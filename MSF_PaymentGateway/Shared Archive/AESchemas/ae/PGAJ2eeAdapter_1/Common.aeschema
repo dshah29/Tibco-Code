@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="BankAccount">
+        <attribute>
+            <name>SORT_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ACCOUNT_HOLDER1</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ACCOUNT_HOLDER2</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ACCOUNT_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ACCOUNT_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ACCOUNT_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ADDRESS1</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ADDRESS2</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ADDRESS3</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_ADDRESS4</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_TOWN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_COUNTY</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_POST_CODE_MAJOR</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_POST_CODE_MINOR</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_BRANCH_TITLE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_BRANCH_SHORT_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_TELEPHONE_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_FAX_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>BANK_BRANCH_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+    </class>
+    <class name="CardDetails">
+        <attribute>
+            <name>CARD_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ACQUIRER_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CARD_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PAYMENT_METHOD_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>START_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.date</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>EXPIRY_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.date</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ISSUE_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>HOLDER_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CARD_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CARD_SYNONYM</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>DEFAULT_CARD</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CREATE_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>POST_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ADDRESS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

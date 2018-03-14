@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/pe/EngineTypes" schemaLocation="/SharedResources/SchemaDefinitions/External/BW/EngineTypes.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/CreateException_ResponseCodeError.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="ResponseCode" type="xsd:string"/>
+                    <xsd:element name="ResponseMessage" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="DefaultExceptionType" type="xsd:string" minOccurs="0"/>
+                    <xsd:choice>
+                        <xsd:sequence>
+                            <xsd:element name="ExceptionCode" type="xsd:string"/>
+                            <xsd:element name="ExceptionType" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Context" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Context2" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Severity" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Description" type="xsd:string"/>
+                            <xsd:element name="Comment" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="ShouldLogLocally" type="xsd:boolean" minOccurs="0"/>
+                            <xsd:element name="attributes" minOccurs="0">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+                                    </xsd:sequence>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                        <xsd:sequence>
+                            <xsd:element name="Context2" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="Comment" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:choice>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>63</pd:startX>
+    <pd:startY>143</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:choose>
+                <xsl:when test="exists($CreateException_InvalidResponseCodeError/root/pfx:Exception)">
+                    <xsl:copy-of select="$CreateException_InvalidResponseCodeError/root/pfx:Exception"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="$Create-Exception/root/pfx:Exception"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:Exception"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>642</pd:endX>
+    <pd:endY>143</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349780757032</pd:targetNamespace>
+    <pd:activity name="Create Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>450</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/Sub/CreateException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/ExceptionType)">
+                        <ExceptionType>
+                            <xsl:value-of select="$Start/root/ExceptionType"/>
+                        </ExceptionType>
+                    </xsl:when>
+                    <xsl:when test="exists($Start/root/DefaultExceptionType)">
+                        <ExceptionType>
+                            <xsl:value-of select="$Start/root/DefaultExceptionType"/>
+                        </ExceptionType>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Technical"/>
+                        </ExceptionType>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <ExceptionCode>
+                    <xsl:value-of select="$Start/root/ExceptionCode"/>
+                </ExceptionCode>
+                <xsl:if test="$Start/root/Context">
+                    <Context>
+                        <xsl:value-of select="$Start/root/Context"/>
+                    </Context>
+                </xsl:if>
+                <xsl:if test="$Start/root/Context2">
+                    <Context2>
+                        <xsl:value-of select="$Start/root/Context2"/>
+                    </Context2>
+                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/Severity)">
+                        <Severity>
+                            <xsl:value-of select="$Start/root/Severity"/>
+                        </Severity>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/Severity/Fatal"/>
+                        </Severity>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <Description>
+                    <xsl:value-of select="$Start/root/Description"/>
+                </Description>
+                <xsl:if test="$Start/root/Comment">
+                    <Comment>
+                        <xsl:value-of select="$Start/root/Comment"/>
+                    </Comment>
+                </xsl:if>
+                <xsl:if test="$Start/root/ShouldLogLocally">
+                    <ShouldLogLocally>
+                        <xsl:value-of select="$Start/root/ShouldLogLocally"/>
+                    </ShouldLogLocally>
+                </xsl:if>
+                <xsl:copy-of select="$Start/root/attributes"/>
+                <xsl:copy-of select="$CreateErrorReport/root/pfx2:ErrorReport"/>
+                <exResponseCode>
+                    <xsl:value-of select="$Start/root/ResponseCode"/>
+                </exResponseCode>
+                <xsl:if test="$Start/root/ResponseMessage">
+                    <exResponseMessage>
+                        <xsl:value-of select="$Start/root/ResponseMessage"/>
+                    </exResponseMessage>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateErrorReport">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>256</pd:x>
+        <pd:y>143</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/Sub/CreateErrorReport.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <removeParentFromStack>
+                    <xsl:value-of select="true()"/>
+                </removeParentFromStack>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException_InvalidResponseCodeError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>450</pd:x>
+        <pd:y>234</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_InvalidResponseCodeError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <responseCode>
+                    <xsl:value-of select="$Start/root/ResponseCode"/>
+                </responseCode>
+                <xsl:if test="$Start/root/ResponseMessage">
+                    <responseMessage>
+                        <xsl:value-of select="$Start/root/ResponseMessage"/>
+                    </responseMessage>
+                </xsl:if>
+                <xsl:if test="$Start/root/Context2">
+                    <Context2>
+                        <xsl:value-of select="$Start/root/Context2"/>
+                    </Context2>
+                </xsl:if>
+                <xsl:if test="$Start/root/Comment">
+                    <Comment>
+                        <xsl:value-of select="$Start/root/Comment"/>
+                    </Comment>
+                </xsl:if>
+                <xsl:copy-of select="$CreateErrorReport/root/pfx2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Create Exception</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>CreateErrorReport</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateErrorReport</pd:from>
+        <pd:to>Create Exception</pd:to>
+        <pd:xpathDescription>Known Code</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Start/root/ExceptionCode)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_InvalidResponseCodeError</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateErrorReport</pd:from>
+        <pd:to>CreateException_InvalidResponseCodeError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

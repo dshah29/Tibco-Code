@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://three.co.uk/xsd/interface/user/useraccount/useraccountmanagement/mcauthentication/v1" xmlns:pfx="urn:RegisterCustomerV2" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://schemas.tibco.com/bw/plugins/http/5.0/httpExceptions" xmlns:ns1="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns4="http://three.co.uk/xsd/internal/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/pe/EngineTypes" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx2="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" xmlns:pfx9="http://three.co.uk/wsdl/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" xmlns:pfx8="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pfx7="http://xmlns.example.com/1422450557296" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pfx6="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/internal/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1.xsd"/>
+    <wsdl:import namespace="urn:RegisterCustomerV2"/>
+    <wsdl:import namespace="urn:RegisterCustomerV2" location="/SharedResources/WebServiceDefinitions/External/registration-customer.wsdl"/>
+    <pd:name>IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx2:AuthenticateThreeConnectUserRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>41</pd:startX>
+    <pd:startY>205</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Map-Data/pfx2:AuthenticateThreeConnectUserResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx2:AuthenticateThreeConnectUserResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1362</pd:endX>
+    <pd:endY>211</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1422543127508</pd:targetNamespace>
+    <pd:group name="Retry on Communication Error">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>291</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>441</pd:width>
+        <pd:height>393</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>repeat</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>loopCount</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:repeatCondition>exists($Connect-API/authenticateResponse)</pd:repeatCondition>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>3 Connect API</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Sleep</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>3 Connect API</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Create Exception Send Error</pd:from>
+            <pd:to>Generate-Exception-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Check Retry Count</pd:from>
+            <pd:to>Log</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log</pd:from>
+            <pd:to>Sleep</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Check Retry Count</pd:from>
+            <pd:to>Create Exception Send Error</pd:to>
+            <pd:xpathDescription>No Retry</pd:xpathDescription>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>($loopCount &gt; $_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/EAIService/Authenticate/SendRetries)</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>3 Connect API</pd:from>
+            <pd:to>Check Retry Count</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-52429</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Create Exception Send Error">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>512</pd:x>
+            <pd:y>211</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Exceptions/CreateException_HTTPSendError.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <destinationName>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/ServiceClient/Authenticate/EntityName"/>
+                    </destinationName>
+                    <httpURL>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/EndPointURL"/>
+                    </httpURL>
+                    <xsl:copy-of select="$_error/pfx4:ErrorReport"/>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Generate-Exception-1">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>623</pd:x>
+            <pd:y>203</pd:y>
+            <config>
+                <faultName>Schema0</faultName>
+            </config>
+            <pd:inputBindings>
+                <ns1:ActivityInput>
+                    <data>
+                        <xsl:copy-of select="$Create-Exception-Send-Error/root/pfx3:Exception"/>
+                    </data>
+                </ns1:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Check Retry Count">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>387</pd:x>
+            <pd:y>202</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Log">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>388</pd:x>
+            <pd:y>318</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Logging/Log.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <level>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Logging/Levels/INFO"/>
+                    </level>
+                    <message>
+                        <xsl:value-of select="concat('JMS Exception: ', $_error/pfx4:ErrorReport/MsgCode, ' on operation attempt ', $loopCount, ' - Retrying after pause *******')"/>
+                    </message>
+                    <processName>
+                        <xsl:value-of select="BW:getCurrentProcessName($_processContext/pfx4:ProcessContext/ProcessId)"/>
+                    </processName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Sleep">
+            <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+            <pd:resourceType>ae.activities.sleep</pd:resourceType>
+            <pd:x>643</pd:x>
+            <pd:y>317</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns0:SleepInputSchema>
+                    <IntervalInMillisec>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/EAIService/Authenticate/RetryIntervalSec * 1000"/>
+                    </IntervalInMillisec>
+                </ns0:SleepInputSchema>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="3 Connect API">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>382</pd:x>
+            <pd:y>77</pd:y>
+            <config>
+                <timeout>%%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/TimeoutSec%%</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx:RegistrationCustomerService</service>
+                <servicePort>RegisterCustomer</servicePort>
+                <operation>authenticate</operation>
+                <soapAction>SprintEndpoint-HTTP/AuthenticateThreeConnectUser</soapAction>
+                <endpointURL>%%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/EndPointURL%%</endpointURL>
+                <authScheme>BASIC</authScheme>
+                <requireBasicAuth>true</requireBasicAuth>
+                <basicHttpAuthIdentity>/SharedResources/Identities/HTTP/RegisterCustomerIdentity.id</basicHttpAuthIdentity>
+                <ns6:ssl xmlns:ns6="http://www.tibco.com/xmlns/aemeta/services/2002">
+                    <ns6:strongCipherSuitesOnly>true</ns6:strongCipherSuitesOnly>
+                    <ns6:cert isRef="true">/SharedResources/Certificates/.folder</ns6:cert>
+                </ns6:ssl>
+            </config>
+            <pd:inputBindings>
+                <authenticate>
+                    <agentid>
+                        <xsl:value-of select="$Start/root/pfx2:AuthenticateThreeConnectUserRequest/pfx2:agentID"/>
+                    </agentid>
+                    <password>
+                        <xsl:value-of select="$Start/root/pfx2:AuthenticateThreeConnectUserRequest/pfx2:password"/>
+                    </password>
+                </authenticate>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="CreateException_ResponseCodeError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1032</pd:x>
+        <pd:y>328</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ResponseCodeError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ResponseCode>
+                    <xsl:value-of select="$Connect-API/authenticateResponse/loginAuthenticateReturnType/responseCode"/>
+                </ResponseCode>
+                <xsl:if test="not(($Connect-API/authenticateResponse/loginAuthenticateReturnType/errorDescription/@xsi:nil=(&quot;true&quot;)) or ($Connect-API/authenticateResponse/loginAuthenticateReturnType/errorDescription/@xsi:nil=(&quot;1&quot;)))">
+                    <ResponseMessage>
+                        <xsl:value-of select="$Connect-API/authenticateResponse/loginAuthenticateReturnType/errorDescription"/>
+                    </ResponseMessage>
+                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="$Connect-API/authenticateResponse/loginAuthenticateReturnType/errorCode=$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AdapterErrors/InvalidPassword/Code">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/InvalidPassword-Exception/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/InvalidPassword-Exception/Description"/>
+                        </Description>
+                        <ShouldLogLocally>
+                            <xsl:value-of select="false()"/>
+                        </ShouldLogLocally>
+                    </xsl:when>
+                    <xsl:when test="$Connect-API/authenticateResponse/loginAuthenticateReturnType/errorCode=$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AdapterErrors/PasswordExpired/Code">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/PasswordExpired-Exception/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/PasswordExpired-Exception/Description"/>
+                        </Description>
+                        <ShouldLogLocally>
+                            <xsl:value-of select="false()"/>
+                        </ShouldLogLocally>
+                    </xsl:when>
+                    <xsl:when test="$Connect-API/authenticateResponse/loginAuthenticateReturnType/errorCode=$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AdapterErrors/InvalidUsername/Code">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/InvalidUserName-Exception/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/InvalidUserName-Exception/Description"/>
+                        </Description>
+                        <ShouldLogLocally>
+                            <xsl:value-of select="false()"/>
+                        </ShouldLogLocally>
+                    </xsl:when>
+                    <xsl:when test="$Connect-API/authenticateResponse/loginAuthenticateReturnType/errorCode=$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AdapterErrors/AccountLocked/Code">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/AccountLocked-Exception/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1/AuthenticateThreeConnectUser/AuthenticateExceptions/AccountLocked-Exception/Description"/>
+                        </Description>
+                        <ShouldLogLocally>
+                            <xsl:value-of select="false()"/>
+                        </ShouldLogLocally>
+                    </xsl:when>
+                    <xsl:otherwise/>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Exception">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>1189</pd:x>
+        <pd:y>329</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns1:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_ResponseCodeError/root/pfx3:Exception"/>
+                </data>
+            </ns1:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Login Success Response">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1016</pd:x>
+        <pd:y>219</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/pfx4:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Connect-API/authenticateResponse"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogResponse">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>861</pd:x>
+        <pd:y>329</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/pfx4:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Connect-API/authenticateResponse"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1129</pd:x>
+        <pd:y>211</pd:y>
+        <config>
+            <element ref="pfx2:AuthenticateThreeConnectUserResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:AuthenticateThreeConnectUserResponse>
+                <pfx2:passwordExpiryDate>
+                    <xsl:value-of select="$Connect-API/authenticateResponse/loginAuthenticateReturnType/passwordExpiryDate"/>
+                </pfx2:passwordExpiryDate>
+            </pfx2:AuthenticateThreeConnectUserResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Response Code Check">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>858</pd:x>
+        <pd:y>219</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1241</pd:x>
+        <pd:y>211</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/pfx4:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Map-Data/pfx2:AuthenticateThreeConnectUserResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>180</pd:x>
+        <pd:y>205</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/pfx4:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx2:AuthenticateThreeConnectUserRequest"/>
+                </payload>
+                <payloadIsForExternalSystem>
+                    <xsl:value-of select="true()"/>
+                </payloadIsForExternalSystem>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Code Check</pd:from>
+        <pd:to>LogResponse</pd:to>
+        <pd:xpathDescription>Otherwise</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Code Check</pd:from>
+        <pd:to>Login Success Response</pd:to>
+        <pd:xpathDescription>Status=Success</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Connect-API/authenticateResponse/loginAuthenticateReturnType/responseCode =0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_ResponseCodeError</pd:from>
+        <pd:to>Generate Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogResponse</pd:from>
+        <pd:to>CreateException_ResponseCodeError</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>Retry on Communication Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Retry on Communication Error</pd:from>
+        <pd:to>Response Code Check</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Login Success Response</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

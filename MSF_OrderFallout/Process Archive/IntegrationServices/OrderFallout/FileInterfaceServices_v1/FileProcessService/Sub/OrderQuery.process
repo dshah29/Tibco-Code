@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/aff/orderservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns12="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns5="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns6="http://www.tibco.com/pe/EngineTypes" xmlns:ns7="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx="http://xmlns.example.com/1301395797508" xmlns:ns8="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/aff/commontypes" xmlns:ns1="http://www.tibco.com/aff/order" xmlns:ns4="http://www.tibco.com/aff/planfragments" xmlns:ns3="http://www.tibco.com/aff/plan" xmlns:ns0="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1301395797508" location="/SharedResources/WebServiceDefinitions/Interface/FOS/Concrete/jms/OrderServiceJMS.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/OrderQuery.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>55</pd:startX>
+    <pd:startY>84</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1516</pd:endX>
+    <pd:endY>221</pd:endY>
+    <pd:errorSchemas>
+        <OrderQuery_Exception ref="ns7:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1461064237994/OrderQuery</pd:targetNamespace>
+    <pd:group name="Iterate Over Row">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>139</pd:x>
+        <pd:y>6</pd:y>
+        <pd:width>1210</pd:width>
+        <pd:height>423</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-Orders-Get-Request/Output/Rows/root</pd:over>
+            <pd:iterationElementSlot>Current_Row</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>GenerateUUID</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Orders Found</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Write-Orders-Get-Response-1</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GenerateUUID</pd:from>
+            <pd:to>Get OMS Orders</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Get OMS Orders</pd:from>
+            <pd:to>Orders Found</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Get OMS Orders</pd:from>
+            <pd:to>Order Not Found</pd:to>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Order Not Found</pd:from>
+            <pd:to>Generate OMS Order Error</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Order Not Found</pd:from>
+            <pd:to>Write-Orders-Get-Response-1</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:group name="Orders Found">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>399</pd:x>
+            <pd:y>32</pd:y>
+            <pd:width>896</pd:width>
+            <pd:height>284</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$Get-OMS-Orders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders/ns:Order</pd:over>
+                <pd:iterationElementSlot>Current_Order</pd:iterationElementSlot>
+                <pd:indexSlot>j</pd:indexSlot>
+                <pd:activityOutputName/>
+                <pd:accumulateOutput>false</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>Get Plan</pd:to>
+                <pd:lineType>Multiple Bends</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Write Orders Get Response</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Multiple Bends</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Get Plan</pd:from>
+                <pd:to>Render Orders Get Response</pd:to>
+                <pd:lineType>One Bend</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Render Orders Get Response</pd:from>
+                <pd:to>Write Orders Get Response</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Plan Not Found</pd:from>
+                <pd:to>Render Orders Get Response</pd:to>
+                <pd:xpathDescription>Plan Not Found</pd:xpathDescription>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>xpath</pd:conditionType>
+                <pd:xpath>$_error_Get-Plan/ns7:Exception/ns6:ErrorReport/MsgCode='TIBCO-AFF-OMS-100008'</pd:xpath>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Get Plan</pd:from>
+                <pd:to>Plan Not Found</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>error</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Plan Not Found</pd:from>
+                <pd:to>Generate Plan Error</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>otherwise</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="Get Plan">
+                <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+                <pd:resourceType>ae.process.subprocess</pd:resourceType>
+                <pd:x>474</pd:x>
+                <pd:y>100</pd:y>
+                <config>
+                    <processName>/UtilityProcesses/FOSDataAccessInterfaces/getOrderExecutionPlan.process</processName>
+                </config>
+                <pd:inputBindings>
+                    <pfx:GetOrderExecutionPlanRequestMsg>
+                        <getorderexecutionplanreqparameters>
+                            <ns:GetOrderExecutionPlanRequest>
+                                <xsl:attribute name="ExternalBusinessTransactionID">
+                                    <xsl:value-of select="$GenerateUUID/UUID"/>
+                                </xsl:attribute>
+                                <ns:orderRef>
+                                    <xsl:value-of select="$Current_Order/ns:Order/ns1:orderRef"/>
+                                </ns:orderRef>
+                            </ns:GetOrderExecutionPlanRequest>
+                        </getorderexecutionplanreqparameters>
+                    </pfx:GetOrderExecutionPlanRequestMsg>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Write Orders Get Response">
+                <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+                <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+                <pd:x>1154</pd:x>
+                <pd:y>245</pd:y>
+                <config>
+                    <encoding>text</encoding>
+                    <compressFile>None</compressFile>
+                    <append>true</append>
+                </config>
+                <pd:inputBindings>
+                    <ns12:WriteActivityInputTextClass>
+                        <fileName>
+                            <xsl:value-of select="$Start/root/ResponseFileName"/>
+                        </fileName>
+                        <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                            <xsl:when test="$j=1and $i=1">
+                                <textContent>
+                                    <xsl:value-of select="concat('OrderRef,','OrderID,','OrderStatus,','SubmittedDateTime,','PlanID,','PlanItemID,','PlanItemName,','PlanItemStatus,','PlanItemStatusChanged',&quot;&#xA;&quot;,$Render-Orders-Get-Response/Text)"/>
+                                </textContent>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <textContent>
+                                    <xsl:value-of select="$Render-Orders-Get-Response/Text"/>
+                                </textContent>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </ns12:WriteActivityInputTextClass>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Render Orders Get Response">
+                <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+                <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+                <pd:x>846</pd:x>
+                <pd:y>246</pd:y>
+                <config>
+                    <ParseSharedConfig>/SharedResources/DataFormats/OrderTemplates/OrdersGetResponseFormat.sharedparse</ParseSharedConfig>
+                </config>
+                <pd:inputBindings>
+                    <Rows>
+                        <xsl:choose>
+                            <xsl:when test="exists($Get-Plan/pfx:GetOrderExecutionPlanResponseMsg/getorderexecutionplanresparameters/ns:GetOrderExecutionPlanResponse/ns:plan/ns3:planID) and&#xA;$Get-Plan/pfx:GetOrderExecutionPlanResponseMsg/getorderexecutionplanresparameters/ns:GetOrderExecutionPlanResponse/ns:plan/ns3:planID!=&quot;&quot;">
+                                <xsl:for-each select="$Get-Plan/pfx:GetOrderExecutionPlanResponseMsg/getorderexecutionplanresparameters/ns:GetOrderExecutionPlanResponse/ns:plan/ns3:planItem[ns3:planItemName!='NON_EXECUTING']">
+                                    <root>
+                                        <OrderRef>
+                                            <xsl:value-of select="$Current_Order/ns:Order/ns1:orderRef"/>
+                                        </OrderRef>
+                                        <OrderID>
+                                            <xsl:value-of select="$Current_Order/ns:Order/ns1:orderID"/>
+                                        </OrderID>
+                                        <Status>
+                                            <xsl:value-of select="$Current_Order/ns:Order/ns1:header/ns1:status"/>
+                                        </Status>
+                                        <SubmittedDateTime>
+                                            <xsl:value-of select="$Current_Order/ns:Order/ns1:header/ns1:submittedDate"/>
+                                        </SubmittedDateTime>
+                                        <PlanID>
+                                            <xsl:value-of select="../ns3:planID"/>
+                                        </PlanID>
+                                        <PlanItemID>
+                                            <xsl:value-of select="ns3:planItemID"/>
+                                        </PlanItemID>
+                                        <PlanItemName>
+                                            <xsl:value-of select="ns3:planItemName"/>
+                                        </PlanItemName>
+                                        <PlanItemStatus>
+                                            <xsl:value-of select="ns3:status"/>
+                                        </PlanItemStatus>
+                                        <PlanItemStatusChanged>
+                                            <xsl:value-of select="ns3:statusChanged"/>
+                                        </PlanItemStatusChanged>
+                                    </root>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <root>
+                                    <OrderRef>
+                                        <xsl:value-of select="$Current_Order/ns:Order/ns1:orderRef"/>
+                                    </OrderRef>
+                                    <OrderID>
+                                        <xsl:value-of select="$Current_Order/ns:Order/ns1:orderID"/>
+                                    </OrderID>
+                                    <Status>
+                                        <xsl:value-of select="$Current_Order/ns:Order/ns1:header/ns1:status"/>
+                                    </Status>
+                                    <SubmittedDateTime>
+                                        <xsl:value-of select="$Current_Order/ns:Order/ns1:header/ns1:statusChanged"/>
+                                    </SubmittedDateTime>
+                                </root>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </Rows>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Plan Not Found">
+                <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+                <pd:resourceType>ae.activities.null</pd:resourceType>
+                <pd:x>476</pd:x>
+                <pd:y>238</pd:y>
+                <config/>
+                <pd:inputBindings/>
+            </pd:activity>
+            <pd:activity name="Generate Plan Error">
+                <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+                <pd:resourceType>ae.activities.throw</pd:resourceType>
+                <pd:x>801</pd:x>
+                <pd:y>133</pd:y>
+                <config>
+                    <faultName>OrderQuery_Exception</faultName>
+                </config>
+                <pd:inputBindings>
+                    <ns0:ActivityInput>
+                        <data>
+                            <xsl:copy-of select="$_error_Get-Plan/ns7:Exception"/>
+                        </data>
+                    </ns0:ActivityInput>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+        <pd:activity name="GenerateUUID">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>221</pd:x>
+            <pd:y>78</pd:y>
+            <config>
+                <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Get OMS Orders">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>219</pd:x>
+            <pd:y>266</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/getOMSOrders.process</processName>
+            </config>
+            <pd:inputBindings>
+                <pfx:GetOrdersRequestMsg>
+                    <getordersreqparameters>
+                        <ns:GetOrdersRequest>
+                            <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="ExternalBusinessTransactionID">
+                                <xsl:value-of select="$GenerateUUID/UUID"/>
+                            </xsl:attribute>
+                            <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Current_Row/root/OrderRef) and $Current_Row/root/OrderRef!=&quot;&quot;">
+                                <ns:orderRef>
+                                    <xsl:value-of select="$Current_Row/root/OrderRef"/>
+                                </ns:orderRef>
+                            </xsl:if>
+                            <ns:dateRange>
+                                <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                                    <xsl:when test="exists($Current_Row/root/StartDate) and $Current_Row/root/StartDate!=&quot;&quot;">
+                                        <ns:startDate>
+                                            <xsl:value-of select="$Current_Row/root/StartDate"/>
+                                        </ns:startDate>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <ns:startDate>
+                                            <xsl:value-of select="substring(current-date(),'1','10')"/>
+                                        </ns:startDate>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                                <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                                    <xsl:when test="exists($Current_Row/root/EndDate) and $Current_Row/root/EndDate!=&quot;&quot;">
+                                        <ns:endDate>
+                                            <xsl:value-of select="tib:add-to-date($Current_Row/root/EndDate, 0, 0,1)"/>
+                                        </ns:endDate>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <ns:endDate>
+                                            <xsl:value-of select="tib:add-to-date(substring(current-date(),'1','10'), 0, 0,1)"/>
+                                        </ns:endDate>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ns:dateRange>
+                            <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Current_Row/root/Status) and $Current_Row/root/Status!=&quot;&quot;">
+                                <ns:status>
+                                    <xsl:value-of select="$Current_Row/root/Status"/>
+                                </ns:status>
+                            </xsl:if>
+                        </ns:GetOrdersRequest>
+                    </getordersreqparameters>
+                </pfx:GetOrdersRequestMsg>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Order Not Found">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>359</pd:x>
+            <pd:y>347</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Generate OMS Order Error">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>217</pd:x>
+            <pd:y>354</pd:y>
+            <config>
+                <faultName>OrderQuery_Exception</faultName>
+            </config>
+            <pd:inputBindings>
+                <ns0:ActivityInput>
+                    <data>
+                        <xsl:copy-of select="$_error_Get-OMS-Orders/ns7:Exception"/>
+                    </data>
+                </ns0:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Write-Orders-Get-Response-1">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>1120</pd:x>
+            <pd:y>352</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+            </config>
+            <pd:inputBindings>
+                <ns12:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="$Start/root/ResponseFileName"/>
+                    </fileName>
+                    <xsl:choose>
+                        <xsl:when test="$i=1">
+                            <textContent>
+                                <xsl:value-of select="concat('OrderRef,','OrderID,','OrderStatus,','SubmittedDateTime,','PlanID,','PlanItemID,','PlanItemName,','PlanItemStatus,','PlanItemStatusChanged',&quot;&#xA;&quot;,concat($Current_Row/root/OrderRef,',,OrderNotFound'),&quot;&#xA;&quot;)"/>
+                            </textContent>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <textContent>
+                                <xsl:value-of select="concat($Current_Row/root/OrderRef,',,OrderNotFound',&quot;&#xA;&quot;)"/>
+                            </textContent>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </ns12:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>614</pd:x>
+        <pd:y>469</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>746</pd:x>
+        <pd:y>477</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns6:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>881</pd:x>
+        <pd:y>477</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns7:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Orders Get Request">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>58</pd:x>
+        <pd:y>207</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/SharedResources/DataFormats/OrderTemplates/OrdersGetRequestFormat.sharedparse</ParseSharedConfig>
+            <SkipBlankLines>true</SkipBlankLines>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1418</pd:x>
+        <pd:y>220</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Orders Get Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Iterate Over Row</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Orders Get Request</pd:from>
+        <pd:to>Iterate Over Row</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

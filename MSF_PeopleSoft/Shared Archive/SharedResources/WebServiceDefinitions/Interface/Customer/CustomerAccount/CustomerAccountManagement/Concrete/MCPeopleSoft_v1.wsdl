@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns1="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/MCPeoplesoft_v1.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="MCPeopleSoft_v1">
+        <wsdl:port binding="tns:PortTypeEndpoint-JMSBinding" name="PortTypeEndpoint-JMS">
+            <soap:address location=""/>
+            <jndi:context>
+                <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://tgs-3uk-centos64-1:7242</jndi:property>
+            </jndi:context>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">UK.DEV.REQ.CUST.CUSTACC.CUSTACCMGMT.MCPEOPLESOFT.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="GetConsumerProfile">
+            <wsdl:input message="tns:GetConsumerProfileRequest"/>
+            <wsdl:output message="tns:GetConsumerProfileResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetInteraction">
+            <wsdl:input message="tns:GetInteractionRequest"/>
+            <wsdl:output message="tns:GetInteractionResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="SearchCustomer">
+            <wsdl:input message="tns:SearchCustomerRequest"/>
+            <wsdl:output message="tns:SearchCustomerResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="Authenticate">
+            <wsdl:input message="tns:AuthenticateRequest"/>
+            <wsdl:output message="tns:AuthenticateResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="CreateInteraction">
+            <wsdl:input message="tns:CreateInteractionRequest"/>
+            <wsdl:output message="tns:CreateInteractionResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PortTypeEndpoint-JMSBinding" type="tns:PortType">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="GetConsumerProfile">
+            <soap:operation soapAction="PortTypeEndpoint-JMS/GetConsumerProfile" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetInteraction">
+            <soap:operation soapAction="PortTypeEndpoint-JMS/GetInteraction" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="SearchCustomer">
+            <soap:operation soapAction="PortTypeEndpoint-JMS/SearchCustomer" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="Authenticate">
+            <soap:operation soapAction="PortTypeEndpoint-JMS/Authenticate" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="CreateInteraction">
+            <soap:operation soapAction="PortTypeEndpoint-JMS/CreateInteraction" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="GetConsumerProfileRequest">
+        <wsdl:part element="ns1:GetConsumerProfileRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="GetConsumerProfileResponse">
+        <wsdl:part element="ns1:GetConsumerProfileResponse" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="GetInteractionRequest">
+        <wsdl:part element="ns1:GetInteractionRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="GetInteractionResponse">
+        <wsdl:part element="ns1:GetInteractionResponse" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="SearchCustomerRequest">
+        <wsdl:part element="ns1:SearchCustomerRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="SearchCustomerResponse">
+        <wsdl:part element="ns1:SearchCustomerResponse" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="AuthenticateRequest">
+        <wsdl:part element="ns1:AuthenticateRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="AuthenticateResponse">
+        <wsdl:part element="ns1:AuthenticateResponse" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="CreateInteractionRequest">
+        <wsdl:part element="ns1:CreateInteractionRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="CreateInteractionResponse">
+        <wsdl:part element="ns1:CreateInteractionResponse" name="part1"/>
+    </wsdl:message>
+</wsdl:definitions>

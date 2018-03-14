@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" xmlns:pfx2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProductInfoSchemas/AESchema" xmlns:pfx="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProductInfoSchemas/AESchema" schemaLocation="/AESchemas/ae/ProductInfoSchemas/AESchema.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetProductPrices/Sub/SemanticAdapter/AE To CDM.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="XMLMessage" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>49</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings>
+        <xsl:copy-of select="$AE-To-CDM/root/pfx:GetProductPricesRequest"/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx:GetProductPricesRequest"/>
+    <pd:endX>375</pd:endX>
+    <pd:endY>62</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1443711420829</pd:targetNamespace>
+    <pd:activity name="AE To CDM">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>261</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:GetProductPricesRequest"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx:GetProductPricesRequest>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="string-length($Parse-Peoplesoft-Message/GetProductPricesRequest/accountNumber)>0">
+                            <pfx:accountNumber>
+                                <xsl:value-of select="$Parse-Peoplesoft-Message/GetProductPricesRequest/accountNumber"/>
+                            </pfx:accountNumber>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx:TargetProducts>
+                                <xsl:if test="not(($Parse-Peoplesoft-Message/GetProductPricesRequest/TargetProducts/accountNumber=(&quot;true&quot;)) or ($Parse-Peoplesoft-Message/GetProductPricesRequest/TargetProducts/accountNumber=(&quot;1&quot;)))">
+                                    <pfx:accountNumber>
+                                        <xsl:value-of select="$Parse-Peoplesoft-Message/GetProductPricesRequest/TargetProducts/accountNumber"/>
+                                    </pfx:accountNumber>
+                                </xsl:if>
+                                <pfx:ProductIDs>
+                                    <xsl:for-each select="$Parse-Peoplesoft-Message/GetProductPricesRequest/TargetProducts/ProductIDs/productID">
+                                        <pfx:productID>
+                                            <xsl:value-of select="."/>
+                                        </pfx:productID>
+                                    </xsl:for-each>
+                                </pfx:ProductIDs>
+                                <pfx:event>
+                                    <xsl:value-of select="$Parse-Peoplesoft-Message/GetProductPricesRequest/TargetProducts/event"/>
+                                </pfx:event>
+                            </pfx:TargetProducts>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx:orgID>
+                        <xsl:value-of select="$Parse-Peoplesoft-Message/GetProductPricesRequest/orgID"/>
+                    </pfx:orgID>
+                    <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Parse-Peoplesoft-Message/GetProductPricesRequest/effectiveDate) and $Parse-Peoplesoft-Message/GetProductPricesRequest/effectiveDate!=&quot;&quot;">
+                        <pfx:effectiveDate>
+                            <xsl:value-of select="concat(translate($Parse-Peoplesoft-Message/GetProductPricesRequest/effectiveDate, ' ', 'T'),'-00:00')"/>
+                        </pfx:effectiveDate>
+                    </xsl:if>
+                    <pfx:packageAggregation>
+                        <xsl:value-of select="$Parse-Peoplesoft-Message/GetProductPricesRequest/packageAggregation"/>
+                    </pfx:packageAggregation>
+                </pfx:GetProductPricesRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Peoplesoft Message">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>146</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term ref="pfx3:GetProductPricesRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Start/root/XMLMessage"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>AE To CDM</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Peoplesoft Message</pd:from>
+        <pd:to>AE To CDM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Peoplesoft Message</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

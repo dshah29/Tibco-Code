@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.three.co.uk/wsdl/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:ns0="http://three.co.uk/wsdl/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://www.three.co.uk/wsdl/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1">
+    <wsdl:import location="../MCFCManagement_v1.wsdl" namespace="http://three.co.uk/wsdl/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1"/>
+    <wsdl:service name="MCFCManagement_v1">
+        <wsdl:port binding="tns:SOAPJMSBinding" name="SOAPJMS">
+            <soap:address location=""/>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">UK.DEV.REQ.FC.PRODUCT.PRODUCTSPEC.PRODUCTSPECMGT.MCFCMGT.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:binding name="SOAPJMSBinding" type="ns0:PortType">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="GetProducts">
+            <soap:operation soapAction="PortTypeEndpoint1/GetProducts" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

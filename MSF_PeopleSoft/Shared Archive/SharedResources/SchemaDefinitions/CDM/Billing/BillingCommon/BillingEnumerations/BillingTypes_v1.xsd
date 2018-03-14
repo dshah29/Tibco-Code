@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:BILL_TYP="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingtypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingtypes/v1"
+	 version="$Id: BillingTypes_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:simpleType name="__PAYMENT_TYPES__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CREDITCARD"/>
+			<xsd:enumeration value="DEBITCARD"/>
+			<xsd:enumeration value="DIRECTDEBIT"/>
+			<xsd:enumeration value="CARD"/>
+			<xsd:enumeration value="CASH"/>
+			<xsd:enumeration value="CHEQUE"/>
+			<xsd:enumeration value="VOUCHER"/>
+			<xsd:enumeration value="ADDTOBILL"/>
+			<xsd:enumeration value="PAYATTILL"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_PAYMENT_TYPES">
+		<xsd:union memberTypes="BILL_TYP:__PAYMENT_TYPES__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="paymentType" type="BILL_TYP:_PAYMENT_TYPES"/>
+
+	<!-- Payment card types defined by Payment Gateway -->
+	<xsd:simpleType name="__PAYMENT_CARD_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Visa Electron"/>
+			<xsd:enumeration value="Amex"/>
+			<xsd:enumeration value="Visa Delta"/>
+			<xsd:enumeration value="Mastercard"/>
+			<xsd:enumeration value="Laser"/>
+			<xsd:enumeration value="Visa"/>
+			<xsd:enumeration value="JCB"/>
+			<xsd:enumeration value="Solo"/>
+			<xsd:enumeration value="Switch"/>
+			<xsd:enumeration value="Unknown"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_PAYMENT_CARD_TYPE">
+		<xsd:union memberTypes="BILL_TYP:__PAYMENT_CARD_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="paymentCardType" type="BILL_TYP:_PAYMENT_CARD_TYPE"/>
+</xsd:schema>

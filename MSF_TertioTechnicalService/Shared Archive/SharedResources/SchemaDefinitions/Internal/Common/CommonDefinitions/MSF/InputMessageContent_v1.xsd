@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:imc="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:complexType name="InputMessageContent">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="skip" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputMessageContent" type="imc:InputMessageContent"/>
+</xs:schema>

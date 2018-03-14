@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn">
+    <import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"/>
+    <import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <import location="../../../../../SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd" namespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn"/>
+    <message name="OperationRequest">
+        <part element="ns:OperationRequest" name="part1"/>
+    </message>
+    <message name="OperationReply">
+        <part element="ns:OperationReply" name="part1"/>
+    </message>
+    <message name="ExceptionInfo">
+        <part element="ns2:ExceptionInfo" name="part1"/>
+    </message>
+    <message name="MessageContext">
+        <part element="ns3:MessageContext" name="part1"/>
+    </message>
+    <portType name="PortType">
+        <operation name="OperationName">
+            <input message="tns:OperationRequest"/>
+            <output message="tns:OperationReply"/>
+            <fault message="tns:ExceptionInfo" name="fault1"/>
+        </operation>
+    </portType>
+</definitions>

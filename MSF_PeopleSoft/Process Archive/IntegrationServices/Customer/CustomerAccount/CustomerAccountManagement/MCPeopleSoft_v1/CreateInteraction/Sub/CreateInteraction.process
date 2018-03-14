@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://www.tibco.com/pe/SignalInActivitySchema" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx9="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions" xmlns:pfx8="http://schemas.tibco.com/bw/plugins/tibrv/5.0/tibrvExceptions" xmlns:pfx7="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Response" xmlns:pfx6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/MCPeoplesoft_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Request" schemaLocation="/AESchemas/ae/PeopleSoft/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Response" schemaLocation="/AESchemas/ae/PeopleSoft/Response.aeschema"/>
+    <wsdl:import namespace="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" location="/SharedResources/WebServiceDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/MCPeopleSoft_v1.wsdl"/>
+    <pd:name>IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CreateInteraction/Sub/CreateInteraction.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx6:SC__UpdateHistoryRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>27</pd:startX>
+    <pd:startY>207</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx7:SC__UpdateHistoryResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>954</pd:endX>
+    <pd:endY>214</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:group name="Retry on Communication Error">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>207</pd:x>
+        <pd:y>13</pd:y>
+        <pd:width>423</pd:width>
+        <pd:height>387</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>repeat</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>loopCount</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:repeatCondition>exists($PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse)</pd:repeatCondition>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>PeopleSoft Adapter</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PeopleSoft Adapter</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Straight</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Sleep</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Check Number of Retries</pd:from>
+            <pd:to>CreateException_RVSendError</pd:to>
+            <pd:xpathDescription>NoRetry</pd:xpathDescription>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$loopCount&gt;$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/EAIService/CreateInteraction/SendRetries</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>CreateException_RVSendError</pd:from>
+            <pd:to>GenerateRVSendError</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Check Number of Retries</pd:from>
+            <pd:to>Log</pd:to>
+            <pd:lineType>Straight</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log</pd:from>
+            <pd:to>Sleep</pd:to>
+            <pd:lineType>Straight</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PeopleSoft Adapter</pd:from>
+            <pd:to>Check Number of Retries</pd:to>
+            <pd:lineType>Straight</pd:lineType>
+            <pd:lineColor>-65536</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Check Number of Retries">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>284</pd:x>
+            <pd:y>213</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="GenerateRVSendError">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>529</pd:x>
+            <pd:y>205</pd:y>
+            <config>
+                <faultName>Schema0</faultName>
+            </config>
+            <pd:inputBindings>
+                <pfx3:ActivityInput>
+                    <data>
+                        <xsl:copy-of select="$CreateException_RVSendError/root/pfx2:Exception"/>
+                    </data>
+                </pfx3:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="CreateException_RVSendError">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>398</pd:x>
+            <pd:y>206</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Exceptions/CreateException_RVSendError.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <destinationName>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/ServiceClient/EntityName"/>
+                    </destinationName>
+                    <rvSubject>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/PPLSFTSubject/CreateInteraction"/>
+                    </rvSubject>
+                    <xsl:copy-of select="$_error/ns2:ErrorReport"/>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Log">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>286</pd:x>
+            <pd:y>324</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Logging/Log.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <level>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Logging/Levels/INFO"/>
+                    </level>
+                    <message>
+                        <xsl:value-of select="concat('RV Exception: ', $_error/ns2:ErrorReport/MsgCode, ' on operation attempt ', $loopCount, ' - Retrying after pause *******')"/>
+                    </message>
+                    <processName>
+                        <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                    </processName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Sleep">
+            <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+            <pd:resourceType>ae.activities.sleep</pd:resourceType>
+            <pd:x>514</pd:x>
+            <pd:y>324</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns0:SleepInputSchema>
+                    <IntervalInMillisec>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/EAIService/CreateInteraction/RetryIntervalSec*1000"/>
+                    </IntervalInMillisec>
+                </ns0:SleepInputSchema>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="PeopleSoft Adapter">
+            <pd:type>com.tibco.plugin.ae.AEPublisherActivity</pd:type>
+            <pd:resourceType>ae.aepalette.aePubActivity</pd:resourceType>
+            <pd:x>280</pd:x>
+            <pd:y>81</pd:y>
+            <config>
+                <ae.aepalette.sharedProperties.transportChoice>rv</ae.aepalette.sharedProperties.transportChoice>
+                <ae.aepalette.sharedProperties.useRequestReply>true</ae.aepalette.sharedProperties.useRequestReply>
+                <ae.aepalette.sharedProperties.customRequest>/AESchemas/ae/PeopleSoft/Request.aeschema#class.SC_UpdateHistoryRequest</ae.aepalette.sharedProperties.customRequest>
+                <ae.aepalette.sharedProperties.customReply>/AESchemas/ae/PeopleSoft/Response.aeschema#class.SC_UpdateHistoryResponse</ae.aepalette.sharedProperties.customReply>
+                <ae.aepalette.sharedProperties.transportType>rv</ae.aepalette.sharedProperties.transportType>
+                <ae.aepalette.sharedProperties.rvSubject>%%IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/PPLSFTSubject/CreateInteraction%%</ae.aepalette.sharedProperties.rvSubject>
+                <ae.aepalette.sharedProperties.msgFormat>aeRvMsg</ae.aepalette.sharedProperties.msgFormat>
+                <ae.aepalette.sharedProperties.rvSessionService>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Service%%</ae.aepalette.sharedProperties.rvSessionService>
+                <ae.aepalette.sharedProperties.rvSessionNetwork>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Network%%</ae.aepalette.sharedProperties.rvSessionNetwork>
+                <ae.aepalette.sharedProperties.rvSessionDaemon>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Daemon%%</ae.aepalette.sharedProperties.rvSessionDaemon>
+            </config>
+            <pd:inputBindings>
+                <aePubInputType>
+                    <requestTimeout>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/EAIService/CreateInteraction/TimeoutSec*1000"/>
+                    </requestTimeout>
+                    <body>
+                        <xsl:copy-of select="$Start/root/pfx6:SC__UpdateHistoryRequest"/>
+                    </body>
+                </aePubInputType>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="CreateException_ResponseCodeError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>830</pd:x>
+        <pd:y>342</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ResponseCodeError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ResponseCode>
+                    <xsl:value-of select="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__CODE"/>
+                </ResponseCode>
+                <xsl:if test="not(($PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__DESCRIPTION/@xsi:nil=(&quot;true&quot;)) or ($PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__DESCRIPTION/@xsi:nil=(&quot;1&quot;)))">
+                    <ResponseMessage>
+                        <xsl:value-of select="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__DESCRIPTION"/>
+                    </ResponseMessage>
+                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__CODE=$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/AdapterErrors/LoggingInteraction/ErrorCode">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/LoggingInteraction/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/LoggingInteraction/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__CODE=$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/AdapterErrors/StartingSubInteraction/ErrorCode">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/StartingSubInteraction/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/StartingSubInteraction/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__CODE=$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/AdapterErrors/InvalidMSISDN/ErrorCode">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InvalidMSISDN/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InvalidMSISDN/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__CODE=$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/AdapterErrors/InvalidMSISDN-BAN/ErrorCode">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InvalidMSISDN-BAN/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InvalidMSISDN-BAN/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__CODE=$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/AdapterErrors/InvalidInputOutcome/ErrorCode">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InvalidInputOutcome/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InvalidInputOutcome/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/ERROR__CODE=$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/AdapterErrors/InputParametersNULL/ErrorCode">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InputParametersNULL/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/InputParametersNULL/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:otherwise/>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Business Exception">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>952</pd:x>
+        <pd:y>352</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_ResponseCodeError/root/pfx2:Exception"/>
+                </data>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>710</pd:x>
+        <pd:y>342</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Response Code Check">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>707</pd:x>
+        <pd:y>222</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>842</pd:x>
+        <pd:y>214</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse"/>
+                </response>
+                <responseIsFromExternalSystem>
+                    <xsl:value-of select="true()"/>
+                </responseIsFromExternalSystem>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>125</pd:x>
+        <pd:y>207</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root"/>
+                </payload>
+                <payloadIsForExternalSystem>
+                    <xsl:value-of select="true()"/>
+                </payloadIsForExternalSystem>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Code Check</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:xpathDescription>Status=Success</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$PeopleSoft-Adapter/PublisherOutput/body/pfx7:SC__UpdateHistoryResponse/STATUS/STATUS__CODE=$_globalVariables/ns1:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/PPLSFTService/AdapterResponseStatus_Success</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Code Check</pd:from>
+        <pd:to>Log Error</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Retry on Communication Error</pd:from>
+        <pd:to>Response Code Check</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Retry on Communication Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Error</pd:from>
+        <pd:to>CreateException_ResponseCodeError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_ResponseCodeError</pd:from>
+        <pd:to>Generate Business Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

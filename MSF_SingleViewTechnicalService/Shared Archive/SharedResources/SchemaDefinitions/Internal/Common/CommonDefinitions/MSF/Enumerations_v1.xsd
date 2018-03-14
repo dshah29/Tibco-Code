@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:enum="http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:complexType name="EnumerationSet">
+		<xs:sequence>
+<xs:choice maxOccurs="unbounded">
+			<xs:element ref="enum:enumeration"/>
+			<xs:element ref="enum:regexp"/>
+</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="caseSensitive" type="xs:boolean" use="required"/>
+		<xs:attribute name="normalised" type="xs:boolean" use="required"/>
+		<xs:attribute name="useSpaces" type="xs:boolean" use="required"/>
+	</xs:complexType>
+	<xs:element name="EnumerationSet" type="enum:EnumerationSet"/>
+	<xs:complexType name="EnumerationSets">
+		<xs:sequence>
+			<xs:element ref="enum:EnumerationSet" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EnumerationSets" type="enum:EnumerationSets"/>
+	<xs:complexType name="enumeration">
+		<xs:simpleContent>
+			<xs:extension base="enum:EmptyString">
+				<xs:attribute name="value" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="regexp">
+		<xs:simpleContent>
+			<xs:extension base="enum:EmptyString">
+				<xs:attribute name="expression" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="enumeration" type="enum:enumeration"/>
+	<xs:element name="regexp" type="enum:regexp"/>
+	<xs:simpleType name="EmptyString">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="0"/>
+			<xs:minLength value="0"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+    <pd:name>UtilityProcesses/ContextResources/GetInputContext.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>56</pd:startY>
+    <pd:returnBindings>
+        <xsl:choose>
+            <xsl:when test="exists($SetContext/root/pfx:MessageContext)">
+                <root>
+                    <xsl:copy-of select="$SetContext/root/pfx:MessageContext"/>
+                </root>
+            </xsl:when>
+            <xsl:otherwise>
+                <root>
+                    <xsl:copy-of select="$Get-Input-Context/root/pfx:MessageContext"/>
+                </root>
+            </xsl:otherwise>
+        </xsl:choose>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:MessageContext"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>706</pd:endX>
+    <pd:endY>56</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349862804076</pd:targetNamespace>
+    <pd:activity name="Add Missing TransactionID">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>585</pd:x>
+        <pd:y>132</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:MessageContext"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <xsl:variable name="var" select="tib:trim($Get-Input-Context/root/pfx:MessageContext/pfx:TransactionID)"/>
+            <root>
+                <pfx:MessageContext>
+                    <xsl:attribute name="messageID">
+                        <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/@messageID[1]"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="messageType">
+                        <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/@messageType[1]"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="timestamp">
+                        <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/@timestamp[1]"/>
+                    </xsl:attribute>
+                    <xsl:if test="exists($Get-Input-Context/root/pfx:MessageContext/@TimeToLive[1])">
+                        <xsl:if test="$Get-Input-Context/root/pfx:MessageContext/@TimeToLive[1]">
+                            <xsl:attribute name="TimeToLive">
+                                <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/@TimeToLive[1]"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                    </xsl:if>
+                    <xsl:if test="$Get-Input-Context/root/pfx:MessageContext/pfx:CorrelationID">
+                        <pfx:CorrelationID>
+                            <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/pfx:CorrelationID"/>
+                        </pfx:CorrelationID>
+                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="$var !=''">
+                            <pfx:TransactionID>
+                                <xsl:value-of select="concat($var, '-', $Generate-UUID-1/UUID)"/>
+                            </pfx:TransactionID>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx:TransactionID>
+                                <xsl:value-of select="$Generate-UUID-1/UUID"/>
+                            </pfx:TransactionID>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:if test="$Get-Input-Context/root/pfx:MessageContext/pfx:BusinessKey">
+                        <pfx:BusinessKey>
+                            <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/pfx:BusinessKey"/>
+                        </pfx:BusinessKey>
+                    </xsl:if>
+                    <xsl:if test="$Get-Input-Context/root/pfx:MessageContext/pfx:ApplicationID">
+                        <pfx:ApplicationID>
+                            <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/pfx:ApplicationID"/>
+                        </pfx:ApplicationID>
+                    </xsl:if>
+                    <xsl:if test="$Get-Input-Context/root/pfx:MessageContext/pfx:UserID">
+                        <pfx:UserID>
+                            <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/pfx:UserID"/>
+                        </pfx:UserID>
+                    </xsl:if>
+                    <xsl:if test="$Get-Input-Context/root/pfx:MessageContext/pfx:ServiceInstanceID">
+                        <pfx:ServiceInstanceID>
+                            <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/pfx:ServiceInstanceID"/>
+                        </pfx:ServiceInstanceID>
+                    </xsl:if>
+                    <xsl:if test="$Get-Input-Context/root/pfx:MessageContext/pfx:SourceProcess">
+                        <pfx:SourceProcess>
+                            <xsl:value-of select="$Get-Input-Context/root/pfx:MessageContext/pfx:SourceProcess"/>
+                        </pfx:SourceProcess>
+                    </xsl:if>
+                </pfx:MessageContext>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Default Message Context">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>450</pd:x>
+        <pd:y>224</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:MessageContext"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx:MessageContext>
+                    <xsl:attribute name="messageID">
+                        <xsl:value-of select="$Generate-UUID/UUID"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="messageType">
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/MessageType/REQUEST"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="timestamp">
+                        <xsl:value-of select="current-dateTime()"/>
+                    </xsl:attribute>
+                    <pfx:TransactionID>
+                        <xsl:value-of select="$Generate-UUID/UUID"/>
+                    </pfx:TransactionID>
+                    <pfx:BusinessKey>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/TestUserID"/>
+                    </pfx:BusinessKey>
+                    <pfx:UserID>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/TestUserID"/>
+                    </pfx:UserID>
+                </pfx:MessageContext>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate UUID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>309</pd:x>
+        <pd:y>216</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate-UUID-1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>450</pd:x>
+        <pd:y>124</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Input Context">
+        <pd:type>com.tibco.ae.tools.palettes.servicepalette.GetContextActivity</pd:type>
+        <pd:resourceType>service.activity.getContext</pd:resourceType>
+        <pd:x>310</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <variableConfig>/SharedResources/ContextResources/InputContext.contextResource</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="SetContext">
+        <pd:type>com.tibco.ae.tools.palettes.servicepalette.SetContextActivity</pd:type>
+        <pd:resourceType>service.activity.setContext</pd:resourceType>
+        <pd:x>706</pd:x>
+        <pd:y>216</pd:y>
+        <config>
+            <variableConfig>/SharedResources/ContextResources/InputContext.contextResource</variableConfig>
+            <showResult>true</showResult>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Create-Default-Message-Context/root/pfx:MessageContext)">
+                        <xsl:copy-of select="$Create-Default-Message-Context/root/pfx:MessageContext"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:copy-of select="$Add-Missing-TransactionID/root/pfx:MessageContext"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Get Input Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Context</pd:from>
+        <pd:to>End</pd:to>
+        <pd:xpathDescription>TransactionID OK</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>string-length(tib:trim($Get-Input-Context/root/pfx:MessageContext/pfx:TransactionID)) &gt;= 6</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Context</pd:from>
+        <pd:to>Generate UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate UUID</pd:from>
+        <pd:to>Create Default Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Default Message Context</pd:from>
+        <pd:to>SetContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetContext</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Context</pd:from>
+        <pd:to>Generate-UUID-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Add Missing TransactionID</pd:from>
+        <pd:to>SetContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate-UUID-1</pd:from>
+        <pd:to>Add Missing TransactionID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:label>
+        <pd:name>Label</pd:name>
+        <pd:description>Error transition should only occur in Tester mode</pd:description>
+        <pd:x>198</pd:x>
+        <pd:y>150</pd:y>
+        <pd:width>164</pd:width>
+        <pd:height>52</pd:height>
+        <pd:fontColor>-16777216</pd:fontColor>
+        <pd:color>-1</pd:color>
+        <pd:type>solid</pd:type>
+        <pd:thickness>0</pd:thickness>
+        <pd:fade>true</pd:fade>
+    </pd:label>
+</pd:ProcessDefinition>

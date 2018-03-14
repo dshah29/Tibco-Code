@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="MCContractServiceWSDL" targetNamespace="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/customercontract/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+    <import namespace="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" location="../../../../../SchemaDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_v1.xsd"/>
+    <message name="CreateContractRequest">
+        <part name="body" element="ns:CreateContractRequest"/>
+    </message>
+    <message name="CreateContractResponse">
+        <part element="ns:CreateContractResponse" name="body"/>
+    </message>
+    <message name="ExceptionInfo">
+        <part name="fault" element="ns2:ExceptionInfo"/>
+    </message>
+    <message name="MessageContext">
+        <part name="header" element="ns3:MessageContext"/>
+    </message>
+    <message name="UpdateContractRequest">
+        <part element="ns:UpdateContractRequest" name="body"/>
+    </message>
+    <message name="UpdateContractResponse">
+        <part name="body" element="ns:UpdateContractResponse"/>
+    </message>
+    <portType name="CustomerContract">
+        <operation name="CreateContract">
+            <input message="tns:CreateContractRequest"/>
+            <output message="tns:CreateContractResponse"/>
+            <fault message="tns:ExceptionInfo" name="fault1"/>
+        </operation>
+        <operation name="UpdateContract">
+            <input message="tns:UpdateContractRequest"/>
+            <output message="tns:UpdateContractResponse"/>
+            <fault message="tns:ExceptionInfo" name="fault1"/>
+        </operation>
+    </portType>
+</definitions>

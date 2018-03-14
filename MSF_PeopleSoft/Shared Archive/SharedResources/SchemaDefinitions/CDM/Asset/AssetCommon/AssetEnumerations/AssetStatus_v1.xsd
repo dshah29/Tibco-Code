@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:STK_STS="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assetstatus/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assetstatus/v1"
+	 version="$Id: AssetStatus_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:simpleType name="__STOCK_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OUTOFSTOCK"/>
+			<xsd:enumeration value="INSTOCK"/>
+			<xsd:enumeration value="LOWSTOCK"/>
+			<xsd:enumeration value="PREORDER"/>
+			<xsd:enumeration value="ENDOFLIFE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_STOCK_STATUS">
+		<xsd:union memberTypes="STK_STS:__STOCK_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="stockStatus" type="STK_STS:_STOCK_STATUS"/>
+	<xsd:simpleType name="__LOCATION_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ACTIVE"/>
+			<xsd:enumeration value="INACTIVE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_LOCATION_STATUS">
+		<xsd:union memberTypes="STK_STS:__LOCATION_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="locationStatus" type="STK_STS:_LOCATION_STATUS"/>
+	<xsd:simpleType name="__RESERVATION_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="EXPIRED"/>
+			<xsd:enumeration value="RESERVED"/>
+			<xsd:enumeration value="COMMITTED"/>
+			<xsd:enumeration value="CANCELLED"/>
+			<xsd:enumeration value="FAILED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_RESERVATION_STATUS">
+		<xsd:union memberTypes="STK_STS:__RESERVATION_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="reservationStatus" type="STK_STS:_RESERVATION_STATUS"/>
+</xsd:schema>

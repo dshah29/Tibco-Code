@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:csh="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/cash/v1" xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" targetNamespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/cash/v1" version="$Id: Cash_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="CashDetails">
+		<xsd:sequence>
+			<xsd:element name="transactionID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="cashAmount" type="BASE:PRICE"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CashDetails" type="csh:CashDetails"/>
+	<xsd:element name="cashDetails" type="csh:CashDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CashDetails instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:DFRQ="http://three.co.uk/xsd/cdm/common/commonenumerations/datefrequency/v1" xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" targetNamespace="http://three.co.uk/xsd/cdm/common/commonenumerations/datefrequency/v1" version="$Id: DateFrequency_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:simpleType name="__DATEFREQUENCY__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="SINGLE"/>
+			<xsd:enumeration value="WEEKLY"/>
+			<xsd:enumeration value="MONTHLY"/>
+			<xsd:enumeration value="QUARTERLY"/>
+			<xsd:enumeration value="YEARLY"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_DATEFREQUENCY">
+		<xsd:union memberTypes="DFRQ:__DATEFREQUENCY__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+</xsd:schema>

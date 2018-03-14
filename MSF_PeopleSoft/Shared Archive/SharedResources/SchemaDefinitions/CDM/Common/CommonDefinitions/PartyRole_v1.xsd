@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:pty="http://three.co.uk/xsd/cdm/common/commondefinitions/party/v1"
+	 xmlns:ptyRole="http://three.co.uk/xsd/cdm/common/commondefinitions/partyrole/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/partyrole/v1"
+	 version="$Id: PartyRole_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/party/v1" schemaLocation="Party_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="PartyRoleDetails">
+		<xsd:sequence>
+			<xsd:element ref="pty:party"/>
+			<xsd:element name="partyRoleStatus" type="pty:_PARTY_STATUS" minOccurs="0"/>
+			<xsd:element name="partyRoleID" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PartyRole" type="ptyRole:PartyRoleDetails"/>
+	<xsd:element name="partyRole" type="ptyRole:PartyRoleDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element PartyRole instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

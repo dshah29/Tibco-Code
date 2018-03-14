@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx5="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd" xmlns:pfx4="http://three.co.uk/wsdl/Interface/service/serviceorder/serviceordermanagement/mcso/v1" xmlns:pfx3="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:pfx8="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/OrderStatusNotification_v1.xsd" xmlns:pfx7="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/notification" xmlns:pfx6="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns9="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns6="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:pfx="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:ns7="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" xmlns:ns10="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:ns11="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:ns8="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/MC_SO_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/notification" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/classes/notification.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/OrderStatusNotification_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/OrderStatusNotification_v1.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" location="/SharedResources/WebServiceDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.wsdl"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" location="/SharedResources/WebServiceDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_CustomerContract_v1.wsdl"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/service/serviceorder/serviceordermanagement/mcso/v1" location="/SharedResources/WebServiceDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1.wsdl"/>
+    <pd:name>IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Starter/SendFinalResponse.process</pd:name>
+    <pd:startName>JMS Queue Receiver</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings>
+        <pfx4:SubmitServiceOrderResponse>
+            <body/>
+        </pfx4:SubmitServiceOrderResponse>
+    </pd:returnBindings>
+    <pd:starter name="JMS Queue Receiver">
+        <pd:type>com.tibco.plugin.jms.JMSQueueEventSource</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueEventSource</pd:resourceType>
+        <pd:x>65</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <PermittedMessageType>XML Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>2</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>%%MSF/REGION%%.%%MSF/ENV%%.%%Destinations/Queues/ServiceOrder/ServiceOrderManagement/ServiceOrder_v1/SubmitServiceOrder/ReciveResponse%%</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+            <OutDataxsdString ref="pfx8:OrderStatusNotification"/>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1345</pd:endX>
+    <pd:endY>62</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 wsMsgRef="pfx3:ExceptionInfo"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355136884829</pd:targetNamespace>
+    <pd:activity name="Audit Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>439</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <payload>
+                    <xsl:copy-of select="$JMS-Queue-Receiver/ns11:ActivityOutput/Body/OrderStatusNotification"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Main">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>566</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Main/SendResponse_MainProcess.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$JMS-Queue-Receiver/ns11:ActivityOutput/Body/OrderStatusNotification"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>112</pd:x>
+        <pd:y>285</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Catch Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>239</pd:x>
+        <pd:y>405</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Confirm">
+        <pd:type>com.tibco.pe.core.ConfirmActivity</pd:type>
+        <pd:resourceType>activity.confirm</pd:resourceType>
+        <pd:x>1234</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <ConfirmEvent>JMS Queue Receiver</ConfirmEvent>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Confirm_OnError">
+        <pd:type>com.tibco.pe.core.ConfirmActivity</pd:type>
+        <pd:resourceType>activity.confirm</pd:resourceType>
+        <pd:x>543</pd:x>
+        <pd:y>345</pd:y>
+        <config>
+            <ConfirmEvent>JMS Queue Receiver</ConfirmEvent>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>252</pd:x>
+        <pd:y>293</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>181</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ReceiveError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Message Context REPLY">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>700</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/CreateMessageContext_REPLY.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Initialise">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>193</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+                <pfx2:InputMessageContent>
+                    <xsl:copy-of select="$JMS-Queue-Receiver/ns11:ActivityOutput/Body/OrderStatusNotification"/>
+                </pfx2:InputMessageContent>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Initialise Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>110</pd:x>
+        <pd:y>181</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>392</pd:x>
+        <pd:y>293</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>378</pd:x>
+        <pd:y>413</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Catch-Exception/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>384</pd:x>
+        <pd:y>181</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Receive-Error/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogAuditEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>968</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <response>
+                    <xsl:copy-of select="$JMS-Queue-Receiver/ns11:ActivityOutput/Body/OrderStatusNotification"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Ouput Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>833</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ContextResources/SetOutputContext.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Message-Context-REPLY/root/ns2:MessageContext"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1109</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$JMS-Queue-Receiver/ns11:ActivityOutput/Body/OrderStatusNotification"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>310</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$JMS-Queue-Receiver/ns11:ActivityOutput/Body/OrderStatusNotification"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Initialise</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit Start</pd:from>
+        <pd:to>Call Main</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Main</pd:from>
+        <pd:to>Create Message Context REPLY</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Message Context REPLY</pd:from>
+        <pd:to>Set Ouput Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Ouput Context</pd:from>
+        <pd:to>LogAuditEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise Receive Error</pd:from>
+        <pd:to>Create Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Receive Error</pd:from>
+        <pd:to>Log Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch Exception</pd:from>
+        <pd:to>Log Exception Catch Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch Exception</pd:from>
+        <pd:to>Confirm_OnError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>Audit Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAuditEnd</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>Confirm</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>Confirm_OnError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JMS Queue Receiver</pd:from>
+        <pd:to>Initialise</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>JMS Queue Receiver</pd:from>
+        <pd:to>Initialise Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Confirm</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Receive Error</pd:from>
+        <pd:to>Confirm</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Confirm_OnError</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

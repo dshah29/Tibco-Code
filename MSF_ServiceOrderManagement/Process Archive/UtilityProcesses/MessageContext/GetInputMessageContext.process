@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ServiceContext_v1.xsd"/>
+    <pd:name>UtilityProcesses/MessageContext/GetInputMessageContext.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>96</pd:startX>
+    <pd:startY>35</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Get-Input-Message-Context/pfx2:MessageContext"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx2:MessageContext"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>412</pd:endX>
+    <pd:endY>35</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349860063473</pd:targetNamespace>
+    <pd:activity name="Get Input Message Context">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>245</pd:x>
+        <pd:y>42</pd:y>
+        <config>
+            <variableConfig>/SharedResources/JobSharedVariables/InputMessageContext.jobsharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Get Input Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Message Context</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 version="$Id: CustomerBaseTypes_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:simpleType name="CustomerAccountID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CustomerCreditID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CustomerID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CustomerSubscriptionID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="customerAccountID" type="custBASE:CustomerAccountID"/>
+	<xsd:element name="customerCreditID" type="custBASE:CustomerCreditID"/>
+	<xsd:element name="customerID" type="custBASE:CustomerID"/>
+	<xsd:element name="customerSubscriptionID" type="custBASE:CustomerSubscriptionID"/>
+
+	<!-- CustomerType defined by PeopleSoft system -->
+	<xsd:simpleType name="__CUSTOMER_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="COMPANY"/>
+			<xsd:enumeration value="CONSUMER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_CUSTOMER_TYPE">
+		<xsd:union memberTypes="custBASE:__CUSTOMER_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="customerType" type="custBASE:_CUSTOMER_TYPE"/>
+
+	<!-- CustomerSubType defined by PeopleSoft system -->
+	<xsd:simpleType name="__CUSTOMER_SUBTYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Hybrid Consumer Customer"/>
+			<xsd:enumeration value="Consumer - Customer"/>
+			<xsd:enumeration value="H3G / VIP 1"/>
+			<xsd:enumeration value="H3G / VIP 2"/>
+			<xsd:enumeration value="H3G / VIP 3"/>
+			<xsd:enumeration value="H3G /  VIP 4"/>
+			<xsd:enumeration value="H3G / Demo"/>
+			<xsd:enumeration value="H3G / Panelist"/>
+			<xsd:enumeration value="H3G / Testing"/>
+			<xsd:enumeration value="H3G / Corrupt Record"/>
+			<xsd:enumeration value="Consumer / Friends &amp; Family"/>
+			<xsd:enumeration value="H3G Post and Prepay"/>
+			<xsd:enumeration value="Consumer VIP"/>
+			<xsd:enumeration value="H3G / Internal"/>
+			<xsd:enumeration value="VIP - Competition Winners"/>
+			<xsd:enumeration value="PrePay Customer"/>
+			<xsd:enumeration value="Prepay / Competition Winners"/>
+			<xsd:enumeration value="H3G / Staff VIP"/>
+			<xsd:enumeration value="H3G Staff A"/>
+			<xsd:enumeration value="H3G Staff B"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_CUSTOMER_SUBTYPE">
+		<xsd:union memberTypes="custBASE:__CUSTOMER_SUBTYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="customerSubtype" type="custBASE:_CUSTOMER_SUBTYPE"/>
+</xsd:schema>

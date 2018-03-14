@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/objectReferenceLookup/v1" xmlns:ns6="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/productIdReferences/v1" xmlns:ns7="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:pfx="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/Internal/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://schemas.tibco.com/bw/plugins/http/5.0/httpExceptions" xmlns:pfx2="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:pfx8="http://www.three.co.uk/ccs/" xmlns:pfx7="http://www.tibco.com/cim/services/workitem/wsdl/2.0" xmlns:pfx6="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/cim/services/workitem/wsdl/2.0" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FC/Workitem_Action.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FC/MasterCatalogRecord_Action.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/ccs/" schemaLocation="/SharedResources/SchemaDefinitions/External/CCS/CentralCatalogueServices.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" location="/SharedResources/SchemaDefinitions/Resource/FC/Cim_Services.wsdl"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/SendSVOSCoreEvent.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="Products" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="ProductID" type="xsd:string"/>
+                                <xsd:element name="ProductName" type="xsd:string"/>
+                                <xsd:element name="ProductEndOfLife" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="ProductType" type="xsd:string"/>
+                                <xsd:element ref="pfx2:Characteristics"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>28</pd:startX>
+    <pd:startY>202</pd:startY>
+    <pd:returnBindings>
+        <group>
+            <add>
+                <xsl:copy-of select="$Create-FC-Request-Add/root/ns2:DataService"/>
+            </add>
+            <modify>
+                <xsl:copy-of select="$Create-FC-Request-Modify/root/ns2:DataService"/>
+            </modify>
+        </group>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1051</pd:endX>
+    <pd:endY>196</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx5:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1418812148777</pd:targetNamespace>
+    <pd:group name="Iterate For All Products In Batch">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>233</pd:x>
+        <pd:y>15</pd:y>
+        <pd:width>631</pd:width>
+        <pd:height>348</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Start/root/Products</pd:over>
+            <pd:iterationElementSlot>currentProduct</pd:iterationElementSlot>
+            <pd:indexSlot>productIndex</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>UpdateProduct</pd:to>
+            <pd:xpathDescription>Dev OR Acc OR USIM</pd:xpathDescription>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$currentProduct/Products/ProductType="Device" or $currentProduct/Products/ProductType="Accessory" or $currentProduct/Products/ProductType="USIM"</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Ignore</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Group</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Ignore</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PublishSVOSTopicEvent</pd:from>
+            <pd:to>Group</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>UpdateProduct</pd:from>
+            <pd:to>PublishSVOSTopicEvent</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="PublishSVOSTopicEvent">
+            <pd:type>com.tibco.plugin.jms.JMSTopicPublishActivity</pd:type>
+            <pd:resourceType>ae.activities.JMSTopicPublishActivity</pd:resourceType>
+            <pd:x>501</pd:x>
+            <pd:y>146</pd:y>
+            <config>
+                <PermittedMessageType>Text</PermittedMessageType>
+                <SessionAttributes>
+                    <transacted>false</transacted>
+                    <acknowledgeMode>1</acknowledgeMode>
+                    <maxSessions>1</maxSessions>
+                    <destination>%%Destinations/Topics/LoadProductModel/LoadProduct_v1%%</destination>
+                </SessionAttributes>
+                <ConfigurableHeaders>
+                    <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                    <JMSExpiration>0</JMSExpiration>
+                    <JMSPriority>4</JMSPriority>
+                </ConfigurableHeaders>
+                <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+                <ApplicationProperties>/SharedResources/Connections/JMS/MSF-JMS-LOADPRODUCT-Properties.sharedjmsapp</ApplicationProperties>
+            </config>
+            <pd:inputBindings>
+                <ns7:ActivityInput>
+                    <OtherProperties>
+                        <PRODUCT_ID>
+                            <xsl:value-of select="$currentProduct/Products/ProductID"/>
+                        </PRODUCT_ID>
+                        <xsl:choose>
+                            <xsl:when test="string-length($currentProduct/Products/ProductName)>0">
+                                <PRODUCT_NAME>
+                                    <xsl:value-of select="$currentProduct/Products/ProductName"/>
+                                </PRODUCT_NAME>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <PRODUCT_NAME>
+                                    <xsl:value-of select="&quot;&quot;"/>
+                                </PRODUCT_NAME>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <LAST_UPDATED>
+                            <xsl:value-of select="current-dateTime()"/>
+                        </LAST_UPDATED>
+                        <xsl:if test="$currentProduct/Products/ProductEndOfLife">
+                            <END_OF_LIFE>
+                                <xsl:value-of select="$currentProduct/Products/ProductEndOfLife"/>
+                            </END_OF_LIFE>
+                        </xsl:if>
+                    </OtherProperties>
+                    <Body>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </Body>
+                </ns7:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Ignore">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>389</pd:x>
+            <pd:y>291</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:group name="Group">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>604</pd:x>
+            <pd:y>38</pd:y>
+            <pd:width>221</pd:width>
+            <pd:height>202</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$currentProduct/Products/pfx2:Characteristics/pfx2:UDF</pd:over>
+                <pd:iterationElementSlot>currentCharacteristic</pd:iterationElementSlot>
+                <pd:indexSlot>i</pd:indexSlot>
+                <pd:activityOutputName/>
+                <pd:accumulateOutput>false</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>Update Product Characteristics and Barcode</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Update Product Characteristics and Barcode</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="Update Product Characteristics and Barcode">
+                <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+                <pd:resourceType>ae.process.subprocess</pd:resourceType>
+                <pd:x>708</pd:x>
+                <pd:y>163</pd:y>
+                <config>
+                    <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/UpdateProductCharacteristics.process</processName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <ProductID>
+                            <xsl:value-of select="$currentProduct/Products/ProductID"/>
+                        </ProductID>
+                        <Name>
+                            <xsl:value-of select="$currentCharacteristic/pfx2:UDF/pfx2:name"/>
+                        </Name>
+                        <Value>
+                            <xsl:value-of select="$currentCharacteristic/pfx2:UDF/pfx2:value"/>
+                        </Value>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+        <pd:activity name="UpdateProduct">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>391</pd:x>
+            <pd:y>144</pd:y>
+            <config>
+                <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/UpdateProduct.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <ProductID>
+                        <xsl:value-of select="$currentProduct/Products/ProductID"/>
+                    </ProductID>
+                    <xsl:choose>
+                        <xsl:when test="string-length($currentProduct/Products/ProductName)>0">
+                            <ProductName>
+                                <xsl:value-of select="$currentProduct/Products/ProductName"/>
+                            </ProductName>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <ProductName>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ProductName>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <EndOfLifeDateTime>
+                        <xsl:value-of select="$currentProduct/Products/ProductEndOfLife"/>
+                    </EndOfLifeDateTime>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>147</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>926</pd:x>
+        <pd:y>197</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Iterate For All Products In Batch</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Iterate For All Products In Batch</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

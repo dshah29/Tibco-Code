@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:off="http://three.co.uk/xsd/cdm/offer/offeritemdefinition/offer/v1"
+	 xmlns:offItm="http://three.co.uk/xsd/cdm/offer/offeritemdefinition/offeritem/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:disct="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:payType="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1"
+	 xmlns:offBASE="http://three.co.uk/xsd/cdm/offer/offertypes/offerbasetypes/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:DFRQ="http://three.co.uk/xsd/cdm/common/commonenumerations/datefrequency/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/offer/offeritemdefinition/offer/v1"
+	 version="$Id: Offer_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1" schemaLocation="../../Common/CommonDefinitions/Discount_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1" schemaLocation="../../Billing/BillingPayment/BillingPaymentManagement/PaymentType_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/offer/offeritemdefinition/offeritem/v1" schemaLocation="OfferItem_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/offer/offertypes/offerbasetypes/v1" schemaLocation="../OfferTypes/OfferBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../Customer/CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../../Common/CommonEnumerations/Types_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/datefrequency/v1" schemaLocation="../../Common/CommonEnumerations/DateFrequency_v1.xsd"/>
+
+	<!--Defines a list of lifecycle statuses for Customer Offer-->
+	<xsd:simpleType name="__OFFER_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="EXPIRED"/>
+			<xsd:enumeration value="INPROGRESS"/>
+			<xsd:enumeration value="SUBMITTED"/>
+			<xsd:enumeration value="CANCELLED"/>
+			<xsd:enumeration value="FAILED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_OFFER_STATUS">
+		<xsd:union memberTypes="off:__OFFER_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+
+	<!--Used to determine the types of offers available-->
+	<xsd:simpleType name="__OFFER_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PROMOTIONAL"/>
+			<xsd:enumeration value="ONLINE"/>
+			<xsd:enumeration value="BASKET"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_OFFER_TYPE">
+		<xsd:union memberTypes="off:__OFFER_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="OfferDetails">
+		<xsd:sequence>
+			<xsd:element name="offerID" type="offBASE:OfferID"/>
+			<xsd:element name="offerName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="offerDescription" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="offerType" type="off:_OFFER_TYPE" minOccurs="0"/>
+			<xsd:element name="offerStatus" type="off:_OFFER_STATUS"/>
+			<xsd:element name="offerStartDateTime" type="xsd:dateTime"/>
+			<xsd:element name="offerEndDateTime" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="customerAccountID" type="custBASE:CustomerAccountID"/>
+			<xsd:element name="offerCharge" type="off:OfferChargeDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="udf:UDF" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="address" type="off:AddressDefn" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="offItm:offerItem" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OfferChargeDetails">
+		<xsd:sequence>
+			<xsd:element name="charge" type="BASE:PRICE"/>
+			<xsd:element name="currency" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="recurringChargeFrequency" type="DFRQ:_DATEFREQUENCY" minOccurs="0"/>
+			<xsd:element ref="disct:discount" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="AddressDefn">
+		<xsd:sequence>
+			<xsd:element ref="addr:address" minOccurs="0"/>
+			<xsd:element name="deliveryCharge" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Offer">
+		<xsd:sequence>
+			<xsd:element name="offerDetails" type="off:OfferDetails"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--This is used for reference purposes-->
+	<xsd:element name="Offer" type="off:Offer"/>
+	<xsd:element name="offer" type="off:Offer">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Offer instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

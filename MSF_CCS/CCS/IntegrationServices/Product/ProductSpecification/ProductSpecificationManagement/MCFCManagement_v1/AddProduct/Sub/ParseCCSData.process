@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.three.co.uk/ccs/" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://www.three.co.uk/ccs/"/>
+    <xsd:import namespace="http://www.three.co.uk/ccs/" schemaLocation="/SharedResources/SchemaDefinitions/External/CCS/CentralCatalogueServices.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/ParseCCSData.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="CCSRequest" type="xsd:string"/>
+    </pd:startType>
+    <pd:startX>46</pd:startX>
+    <pd:startY>65</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Order-Data/root/pfx4:release"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx4:release"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>460</pd:endX>
+    <pd:endY>65</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1419159987019</pd:targetNamespace>
+    <pd:activity name="CreateException_XMLParseError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>167</pd:x>
+        <pd:y>187</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_XMLParseError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns1:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-XMLParseError">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>315</pd:x>
+        <pd:y>188</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_XMLParseError/root/pfx2:Exception"/>
+                </data>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Order Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>315</pd:x>
+        <pd:y>66</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx4:release"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx4:release>
+                    <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="name">
+                        <xsl:value-of select="$Parse-CCS-Request/pfx4:release/@name"/>
+                    </xsl:attribute>
+                    <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="targetApplication">
+                        <xsl:value-of select="$Parse-CCS-Request/pfx4:release/@targetApplication"/>
+                    </xsl:attribute>
+                    <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="orgID">
+                        <xsl:value-of select="$Parse-CCS-Request/pfx4:release/@orgID"/>
+                    </xsl:attribute>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Parse-CCS-Request/pfx4:release/pfx4:productDefinition[count(pfx4:prodRef) =0]">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Parse-CCS-Request/pfx4:release/pfx4:productDefinition[@type=&quot;Action&quot; and count(pfx4:prodRef) > 0]">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Parse-CCS-Request/pfx4:release/pfx4:productDefinition[@type=&quot;Service&quot; and count(pfx4:prodRef) > 0]">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Parse-CCS-Request/pfx4:release/pfx4:productDefinition[contains(@type,'Allowance') and count(pfx4:prodRef) > 0]">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Parse-CCS-Request/pfx4:release/pfx4:productDefinition[contains(@type,'Charge') and count(pfx4:prodRef) > 0]">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Parse-CCS-Request/pfx4:release/pfx4:productDefinition[not(contains(@type,'Allowance')) and not(contains(@type,'Charge')) and @type!=&quot;Service&quot; and @type!=&quot;Action&quot; and count(pfx4:prodRef) > 0]">
+                        <xsl:copy-of select="."/>
+                    </xsl:for-each>
+                </pfx4:release>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse CCS Request">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>164</pd:x>
+        <pd:y>65</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx4:release"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Start/CCSRequest"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse CCS Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse CCS Request</pd:from>
+        <pd:to>Order Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse CCS Request</pd:from>
+        <pd:to>CreateException_XMLParseError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_XMLParseError</pd:from>
+        <pd:to>Generate-XMLParseError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Order Data</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

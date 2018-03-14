@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:pplSoft="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commonDefinitions/UDF_v1/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1"
+	 xmlns:custAcc="http://three.co.uk/xsd/cdm/customer/customeraccount/customeraccountmanagement/customeraccount/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 xmlns:custIntrs="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinteractionmanagement/customerinteractions/v1"
+	 xmlns:CHNL="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:billBASE="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1"
+	 xmlns:bnkDtls="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:custChar="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customercharacteristics/v1"
+	 xmlns:cc="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:payDtls="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymentdetails/v1"
+	 xmlns:custSub="http://three.co.uk/xsd/cdm/customer/customerprofile/customerprofilesubscriptionmanagement/customersubscription/v1"
+	 xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 xmlns:cust="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1"
+	 xmlns:ns0="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:ns1="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingtypes/v1"
+	 xmlns:ns2="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 targetNamespace="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../../CDM/Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Types_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1" schemaLocation="../../../../CDM/Billing/BillingPayment/BillingPaymentManagement/CreditCardDetails_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customeraccount/customeraccountmanagement/customeraccount/v1" schemaLocation="../../../../CDM/Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customercharacteristics/v1" schemaLocation="../../../../CDM/Customer/CustomerProfile/CustomerPersonalInformationManagement/CustomerCharacteristics_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../../../CDM/Customer/CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinteractionmanagement/customerinteractions/v1" schemaLocation="../../../../CDM/Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1" schemaLocation="../../../../CDM/Billing/BillingPayment/BillingPaymentManagement/BankDetails_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Channel_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Status_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/Address_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingtypes/v1" schemaLocation="../../../../CDM/Billing/BillingCommon/BillingEnumerations/BillingTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymentdetails/v1" schemaLocation="../../../../CDM/Billing/BillingPayment/BillingPaymentManagement/PaymentDetails_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1" schemaLocation="../../../../CDM/Customer/CustomerProfile/CustomerPersonalInformationManagement/Customer_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Organisation_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../../../CDM/Product/ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerprofilesubscriptionmanagement/customersubscription/v1" schemaLocation="../../../../CDM/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/CustomerSubscription_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/Individual_v1.xsd"/>
+	<xs:element name="SearchCustomerRequest" type="pplSoft:SearchCustomersReq"/>
+	<xs:element name="SearchCustomerResponse" type="pplSoft:SearchCustomersRes"/>
+	<xs:element name="GetInteractionRequest" type="pplSoft:GetInteractionReq"/>
+	<xs:element name="GetInteractionResponse" type="pplSoft:GetInteractionRes"/>
+	<xs:element name="CreateInteractionRequest" type="pplSoft:CreateInteractionReqDef"/>
+	<xs:element name="CreateInteractionResponse" type="pplSoft:CreateInteractionResDef"/>
+	<xs:element name="AuthenticateRequest" type="pplSoft:authenticateReqDef"/>
+	<xs:element name="AuthenticateResponse" type="pplSoft:authenticateResDef"/>
+	<xs:element name="GetConsumerProfileRequest" type="pplSoft:ConsumerProfileReq"/>
+	<xs:element name="GetConsumerProfileResponse" type="pplSoft:ConsumerProfileRes"/>
+	<xs:element name="PeoplesoftToMCELoad" type="pplSoft:PeoplesoftToMCELoadDef"/>
+	<xs:complexType name="PeoplesoftToMCELoadDef">
+		<xs:sequence>
+			<xs:element name="transactionID" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerProfileReq">
+		<xs:sequence>
+			<xs:element name="salesChannel" type="CHNL:SALES_CHANNEL"/>
+			<xs:element name="orgID" type="TYP:ORGANISATION_LIST"/>
+			<xs:element name="orderType" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="agentRole" type="BASE:PopulatedString"/>
+			<xs:element name="nbsCoverage" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="CustomerKey" type="pplSoft:ConsumerKeyDef"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerKeyDef">
+		<xs:sequence>
+			<xs:element name="BAN" type="BASE:BAN" minOccurs="0"/>
+			<xs:element name="DOB" type="xs:date" minOccurs="0"/>
+			<xs:element name="postCode" type="BASE:POSTCODE" minOccurs="0"/>
+			<xs:element name="houseName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="houseNumber" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="crmID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="MSISDN" type="BASE:MSISDN"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerProfileRes">
+		<xs:sequence>
+			<xs:element name="CustomerKey" type="pplSoft:ConsumerKeyDef"/>
+			<xs:element name="Name" type="ind:PersonalDetails"/>
+			<xs:element ref="addr:Address"/>
+			<xs:element name="customerType" type="custBASE:_CUSTOMER_TYPE"/>
+			<xs:element name="customerSubType" type="custBASE:_CUSTOMER_SUBTYPE"/>
+			<xs:element name="customerValue" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="customerStatus" type="cust:_CUSTOMER_STATUS"/>
+			<xs:element name="churnPropensity" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="accountType" type="custAcc:_ACCOUNT_TYPE"/>
+			<xs:element name="accountLevel" type="custAcc:_ACCOUNT_LEVEL"/>
+			<xs:element name="currentTerm" type="pplSoft:ACCOUNT_TERM"/>
+			<xs:element name="termElapsed" type="pplSoft:ACCOUNT_TERM"/>
+			<xs:element name="OpenCases" type="pplSoft:ConsumerOpenCasesDef" minOccurs="0"/>
+			<xs:element name="parentPricePlanID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="parentPricePlanDesc" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="Contacts" type="pplSoft:ConsumerContactListDef" minOccurs="0"/>
+			<xs:element name="internalClass" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="firstContractStartDate" type="xs:date"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerNameDef">
+		<xs:sequence>
+			<xs:element ref="ind:PersonalDetails"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="end10" type="BASE:VersionMarker"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerOpenCasesDef">
+		<xs:sequence>
+			<xs:element name="OpenCase" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="openCaseID" type="BASE:PopulatedString"/>
+						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerContactListDef">
+		<xs:sequence>
+			<xs:element name="Contact" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="firstName" type="BASE:PopulatedString" minOccurs="0"/>
+						<xs:element name="lastName" type="BASE:PopulatedString" minOccurs="0"/>
+						<xs:element name="primary" type="xs:boolean"/>
+						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerSeqServiceListDef">
+		<xs:sequence>
+			<xs:element name="item" type="pplSoft:ConsumerServiceDef" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="end10" type="BASE:VersionMarker"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ConsumerServiceDef">
+		<xs:sequence>
+			<xs:element name="serviceID" type="BASE:PopulatedString"/>
+			<xs:element name="MSISDN" type="BASE:MSISDN"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--	<xs:complexType name="ConsumerAddressDef">
+		<xs:sequence>
+			<xs:element name="addressLine1" type="xs:string" minOccurs="0"/>
+			<xs:element name="addressLine2" type="xs:string" minOccurs="0"/>
+			<xs:element name="addressLine3" type="xs:string" minOccurs="0"/>
+			<xs:element name="addressLine4" type="xs:string" minOccurs="0"/>
+			<xs:element name="postCode" type="BASE:POSTCODE" minOccurs="0"/>
+			<xs:element name="country" type="xs:string" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="end10" type="BASE:VersionMarker"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>-->
+	<!-- Adding newly-->
+	<xs:complexType name="authenticateReqDef">
+		<xs:sequence>
+			<xs:element name="agentID" type="BASE:PopulatedString"/>
+			<xs:element name="password" type="xs:string"/>
+			<xs:element name="orgID" type="TYP:ORGANISATION_LIST"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="authenticateResDef">
+		<xs:sequence>
+			<xs:element name="passwordExpiryDate" type="xs:date"/>
+			<xs:element name="agentName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="configuredValidAttempts" type="BASE:POSITIVEINT"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Request Part-->
+	<xs:complexType name="SearchCustomersReq">
+		<xs:sequence>
+			<xs:element name="BAN" type="BASE:BAN" minOccurs="0"/>
+			<xs:element name="MSISDN" type="BASE:MSISDN" minOccurs="0"/>
+			<xs:element name="ICCID" type="BASE:ICCID" minOccurs="0"/>
+			<xs:element name="DOB" type="xs:date" minOccurs="0"/>
+			<xs:element name="postCode" type="BASE:POSTCODE" minOccurs="0"/>
+			<xs:element name="orgID" type="TYP:ORGANISATION_LIST"/>
+			<xs:element name="includeTerminatedAccounts" type="xs:boolean"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Response Part-->
+	<xs:complexType name="SearchCustomersRes">
+		<xs:sequence>
+			<xs:element ref="pplSoft:Customers"/>
+			<xs:element name="totalNumberOfRecords" type="BASE:POSITIVEINT"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomerDef">
+		<xs:sequence>
+			<xs:element name="customerAccountDetails" type="custAcc:CustomerAccountDetails" minOccurs="0"/>
+			<xs:element name="customerSubscriptionResources" type="custSub:customerSubscriptionResources"/>
+			<xs:element name="individual" type="ind:Individual" minOccurs="0"/>
+			<xs:element name="customerCharacteristic" type="custChar:CustomerCharacteristics" minOccurs="0"/>
+			<xs:element name="address" type="addr:Address" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="end10" type="BASE:VersionMarker"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Create Interaction Request -->
+	<xs:complexType name="CreateInteractionReqDef">
+		<xs:sequence>
+			<xs:element name="BAN" type="BASE:BAN"/>
+			<xs:element name="MSISDN" type="BASE:MSISDN" minOccurs="0"/>
+			<xs:element name="interactionText" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="category" type="custIntrs:_INTERACTION_CATEGORY" minOccurs="0"/>
+			<xs:element name="subCategory" type="custIntrs:_INTERACTION_SUBCATEGORY" minOccurs="0"/>
+			<xs:element name="startDateTime" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="endDateTime" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="agentID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="status" type="custIntrs:_INTERACTION_STATUS" minOccurs="0"/>
+			<xs:element name="outcome" type="custIntrs:_INTERACTION_OUTCOME" minOccurs="0"/>
+			<xs:element name="contactMethod" type="custIntrs:_INTERACTION_METHOD"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Create Interaction Response Part-->
+	<xs:complexType name="CreateInteractionResDef">
+		<xs:sequence>
+			<xs:element name="interactionID" type="BASE:PopulatedString"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Get Interaction Request -->
+	<!--	<xs:element name="status" type="ResultStatusDef"/> -->
+	<xs:complexType name="GetInteractionReq">
+		<xs:sequence>
+			<xs:sequence minOccurs="0">
+				<xs:element name="contactMethod" type="custIntrs:_INTERACTION_METHOD" minOccurs="0"/>
+				<xs:element name="contactReason" type="custIntrs:_INTERACTION_CATEGORY" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element ref="pplSoft:CustomerKey"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Get Interaction Response -->
+	<xs:complexType name="GetInteractionRes">
+		<xs:sequence>
+			<xs:element name="Interactions" type="pplSoft:InteractionListDef"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Definitions Supported -->
+	<xs:complexType name="CustomerKeyDef">
+		<xs:sequence>
+			<xs:element name="BAN" type="BASE:BAN"/>
+			<xs:element name="MSISDN" type="BASE:MSISDN"/>
+			<xs:element name="CRMID" type="BASE:PopulatedString"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CustomerKey" type="pplSoft:CustomerKeyDef"/>
+	<xs:complexType name="NoteDef">
+		<xs:sequence>
+			<xs:element name="noteDescription" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:element name="dateTime" type="xs:dateTime"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="orgID" type="TYP:ORGANISATION_LIST"/>
+	<xs:complexType name="InteractionListDef">
+		<xs:sequence>
+			<xs:element name="Interaction" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="startDateTime" type="xs:dateTime"/>
+						<xs:element name="endDateTime" type="xs:dateTime" minOccurs="0"/>
+						<xs:element name="contactMethodDesc" type="BASE:PopulatedString" minOccurs="0"/>
+						<xs:element name="contactReasonDesc" type="BASE:PopulatedString" minOccurs="0"/>
+						<xs:element name="contactSubReasonDesc" type="BASE:PopulatedString" minOccurs="0"/>
+						<xs:element name="Notes">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Note" type="pplSoft:NoteDef" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="contactName" type="BASE:PopulatedString" minOccurs="0"/>
+						<xs:element name="contactOutcomeDesc" type="BASE:PopulatedString" minOccurs="0"/>
+						<xs:element name="agentID" type="BASE:PopulatedString"/>
+						<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Customers">
+		<xs:sequence>
+			<xs:element ref="pplSoft:Customer" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Customers" type="pplSoft:Customers"/>
+	<xs:complexType name="Customer">
+		<xs:sequence>
+			<xs:element name="CustomerAccountDetails" type="custAcc:CustomerAccountDetails" minOccurs="0"/>
+			<xs:element name="customerSubscriptionResources" type="custSub:customerSubscriptionResources"/>
+			<xs:element ref="ind:Individual" minOccurs="0"/>
+			<xs:element ref="custChar:CustomerCharacteristics" minOccurs="0"/>
+			<xs:element ref="addr:Address" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="end10" type="BASE:VersionMarker"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Customer" type="pplSoft:Customer"/>
+	<xs:simpleType name="ACCOUNT_TERM">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="OUT-OF-CONTRACT"/>
+			<xs:enumeration value="WITHIN-CONTRACT"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,629 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:baseTypes="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:billBASE="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1"
+	 xmlns:org="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1"
+	 xmlns:sglView="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1"
+	 targetNamespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../../../CDM/Product/ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../../CDM/Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/Address_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1" schemaLocation="../../../../CDM/Billing/BillingTypes/BillingBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Organisation_v1.xsd"/>
+	<xs:complexType name="RetrievePackagePriceHistoryRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="accountNumber" type="baseTypes:BAN"/>
+				<xs:element name="MSISDN" type="baseTypes:CTN"/>
+			</xs:choice>
+			<xs:element name="startDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="endDate" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrievePackagePriceHistoryResponse">
+		<xs:sequence>
+			<xs:element name="priceHistory" type="sglView:PackagePriceHistory" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackagePriceHistory">
+		<xs:sequence>
+			<xs:element name="packageID" type="pductBASE:ProductID"/>
+			<xs:element name="effectiveStartDate" type="xs:dateTime"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime"/>
+			<xs:element name="event" type="xs:string"/>
+			<xs:element name="packagePrice" type="xs:double"/>
+			<xs:element name="totalPercentagediscounts" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveProductPricesRequest">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="orgID" type="org:ORGANISATION_LIST"/>
+			<xs:element name="effectiveDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="targetProducts" type="pductBASE:ProductID" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="packageAggregationOption" type="xs:int" minOccurs="0"/>
+			<xs:element name="event" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveProductPricesResponse">
+		<xs:sequence>
+			<xs:element name="ExistingProductPrice" type="sglView:ProductPrice" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TargetProductPrice" type="sglView:ProductPrice" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductPrice">
+		<xs:sequence>
+			<xs:element name="productID" type="pductBASE:ProductID"/>
+			<xs:element name="price" type="xs:double"/>
+			<xs:element name="discountPercentage" type="xs:double" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdateContractRequest">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="effectiveDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Contract" type="sglView:OnUpdateContractDefn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdateContractResponse">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="transactionID" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreateContractRequest">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="Contract" type="sglView:OnCreateContractDefn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreateContractResponse">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="transactionID" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnCreateContractDefn">
+		<xs:sequence>
+			<xs:element name="contractNumber" type="xs:string"/>
+			<xs:element name="contractTypeID" type="xs:long" minOccurs="0"/>
+			<xs:element name="contractStatusCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="startDate" type="xs:dateTime"/>
+			<xs:element name="contractInitialDuration" type="xs:int"/>
+			<xs:element name="expectedExpiryDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="termsConditionsID" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OnUpdateContractDefn">
+		<xs:sequence>
+			<xs:element name="contractNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="contractStatusCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="startDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="contractInitialDuration" type="xs:int" minOccurs="0"/>
+			<xs:element name="expectedExpiryDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="actualExpiryDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="termsConditionsID" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChangePricePlanRequest">
+		<xs:sequence>
+			<xs:element name="currentPackageInstanceID" type="xs:long"/>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="newPackageID" type="pductBASE:ProductID"/>
+			<xs:element name="Package" type="sglView:PackageHash"/>
+			<xs:element name="Service" type="sglView:ServiceHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Product" type="sglView:ProductHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Feature" type="sglView:FeatureHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Option" type="sglView:OptionHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Charge" type="sglView:ChargeHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Campaign" type="sglView:CampaignHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Contract" type="sglView:OnUpdateContractDefn" minOccurs="0"/>
+			<xs:element name="BSOName" type="sglView:BSOName"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChangePricePlanResponse">
+		<xs:sequence>
+			<xs:element name="effectiveDate" type="xs:dateTime"/>
+			<xs:element name="newPackInstID" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdatePackageRequest">
+		<xs:sequence>
+			<xs:element name="packageInstanceID" type="xs:long"/>
+			<xs:element name="effectiveDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="Package" type="sglView:PackageHash" minOccurs="0"/>
+			<xs:element name="Service" type="sglView:ServiceHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Product" type="sglView:ProductHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Feature" type="sglView:FeatureHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Option" type="sglView:OptionHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Charge" type="sglView:ChargeHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Campaign" type="sglView:CampaignHash" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdatePackageResponse">
+		<xs:sequence>
+			<xs:element name="successReturn" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="POSUpgradeNoCPPRequest">
+		<xs:sequence>
+			<xs:element name="packageInstanceID" type="xs:long"/>
+			<xs:element name="serviceName" type="xs:string"/>
+			<xs:element name="effectiveDate" type="xs:dateTime"/>
+			<xs:element name="AddProduct" type="sglView:ProductPOSHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="AddCampaign" type="sglView:CampaignPOSHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="RemoveProduct" type="sglView:ProductPOSHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="RemoveCampaign" type="sglView:CampaignPOSHash" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Contract" type="sglView:OnUpdateContractDefn" minOccurs="0"/>
+			<xs:element name="BSOName" type="sglView:BSOName"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="POSUpgradeNoCPPResponse">
+		<xs:sequence>
+			<xs:element name="successReturn" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductPOSHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="productID" type="pductBASE:ProductID"/>
+			<xs:element name="salesChannel" type="xs:string" minOccurs="0"/>
+			<xs:element name="salesAgent" type="xs:string" minOccurs="0"/>
+			<xs:element name="fullyDeprovisioned" type="xs:long" minOccurs="0"/>
+			<xs:element name="upgradeReason" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CampaignPOSHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="campaignID" type="pductBASE:ProductID"/>
+			<xs:element name="fullyDeprovisioned" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpenPaymentBatchRequest">
+		<xs:sequence>
+			<xs:element name="paymentSource" type="sglView:PaymentSource"/>
+			<xs:element name="batchComment" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OpenPaymentBatchResponse">
+		<xs:sequence>
+			<xs:element name="paymentGatewayBatchId" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClosePaymentBatchRequest">
+		<xs:sequence>
+			<xs:element name="paymentGatewayBatchId" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TotalAmount">
+		<xs:sequence>
+			<xs:element name="currency" type="sglView:Currency"/>
+			<xs:element name="amount" type="xs:double"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClosePaymentBatchResponse">
+		<xs:sequence>
+			<xs:element name="TotalAmount" type="sglView:TotalAmount" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentHash">
+		<xs:sequence>
+			<xs:element name="paymentGatewayBatchID" type="xs:long"/>
+			<xs:element name="paymentReceiptNR" type="xs:string" minOccurs="0"/>
+			<xs:element name="customerReceiptNR" type="xs:string" minOccurs="0"/>
+			<xs:element name="paymentDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="paymentReceivedDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="accountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="generalLedgerCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="paymentAmount" type="xs:double"/>
+			<xs:element name="paymentCurrency" type="sglView:Currency"/>
+			<xs:element name="paymentSource" type="sglView:PaymentSource"/>
+			<xs:element name="paymentType" type="sglView:PaymentType"/>
+			<xs:element name="paymentComment" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="BSOName">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Change Price Plan"/>
+			<xs:enumeration value="Upgrade"/>
+			<xs:enumeration value="Upgrade Reversal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Currency">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Euro"/>
+			<xs:enumeration value="GBP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentSource">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="3OnlineUpgrade"/>
+			<xs:enumeration value="3AdvisorUpgrade"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PaymentType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Cash"/>
+			<xs:enumeration value="Cheque"/>
+			<xs:enumeration value="CreditCard"/>
+			<xs:enumeration value="CreditNoteTransaction"/>
+			<xs:enumeration value="DirectDebitBank"/>
+			<xs:enumeration value="DirectDebitCreditCard"/>
+			<xs:enumeration value="RefundOverpayment"/>
+			<xs:enumeration value="RefundGeneral"/>
+			<xs:enumeration value="TopUpScratchCard"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="PostPaymentRequest">
+		<xs:sequence>
+			<xs:element name="PaymentHash" type="sglView:PaymentHash"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PostPaymentResponse">
+		<xs:sequence>
+			<xs:element name="paymentReceiptNumber" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveAccountRequest">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="effectiveDate" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RetrieveAccountResponse">
+		<xs:sequence>
+			<xs:element name="AccountDetails" type="sglView:AccountHash"/>
+			<xs:element name="PrimaryContact" type="sglView:ContactHash" minOccurs="0"/>
+			<xs:element name="InvoiceFormat" type="sglView:InvoiceFormatHash" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountHash">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="accountName" type="xs:string" minOccurs="0"/>
+			<xs:element name="parentAccountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="rootAccountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="lastModified" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="accountTypeName" type="xs:string" minOccurs="0"/>
+			<xs:element name="accountTypeID" type="xs:long" minOccurs="0"/>
+			<xs:element name="accountStatusCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="contactID" type="billBASE:ContactID" minOccurs="0"/>
+			<xs:element name="reportLevelCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="postalAddress" type="addr:Address" minOccurs="0"/>
+			<xs:element name="currencyID" type="xs:long" minOccurs="0"/>
+			<xs:element name="billCycleID" type="xs:long" minOccurs="0"/>
+			<xs:element name="billingPriority" type="xs:long" minOccurs="0"/>
+			<xs:element name="billingConfigurationCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="suppressIndCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="suppressBillCycleCount" type="xs:long" minOccurs="0"/>
+			<xs:element name="suppressUntilIssueDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="invoiceFormatName" type="xs:string" minOccurs="0"/>
+			<xs:element name="invoiceFormatID" type="xs:long" minOccurs="0"/>
+			<xs:element name="creditLimit" type="xs:double" minOccurs="0"/>
+			<xs:element name="effectiveCreditLimit" type="xs:double" minOccurs="0"/>
+			<xs:element name="voluntaryCreditLimit" type="xs:double" minOccurs="0"/>
+			<xs:element name="creditClassCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="taxClassCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="paymentMethodCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="preAuthorisedFlag" type="xs:int" minOccurs="0"/>
+			<xs:element name="salesChannel" type="xs:string" minOccurs="0"/>
+			<xs:element name="salesAgent" type="xs:string" minOccurs="0"/>
+			<xs:element name="companyNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="customerClassification" type="xs:long" minOccurs="0"/>
+			<xs:element name="accountingMethod" type="xs:long" minOccurs="0"/>
+			<xs:element name="collectionAgent" type="xs:long" minOccurs="0"/>
+			<xs:element name="collectionStatus" type="xs:long" minOccurs="0"/>
+			<xs:element name="shadowCreditLimit" type="xs:double" minOccurs="0"/>
+			<xs:element name="transactionLimit" type="xs:double" minOccurs="0"/>
+			<xs:element name="VIPFlag" type="xs:int" minOccurs="0"/>
+			<xs:element name="proRatingMethod" type="xs:long" minOccurs="0"/>
+			<xs:element name="externalCustomerID" type="xs:string" minOccurs="0"/>
+			<xs:element name="timeBandProfile" type="xs:string" minOccurs="0"/>
+			<xs:element name="AccountOption" type="sglView:AccountOption" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Exemption" type="sglView:Exemption" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="LeagalEntity" type="sglView:LeagalEntity" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TriggeredAction" type="sglView:TriggeredAction" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="autoTopupAmount" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="SpecialDay" type="sglView:SpecialDay" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="OutputOption" type="sglView:OutputOption" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="retirementType" type="xs:string" minOccurs="0"/>
+			<xs:element name="creditComments" type="xs:string" minOccurs="0"/>
+			<xs:element name="SpendLimit" type="sglView:SpendLimit" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="eudrlAlertFlag" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountOption">
+		<xs:sequence>
+			<xs:element name="accountOption" type="xs:string"/>
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Exemption">
+		<xs:sequence>
+			<xs:element name="exemption" type="xs:long"/>
+			<xs:element name="description" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LeagalEntity">
+		<xs:sequence>
+			<xs:element name="entity" type="xs:string"/>
+			<xs:element name="information" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TriggeredAction">
+		<xs:sequence>
+			<xs:element name="trigger" type="xs:string"/>
+			<xs:element name="action" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SpecialDay">
+		<xs:sequence>
+			<xs:element name="day">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="31"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="month">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="1"/>
+						<xs:maxInclusive value="12"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="year" type="xs:integer" minOccurs="0"/>
+			<xs:element name="specialDayCode" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OutputOption">
+		<xs:sequence>
+			<xs:element name="displayMedium" type="xs:long" minOccurs="0"/>
+			<xs:element name="displaySection" type="xs:long" minOccurs="0"/>
+			<xs:element name="displayStatus" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SpendLimit">
+		<xs:sequence>
+			<xs:element name="spendLimitType" type="xs:string"/>
+			<xs:element name="spendLimitValue" type="xs:double" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ContactHash">
+		<xs:sequence>
+			<xs:element name="contactID" type="billBASE:ContactID" minOccurs="0"/>
+			<xs:element name="contactTypeID" type="xs:string" minOccurs="0"/>
+			<xs:element name="title" type="xs:string" minOccurs="0"/>
+			<xs:element name="givenNames" type="xs:string" minOccurs="0"/>
+			<xs:element name="familyName" type="xs:string" minOccurs="0"/>
+			<xs:element name="officialName" type="xs:string" minOccurs="0"/>
+			<xs:element name="preferredName" type="xs:string" minOccurs="0"/>
+			<xs:element name="genderCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="contactStatusCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="disabilityCategory" type="xs:string" minOccurs="0"/>
+			<xs:element name="postalAddress" type="addr:Address" minOccurs="0"/>
+			<xs:element name="phoneNR" type="baseTypes:PHONENUMBER" minOccurs="0"/>
+			<xs:element name="faxPhoneNR" type="baseTypes:PHONENUMBER" minOccurs="0"/>
+			<xs:element name="emailAddress" type="baseTypes:EMAILADDRESS" minOccurs="0"/>
+			<xs:element name="writtenLanguageCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="spokenLanguageCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="password" type="xs:string" minOccurs="0"/>
+			<xs:element name="preferredContactMethod" type="xs:string" minOccurs="0"/>
+			<xs:element name="birthDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="lastModified" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InvoiceFormatHash">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="seqNR" type="xs:long" minOccurs="0"/>
+			<xs:element name="invoiceFormatName" type="xs:string" minOccurs="0"/>
+			<xs:element name="invoiceFormatID" type="xs:long" minOccurs="0"/>
+			<xs:element name="numExtraInvoiceCopies" type="xs:long" minOccurs="0"/>
+			<xs:element name="InvSummaryDetailFlag" type="xs:long" minOccurs="0"/>
+			<xs:element name="holdBillFlag" type="xs:long" minOccurs="0"/>
+			<xs:element name="suppressStatementDetailsFlag" type="xs:string" minOccurs="0"/>
+			<xs:element name="contactID" type="billBASE:ContactID" minOccurs="0"/>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreateOneOffChgRequest">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="serviceId" type="pductBASE:ProductID" minOccurs="0"/>
+			<xs:element name="OneOffChgHash" type="sglView:OneOffChgHash"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OneOffChgHash">
+		<xs:sequence>
+			<xs:element name="chargeTypeCode" type="xs:long"/>
+			<xs:element name="charge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="currency" type="sglView:Currency" minOccurs="0"/>
+			<xs:element name="invoiceText" type="xs:string" minOccurs="0"/>
+			<xs:element name="GLCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="chargeDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="baseProductInstanceId" type="xs:long" minOccurs="0"/>
+			<xs:element name="termChargeType" type="sglView:TermChargeType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="TermChargeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ATF"/>
+			<xs:enumeration value="ETF"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="CreateOneOffChgResponse">
+		<xs:sequence>
+			<xs:element name="oneOffChargeId" type="xs:long"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PackageHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="packageName" type="xs:string"/>
+				<xs:element name="packageID" type="pductBASE:ProductID"/>
+			</xs:choice>
+			<xs:element name="packageInstanceCode" type="xs:long" minOccurs="0"/>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="activationPersonaName" type="xs:string" minOccurs="0"/>
+			<xs:element name="recurringPersonaName" type="xs:string" minOccurs="0"/>
+			<xs:element name="usagePersonaName" type="xs:string" minOccurs="0"/>
+			<xs:element name="chargeHierarchyAccNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="activationCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="recurringCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="salesChannel" type="xs:string" minOccurs="0"/>
+			<xs:element name="salesAgent" type="xs:string" minOccurs="0"/>
+			<xs:element name="timeBandProfile" type="xs:string" minOccurs="0"/>
+			<xs:element name="FCNDiscountFlag" type="xs:long" minOccurs="0"/>
+			<xs:element name="Preferences" type="udf:UserDefinedField" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="upgradereason" type="xs:string" minOccurs="0"/>
+			<xs:element name="originalPackageInstanceID" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceHash">
+		<xs:sequence>
+			<xs:element name="serviceName" type="xs:string"/>
+			<xs:element name="networkName" type="xs:string" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="serviceTypeName" type="xs:string"/>
+				<xs:element name="serviceTypeID" type="pductBASE:ProductID"/>
+			</xs:choice>
+			<xs:element name="serviceSubtype" type="xs:string" minOccurs="0"/>
+			<xs:element name="contactID" type="billBASE:ContactID" minOccurs="0"/>
+			<xs:element name="contractID" type="xs:long" minOccurs="0"/>
+			<xs:element name="AAdress" type="addr:Address" minOccurs="0"/>
+			<xs:element name="BAddress" type="addr:Address" minOccurs="0"/>
+			<xs:element name="requiredByDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="provisionedDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="billingPriority" type="xs:long" minOccurs="0"/>
+			<xs:element name="gradeOfService" type="xs:string" minOccurs="0"/>
+			<xs:element name="numberType" type="xs:long" minOccurs="0"/>
+			<xs:element name="USIMExpiry" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="productName" type="xs:string"/>
+				<xs:element name="productID" type="pductBASE:ProductID"/>
+			</xs:choice>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="activationPersonaName" type="xs:string" minOccurs="0"/>
+			<xs:element name="recurringPersonaName" type="xs:string" minOccurs="0"/>
+			<xs:element name="usagePersonaName" type="xs:string" minOccurs="0"/>
+			<xs:element name="chargeHierarchyAccNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="activationCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="recurringCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="salesChannel" type="xs:string" minOccurs="0"/>
+			<xs:element name="salesAgent" type="xs:string" minOccurs="0"/>
+			<xs:element name="timeBandProfile" type="xs:string" minOccurs="0"/>
+			<xs:element name="FCNDiscountFlag" type="xs:long" minOccurs="0"/>
+			<xs:element name="Preferences" type="udf:UserDefinedField" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="reasonCode" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FeatureHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="featureName" type="xs:string"/>
+				<xs:element name="featureID" type="pductBASE:ProductID"/>
+			</xs:choice>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="productInstanceID" type="xs:long" minOccurs="0"/>
+			<xs:element name="activationCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="recurringCharge" type="baseTypes:PRICE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OptionHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="optionName" type="xs:string"/>
+				<xs:element name="optionID" type="pductBASE:ProductID"/>
+			</xs:choice>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="productInstanceID" type="xs:long" minOccurs="0"/>
+			<xs:element name="activationCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="recurringCharge" type="baseTypes:PRICE" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ChargeHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="chargeName" type="xs:string"/>
+				<xs:element name="chargeID" type="pductBASE:ProductID"/>
+			</xs:choice>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="activationCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="recurringCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="productInstanceID" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CampaignHash">
+		<xs:sequence>
+			<xs:element name="effectiveStartDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="effectiveEndDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="campaignName" type="xs:string"/>
+				<xs:element name="campaignID" type="pductBASE:ProductID"/>
+			</xs:choice>
+			<xs:element name="accountNumber" type="baseTypes:BAN"/>
+			<xs:element name="activationCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="recurringCharge" type="baseTypes:PRICE" minOccurs="0"/>
+			<xs:element name="productInstanceID" type="xs:long" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ChangePricePlanRequest" type="sglView:ChangePricePlanRequest"/>
+	<xs:element name="ChangePricePlanResponse" type="sglView:ChangePricePlanResponse"/>
+	<xs:element name="POSUpgradeNoCPPRequest" type="sglView:POSUpgradeNoCPPRequest"/>
+	<xs:element name="POSUpgradeNoCPPResponse" type="sglView:POSUpgradeNoCPPResponse"/>
+	<xs:element name="UpdatePackageRequest" type="sglView:UpdatePackageRequest"/>
+	<xs:element name="UpdatePackageResponse" type="sglView:UpdatePackageResponse"/>
+	<xs:element name="RetrieveAccountRequest" type="sglView:RetrieveAccountRequest"/>
+	<xs:element name="RetrieveAccountResponse" type="sglView:RetrieveAccountResponse"/>
+	<xs:element name="PostPaymentRequest" type="sglView:PostPaymentRequest"/>
+	<xs:element name="PostPaymentResponse" type="sglView:PostPaymentResponse"/>
+	<xs:element name="CreateOneOffChgRequest" type="sglView:CreateOneOffChgRequest"/>
+	<xs:element name="CreateOneOffChgResponse" type="sglView:CreateOneOffChgResponse"/>
+	<xs:element name="OpenPaymentBatchRequest" type="sglView:OpenPaymentBatchRequest"/>
+	<xs:element name="OpenPaymentBatchResponse" type="sglView:OpenPaymentBatchResponse"/>
+	<xs:element name="ClosePaymentBatchRequest" type="sglView:ClosePaymentBatchRequest"/>
+	<xs:element name="ClosePaymentBatchResponse" type="sglView:ClosePaymentBatchResponse"/>
+	<xs:element name="UpdateContractRequest" type="sglView:UpdateContractRequest"/>
+	<xs:element name="UpdateContractResponse" type="sglView:UpdateContractResponse"/>
+	<xs:element name="CreateContractRequest" type="sglView:CreateContractRequest"/>
+	<xs:element name="CreateContractResponse" type="sglView:CreateContractResponse"/>
+	<xs:element name="RetrieveProductPricesRequest" type="sglView:RetrieveProductPricesRequest"/>
+	<xs:element name="RetrieveProductPricesResponse" type="sglView:RetrieveProductPricesResponse"/>
+	<xs:element name="RetrievePackagePriceHistoryRequest" type="sglView:RetrievePackagePriceHistoryRequest"/>
+	<xs:element name="RetrievePackagePriceHistoryResponse" type="sglView:RetrievePackagePriceHistoryResponse"/>
+</xs:schema>

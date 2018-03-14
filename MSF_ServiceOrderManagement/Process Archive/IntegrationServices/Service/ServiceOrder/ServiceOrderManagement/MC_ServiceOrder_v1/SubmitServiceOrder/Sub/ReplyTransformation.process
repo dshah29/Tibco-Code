@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd" xmlns:pfx4="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_eai_to_ext" xmlns:ns22="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_AckResp_v1.xsd" xmlns:pfx2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_ext_to_eai" xmlns:pfx="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" xmlns:ns7="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_AckResp_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_AckResp_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_ext_to_eai" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/crm_ext_to_eai.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_eai_to_ext" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/crm_eai_to_ext.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/MC_SO_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd"/>
+    <pd:name>IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Sub/ReplyTransformation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="ns7:SubmitServiceOrderResponse"/>
+    <pd:startX>86</pd:startX>
+    <pd:startY>147</pd:startY>
+    <pd:returnBindings>
+        <xsl:copy-of select="$AEToTSO/AckResponse"/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx5:AckResponse"/>
+    <pd:endX>466</pd:endX>
+    <pd:endY>141</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1443676198211</pd:targetNamespace>
+    <pd:activity name="AEToTSO">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>260</pd:x>
+        <pd:y>149</pd:y>
+        <config>
+            <element ref="pfx5:AckResponse"/>
+        </config>
+        <pd:inputBindings>
+            <AckResponse>
+                <ResultStatus>
+                    <STATUS_CODE>
+                        <xsl:value-of select="0"/>
+                    </STATUS_CODE>
+                </ResultStatus>
+            </AckResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>AEToTSO</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>AEToTSO</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

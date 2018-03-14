@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx5="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintLDAPSecurityRole" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain" xmlns:pfx3="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintAdapterLDAP" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema" schemaLocation="/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain" schemaLocation="/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintLDAPSecurityRole" schemaLocation="/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintAdapterLDAP" schemaLocation="/AESchemas/ae/ADB/SprintAdapterLDAP.aeschema"/>
+    <pd:name>IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/Main/Main.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:P__SECURITYPRINCIPAL"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>28</pd:startX>
+    <pd:startY>366</pd:startY>
+    <pd:returnBindings>
+        <root/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1214</pd:endX>
+    <pd:endY>369</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <LDAP>
+            <xsd:element name="OpCode" type="xsd:string"/>
+        </LDAP>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1424078960971</pd:targetNamespace>
+    <pd:group name="SyncUser">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>317</pd:x>
+        <pd:y>157</pd:y>
+        <pd:width>740</pd:width>
+        <pd:height>407</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>simpleGroup</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>getUserRoles</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>LDAPSyncUser</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>getUserRoles</pd:from>
+            <pd:to>Log</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>getUserRoles</pd:from>
+            <pd:to>CreateException_DatabaseOperationError</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-65536</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>CreateException_DatabaseOperationError</pd:from>
+            <pd:to>Generate Error</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log</pd:from>
+            <pd:to>LDAPSyncUser</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="CreateException_DatabaseOperationError">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>401</pd:x>
+            <pd:y>508</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Exceptions/CreateException_DatabaseOperationError.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:copy-of select="$_error/ns2:ErrorReport"/>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Generate Error">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>509</pd:x>
+            <pd:y>508</pd:y>
+            <config>
+                <faultName>Schema0</faultName>
+            </config>
+            <pd:inputBindings>
+                <ns:ActivityInput>
+                    <data>
+                        <xsl:copy-of select="$CreateException_DatabaseOperationError/root/pfx2:Exception"/>
+                    </data>
+                </ns:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="getUserRoles">
+            <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+            <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+            <pd:x>398</pd:x>
+            <pd:y>368</pd:y>
+            <config>
+                <timeout>%%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/JDBC/Timeout%%</timeout>
+                <commit>false</commit>
+                <maxRows>0</maxRows>
+                <emptyStrAsNil>false</emptyStrAsNil>
+                <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+                <statement>SELECT A.SECURITYPRINCIPALID, A.SECURITYPRINCIPALNAME
+FROM  %%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/JDBC/SchemaName%%.SECURITYPRINCIPAL A
+WHERE A.SECURITYPRINCIPALID = ?</statement>
+                <processInSubsets>false</processInSubsets>
+                <Prepared_Param_DataType>
+                    <parameter>
+                        <parameterName>userID</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                </Prepared_Param_DataType>
+                <oraObjects/>
+                <oraTables/>
+                <QueryOutputCachedSchemaColumns>SECURITYPRINCIPALID</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>SECURITYPRINCIPALNAME</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            </config>
+            <pd:inputBindings>
+                <jdbcQueryActivityInput>
+                    <userID>
+                        <xsl:copy-of select="$Start/root/pfx:P__SECURITYPRINCIPAL/SECURITYPRINCIPALID/@xsi:nil"/>
+                        <xsl:value-of select="$Start/root/pfx:P__SECURITYPRINCIPAL/SECURITYPRINCIPALID"/>
+                    </userID>
+                </jdbcQueryActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Log">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>486</pd:x>
+            <pd:y>373</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Logging/Log.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <level>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Logging/Levels/DEBUG"/>
+                    </level>
+                    <message>
+                        <xsl:value-of select="'Retrieved User Roles'"/>
+                    </message>
+                    <processName>
+                        <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                    </processName>
+                    <payload>
+                        <xsl:copy-of select="$getUserRoles/resultSet"/>
+                    </payload>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:group name="LDAPSyncUser">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>597</pd:x>
+            <pd:y>218</pd:y>
+            <pd:width>446</pd:width>
+            <pd:height>321</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$getUserRoles/resultSet/Record</pd:over>
+                <pd:iterationElementSlot>curUser</pd:iterationElementSlot>
+                <pd:indexSlot>i</pd:indexSlot>
+                <pd:activityOutputName/>
+                <pd:accumulateOutput>false</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>getRoleName</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>CallSyncLDAPUser</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Log-1</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>MapLDAPData</pd:from>
+                <pd:to>CallSyncLDAPUser</pd:to>
+                <pd:xpathDescription>Add</pd:xpathDescription>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>otherwise</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>getRoleName</pd:from>
+                <pd:to>MapLDAPData</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>getRoleName</pd:from>
+                <pd:to>CreateException_DatabaseOperationError-1</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>error</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>CreateException_DatabaseOperationError-1</pd:from>
+                <pd:to>Generate-Error-1</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>MapLDAPData</pd:from>
+                <pd:to>LookUpLDAPUser</pd:to>
+                <pd:xpathDescription>Delete</pd:xpathDescription>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>xpath</pd:conditionType>
+                <pd:xpath>$LDAP/OpCode = $_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAP_Action/Delete</pd:xpath>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>LookUpLDAPUser</pd:from>
+                <pd:to>CallSyncLDAPUser</pd:to>
+                <pd:xpathDescription>LDAP sync found</pd:xpathDescription>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>xpath</pd:conditionType>
+                <pd:xpath>$LookUpLDAPUser/root/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation/__caret_returnValue_caret_/errorString = 'Success'</pd:xpath>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>LookUpLDAPUser</pd:from>
+                <pd:to>Log-1</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>otherwise</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="CallSyncLDAPUser">
+                <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+                <pd:resourceType>ae.process.subprocess</pd:resourceType>
+                <pd:x>947</pd:x>
+                <pd:y>387</pd:y>
+                <config>
+                    <processName>/Common/LDAP/LDAPClient.process</processName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <xsl:copy-of select="$MapLDAPData/root/pfx4:h3orgperson"/>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="MapLDAPData">
+                <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+                <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+                <pd:x>817</pd:x>
+                <pd:y>388</pd:y>
+                <config>
+                    <element>
+                        <xsd:element name="root">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element ref="pfx4:h3orgperson"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </element>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <pfx4:h3orgperson>
+                            <OpCode>
+                                <xsl:value-of select="$LDAP/OpCode"/>
+                            </OpCode>
+                            <DN>
+                                <xsl:value-of select="concat('uid=',$curUser/Record/SECURITYPRINCIPALNAME,',ou=',$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/ou1,',',$_globalVariables/ns1:GlobalVariables/AdapterConfigurations/LDAP/BaseDN)"/>
+                            </DN>
+                            <ObjectClass>
+                                <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/objectClass"/>
+                            </ObjectClass>
+                            <h3orgperson>
+                                <bpmUid>
+                                    <item>
+                                        <xsl:value-of select="concat(&#xA;  $curUser/Record/SECURITYPRINCIPALNAME,&#xA;  $_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/Uid_Sprint_BPM_Suffix&#xA;)"/>
+                                    </item>
+                                </bpmUid>
+                                <mcUid>
+                                    <item>
+                                        <xsl:value-of select="concat(&#xA;  $curUser/Record/SECURITYPRINCIPALNAME,&#xA;  $_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/Uid_Sprint_MC_Suffix&#xA;)"/>
+                                    </item>
+                                </mcUid>
+                                <sn>
+                                    <item>
+                                        <xsl:value-of select="$curUser/Record/SECURITYPRINCIPALNAME"/>
+                                    </item>
+                                </sn>
+                                <cn>
+                                    <item>
+                                        <xsl:value-of select="concat(&#xA;  $_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/ou1,&#xA;  &quot; &quot;,&#xA;  $curUser/Record/SECURITYPRINCIPALNAME&#xA;)"/>
+                                    </item>
+                                </cn>
+                                <objectClass>
+                                    <item>
+                                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/objectClass"/>
+                                    </item>
+                                </objectClass>
+                                <roleName>
+                                    <xsl:for-each select="$getRoleName/resultSet/Record/ROLENAME">
+                                        <item>
+                                            <xsl:value-of select="."/>
+                                        </item>
+                                    </xsl:for-each>
+                                </roleName>
+                                <givenName>
+                                    <item>
+                                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/GivenName"/>
+                                    </item>
+                                </givenName>
+                                <o>
+                                    <item>
+                                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/o"/>
+                                    </item>
+                                </o>
+                                <uid>
+                                    <item>
+                                        <xsl:value-of select="$curUser/Record/SECURITYPRINCIPALNAME"/>
+                                    </item>
+                                </uid>
+                                <ou>
+                                    <item>
+                                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/ou1"/>
+                                    </item>
+                                </ou>
+                            </h3orgperson>
+                        </pfx4:h3orgperson>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="getRoleName">
+                <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+                <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+                <pd:x>705</pd:x>
+                <pd:y>387</pd:y>
+                <config>
+                    <timeout>%%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/JDBC/Timeout%%</timeout>
+                    <commit>false</commit>
+                    <maxRows>0</maxRows>
+                    <emptyStrAsNil>false</emptyStrAsNil>
+                    <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+                    <statement>SELECT A.SECURITYPRINCIPALID, A.SECURITYPRINCIPALNAME, C.ROLENAME 
+FROM 
+%%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/JDBC/SchemaName%%.SECURITYPRINCIPAL A,
+%%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/JDBC/SchemaName%%.SECURITYPRINCIPALSECURITYROLE B,
+ %%IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/JDBC/SchemaName%%.SECURITYROLE C 
+WHERE A.SECURITYPRINCIPALID = B.SECURITYPRINCIPALID 
+AND B.SECURITYROLEID = C.SECURITYROLEID
+AND A.SECURITYPRINCIPALID = ?</statement>
+                    <processInSubsets>false</processInSubsets>
+                    <Prepared_Param_DataType>
+                        <parameter>
+                            <parameterName>userID</parameterName>
+                            <dataType>VARCHAR</dataType>
+                        </parameter>
+                    </Prepared_Param_DataType>
+                    <oraObjects/>
+                    <oraTables/>
+                    <QueryOutputCachedSchemaColumns>SECURITYPRINCIPALID</QueryOutputCachedSchemaColumns>
+                    <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                    <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                    <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                    <QueryOutputCachedSchemaColumns>SECURITYPRINCIPALNAME</QueryOutputCachedSchemaColumns>
+                    <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                    <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                    <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                    <QueryOutputCachedSchemaColumns>ROLENAME</QueryOutputCachedSchemaColumns>
+                    <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                    <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                    <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                </config>
+                <pd:inputBindings>
+                    <jdbcQueryActivityInput>
+                        <userID>
+                            <xsl:copy-of select="$Start/root/pfx:P__SECURITYPRINCIPAL/SECURITYPRINCIPALID/@xsi:nil"/>
+                            <xsl:value-of select="$Start/root/pfx:P__SECURITYPRINCIPAL/SECURITYPRINCIPALID"/>
+                        </userID>
+                    </jdbcQueryActivityInput>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="CreateException_DatabaseOperationError-1">
+                <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+                <pd:resourceType>ae.process.subprocess</pd:resourceType>
+                <pd:x>705</pd:x>
+                <pd:y>482</pd:y>
+                <config>
+                    <processName>/UtilityProcesses/Exceptions/CreateException_DatabaseOperationError.process</processName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <xsl:copy-of select="$_error/ns2:ErrorReport"/>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Generate-Error-1">
+                <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+                <pd:resourceType>ae.activities.throw</pd:resourceType>
+                <pd:x>830</pd:x>
+                <pd:y>482</pd:y>
+                <config>
+                    <faultName>Schema0</faultName>
+                </config>
+                <pd:inputBindings>
+                    <ns:ActivityInput>
+                        <data>
+                            <xsl:copy-of select="$CreateException_DatabaseOperationError-1/root/pfx2:Exception"/>
+                        </data>
+                    </ns:ActivityInput>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Log-1">
+                <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+                <pd:resourceType>ae.process.subprocess</pd:resourceType>
+                <pd:x>979</pd:x>
+                <pd:y>274</pd:y>
+                <config>
+                    <processName>/UtilityProcesses/Logging/Log.process</processName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <level>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Logging/Levels/DEBUG"/>
+                        </level>
+                        <message>
+                            <xsl:value-of select="concat('The User is filtered from LDAP sync. User ID: ' ,$Start/root/pfx:P__SECURITYPRINCIPAL/SECURITYPRINCIPALID)"/>
+                        </message>
+                        <processName>
+                            <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                        </processName>
+                        <payload>
+                            <xsl:copy-of select="$MapLDAPData/root/pfx4:h3orgperson"/>
+                        </payload>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="LookUpLDAPUser">
+                <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+                <pd:resourceType>ae.process.subprocess</pd:resourceType>
+                <pd:x>818</pd:x>
+                <pd:y>274</pd:y>
+                <config>
+                    <processName>/Common/LDAP/LDAPClient.process</processName>
+                </config>
+                <pd:inputBindings>
+                    <root>
+                        <pfx4:h3orgperson>
+                            <OpCode>
+                                <xsl:value-of select="'LDAP_LOOKUP'"/>
+                            </OpCode>
+                            <xsl:if test="$MapLDAPData/root/pfx4:h3orgperson/DN">
+                                <DN>
+                                    <xsl:copy-of select="$MapLDAPData/root/pfx4:h3orgperson/DN/@xsi:nil"/>
+                                    <xsl:value-of select="$MapLDAPData/root/pfx4:h3orgperson/DN"/>
+                                </DN>
+                            </xsl:if>
+                        </pfx4:h3orgperson>
+                    </root>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+    </pd:group>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1124</pd:x>
+        <pd:y>368</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace-Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>115</pd:x>
+        <pd:y>365</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx:P__SECURITYPRINCIPAL"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>235</pd:x>
+        <pd:y>368</pd:y>
+        <config>
+            <variableName>LDAP</variableName>
+        </config>
+        <pd:inputBindings>
+            <OpCode>
+                <xsl:value-of select="if(tib:compare-date(&#xA;tib:parse-date('yyyy-MM-dd',substring($Start/root/pfx:P__SECURITYPRINCIPAL/PASSWORDCHANGEDDATE, 1, 10)),&#xA;tib:add-to-date(current-date(),0,0,-$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAPSyncUser/PwdChangeInterval))&#xA; = -1&#xA;)&#xA;then&#xA;$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAP_Action/Delete&#xA;else if($Start/root/pfx:P__SECURITYPRINCIPAL/ADB__OPCODE='3' )&#xA;then&#xA;$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAP_Action/Delete&#xA;else&#xA;$_globalVariables/ns1:GlobalVariables/IntegrationServices/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/UpdateLDAPUser_v1/LDAP_Action/Upsert"/>
+            </OpCode>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Trace-Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SyncUser</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace-Start</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
+        <pd:to>SyncUser</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

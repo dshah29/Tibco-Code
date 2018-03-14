@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:inLine="http://services.brm.n2.tibco.com/WorkItemManagementService_1.6.0">
+    <name>SecurityPolicyAssociation_AllocateandOpenWorkitem</name>
+    <resourceType>ws.security.policy.association.resource</resourceType>
+    <config>
+        <applyTo>/IntegrationServices/OrderFallout/BulkRelease_v1/Sub/OpenandCompleteWorkItems.process/allocateandopenWorkItem</applyTo>
+        <systemSecuritySubject>/IntegrationServices/OrderFallout/BulkRelease_v1/Sub/OpenandCompleteWorkItems.process/WorkItemManagementService.soap/allocateAndOpenWorkItem</systemSecuritySubject>
+        <inbound>
+            <selectSignatureParts/>
+            <selectEncryptionParts/>
+        </inbound>
+        <outbound>
+            <selectSignatureParts/>
+            <selectEncryptionParts/>
+        </outbound>
+        <outboundMessagePolicy>/SharedResources/Policies/BPM/SecurityPolicy_BPM.securityPolicy</outboundMessagePolicy>
+    </config>
+</BWSharedResource>

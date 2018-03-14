@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/aff/commontypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns1="http://www.tibco.com/aff/order" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns="http://www.tibco.com/aff/orderservice" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns5="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns6="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pfx="http://xmlns.example.com/1301395797508" xmlns:ns7="http://www.tibco.com/namespaces/tnt/plugins/file/v2">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/aff/order" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/oms/order.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1301395797508" location="/SharedResources/WebServiceDefinitions/Interface/FOS/Concrete/jms/OrderServiceJMS.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/SubmitOrder.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>80</pd:startX>
+    <pd:startY>87</pd:startY>
+    <pd:returnBindings>
+        <pfx:SubmitOrderResponseMsg/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>704</pd:endX>
+    <pd:endY>88</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="ns4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1461064237994/SubmitOrder</pd:targetNamespace>
+    <pd:activity name="GenerateUUID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>377</pd:x>
+        <pd:y>87</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Parse Resubmit Order Request">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>273</pd:x>
+        <pd:y>95</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term ref="ns1:orderRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Read-Resubmit-Order-Request/ns6:ReadActivityOutputTextClass/fileContent/textContent"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read Resubmit Order Request">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>169</pd:x>
+        <pd:y>95</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns7:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+            </ns7:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SubmitOrder">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>490</pd:x>
+        <pd:y>87</pd:y>
+        <config>
+            <processName>/UtilityProcesses/FOSDataAccessInterfaces/submitOrder.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx:SubmitOrderRequestMsg>
+                <submitorderreqparameters>
+                    <ns:SubmitOrderRequest>
+                        <xsl:attribute name="ExternalBusinessTransactionID">
+                            <xsl:value-of select="$GenerateUUID/UUID"/>
+                        </xsl:attribute>
+                        <ns:orderRequest>
+                            <ns1:orderRef>
+                                <xsl:value-of select="$Parse-Resubmit-Order-Request/ns1:orderRequest/ns1:orderRef"/>
+                            </ns1:orderRef>
+                            <xsl:copy-of select="$Parse-Resubmit-Order-Request/ns1:orderRequest/ns1:header"/>
+                            <xsl:copy-of select="$Parse-Resubmit-Order-Request/ns1:orderRequest/ns1:line"/>
+                        </ns:orderRequest>
+                    </ns:SubmitOrderRequest>
+                </submitorderreqparameters>
+            </pfx:SubmitOrderRequestMsg>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>597</pd:x>
+        <pd:y>89</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Read Resubmit Order Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SubmitOrder</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read Resubmit Order Request</pd:from>
+        <pd:to>Parse Resubmit Order Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Resubmit Order Request</pd:from>
+        <pd:to>GenerateUUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GenerateUUID</pd:from>
+        <pd:to>SubmitOrder</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/processstats/v1" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ServiceContext_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/processstats/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/ProcessStats_v1.xsd"/>
+    <pd:name>UtilityProcesses/ProcessStats/SetStatsForProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx2:ProcessStats"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>68</pd:startX>
+    <pd:startY>115</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <startTimestamp>
+                <xsl:value-of select="$Set--Process-Stats/pfx2:ProcessStatsList/pfx2:startTimestamp"/>
+            </startTimestamp>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="startTimestamp" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>518</pd:endX>
+    <pd:endY>115</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349860044202</pd:targetNamespace>
+    <pd:activity name="Get Process Stats">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>202</pd:x>
+        <pd:y>115</pd:y>
+        <config>
+            <variableConfig>/SharedResources/JobSharedVariables/ProcessStatistics.jobsharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>281</pd:x>
+        <pd:y>249</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Set  Process Stats">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>370</pd:x>
+        <pd:y>115</pd:y>
+        <config>
+            <showResult>true</showResult>
+            <variableConfig>/SharedResources/JobSharedVariables/ProcessStatistics.jobsharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings>
+            <xsl:variable name="var" select="$Start/root/pfx2:ProcessStats/@name"/>
+            <pfx2:ProcessStatsList>
+                <xsl:if test="$Get-Process-Stats/pfx2:ProcessStatsList/pfx2:startTimestamp">
+                    <pfx2:startTimestamp>
+                        <xsl:value-of select="$Get-Process-Stats/pfx2:ProcessStatsList/pfx2:startTimestamp"/>
+                    </pfx2:startTimestamp>
+                </xsl:if>
+                <xsl:copy-of select="$Start/root/pfx2:ProcessStats"/>
+                <xsl:copy-of select="$Get-Process-Stats/pfx2:ProcessStatsList/pfx2:ProcessStats[@name != $var]"/>
+            </pfx2:ProcessStatsList>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Get Process Stats</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set  Process Stats</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Process Stats</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Process Stats</pd:from>
+        <pd:to>Set  Process Stats</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>Set  Process Stats</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

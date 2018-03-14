@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:pfx15="http://www.tibco.com/pe/SignalInActivitySchema" xmlns:pfx14="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/OrderStatusNotification_v1.xsd" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:pfx13="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pfx12="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx11="http://www.tibco.com/aff/commontypes" xmlns:pfx10="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:pfx5="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:pfx9="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1" xmlns:pfx8="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:pfx7="http://xmlns.example.com/1301395797508" xmlns:pfx6="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" xmlns:ns16="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/POSUpgrade/Response" xmlns:ns17="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/ChangeTariff/Response" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns14="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/POSUpgrade/Request" xmlns:ns15="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/ChangeTariff/Request" xmlns:ns18="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Request" xmlns:ns9="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:ns12="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" xmlns:ns6="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" xmlns:ns13="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Response" xmlns:pfx="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" xmlns:ns10="http://www.tibco.com/aff/order" xmlns:ns7="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:ns11="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:ns8="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://www.tibco.com/aff/orderservice" xmlns:ns3="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Reply.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/MC_SO_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/OrderStatusNotification_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/OrderStatusNotification_v1.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" location="/SharedResources/WebServiceDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/Concrete/MC_SinvleView_v1.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1301395797508" location="/SharedResources/WebServiceDefinitions/Interface/FOS/Concrete/jms/OrderServiceJMS.wsdl"/>
+    <pd:name>IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Sub/FinalResponse.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx14:OrderStatusNotification"/>
+    <pd:startX>70</pd:startX>
+    <pd:startY>118</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <pfx6:SubmitServiceOrderResponse>
+                <pfx6:orderID>
+                    <xsl:value-of select="$SOAPRequestReply/outputMessage/ns4:SubmitOrderResponse/ns4:orderRef"/>
+                </pfx6:orderID>
+                <pfx6:orderStatus>
+                    <xsl:value-of select="&quot;PENDING&quot;"/>
+                </pfx6:orderStatus>
+            </pfx6:SubmitServiceOrderResponse>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>708</pd:endX>
+    <pd:endY>112</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1441189605215</pd:targetNamespace>
+    <pd:activity name="Change_Tariff_Response">
+        <pd:type>com.tibco.plugin.ae.AEPublisherActivity</pd:type>
+        <pd:resourceType>ae.aepalette.aePubActivity</pd:resourceType>
+        <pd:x>383</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <ae.aepalette.sharedProperties.transportChoice>rv</ae.aepalette.sharedProperties.transportChoice>
+            <ae.aepalette.sharedProperties.useRequestReply>false</ae.aepalette.sharedProperties.useRequestReply>
+            <ae.aepalette.sharedProperties.useCustomOutput>true</ae.aepalette.sharedProperties.useCustomOutput>
+            <ae.aepalette.sharedProperties.customOutputMeta>/AESchemas/ae/PeopleSoft/Request.aeschema#class.TL_ChangeTariffRequest</ae.aepalette.sharedProperties.customOutputMeta>
+            <ae.aepalette.sharedProperties.transportType>rv</ae.aepalette.sharedProperties.transportType>
+            <ae.aepalette.sharedProperties.msgFormat>aeRvMsg</ae.aepalette.sharedProperties.msgFormat>
+            <ae.aepalette.sharedProperties.rvSessionService>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Service%%</ae.aepalette.sharedProperties.rvSessionService>
+            <ae.aepalette.sharedProperties.rvSessionNetwork>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Network%%</ae.aepalette.sharedProperties.rvSessionNetwork>
+            <ae.aepalette.sharedProperties.rvSessionDaemon>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Daemon%%</ae.aepalette.sharedProperties.rvSessionDaemon>
+            <ae.aepalette.sharedProperties.rvSubject>%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Environment%%.%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Country%%.%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Company%%.%%IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Subject/ChangeTariff%%</ae.aepalette.sharedProperties.rvSubject>
+        </config>
+        <pd:inputBindings>
+            <aePubInputType>
+                <body>
+                    <ns18:TL__ChangeTariffRequest>
+                        <H1UK__TSOID>
+                            <xsl:value-of select="$Start/OrderStatusNotification/H1UK_TSOID"/>
+                        </H1UK__TSOID>
+                        <H1UK__TSOLABEL>
+                            <xsl:value-of select="$Start/OrderStatusNotification/H1UK_TSOLABEL"/>
+                        </H1UK__TSOLABEL>
+                        <H1UK__PACKAGEINSTANCEID>
+                            <xsl:choose>
+                                <xsl:when test="exists($Start/OrderStatusNotification/H1UK_PACKAGEINSTANCEID)">
+                                    <xsl:value-of select="$Start/OrderStatusNotification/H1UK_PACKAGEINSTANCEID"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </H1UK__PACKAGEINSTANCEID>
+                        <STATUS__CODE>
+                            <xsl:value-of select="$Start/OrderStatusNotification/RESULT_STATUS/STATUS_CODE"/>
+                        </STATUS__CODE>
+                        <SERVICE__NAME>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/ServiceName_ChangeTariff"/>
+                        </SERVICE__NAME>
+                    </ns18:TL__ChangeTariffRequest>
+                </body>
+            </aePubInputType>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="POS_Upgread_Response">
+        <pd:type>com.tibco.plugin.ae.AEPublisherActivity</pd:type>
+        <pd:resourceType>ae.aepalette.aePubActivity</pd:resourceType>
+        <pd:x>387</pd:x>
+        <pd:y>180</pd:y>
+        <config>
+            <ae.aepalette.sharedProperties.transportChoice>rv</ae.aepalette.sharedProperties.transportChoice>
+            <ae.aepalette.sharedProperties.useRequestReply>false</ae.aepalette.sharedProperties.useRequestReply>
+            <ae.aepalette.sharedProperties.useCustomOutput>true</ae.aepalette.sharedProperties.useCustomOutput>
+            <ae.aepalette.sharedProperties.customOutputMeta>/AESchemas/ae/PeopleSoft/Request.aeschema#class.TL_POSUpgradeRequest</ae.aepalette.sharedProperties.customOutputMeta>
+            <ae.aepalette.sharedProperties.transportType>rv</ae.aepalette.sharedProperties.transportType>
+            <ae.aepalette.sharedProperties.msgFormat>aeRvMsg</ae.aepalette.sharedProperties.msgFormat>
+            <ae.aepalette.sharedProperties.rvSessionService>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Service%%</ae.aepalette.sharedProperties.rvSessionService>
+            <ae.aepalette.sharedProperties.rvSessionNetwork>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Network%%</ae.aepalette.sharedProperties.rvSessionNetwork>
+            <ae.aepalette.sharedProperties.rvSessionDaemon>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Daemon%%</ae.aepalette.sharedProperties.rvSessionDaemon>
+            <ae.aepalette.sharedProperties.rvSubject>%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Environment%%.%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Country%%.%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Company%%.%%IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Subject/POS_UPGRADE%%</ae.aepalette.sharedProperties.rvSubject>
+        </config>
+        <pd:inputBindings>
+            <aePubInputType>
+                <body>
+                    <ns18:TL__POSUpgradeRequest>
+                        <SERVICE__NAME>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/ServiceName_POSUpgrade"/>
+                        </SERVICE__NAME>
+                        <H1UK__TSOID>
+                            <xsl:value-of select="$Start/OrderStatusNotification/H1UK_TSOID"/>
+                        </H1UK__TSOID>
+                        <H1UK__TSOLABEL>
+                            <xsl:value-of select="$Start/OrderStatusNotification/H1UK_TSOLABEL"/>
+                        </H1UK__TSOLABEL>
+                        <xsl:choose>
+                            <xsl:when test="exists($Start/OrderStatusNotification/H1UK_PACKAGEINSTANCEID)">
+                                <H1UK__PACKAGEINSTANCEID>
+                                    <xsl:choose>
+                                        <xsl:when test="exists($Start/OrderStatusNotification/H1UK_PACKAGEINSTANCEID)">
+                                            <xsl:value-of select="$Start/OrderStatusNotification/H1UK_PACKAGEINSTANCEID"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </H1UK__PACKAGEINSTANCEID>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <H1UK__PACKAGEINSTANCEID>
+                                    <xsl:choose>
+                                        <xsl:when test="exists(&quot;&quot;)">
+                                            <xsl:value-of select="&quot;&quot;"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </H1UK__PACKAGEINSTANCEID>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <RESULT__STATUS>
+                            <STATUS__CODE>
+                                <xsl:value-of select="$Start/OrderStatusNotification/RESULT_STATUS/STATUS_CODE"/>
+                            </STATUS__CODE>
+                            <ERROR__CODE>
+                                <xsl:choose>
+                                    <xsl:when test="exists($Start/OrderStatusNotification/RESULT_STATUS/ERROR_CODE)">
+                                        <xsl:value-of select="$Start/OrderStatusNotification/RESULT_STATUS/ERROR_CODE"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ERROR__CODE>
+                            <ERROR__DESCRIPTION>
+                                <xsl:choose>
+                                    <xsl:when test="exists($Start/OrderStatusNotification/RESULT_STATUS/ERROR_DESCRIPTION)">
+                                        <xsl:value-of select="$Start/OrderStatusNotification/RESULT_STATUS/ERROR_DESCRIPTION"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ERROR__DESCRIPTION>
+                        </RESULT__STATUS>
+                    </ns18:TL__POSUpgradeRequest>
+                </body>
+            </aePubInputType>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>575</pd:x>
+        <pd:y>112</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Start/OrderStatusNotification"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>200</pd:x>
+        <pd:y>118</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/OrderStatusNotification"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>POS_Upgread_Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/OrderStatusNotification/H1UK_TSOLABEL="POS_UPGRADE"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>POS_Upgread_Response</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Change_Tariff_Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/OrderStatusNotification/H1UK_TSOLABEL="CHANGETARIFF"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Change_Tariff_Response</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

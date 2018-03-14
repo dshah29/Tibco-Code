@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/pe/EngineTypes" schemaLocation="/SharedResources/SchemaDefinitions/External/BW/EngineTypes.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/CreateException_ReceiveError.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="Context" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Context2" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="attributes" minOccurs="0">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element ref="pfx2:ErrorReport"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>59</pd:startX>
+    <pd:startY>90</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:choose>
+                <xsl:when test="exists($CreateException_XMLParseError/root/pfx:Exception)">
+                    <xsl:copy-of select="$CreateException_XMLParseError/root/pfx:Exception"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="$Create-Exception/root/pfx:Exception"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:Exception"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>538</pd:endX>
+    <pd:endY>90</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349780757020</pd:targetNamespace>
+    <pd:activity name="Create Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>370</pd:x>
+        <pd:y>90</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/Sub/CreateException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionType>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                </ExceptionType>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Service-Start-Error/Code"/>
+                </ExceptionCode>
+                <xsl:if test="$Start/root/Context">
+                    <Context>
+                        <xsl:value-of select="$Start/root/Context"/>
+                    </Context>
+                </xsl:if>
+                <xsl:if test="$Start/root/Context2">
+                    <Context2>
+                        <xsl:value-of select="$Start/root/Context2"/>
+                    </Context2>
+                </xsl:if>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/Severity/Fatal"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Service-Start-Error/Description"/>
+                </Description>
+                <xsl:if test="exists($ParseXMLError/root/Description)">
+                    <xsl:choose>
+                        <xsl:when test="exists($ParseXMLError/root/Field)">
+                            <Comment>
+                                <xsl:value-of select="concat($ParseXMLError/root/Description, &quot; - &quot;, $ParseXMLError/root/Field)"/>
+                            </Comment>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:if test="$ParseXMLError/root/Description">
+                                <Comment>
+                                    <xsl:value-of select="$ParseXMLError/root/Description"/>
+                                </Comment>
+                            </xsl:if>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+                <xsl:copy-of select="$Start/root/attributes"/>
+                <xsl:copy-of select="$Start/root/pfx2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException_XMLParseError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>370</pd:x>
+        <pd:y>236</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_XMLParseError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Comment>
+                    <xsl:value-of select="'Cannot start service'"/>
+                </Comment>
+                <xsl:copy-of select="$Start/root/attributes"/>
+                <xsl:copy-of select="$Start/root/pfx2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ParseXMLError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>199</pd:x>
+        <pd:y>90</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/Sub/ParseXMLError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Start/root/pfx2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>ParseXMLError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ParseXMLError</pd:from>
+        <pd:to>Create Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ParseXMLError</pd:from>
+        <pd:to>CreateException_XMLParseError</pd:to>
+        <pd:xpathDescription>XML Error</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($ParseXMLError/root/Description)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_XMLParseError</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

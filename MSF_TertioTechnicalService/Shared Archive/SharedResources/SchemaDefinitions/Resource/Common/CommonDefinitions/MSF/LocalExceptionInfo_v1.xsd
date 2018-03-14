@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:lxi="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1"
+	 version="$Id: LocalExceptionInfo_v1.xsd 4015 2015-06-16 17:18:54Z rarmitag $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="LocalExceptionInfo" type="lxi:LocalExceptionInfo"/>
+	<xs:complexType name="LocalExceptionInfo">
+		<xs:sequence>
+			<xs:element ref="lxi:ExceptionSourceType"/>
+			<xs:element ref="lxi:LogExceptionLocally"/>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="lxi:InitialProcessName"/>
+				<xs:element ref="lxi:InitialProcessShortName"/>
+			</xs:sequence>
+			<xs:element ref="lxi:ResponseCode" minOccurs="0"/>
+			<xs:element ref="lxi:ResponseMessage" minOccurs="0"/>
+			<xs:element ref="lxi:RVSubject" minOccurs="0"/>
+			<xs:element ref="lxi:JMSDestinationName" minOccurs="0"/>
+			<xs:element ref="lxi:HTTPURL" minOccurs="0"/>
+			<xs:element ref="lxi:FilePath" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ExceptionSourceType">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="SOURCE"/>
+				<xs:enumeration value="CHAINED"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="InitialProcessName" type="xs:string"/>
+	<xs:element name="InitialProcessShortName" type="xs:string"/>
+	<xs:element name="LogExceptionLocally" type="xs:boolean"/>
+	<xs:element name="ResponseCode" type="xs:string"/>
+	<xs:element name="ResponseMessage" type="xs:string"/>
+	<xs:element name="RVSubject" type="xs:string"/>
+	<xs:element name="JMSDestinationName" type="xs:string"/>
+	<xs:element name="HTTPURL" type="xs:string"/>
+	<xs:element name="FilePath" type="xs:string"/>
+</xs:schema>

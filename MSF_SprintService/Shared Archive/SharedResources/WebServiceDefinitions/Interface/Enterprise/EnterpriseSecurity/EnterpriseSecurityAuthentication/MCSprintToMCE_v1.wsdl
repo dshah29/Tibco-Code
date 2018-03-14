@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns4="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityevents/mcaudit/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns3="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://three.co.uk/wsdl/interface/enterprise/enterprisesecurity/enterprisesecurityevents/mcsprint/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="MCSprintToMCE" targetNamespace="http://three.co.uk/wsdl/interface/enterprise/enterprisesecurity/enterprisesecurityevents/mcsprint/v1">
+    <wsdl:import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <wsdl:import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"/>
+    <wsdl:import location="../../../../../SchemaDefinitions/Interface/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1.xsd" namespace="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1"/>
+    <wsdl:message name="SprintToMCERequest">
+        <wsdl:part name="part1" element="ns3:SprintToMCELoadRequest"/>
+    </wsdl:message>
+    <wsdl:portType name="SprintToMCE">
+        <wsdl:operation name="SprintToMCE">
+            <wsdl:input message="tns:SprintToMCERequest"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="part1"/>
+    </wsdl:message>
+</wsdl:definitions>

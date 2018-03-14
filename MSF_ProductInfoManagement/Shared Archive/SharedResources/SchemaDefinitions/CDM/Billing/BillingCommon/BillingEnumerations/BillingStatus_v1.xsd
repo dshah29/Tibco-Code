@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:BILL_STS="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingstatus/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingstatus/v1"
+	 version="$Id: BillingStatus_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!-- used to model the states of a billing account-->
+	<xsd:simpleType name="__BILLING_ACCOUNT_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OPEN"/>
+			<xsd:enumeration value="SUSPENDED"/>
+			<xsd:enumeration value="CANCELLED"/>
+			<xsd:enumeration value="CLOSED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_BILLING_ACCOUNT_STATUS">
+		<xsd:union memberTypes="BILL_STS:__BILLING_ACCOUNT_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="billingAccountStatus" type="BILL_STS:_BILLING_ACCOUNT_STATUS"/>
+
+	<!--Mandate -->
+	<xsd:simpleType name="__DIRECT_DEBIT_MANDATE_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ISSUED"/>
+			<xsd:enumeration value="CANCELLED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_DIRECT_DEBIT_MANDATE_STATUS">
+		<xsd:union memberTypes="BILL_STS:__DIRECT_DEBIT_MANDATE_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="directDebitMandateStatus" type="BILL_STS:_DIRECT_DEBIT_MANDATE_STATUS"/>
+</xsd:schema>

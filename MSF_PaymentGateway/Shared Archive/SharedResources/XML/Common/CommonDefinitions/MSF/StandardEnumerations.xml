@@ -1,0 +1,588 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<EnumerationSets xmlns = "http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1 ../../../../SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/Enumerations_v1.xsd">
+	<EnumerationSet caseSensitive = "false" name = "Enterprise/EnterpriseSecurity/EnterpriseSecurityEvents/MCAudit/v1:AUDIT_EVENT_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "CUSTOMER_VALIDATION"/>
+		<enumeration value = "ACCESS_MY3"/>
+		<enumeration value = "CUSTOMER_SEARCH"/>
+		<enumeration value = "INTERACTION_NOTE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Asset/AssetCommon/AssetEnumerations/AssetStatus/v1:STOCK_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "OUTOFSTOCK"/>
+		<enumeration value = "INSTOCK"/>
+		<enumeration value = "LOWSTOCK"/>
+		<enumeration value = "PREORDER"/>
+		<enumeration value = "ENDOFLIFE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Asset/AssetCommon/AssetEnumerations/AssetStatus/v1:LOCATION_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "ACTIVE"/>
+		<enumeration value = "INACTIVE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Asset/AssetCommon/AssetEnumerations/AssetStatus/v1:RESERVATION_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "EXPIRED"/>
+		<enumeration value = "RESERVED"/>
+		<enumeration value = "COMMITTED"/>
+		<enumeration value = "CANCELLED"/>
+		<enumeration value = "FAILED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Asset/AssetCommon/AssetEnumerations/AssetTypes/v1:LOCATION_TYPES" normalised = "true" useSpaces = "true">
+		<enumeration value = "STORE"/>
+		<enumeration value = "WAREHOUSE"/>
+		<enumeration value = "CALLCENTRE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Billing/BillingCommon/BillingEnumerations/BillingStatus/v1:BILLING_ACCOUNT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "OPEN"/>
+		<enumeration value = "SUSPENDED"/>
+		<enumeration value = "CANCELLED"/>
+		<enumeration value = "CLOSED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Billing/BillingCommon/BillingEnumerations/BillingStatus/v1:DIRECT_DEBIT_MANDATE_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "ISSUED"/>
+		<enumeration value = "CANCELLED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Billing/BillingCommon/BillingEnumerations/BillingTypes/v1:PAYMENT_TYPES" normalised = "true" useSpaces = "true">
+		<enumeration value = "CREDITCARD"/>
+		<enumeration value = "DEBITCARD"/>
+		<enumeration value = "DIRECTDEBIT"/>
+		<enumeration value = "CARD"/>
+		<enumeration value = "CASH"/>
+		<enumeration value = "CHEQUE"/>
+		<enumeration value = "VOUCHER"/>
+		<enumeration value = "ADDTOBILL"/>
+		<enumeration value = "PAYATTILL"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Billing/BillingCommon/BillingEnumerations/BillingTypes/v1:PAYMENT_CARD_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "Visa Electron"/>
+		<enumeration value = "Amex"/>
+		<enumeration value = "Visa Delta"/>
+		<enumeration value = "Mastercard"/>
+		<enumeration value = "Laser"/>
+		<enumeration value = "Visa"/>
+		<enumeration value = "JCB"/>
+		<enumeration value = "Solo"/>
+		<enumeration value = "Switch"/>
+		<enumeration value = "Unknown"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Address/v1:ADDRESS_TYPES" normalised = "true" useSpaces = "true">
+		<enumeration value = "BILLING"/>
+		<enumeration value = "HOME"/>
+		<enumeration value = "WORK"/>
+		<enumeration value = "COLLECTION"/>
+		<enumeration value = "DELIVERY"/>
+		<enumeration value = "STORE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Address/v1:RESIDENT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "OWNER"/>
+		<enumeration value = "TENANT"/>
+		<enumeration value = "PARENTS"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Appointments/v1:APPOINTMENT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "PENDING"/>
+		<enumeration value = "ATTENDED"/>
+		<enumeration value = "NOT ATTENDED"/>
+		<enumeration value = "CANCELLED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Appointments/v1:APPOINTMENT_TYPES" normalised = "true" useSpaces = "true">
+		<enumeration value = "COLLECTION"/>
+		<enumeration value = "INQUIRY"/>
+		<enumeration value = "PROBLEM"/>
+		<enumeration value = "DEMONSTRATION"/>
+		<enumeration value = "DROPOFF"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/CreditProfileReference/v1:CREDIT_REF_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "CREDIT"/>
+		<enumeration value = "SAVINGS"/>
+		<enumeration value = "STOCK"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Discount/v1:DISCOUNT_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "PROMOTION"/>
+		<enumeration value = "BUSINESS"/>
+		<enumeration value = "MANAGEMENT DISCRETION"/>
+		<enumeration value = "ADD OFF"/>
+		<enumeration value = "DISPLAY / DAMAGED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Discount/v1:DISCOUNT_CALCULATION_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "MONETARY"/>
+		<enumeration value = "PERCENTAGE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Individual/v1:MARITAL_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "MARRIED"/>
+		<enumeration value = "SEPARATED"/>
+		<enumeration value = "SINGLE"/>
+		<enumeration value = "DIVORCED"/>
+		<enumeration value = "WIDOWED"/>
+		<enumeration value = "NOT DISCLOSED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Individual/v1:EMPLOYMENT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "EMPLOYED"/>
+		<enumeration value = "SELF EMPLOYED"/>
+		<enumeration value = "UNEMPLOYED"/>
+		<enumeration value = "STUDENT"/>
+		<enumeration value = "RETIRED"/>
+		<enumeration value = "SOLE TRADER"/>
+		<enumeration value = "COMPANY DIRECTOR"/>
+		<enumeration value = "PARTNERSHIP"/>
+		<enumeration value = "OTHER"/>
+		<enumeration value = "PART TIME"/>
+		<enumeration value = "CORPORATE EMPLOYEE"/>
+		<enumeration value = "NON UK STUDENT"/>
+		<enumeration value = "DEPENDANT SPOUSE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Interaction/v1:INTERACTION_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "PENDING"/>
+		<enumeration value = "CLOSED"/>
+		<enumeration value = "OPEN"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonDefinitions/Party/v1:PARTY_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "ACTIVE"/>
+		<enumeration value = "INACTIVE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonEnumerations/DateFrequency/v1:DATEFREQUENCY" normalised = "true" useSpaces = "true">
+		<enumeration value = "SINGLE"/>
+		<enumeration value = "WEEKLY"/>
+		<enumeration value = "MONTHLY"/>
+		<enumeration value = "QUARTERLY"/>
+		<enumeration value = "YEARLY"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonEnumerations/Status/v1:ACCOUNT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "OPEN"/>
+		<enumeration value = "CLOSED"/>
+		<enumeration value = "SUSPENDED"/>
+		<enumeration value = "CANCELLED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonEnumerations/Status/v1:PRICE_SEGMENT" normalised = "true" useSpaces = "true">
+		<enumeration value = "ONLINE"/>
+		<enumeration value = "RETAIL"/>
+		<enumeration value = "CONTACTCENTRE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Common/CommonEnumerations/Status/v1:ACCOUNTTYPE_SEGMENT" normalised = "true" useSpaces = "true">
+		<enumeration value = "SIMO"/>
+		<enumeration value = "CHS"/>
+		<enumeration value = "MBB"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:ACCOUNT_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "CONTRACT"/>
+		<enumeration value = "PAYG"/>
+		<enumeration value = "HYBRID"/>
+		<enumeration value = "SHARER"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:ACCOUNT_LEVEL" normalised = "true" useSpaces = "true">
+		<enumeration value = "Parent"/>
+		<enumeration value = "Child"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:ACCOUNT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "Active"/>
+		<enumeration value = "Suspended"/>
+		<enumeration value = "Closed"/>
+		<enumeration value = "Pending Activation"/>
+		<enumeration value = "Activation"/>
+		<enumeration value = "Pending Suspension"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:SERVICE_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "INS"/>
+		<enumeration value = "DIS"/>
+		<enumeration value = "SUS-COLL"/>
+		<enumeration value = "SUS-CUST"/>
+		<enumeration value = "SUS-F&amp;S"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/v1:INTERACTION_CATEGORY" normalised = "true" useSpaces = "true">
+		<enumeration value = "3008"/>
+		<enumeration value = "3009"/>
+		<enumeration value = "3010"/>
+		<enumeration value = "3015"/>
+		<enumeration value = "3016"/>
+		<enumeration value = "3039"/>
+		<enumeration value = "3057"/>
+		<enumeration value = "3058"/>
+		<enumeration value = "3059"/>
+		<enumeration value = "3061"/>
+		<enumeration value = "3077"/>
+		<enumeration value = "3087"/>
+		<enumeration value = "3095"/>
+		<enumeration value = "3096"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/v1:INTERACTION_METHOD" normalised = "true" useSpaces = "true">
+		<enumeration value = "WSUI"/>
+		<enumeration value = "OSUI"/>
+		<enumeration value = "TSUI"/>
+		<enumeration value = "SSUI"/>
+		<enumeration value = "ISUI"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/v1:INTERACTION_SUBCATEGORY" normalised = "true" useSpaces = "true">
+		<enumeration value = "M001"/>
+		<enumeration value = "M002"/>
+		<enumeration value = "M003"/>
+		<enumeration value = "M004"/>
+		<enumeration value = "M005"/>
+		<enumeration value = "R065"/>
+		<enumeration value = "R223"/>
+		<enumeration value = "R233"/>
+		<enumeration value = "R241"/>
+		<enumeration value = "R242"/>
+		<enumeration value = "R247"/>
+		<enumeration value = "R254"/>
+		<enumeration value = "R256"/>
+		<enumeration value = "R257"/>
+		<enumeration value = "R258"/>
+		<enumeration value = "R259"/>
+		<enumeration value = "R273"/>
+		<enumeration value = "R274"/>
+		<enumeration value = "R275"/>
+		<enumeration value = "R276"/>
+		<enumeration value = "R277"/>
+		<enumeration value = "R279"/>
+		<enumeration value = "R404"/>
+		<enumeration value = "R523"/>
+		<enumeration value = "R525"/>
+		<enumeration value = "R526"/>
+		<enumeration value = "R529"/>
+		<enumeration value = "R530"/>
+		<enumeration value = "S104"/>
+		<enumeration value = "S113"/>
+		<enumeration value = "S118"/>
+		<enumeration value = "S119"/>
+		<enumeration value = "S120"/>
+		<enumeration value = "S121"/>
+		<enumeration value = "S122"/>
+		<enumeration value = "S123"/>
+		<enumeration value = "S124"/>
+		<enumeration value = "S125"/>
+		<enumeration value = "S126"/>
+		<enumeration value = "S128"/>
+		<enumeration value = "S130"/>
+		<enumeration value = "S135"/>
+		<enumeration value = "S136"/>
+		<enumeration value = "S138"/>
+		<enumeration value = "S140"/>
+		<enumeration value = "S142"/>
+		<enumeration value = "S143"/>
+		<enumeration value = "S144"/>
+		<enumeration value = "S147"/>
+		<enumeration value = "S148"/>
+		<enumeration value = "S150"/>
+		<enumeration value = "S163"/>
+		<enumeration value = "S262"/>
+		<enumeration value = "S264"/>
+		<enumeration value = "S269"/>
+		<enumeration value = "S275"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/v1:INTERACTION_OUTCOME" normalised = "true" useSpaces = "true">
+		<enumeration value = "3893"/>
+		<enumeration value = "3934"/>
+		<enumeration value = "5979"/>
+		<enumeration value = "5984"/>
+		<enumeration value = "5999"/>
+		<enumeration value = "6004"/>
+		<enumeration value = "611"/>
+		<enumeration value = "M001"/>
+		<enumeration value = "M002"/>
+		<enumeration value = "M003"/>
+		<enumeration value = "M004"/>
+		<enumeration value = "M005"/>
+		<enumeration value = "M006"/>
+		<enumeration value = "M007"/>
+		<enumeration value = "M008"/>
+		<enumeration value = "M009"/>
+		<enumeration value = "M010"/>
+		<enumeration value = "M011"/>
+		<enumeration value = "M012"/>
+		<enumeration value = "M013"/>
+		<enumeration value = "M014"/>
+		<enumeration value = "M015"/>
+		<enumeration value = "M016"/>
+		<enumeration value = "M017"/>
+		<enumeration value = "M018"/>
+		<enumeration value = "M019"/>
+		<enumeration value = "M020"/>
+		<enumeration value = "M021"/>
+		<enumeration value = "M022"/>
+		<enumeration value = "M023"/>
+		<enumeration value = "M024"/>
+		<enumeration value = "M025"/>
+		<enumeration value = "M026"/>
+		<enumeration value = "M027"/>
+		<enumeration value = "M028"/>
+		<enumeration value = "M029"/>
+		<enumeration value = "M030"/>
+		<enumeration value = "M031"/>
+		<enumeration value = "M032"/>
+		<enumeration value = "M033"/>
+		<enumeration value = "M034"/>
+		<enumeration value = "M035"/>
+		<enumeration value = "M036"/>
+		<enumeration value = "M037"/>
+		<enumeration value = "M038"/>
+		<enumeration value = "M039"/>
+		<enumeration value = "M040"/>
+		<enumeration value = "M041"/>
+		<enumeration value = "M042"/>
+		<enumeration value = "M043"/>
+		<enumeration value = "M044"/>
+		<enumeration value = "M045"/>
+		<enumeration value = "M046"/>
+		<enumeration value = "M047"/>
+		<enumeration value = "M048"/>
+		<enumeration value = "M049"/>
+		<enumeration value = "M050"/>
+		<enumeration value = "M051"/>
+		<enumeration value = "M052"/>
+		<enumeration value = "M053"/>
+		<enumeration value = "M054"/>
+		<enumeration value = "M055"/>
+		<enumeration value = "M056"/>
+		<enumeration value = "M057"/>
+		<enumeration value = "M058"/>
+		<enumeration value = "M059"/>
+		<enumeration value = "M060"/>
+		<enumeration value = "M061"/>
+		<enumeration value = "M062"/>
+		<enumeration value = "M063"/>
+		<enumeration value = "M064"/>
+		<enumeration value = "M065"/>
+		<enumeration value = "M066"/>
+		<enumeration value = "M067"/>
+		<enumeration value = "M068"/>
+		<enumeration value = "M069"/>
+		<enumeration value = "M070"/>
+		<enumeration value = "M071"/>
+		<enumeration value = "M072"/>
+		<enumeration value = "M073"/>
+		<enumeration value = "M074"/>
+		<enumeration value = "M075"/>
+		<enumeration value = "M076"/>
+		<enumeration value = "M077"/>
+		<enumeration value = "M078"/>
+		<enumeration value = "M079"/>
+		<enumeration value = "M080"/>
+		<enumeration value = "M081"/>
+		<enumeration value = "M082"/>
+		<enumeration value = "M083"/>
+		<enumeration value = "M084"/>
+		<enumeration value = "M085"/>
+		<enumeration value = "M086"/>
+		<enumeration value = "M087"/>
+		<enumeration value = "M088"/>
+		<enumeration value = "M089"/>
+		<enumeration value = "M090"/>
+		<enumeration value = "M091"/>
+		<enumeration value = "M092"/>
+		<enumeration value = "M093"/>
+		<enumeration value = "M094"/>
+		<enumeration value = "M095"/>
+		<enumeration value = "M096"/>
+		<enumeration value = "M097"/>
+		<enumeration value = "M098"/>
+		<enumeration value = "M099"/>
+		<enumeration value = "M100"/>
+		<enumeration value = "M101"/>
+		<enumeration value = "M102"/>
+		<enumeration value = "M103"/>
+		<enumeration value = "M104"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/v1:INTERACTION_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "BUSY"/>
+		<enumeration value = "CALL"/>
+		<enumeration value = "CHLD"/>
+		<enumeration value = "CMPL"/>
+		<enumeration value = "NOCL"/>
+		<enumeration value = "INPR"/>
+		<enumeration value = "NOAN"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerProfile/CustomerCreditProfileManagement/CustomerCreditProfile/v1:CREDIT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "ACCEPT"/>
+		<enumeration value = "REFER"/>
+		<enumeration value = "DECLINE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerProfile/CustomerPersonalInformationManagement/Customer/v1:CUSTOMER_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "PAYG"/>
+		<enumeration value = "COLLECTIONS"/>
+		<enumeration value = "PENDING_PORTOUT"/>
+		<enumeration value = "PENDING_RETIREMENT"/>
+		<enumeration value = "PENDING_COO"/>
+		<enumeration value = "PENDING_POSTTOPRE"/>
+		<enumeration value = "PENDING_PRICE_PLAN_CHANGE"/>
+		<enumeration value = "PENDING_NEW_CONTRACT"/>
+		<enumeration value = "ACTIVE"/>
+		<enumeration value = "PENDING_PRICE_PLAN_CHANGE"/>
+		<enumeration value = "RETIRED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerProfile/CustomerPersonalInformationManagement/Customer/v1:CUSTOMER_SEGMENT" normalised = "true" useSpaces = "true">
+		<enumeration value = "PREPAY"/>
+		<enumeration value = "BUSINESS"/>
+		<enumeration value = "POSTPAY"/>
+		<enumeration value = "MVNO"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerProfile/CustomerProfileSubscriptionManagement/CustomerSubscription/v1:SUBSCRIPTION_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "RESERVED"/>
+		<enumeration value = "SUSPENDED"/>
+		<enumeration value = "ACTIVE"/>
+		<enumeration value = "CANCELLED"/>
+		<enumeration value = "CONNECTED"/>
+		<enumeration value = "DISCONNECTED"/>
+		<enumeration value = "MOVE TO POSTPAY"/>
+		<enumeration value = "MOVE TO PREPAY"/>
+		<enumeration value = "PORTING OUT"/>
+		<enumeration value = "PORTING IN"/>
+		<enumeration value = "PORTIN PENDING"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerTypes/CustomerBaseTypes/v1:CUSTOMER_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "COMPANY"/>
+		<enumeration value = "CONSUMER"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerTypes/CustomerBaseTypes/v1:CUSTOMER_SUBTYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "Hybrid Consumer Customer"/>
+		<enumeration value = "Consumer - Customer"/>
+		<enumeration value = "H3G / VIP 1"/>
+		<enumeration value = "H3G / VIP 2"/>
+		<enumeration value = "H3G / VIP 3"/>
+		<enumeration value = "H3G /  VIP 4"/>
+		<enumeration value = "H3G / Demo"/>
+		<enumeration value = "H3G / Panelist"/>
+		<enumeration value = "H3G / Testing"/>
+		<enumeration value = "H3G / Corrupt Record"/>
+		<enumeration value = "Consumer / Friends &amp; Family"/>
+		<enumeration value = "H3G Post and Prepay"/>
+		<enumeration value = "Consumer VIP"/>
+		<enumeration value = "H3G / Internal"/>
+		<enumeration value = "VIP - Competition Winners"/>
+		<enumeration value = "PrePay Customer"/>
+		<enumeration value = "Prepay / Competition Winners"/>
+		<enumeration value = "H3G / Staff VIP"/>
+		<enumeration value = "H3G Staff A"/>
+		<enumeration value = "H3G Staff B"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Offer/OfferItemDefinition/Offer/v1:OFFER_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "EXPIRED"/>
+		<enumeration value = "INPROGRESS"/>
+		<enumeration value = "SUBMITTED"/>
+		<enumeration value = "CANCELLED"/>
+		<enumeration value = "FAILED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Offer/OfferItemDefinition/Offer/v1:OFFER_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "PROMOTIONAL"/>
+		<enumeration value = "ONLINE"/>
+		<enumeration value = "BASKET"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Offer/OfferItemDefinition/OfferItem/v1:OFFERITEM_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "PENDING DELIVERY"/>
+		<enumeration value = "DELIVERED"/>
+		<enumeration value = "PROVISIONED"/>
+		<enumeration value = "PENDING"/>
+		<enumeration value = "CANCELLED"/>
+		<enumeration value = "NOT PROVISIONED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Order/OrderItemDefinition/Order/v1:ORDER_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "PENDING"/>
+		<enumeration value = "COMPLETED"/>
+		<enumeration value = "CANCELLED"/>
+		<enumeration value = "OPEN"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Order/OrderItemDefinition/OrderItem/v1:ORDERITEM_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "PENDING DELIVERY"/>
+		<enumeration value = "DELIVERED"/>
+		<enumeration value = "PROVISIONED"/>
+		<enumeration value = "PENDING"/>
+		<enumeration value = "CANCELLED"/>
+		<enumeration value = "NOT PROVISIONED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Product/ProductSpecification/ProductSpecificationManagement/ProductSpecification/v1:PRODUCT_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "DEVICE"/>
+		<enumeration value = "TARIFF"/>
+		<enumeration value = "SERVICE"/>
+		<enumeration value = "DISCOUNT"/>
+		<enumeration value = "ACCESSORY"/>
+		<enumeration value = "BUNDLE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Product/ProductTypes/ProductBaseTypes/v1:PRODUCT_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "AVAILABLE"/>
+		<enumeration value = "UNAVAILABLE"/>
+		<enumeration value = "CANCELLED"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Product/ProductTypes/ProductBaseTypes/v1:TARRIF_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "Voice"/>
+		<enumeration value = "MBB"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:USER_LOCATION" normalised = "true" useSpaces = "true">
+		<enumeration value = "STORE"/>
+		<enumeration value = "CALL CENTRE"/>
+		<enumeration value = "CORPORATE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:FACTOR_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "MEMORABLE_NAME"/>
+		<enumeration value = "MEMORABLE_PLACE"/>
+		<enumeration value = "AUTHORISED_CONTACT_MEMORABLE_NAME"/>
+		<enumeration value = "AUTHORISED_CONTACT_MEMORABLE_PLACE"/>
+		<enumeration value = "BANK_ACCOUNT"/>
+		<enumeration value = "REGISTERED_CARD_NUMBER"/>
+		<enumeration value = "LAST_TOPUP_AMOUNT"/>
+		<enumeration value = "DPA_SCORE"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:AUTHORISED_ACCESS_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "Full"/>
+		<enumeration value = "Partial"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:FACTOR_SOURCE" normalised = "true" useSpaces = "true">
+		<enumeration value = "SYSTEM"/>
+		<enumeration value = "AGENT"/>
+		<enumeration value = "CUSTOMER"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:CONTACT_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "Account Holder"/>
+		<enumeration value = "Authorised Contact"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/v1:VALIDATION_REASON" normalised = "true" useSpaces = "true">
+		<enumeration value = "Upgrade"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway/v1:PAYMENT_METHOD_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "RECURRING"/>
+		<enumeration value = "DIRECT-DEBIT"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway/v1:BANK_ACCOUNT_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "UK000005010"/>
+		<enumeration value = "UK000005011"/>
+		<enumeration value = "Single"/>
+		<enumeration value = "Single Signatory"/>
+		<enumeration value = "14"/>
+		<enumeration value = "15"/>
+		<enumeration value = "Joint Signatory"/>
+		<enumeration value = "Joint"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/MCVoucherManagementSystem/v1:VOUCHER_TYPE" normalised = "true" useSpaces = "true">
+		<enumeration value = "ALL"/>
+		<enumeration value = "VRTUL"/>
+		<enumeration value = "SOP"/>
+		<enumeration value = "TUR"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/MCVoucherManagementSystem/v1:VOUCHER_STATUS" normalised = "true" useSpaces = "true">
+		<enumeration value = "BURNED"/>
+		<enumeration value = "ADCERR"/>
+		<enumeration value = "ADCTO"/>
+		<enumeration value = "ADCNA"/>
+		<enumeration value = "EXPIRE"/>
+		<enumeration value = "ADCDUP"/>
+		<enumeration value = "IN_USE"/>
+		<enumeration value = "SOLD"/>
+		<enumeration value = "O2TO"/>
+		<enumeration value = "O2ERR"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/MCVoucherManagementSystem/v1:VOUCHER_SALES_CHANNEL" normalised = "true" useSpaces = "true">
+		<enumeration value = "ATM"/>
+		<enumeration value = "AUTO"/>
+		<enumeration value = "Handset"/>
+		<enumeration value = "IVR"/>
+		<enumeration value = "POS"/>
+		<enumeration value = "REC"/>
+		<enumeration value = "SCH"/>
+		<enumeration value = "SCIV"/>
+		<enumeration value = "SCW"/>
+		<enumeration value = "TUR"/>
+		<enumeration value = "VCS"/>
+		<enumeration value = "VMS UI"/>
+		<enumeration value = "Web"/>
+		<regexp expression = "VMS UI (..*)"/>
+		<regexp expression = "..*"/>
+	</EnumerationSet>
+	<EnumerationSet caseSensitive = "false" name = "Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft/v1:AGENT_ROLE" normalised = "true" useSpaces = "true">
+		<enumeration value = "MCE_RETAIL_AGENT"/>
+		<enumeration value = "MCE_CC_AGENT"/>
+	</EnumerationSet>
+</EnumerationSets>

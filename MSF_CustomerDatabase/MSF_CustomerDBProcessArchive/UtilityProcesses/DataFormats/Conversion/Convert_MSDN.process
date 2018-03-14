@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
+    <pd:name>UtilityProcesses/DataFormats/Conversion/Convert_MSDN.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="MSISDN" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>132</pd:startX>
+    <pd:startY>146</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <nationalFormat>
+                <xsl:value-of select="$Convert-MSISDN-to-National-Format/root/MSISDN"/>
+            </nationalFormat>
+            <internationalFormat>
+                <xsl:value-of select="$Convert-MSISDN-to-International-Format/root/MSISDN"/>
+            </internationalFormat>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="nationalFormat" type="xsd:string"/>
+                    <xsd:element name="internationalFormat" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>585</pd:endX>
+    <pd:endY>146</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1442251101874</pd:targetNamespace>
+    <pd:activity name="Convert MSISDN to International Format">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>285</pd:x>
+        <pd:y>161</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="MSISDN" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                    <xsl:when test="starts-with($Start/root/MSISDN, &quot;0&quot;)">
+                        <MSISDN>
+                            <xsl:value-of select="tib:pad-front(substring-after($Start/root/MSISDN, &quot;0&quot;), 12, 4)"/>
+                        </MSISDN>
+                    </xsl:when>
+                    <xsl:when test="starts-with($Start/root/MSISDN, &quot;+&quot;)">
+                        <MSISDN>
+                            <xsl:value-of select="substring-after($Start/root/MSISDN, &quot;+&quot;)"/>
+                        </MSISDN>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <MSISDN>
+                            <xsl:value-of select="$Start/root/MSISDN"/>
+                        </MSISDN>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Convert MSISDN to National Format">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>444</pd:x>
+        <pd:y>154</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="MSISDN" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                    <xsl:when test="starts-with($Start/root/MSISDN, &quot;+&quot;)">
+                        <MSISDN>
+                            <xsl:value-of select="concat(&quot;0&quot;, substring-after($Start/root/MSISDN, &quot;+44&quot;))"/>
+                        </MSISDN>
+                    </xsl:when>
+                    <xsl:when test="starts-with($Start/root/MSISDN, &quot;44&quot;)">
+                        <MSISDN>
+                            <xsl:value-of select="concat(&quot;0&quot;,substring-after($Start/root/MSISDN, &quot;44&quot;))"/>
+                        </MSISDN>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <MSISDN>
+                            <xsl:value-of select="$Start/root/MSISDN"/>
+                        </MSISDN>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Convert MSISDN to International Format</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Convert MSISDN to International Format</pd:from>
+        <pd:to>Convert MSISDN to National Format</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Convert MSISDN to National Format</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

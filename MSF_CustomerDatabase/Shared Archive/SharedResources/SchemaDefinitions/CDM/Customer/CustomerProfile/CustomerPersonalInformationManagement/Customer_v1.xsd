@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:cust="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1"
+	 xmlns:custAcc="http://three.co.uk/xsd/cdm/customer/customeraccount/customeraccountmanagement/customeraccount/v1"
+	 xmlns:cnt="http://three.co.uk/xsd/cdm/common/commondefinitions/contactdetails/v1"
+	 xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:custIntrs="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinteractionmanagement/customerinteractions/v1"
+	 xmlns:custCredit="http://three.co.uk/xsd/cdm/customer/customerprofile/customercreditprofilemanagement/customercreditprofile/v1"
+	 xmlns:custChar="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customercharacteristics/v1"
+	 xmlns:ord="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1"
+	 xmlns:ps="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:po="http://three.co.uk/xsd/cdm/product/productoffering/productofferingmanagement/productoffering/v1"
+	 xmlns:ptyRole="http://three.co.uk/xsd/cdm/common/commondefinitions/partyrole/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1"
+	 version="$Id: Customer_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customercharacteristics/v1" schemaLocation="CustomerCharacteristics_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" schemaLocation="../../../Common/CommonDefinitions/Individual_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/contactdetails/v1" schemaLocation="../../../Common/CommonDefinitions/ContactDetails_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customeraccount/customeraccountmanagement/customeraccount/v1" schemaLocation="../../CustomerAccount/CustomerAccountManagement/CustomerAccount_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinteractionmanagement/customerinteractions/v1" schemaLocation="../../CustomerInteraction/CustomerInteractionManagement/CustomerInteractions_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customercreditprofilemanagement/customercreditprofile/v1" schemaLocation="../CustomerCreditProfileManagement/CustomerCreditProfile_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" schemaLocation="../../../Product/ProductSpecification/ProductSpecificationManagement/ProductSpecification_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" schemaLocation="../../../Order/OrderItemDefinition/Order_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/partyrole/v1" schemaLocation="../../../Common/CommonDefinitions/PartyRole_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productoffering/productofferingmanagement/productoffering/v1" schemaLocation="../../../Product/ProductOffering/ProductOfferingManagement/ProductOffering_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!-- Customer  status - defined by PeopleSoft -->
+	<xsd:simpleType name="__CUSTOMER_STATUS__BASE__">
+		<!-- Original CDM values
+			<xsd:enumeration value="ACTIVE"/>
+			<xsd:enumeration value="DEACTIVATED"/>
+			<xsd:enumeration value="SUSPENDED"/>
+			<xsd:enumeration value="PROSPECT"/>
+-->
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PAYG"/>
+			<xsd:enumeration value="COLLECTIONS"/>
+			<xsd:enumeration value="PENDING_PORTOUT"/>
+			<xsd:enumeration value="PENDING_RETIREMENT"/>
+			<xsd:enumeration value="PENDING_COO"/>
+			<xsd:enumeration value="PENDING_POSTTOPRE"/>
+			<xsd:enumeration value="PENDING_PRICE_PLAN_CHANGE"/>
+			<xsd:enumeration value="PENDING_NEW_CONTRACT"/>
+			<xsd:enumeration value="ACTIVE"/>
+			<xsd:enumeration value="PENDING_PRICE_PLAN_CHANGE"/>
+			<xsd:enumeration value="RETIRED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_CUSTOMER_STATUS">
+		<xsd:union memberTypes="cust:__CUSTOMER_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+
+	<!-- more of a type field, for all the different types of customer's possible-->
+	<xsd:simpleType name="__CUSTOMER_SEGMENT__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PREPAY"/>
+			<xsd:enumeration value="BUSINESS"/>
+			<xsd:enumeration value="POSTPAY"/>
+			<xsd:enumeration value="MVNO"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_CUSTOMER_SEGMENT">
+		<xsd:union memberTypes="cust:__CUSTOMER_SEGMENT__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="OrderHistory">
+		<xsd:sequence>
+			<xsd:element ref="ord:order" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CustomerOffers">
+		<xsd:sequence>
+			<xsd:element ref="po:productOffering" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="InstalledProductBase">
+		<xsd:sequence>
+			<xsd:element ref="ps:productSpecification" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="Customer">
+		<xsd:sequence>
+			<xsd:element ref="ptyRole:partyRole" minOccurs="0"/>
+			<xsd:element name="customerID" type="custBASE:CustomerID"/>
+			<xsd:element name="customerStatus" type="cust:_CUSTOMER_STATUS"/>
+			<xsd:element name="customerValue" type="BASE:PopulatedString"/>
+			<xsd:element name="customerSegment" type="cust:_CUSTOMER_SEGMENT"/>
+			<xsd:element ref="ind:individual" minOccurs="0"/>
+			<xsd:element ref="addr:address" maxOccurs="unbounded"/>
+			<xsd:element ref="cnt:contactDetails" minOccurs="0"/>
+			<xsd:element ref="custAcc:customerAccount" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="custChar:customerCharacteristics" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="custIntrs:customerInteractions" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="custCredit:customerCreditProfile" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="orderHistory" type="cust:OrderHistory" minOccurs="0"/>
+			<xsd:element name="customerOffers" type="cust:CustomerOffers" minOccurs="0"/>
+			<xsd:element name="installedProductBase" type="cust:InstalledProductBase" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Customer" type="cust:Customer"/>
+	<xsd:element name="customer" type="cust:Customer">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Customer instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

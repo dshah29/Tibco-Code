@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/customerdetails/v1" xmlns:ns32="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns5="http://schemas.tibco.com/bw/plugins/as/5.0/asExceptions" xmlns:ns12="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pfx="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/addcustomerdetails/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/as" xmlns:ns4="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/addcustomerdetails/v1"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/MC_CustomerDatabase_v1.xsd"/>
+    <pd:name>IntegrationServices/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/CustomerDatabase_v1/Common/Put.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="group">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx3:AddCustomerDetailsRequest"/>
+                    <xsd:element name="lastUpdate" type="xsd:dateTime"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>27</pd:startX>
+    <pd:startY>225</pd:startY>
+    <pd:returnBindings>
+        <pfx3:AddCustomerDetailsResponse/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx3:AddCustomerDetailsResponse"/>
+    <pd:endX>1363</pd:endX>
+    <pd:endY>233</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="HasError" type="xsd:boolean"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1420439452805</pd:targetNamespace>
+    <pd:group name="IterateAllCustomerDetails">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>528</pd:x>
+        <pd:y>149</pd:y>
+        <pd:width>353</pd:width>
+        <pd:height>140</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest</pd:over>
+            <pd:iterationElementSlot>currCustomer</pd:iterationElementSlot>
+            <pd:indexSlot>customerIndex</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Convert_MSDN</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>HasError</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Convert_MSDN</pd:from>
+            <pd:to>AddCustomer</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>AddCustomer</pd:from>
+            <pd:to>HasError</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="AddCustomer">
+            <pd:type>com.tibco.plugin.as.ASPutActivity</pd:type>
+            <pd:resourceType>ae.activities.ASPutActivity</pd:resourceType>
+            <pd:x>699</pd:x>
+            <pd:y>226</pd:y>
+            <config>
+                <lockWait>-2</lockWait>
+                <ttl>-2</ttl>
+                <spaceConnection>/SharedResources/Connections/Metaspace/MS_CustomerDatabase.sharedMetaSpacecon/CUSTOMER/CustomerSpaceConnection</spaceConnection>
+            </config>
+            <pd:inputBindings>
+                <ns1:ActivityInput>
+                    <Tuple>
+                        <transactionID>
+                            <xsl:value-of select="$GetInputMessageContext/root/ns6:MessageContext/ns6:TransactionID"/>
+                        </transactionID>
+                        <xsl:if test="string-length($Convert_MSDN/root/internationalFormat)>0">
+                            <MSISDN>
+                                <xsl:value-of select="$Convert_MSDN/root/internationalFormat"/>
+                            </MSISDN>
+                        </xsl:if>
+                        <xsl:if test="string-length($Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest[$customerIndex]/pfx3:accountID)>0">
+                            <xsl:if test="$Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest[$customerIndex]/pfx3:accountID">
+                                <accountID>
+                                    <xsl:value-of select="$Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest[$customerIndex]/pfx3:accountID"/>
+                                </accountID>
+                            </xsl:if>
+                        </xsl:if>
+                        <xsl:if test="string-length($Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest[$customerIndex]/pfx3:CRMID)>0">
+                            <CRMID>
+                                <xsl:value-of select="$Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest[$customerIndex]/pfx3:CRMID"/>
+                            </CRMID>
+                        </xsl:if>
+                        <customerDetails>
+                            <xsl:value-of select="tib:string-to-base64(tib:render-xml($Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest[$customerIndex]/pfx3:CustomerDetails, false(), false()))"/>
+                        </customerDetails>
+                        <lastUpdate>
+                            <xsl:value-of select="$Start/group/lastUpdate"/>
+                        </lastUpdate>
+                    </Tuple>
+                </ns1:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Convert_MSDN">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>601</pd:x>
+            <pd:y>226</pd:y>
+            <config>
+                <processName>/UtilityProcesses/DataFormats/Conversion/Convert_MSDN.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <MSISDN>
+                        <xsl:value-of select="$Start/group/pfx3:AddCustomerDetailsRequest/pfx3:AddCustomerDetailsRequests/pfx3:AddCustomerDetailRequest[$customerIndex]/pfx3:MSISDN"/>
+                    </MSISDN>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="HasError">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>794</pd:x>
+            <pd:y>225</pd:y>
+            <config>
+                <variableName>Variable0</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:choose>
+                        <xsl:when test="$AddCustomer/ns1:ResultList/HasError=&quot;true&quot;">
+                            <HasError>
+                                <xsl:value-of select="true()"/>
+                            </HasError>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <HasError>
+                                <xsl:value-of select="$Variable0/root/HasError"/>
+                            </HasError>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Begin Transaction">
+        <pd:type>com.tibco.plugin.as.ASBeginTransactionActivity</pd:type>
+        <pd:resourceType>ae.activities.ASBeginTransactionActivity</pd:resourceType>
+        <pd:x>444</pd:x>
+        <pd:y>226</pd:y>
+        <config>
+            <Metaspace>/SharedResources/Connections/Metaspace/MS_CustomerDatabase.sharedMetaSpacecon</Metaspace>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>409</pd:x>
+        <pd:y>395</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=ASException namespace=http://schemas.tibco.com/bw/plugins/as/5.0/asExceptions</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Commit Transaction">
+        <pd:type>com.tibco.plugin.as.ASCommitTransactionActivity</pd:type>
+        <pd:resourceType>ae.activities.ASCommitTransactionActivity</pd:resourceType>
+        <pd:x>999</pd:x>
+        <pd:y>230</pd:y>
+        <config>
+            <Metaspace>/SharedResources/Connections/Metaspace/MS_CustomerDatabase.sharedMetaSpacecon</Metaspace>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateBusinessException-CustomerLocked">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>475</pd:x>
+        <pd:y>44</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/ExceptionCodes/MSF/CustomerDB/AddCustomer/CustomerLocked/Code"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/ExceptionCodes/MSF/CustomerDB/AddCustomer/CustomerLocked/Description"/>
+                </Description>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException_ASOperationError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>726</pd:x>
+        <pd:y>394</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ASOperationError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <metaspaceName>
+                    <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/SharedResources/Connections/MetaspaceConnection/CustomerDBConnection/MetaSpaceName"/>
+                </metaspaceName>
+                <xsl:copy-of select="$_error/ns4:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Error-AS">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>862</pd:x>
+        <pd:y>395</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_ASOperationError/root/pfx2:Exception"/>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Error-CustomerLocked">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>295</pd:x>
+        <pd:y>46</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateBusinessException-CustomerLocked/root/pfx2:Exception"/>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetInputMessageContext">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>329</pd:x>
+        <pd:y>226</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="InitializeHasError">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>120</pd:x>
+        <pd:y>226</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <HasError>
+                    <xsl:value-of select="false()"/>
+                </HasError>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1128</pd:x>
+        <pd:y>230</pd:y>
+        <config>
+            <element ref="pfx3:AddCustomerDetailsResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx3:AddCustomerDetailsResponse/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>575</pd:x>
+        <pd:y>502</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Rollback Transaction">
+        <pd:type>com.tibco.plugin.as.ASRollbackTransactionActivity</pd:type>
+        <pd:resourceType>ae.activities.ASRollbackTransactionActivity</pd:resourceType>
+        <pd:x>574</pd:x>
+        <pd:y>402</pd:y>
+        <config>
+            <Metaspace>/SharedResources/Connections/Metaspace/MS_CustomerDatabase.sharedMetaSpacecon</Metaspace>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Rollback-Transaction-1">
+        <pd:type>com.tibco.plugin.as.ASRollbackTransactionActivity</pd:type>
+        <pd:resourceType>ae.activities.ASRollbackTransactionActivity</pd:resourceType>
+        <pd:x>700</pd:x>
+        <pd:y>43</pd:y>
+        <config>
+            <Metaspace>/SharedResources/Connections/Metaspace/MS_CustomerDatabase.sharedMetaSpacecon</Metaspace>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1252</pd:x>
+        <pd:y>233</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns4:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Map-Data/pfx3:AddCustomerDetailsResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>227</pd:x>
+        <pd:y>226</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns4:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/group"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Rollback Transaction</pd:to>
+        <pd:xpathDescription>TransactionStarted</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>not(exists($_error_Begin-Transaction/ns5:ASException))</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Rollback Transaction</pd:from>
+        <pd:to>CreateException_ASOperationError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Rollback-Transaction-1</pd:from>
+        <pd:to>CreateBusinessException-CustomerLocked</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateBusinessException-CustomerLocked</pd:from>
+        <pd:to>Generate-Error-CustomerLocked</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>InitializeHasError</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Commit Transaction</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>CreateException_ASOperationError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_ASOperationError</pd:from>
+        <pd:to>Generate-Error-AS</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetInputMessageContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetInputMessageContext</pd:from>
+        <pd:to>Begin Transaction</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>IterateAllCustomerDetails</pd:from>
+        <pd:to>Commit Transaction</pd:to>
+        <pd:xpathDescription>AddSuccessful</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Begin Transaction</pd:from>
+        <pd:to>IterateAllCustomerDetails</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>IterateAllCustomerDetails</pd:from>
+        <pd:to>Rollback-Transaction-1</pd:to>
+        <pd:xpathDescription>Error</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Variable0/root/HasError="true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InitializeHasError</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

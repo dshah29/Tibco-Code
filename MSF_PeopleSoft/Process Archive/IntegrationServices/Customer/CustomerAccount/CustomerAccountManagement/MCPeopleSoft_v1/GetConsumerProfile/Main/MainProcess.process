@@ -1,0 +1,491 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Request" xmlns:XMLUtil="java://com.tibco.tibcobw.customfunctions.XMLUtils" xmlns:ns5="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" xmlns:pfx="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Response" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/MCPeoplesoft_v1.xsd"/>
+    <pd:name>IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/GetConsumerProfile/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:GetConsumerProfileRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>42</pd:startX>
+    <pd:startY>81</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$AESchema_To_CDM/root/pfx:GetConsumerProfileResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:GetConsumerProfileResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>937</pd:endX>
+    <pd:endY>81</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1424676234771</pd:targetNamespace>
+    <pd:activity name="AESchema_To_CDM">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>678</pd:x>
+        <pd:y>79</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:GetConsumerProfileResponse"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx:GetConsumerProfileResponse>
+                    <xsl:for-each select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__KEY">
+                        <pfx:CustomerKey>
+                            <xsl:if test="not((ACCOUNT__ID/@xsi:nil=(&quot;true&quot;)) or (ACCOUNT__ID/@xsi:nil=(&quot;1&quot;)))">
+                                <pfx:BAN>
+                                    <xsl:value-of select="ACCOUNT__ID"/>
+                                </pfx:BAN>
+                            </xsl:if>
+                            <xsl:if test="not((CRM__ID/@xsi:nil=(&quot;true&quot;)) or (CRM__ID/@xsi:nil=(&quot;1&quot;)))">
+                                <pfx:crmID>
+                                    <xsl:value-of select="CRM__ID"/>
+                                </pfx:crmID>
+                            </xsl:if>
+                            <pfx:MSISDN>
+                                <xsl:value-of select="MSISDN"/>
+                            </pfx:MSISDN>
+                        </pfx:CustomerKey>
+                    </xsl:for-each>
+                    <pfx:Name>
+                        <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/TITLE) and ($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/TITLE) !=&quot;&quot;)">
+                            <ns5:title>
+                                <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/TITLE"/>
+                            </ns5:title>
+                        </xsl:if>
+                        <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/FORENAME) and ($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/FORENAME)!=&quot;&quot;)">
+                            <ns5:firstName>
+                                <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/FORENAME"/>
+                            </ns5:firstName>
+                        </xsl:if>
+                        <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/SURNAME) and ($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/SURNAME)!=&quot;&quot;)">
+                            <ns5:lastName>
+                                <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__NAME/SURNAME"/>
+                            </ns5:lastName>
+                        </xsl:if>
+                    </pfx:Name>
+                    <xsl:for-each select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/ADDRESS">
+                        <pfx4:Address>
+                            <xsl:if test="(exists(ADDRESS__LINE__1) and (ADDRESS__LINE__1)!=&quot;&quot;)">
+                                <pfx4:streetLine1>
+                                    <xsl:value-of select="ADDRESS__LINE__1"/>
+                                </pfx4:streetLine1>
+                            </xsl:if>
+                            <xsl:if test="(exists(ADDRESS__LINE__2) and (ADDRESS__LINE__2)!=&quot;&quot;)">
+                                <pfx4:streetLine2>
+                                    <xsl:value-of select="ADDRESS__LINE__2"/>
+                                </pfx4:streetLine2>
+                            </xsl:if>
+                            <xsl:if test="(exists(ADDRESS__LINE__3) and (ADDRESS__LINE__3)!=&quot;&quot;)">
+                                <pfx4:city>
+                                    <xsl:value-of select="ADDRESS__LINE__3"/>
+                                </pfx4:city>
+                            </xsl:if>
+                            <xsl:if test="(exists(ADDRESS__LINE__4) and (ADDRESS__LINE__4)!=&quot;&quot;)">
+                                <pfx4:county>
+                                    <xsl:value-of select="ADDRESS__LINE__4"/>
+                                </pfx4:county>
+                            </xsl:if>
+                            <xsl:if test="(exists(COUNTRY) and (COUNTRY)!=&quot;&quot;)">
+                                <xsl:if test="COUNTRY">
+                                    <pfx4:country>
+                                        <xsl:value-of select="COUNTRY"/>
+                                    </pfx4:country>
+                                </xsl:if>
+                            </xsl:if>
+                            <xsl:if test="(exists(POSTCODE) and (POSTCODE)!=&quot;&quot;)">
+                                <xsl:if test="POSTCODE">
+                                    <pfx4:postCode>
+                                        <xsl:value-of select="POSTCODE"/>
+                                    </pfx4:postCode>
+                                </xsl:if>
+                            </xsl:if>
+                        </pfx4:Address>
+                    </xsl:for-each>
+                    <pfx:customerType>
+                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns3:GlobalVariables/Enumerations/CDM/Customer/CustomerTypes/CustomerBaseTypes/CUSTOMER_TYPE, $GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__TYPE)"/>
+                    </pfx:customerType>
+                    <pfx:customerSubType>
+                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns3:GlobalVariables/Enumerations/CDM/Customer/CustomerTypes/CustomerBaseTypes/CUSTOMER_SUBTYPE,$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__SUB__TYPE)"/>
+                    </pfx:customerSubType>
+                    <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__VALUE) and ($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__VALUE)!=&quot;&quot;)">
+                        <pfx:customerValue>
+                            <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__VALUE"/>
+                        </pfx:customerValue>
+                    </xsl:if>
+                    <pfx:customerStatus>
+                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns3:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/Enumeration/CUSTOMER_STATUS, $GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CUSTOMER__STATUS)"/>
+                    </pfx:customerStatus>
+                    <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CHURNPROPENSITY) and ($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CHURNPROPENSITY)!=&quot;&quot;)">
+                        <pfx:churnPropensity>
+                            <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CHURNPROPENSITY"/>
+                        </pfx:churnPropensity>
+                    </xsl:if>
+                    <pfx:accountType>
+                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns3:GlobalVariables/Enumerations/CDM/Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/ACCOUNT_TYPE,$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/ACCOUNT__TYPE)"/>
+                    </pfx:accountType>
+                    <pfx:accountLevel>
+                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns3:GlobalVariables/Enumerations/CDM/Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/ACCOUNT_LEVEL,$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/ACCOUNT__LEVEL)"/>
+                    </pfx:accountLevel>
+                    <xsl:choose>
+                        <xsl:when test="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CURRENT__TERM=&quot;-1&quot;">
+                            <pfx:currentTerm>
+                                <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/CurrentTerm/OUTOFCONTRACT"/>
+                            </pfx:currentTerm>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx:currentTerm>
+                                <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/CurrentTerm/WITHINCONTRACT"/>
+                            </pfx:currentTerm>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/TERM__ELAPSED=&quot;-1&quot;">
+                            <pfx:termElapsed>
+                                <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/CurrentTerm/OUTOFCONTRACT"/>
+                            </pfx:termElapsed>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx:termElapsed>
+                                <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomExceptions/CurrentTerm/WITHINCONTRACT"/>
+                            </pfx:termElapsed>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx:OpenCases>
+                        <xsl:for-each select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/OPENCASE/item">
+                            <pfx:OpenCase>
+                                <pfx:openCaseID>
+                                    <xsl:value-of select="."/>
+                                </pfx:openCaseID>
+                            </pfx:OpenCase>
+                        </xsl:for-each>
+                    </pfx:OpenCases>
+                    <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/PARENT__PRICE__PLAN__ID) and ($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/PARENT__PRICE__PLAN__ID)!=&quot;&quot;)">
+                        <pfx:parentPricePlanID>
+                            <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/PARENT__PRICE__PLAN__ID"/>
+                        </pfx:parentPricePlanID>
+                    </xsl:if>
+                    <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/PARENT__PRICE__PLAN__DESCR) and ($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/PARENT__PRICE__PLAN__DESCR)!=&quot;&quot;)">
+                        <pfx:parentPricePlanDesc>
+                            <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/PARENT__PRICE__PLAN__DESCR"/>
+                        </pfx:parentPricePlanDesc>
+                    </xsl:if>
+                    <pfx:Contacts>
+                        <xsl:for-each select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/CONTACT__LIST/item">
+                            <pfx:Contact>
+                                <xsl:if test="(exists(FIRSTNAME) and (FIRSTNAME)!=&quot;&quot;)">
+                                    <xsl:if test="FIRSTNAME">
+                                        <pfx:firstName>
+                                            <xsl:value-of select="FIRSTNAME"/>
+                                        </pfx:firstName>
+                                    </xsl:if>
+                                </xsl:if>
+                                <xsl:if test="(exists(SURNAME) and (SURNAME)!=&quot;&quot;)">
+                                    <pfx:lastName>
+                                        <xsl:value-of select="SURNAME"/>
+                                    </pfx:lastName>
+                                </xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="tib:trim(PRIMARY)=&quot;Y&quot;">
+                                        <pfx:primary>
+                                            <xsl:value-of select="true()"/>
+                                        </pfx:primary>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <pfx:primary>
+                                            <xsl:value-of select="false()"/>
+                                        </pfx:primary>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </pfx:Contact>
+                        </xsl:for-each>
+                    </pfx:Contacts>
+                    <xsl:if test="(exists($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/INTERNAL__CLASS) and tib:trim($GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/INTERNAL__CLASS)!=&quot;&quot;)">
+                        <pfx:internalClass>
+                            <xsl:value-of select="$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/INTERNAL__CLASS"/>
+                        </pfx:internalClass>
+                    </xsl:if>
+                    <pfx:firstContractStartDate>
+                        <xsl:value-of select="tib:parse-date(&quot;dd-MM-yyyy&quot;,$GetConsumerProfile/root/ns1:CCS__ConsumerProfileResponse/FIRST__CONTRACT__START__DT)"/>
+                    </pfx:firstContractStartDate>
+                </pfx:GetConsumerProfileResponse>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetConsumerProfile">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>531</pd:x>
+        <pd:y>80</pd:y>
+        <config>
+            <processName>/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/GetConsumerProfile/Sub/GetConsumerProfile.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$CDM_To_AESchema/root/ns:CCS__ConsumerProfileRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CDM_To_AESchema">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>387</pd:x>
+        <pd:y>79</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="ns:CCS__ConsumerProfileRequest"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ns:CCS__ConsumerProfileRequest>
+                    <SERVICE__NAME>
+                        <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/PPLSFTService/ExternalService/GetConsumerProfile"/>
+                    </SERVICE__NAME>
+                    <CUSTOMER__KEY>
+                        <xsl:if test="$Convert-MSISDN-Format/root/MSISDN">
+                            <MSISDN>
+                                <xsl:value-of select="$Convert-MSISDN-Format/root/MSISDN"/>
+                            </MSISDN>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:BAN)">
+                            <ACCOUNT__ID>
+                                <xsl:choose>
+                                    <xsl:when test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:BAN)">
+                                        <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:BAN"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ACCOUNT__ID>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:crmID)  and tib:trim($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:crmID)!=&quot;&quot;">
+                            <CRM__ID>
+                                <xsl:choose>
+                                    <xsl:when test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:crmID)">
+                                        <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:crmID"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </CRM__ID>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:postCode) and tib:trim($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:postCode)!=&quot;&quot;">
+                            <POSTCODE>
+                                <xsl:choose>
+                                    <xsl:when test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:postCode)">
+                                        <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:postCode"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </POSTCODE>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:DOB) and ( tib:trim($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:DOB)!=&quot;&quot;)">
+                            <DOB>
+                                <xsl:choose>
+                                    <xsl:when test="exists(tib:format-date(&quot;dd/MM/yyyy&quot;,$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:DOB))">
+                                        <xsl:value-of select="tib:format-date(&quot;dd/MM/yyyy&quot;,$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:DOB)"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </DOB>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseName) and (tib:trim($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseName)!=&quot;&quot;)">
+                            <HOUSE__NAME>
+                                <xsl:choose>
+                                    <xsl:when test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseName)">
+                                        <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseName"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </HOUSE__NAME>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseNumber) and (tib:trim($Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseNumber)!=&quot;&quot;)">
+                            <xsl:if test="$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseNumber">
+                                <HOUSE__NUMBER>
+                                    <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:houseNumber"/>
+                                </HOUSE__NUMBER>
+                            </xsl:if>
+                        </xsl:if>
+                    </CUSTOMER__KEY>
+                    <xsl:choose>
+                        <xsl:when test="$Start/root/pfx:GetConsumerProfileRequest/pfx:salesChannel=&quot;Direct_Telesales&quot;">
+                            <CHANNEL>
+                                <xsl:value-of select="&quot;Direct_Telesale&quot;"/>
+                            </CHANNEL>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <CHANNEL>
+                                <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:salesChannel"/>
+                            </CHANNEL>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <ORGID>
+                        <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:orgID"/>
+                    </ORGID>
+                    <AGENT__ROLE>
+                        <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:agentRole"/>
+                    </AGENT__ROLE>
+                    <ORDER__TYPE>
+                        <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:orderType"/>
+                    </ORDER__TYPE>
+                    <xsl:if test="(exists($Start/root/pfx:GetConsumerProfileRequest/pfx:nbsCoverage) and tib:trim($Start/root/pfx:GetConsumerProfileRequest/pfx:nbsCoverage) !=&quot;&quot;)">
+                        <NBS__COVERAGE>
+                            <xsl:choose>
+                                <xsl:when test="exists($Start/root/pfx:GetConsumerProfileRequest/pfx:nbsCoverage)">
+                                    <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:nbsCoverage"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </NBS__COVERAGE>
+                    </xsl:if>
+                </ns:CCS__ConsumerProfileRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Convert MSISDN Format">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>254</pd:x>
+        <pd:y>90</pd:y>
+        <config>
+            <processName>/Common/Convert MSISDN format.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <MSISDN>
+                    <xsl:value-of select="$Start/root/pfx:GetConsumerProfileRequest/pfx:CustomerKey/pfx:MSISDN"/>
+                </MSISDN>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>825</pd:x>
+        <pd:y>76</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$AESchema_To_CDM/root"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>147</pd:x>
+        <pd:y>81</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx:GetConsumerProfileRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetConsumerProfile</pd:from>
+        <pd:to>AESchema_To_CDM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CDM_To_AESchema</pd:from>
+        <pd:to>GetConsumerProfile</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Convert MSISDN Format</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AESchema_To_CDM</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Convert MSISDN Format</pd:from>
+        <pd:to>CDM_To_AESchema</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

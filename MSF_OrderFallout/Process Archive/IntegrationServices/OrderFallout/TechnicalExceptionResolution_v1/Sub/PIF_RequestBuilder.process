@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns4="http://www.tibco.com/pe/EngineTypes" xmlns:ns="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx2="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ResolutionReply.xsd" xmlns:ns5="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider">
+    <xsd:import namespace="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ResolutionReply.xsd" schemaLocation="/SharedResources/Schemas/Public/Exception/ResolutionReply.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorProviderService.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>IntegrationServices/OrderFallout/TechnicalExceptionResolution_v1/Sub/PIF_RequestBuilder.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx2:ResolutionReply"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>98</pd:startX>
+    <pd:startY>92</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <pfx:PlanItemFailedReply>
+                <xsl:if test="$ParseRequesMessage/pfx:PlanItemFailedRequest/@pfx:businessTransactionID">
+                    <xsl:attribute name="pfx:businessTransactionID">
+                        <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/@pfx:businessTransactionID"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="$ParseRequesMessage/pfx:PlanItemFailedRequest/@correlationID">
+                    <xsl:attribute name="correlationID">
+                        <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/@correlationID"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <ns2:resultStatus>
+                    <ns2:deployment>
+                        <xsl:value-of select="$_processContext/ns4:ProcessContext/ProjectName"/>
+                    </ns2:deployment>
+                    <ns2:service>
+                        <xsl:value-of select="&quot;CLE&quot;"/>
+                    </ns2:service>
+                    <ns2:operation>
+                        <xsl:value-of select="&quot;PIF&quot;"/>
+                    </ns2:operation>
+                    <ns2:severity>
+                        <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/ns1:message[1]/ns1:type"/>
+                    </ns2:severity>
+                    <ns2:code>
+                        <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/ns1:message[1]/ns1:code"/>
+                    </ns2:code>
+                    <ns2:message>
+                        <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/ns1:message[1]/ns1:description"/>
+                    </ns2:message>
+                </ns2:resultStatus>
+                <pfx:orderID>
+                    <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/pfx:orderID"/>
+                </pfx:orderID>
+                <pfx:orderRef>
+                    <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/pfx:orderRef"/>
+                </pfx:orderRef>
+                <pfx:planID>
+                    <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/pfx:planID"/>
+                </pfx:planID>
+                <pfx:planItemID>
+                    <xsl:value-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/pfx:planItem/pfx:planItemID"/>
+                </pfx:planItemID>
+                <xsl:choose>
+                    <xsl:when test="lower-case($Start/root/pfx2:ResolutionReply/ResolutionDescription)=lower-case($_globalVariables/ns3:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionRetry)">
+                        <pfx:retry/>
+                    </xsl:when>
+                    <xsl:when test="lower-case($Start/root/pfx2:ResolutionReply/ResolutionDescription)=lower-case($_globalVariables/ns3:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionResume)">
+                        <pfx:complete/>
+                    </xsl:when>
+                    <xsl:when test="lower-case($Start/root/pfx2:ResolutionReply/ResolutionDescription)=lower-case($_globalVariables/ns3:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionComplete)">
+                        <pfx:complete/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <pfx:retry/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:copy-of select="$ParseRequesMessage/pfx:PlanItemFailedRequest/ns1:message"/>
+            </pfx:PlanItemFailedReply>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:PlanItemFailedReply"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>489</pd:endX>
+    <pd:endY>92</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1416995864150</pd:targetNamespace>
+    <pd:activity name="CreateException_XMLParseError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>310</pd:x>
+        <pd:y>209</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_XMLParseError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns4:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>313</pd:x>
+        <pd:y>317</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns5:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_XMLParseError/root/pfx3:Exception"/>
+                </data>
+            </ns5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ParseRequesMessage">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>309</pd:x>
+        <pd:y>92</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx:PlanItemFailedRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Start/root/pfx2:ResolutionReply/ns:Header/ns:Transaction"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>ParseRequesMessage</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ParseRequesMessage</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ParseRequesMessage</pd:from>
+        <pd:to>CreateException_XMLParseError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_XMLParseError</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

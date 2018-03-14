@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Request" xmlns:XMLUtil="java://com.tibco.tibcobw.customfunctions.XMLUtils" xmlns:ns9="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customercharacteristics/v1" xmlns:ns5="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns6="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:ns7="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:ns8="http://www.tibco.com/pe/DeployedVarsType" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/cdm/customer/customeraccount/customeraccountmanagement/customeraccount/v1" xmlns:ns1="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Response" xmlns:ns4="http://three.co.uk/xsd/cdm/customer/customerprofile/customerprofilesubscriptionmanagement/customersubscription/v1" xmlns:ns3="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/MCPeoplesoft_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Request" schemaLocation="/AESchemas/ae/PeopleSoft/Request.aeschema"/>
+    <pd:name>IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/SearchCustomer/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:SearchCustomerRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>47</pd:startX>
+    <pd:startY>113</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$AESchema_To_CDM/root/pfx:SearchCustomerResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:SearchCustomerResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>879</pd:endX>
+    <pd:endY>112</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1424676234771</pd:targetNamespace>
+    <pd:activity name="AESchema_To_CDM">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>657</pd:x>
+        <pd:y>115</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:SearchCustomerResponse"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx:SearchCustomerResponse>
+                    <pfx:Customers>
+                        <xsl:for-each select="$SearchCustomer/root/ns1:CustomerSearchResponse/CUSTOMER__LIST/item">
+                            <pfx:Customer>
+                                <pfx:CustomerAccountDetails>
+                                    <ns2:customerAccountID>
+                                        <xsl:value-of select="ACCOUNT__NUMBER"/>
+                                    </ns2:customerAccountID>
+                                    <ns2:creationDate>
+                                        <xsl:value-of select="current-date()"/>
+                                    </ns2:creationDate>
+                                    <xsl:if test="ACCOUNT__NUMBER">
+                                        <ns2:billingAccountNumber>
+                                            <xsl:value-of select="ACCOUNT__NUMBER"/>
+                                        </ns2:billingAccountNumber>
+                                    </xsl:if>
+                                </pfx:CustomerAccountDetails>
+                                <pfx:customerSubscriptionResources>
+                                    <xsl:if test="ICCID">
+                                        <ns4:ICCID>
+                                            <xsl:value-of select="ICCID"/>
+                                        </ns4:ICCID>
+                                    </xsl:if>
+                                    <xsl:if test="MSISDN">
+                                        <ns4:MSISDN>
+                                            <xsl:value-of select="MSISDN"/>
+                                        </ns4:MSISDN>
+                                    </xsl:if>
+                                </pfx:customerSubscriptionResources>
+                                <ns3:Individual>
+                                    <ns3:personalDetails>
+                                        <xsl:if test="(exists(NAME) and tib:trim(NAME) !=&quot;&quot;)">
+                                            <xsl:if test="NAME">
+                                                <ns3:fullName>
+                                                    <xsl:value-of select="NAME"/>
+                                                </ns3:fullName>
+                                            </xsl:if>
+                                        </xsl:if>
+                                        <xsl:if test="(exists(DOB) and (DOB!=&quot;&quot;))">
+                                            <xsl:if test="DOB">
+                                                <ns3:dob>
+                                                    <xsl:value-of select="DOB"/>
+                                                </ns3:dob>
+                                            </xsl:if>
+                                        </xsl:if>
+                                    </ns3:personalDetails>
+                                </ns3:Individual>
+                                <ns9:CustomerCharacteristics>
+                                    <xsl:if test="exists(ACCOUNT__TYPE) and string-length(ACCOUNT__TYPE)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'accountType'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/ACCOUNT_TYPE, ACCOUNT__TYPE)"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(TARIFF__TYPE) and string-length(TARIFF__TYPE)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'tariffType'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Product/ProductTypes/ProductBaseTypes/TARRIF_TYPE, TARIFF__TYPE)"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(CUSTOMER__TYPE) and string-length(CUSTOMER__TYPE)>0">
+                                        <xsl:choose>
+                                            <xsl:when test="upper-case(CUSTOMER__TYPE)=upper-case($_globalVariables/ns8:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomerType/External/Consumer)">
+                                                <ns5:UDF>
+                                                    <ns5:name>
+                                                        <xsl:value-of select="'customerType'"/>
+                                                    </ns5:name>
+                                                    <ns5:value>
+                                                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Customer/CustomerTypes/CustomerBaseTypes/CUSTOMER_TYPE, $_globalVariables/ns8:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomerType/Internal/Consumer)"/>
+                                                    </ns5:value>
+                                                </ns5:UDF>
+                                            </xsl:when>
+                                            <xsl:when test="upper-case(CUSTOMER__TYPE)=upper-case($_globalVariables/ns8:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomerType/External/Business)">
+                                                <ns5:UDF>
+                                                    <ns5:name>
+                                                        <xsl:value-of select="'customerType'"/>
+                                                    </ns5:name>
+                                                    <ns5:value>
+                                                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Customer/CustomerTypes/CustomerBaseTypes/CUSTOMER_TYPE, $_globalVariables/ns8:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/CustomerType/Internal/Company)"/>
+                                                    </ns5:value>
+                                                </ns5:UDF>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <ns5:UDF>
+                                                    <ns5:name>
+                                                        <xsl:value-of select="'customerType'"/>
+                                                    </ns5:name>
+                                                    <ns5:value>
+                                                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Customer/CustomerTypes/CustomerBaseTypes/CUSTOMER_TYPE, '')"/>
+                                                    </ns5:value>
+                                                </ns5:UDF>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </xsl:if>
+                                    <xsl:if test="exists(CUSTOMER__SUB__TYPE) and string-length(CUSTOMER__SUB__TYPE)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'customerSubType'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Customer/CustomerTypes/CustomerBaseTypes/CUSTOMER_SUBTYPE, CUSTOMER__SUB__TYPE)"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(ACCOUNT__STATUS) and string-length(ACCOUNT__STATUS)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'accountStatus'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/ACCOUNT_STATUS, ACCOUNT__STATUS)"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(CONTRACT__END__DATE) and string-length(CONTRACT__END__DATE)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'contractEndDate'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="CONTRACT__END__DATE"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(FRAUD__SECURITY) and string-length(FRAUD__SECURITY)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'fraudSecurity'"/>
+                                            </ns5:name>
+                                            <xsl:choose>
+                                                <xsl:when test="tib:trim(FRAUD__SECURITY)=&quot;Y&quot;">
+                                                    <ns5:value>
+                                                        <xsl:value-of select="true()"/>
+                                                    </ns5:value>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <ns5:value>
+                                                        <xsl:value-of select="false()"/>
+                                                    </ns5:value>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(VICTIM__OF__FRAUD) and string-length(VICTIM__OF__FRAUD)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'victimOfFraud'"/>
+                                            </ns5:name>
+                                            <xsl:choose>
+                                                <xsl:when test="tib:trim(VICTIM__OF__FRAUD)=&quot;Y&quot;">
+                                                    <ns5:value>
+                                                        <xsl:value-of select="true()"/>
+                                                    </ns5:value>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <ns5:value>
+                                                        <xsl:value-of select="false()"/>
+                                                    </ns5:value>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(MEMORABLE__NAME) and string-length(MEMORABLE__NAME)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'memorableName'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="MEMORABLE__NAME"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(MEMORABLE__PLACE) and string-length(MEMORABLE__PLACE)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'memorablePlace'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="MEMORABLE__PLACE"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(AUTHORISE__MEMORABLE__NAME) and string-length(AUTHORISE__MEMORABLE__NAME)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'authoriseMemorableName'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="AUTHORISE__MEMORABLE__NAME"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(AUTHORISE__MEMORABLE__PLACE) and string-length(AUTHORISE__MEMORABLE__PLACE)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'authoriseMemorablePlace'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="AUTHORISE__MEMORABLE__PLACE"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(AUTHORISE__TYPE__OF__CONTACT) and string-length(AUTHORISE__TYPE__OF__CONTACT)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'authoriseTypeOfContact'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="XMLUtil:validate($_globalVariables/ns8:GlobalVariables/Enumerations/CDM/Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount/AUTHORISED_ACCESS_TYPE, current()/AUTHORISE__TYPE__OF__CONTACT)"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                    <xsl:if test="exists(AUTHORISE__NAME) and string-length(AUTHORISE__NAME)>0">
+                                        <ns5:UDF>
+                                            <ns5:name>
+                                                <xsl:value-of select="'authoriseName'"/>
+                                            </ns5:name>
+                                            <ns5:value>
+                                                <xsl:value-of select="AUTHORISE__NAME"/>
+                                            </ns5:value>
+                                        </ns5:UDF>
+                                    </xsl:if>
+                                </ns9:CustomerCharacteristics>
+                                <ns6:Address>
+                                    <xsl:if test="(exists(POSTAL__CODE) and (POSTAL__CODE!=&quot;&quot;))">
+                                        <xsl:if test="POSTAL__CODE">
+                                            <ns6:postCode>
+                                                <xsl:value-of select="POSTAL__CODE"/>
+                                            </ns6:postCode>
+                                        </xsl:if>
+                                    </xsl:if>
+                                </ns6:Address>
+                            </pfx:Customer>
+                        </xsl:for-each>
+                    </pfx:Customers>
+                    <pfx:totalNumberOfRecords>
+                        <xsl:value-of select="$SearchCustomer/root/ns1:CustomerSearchResponse/TOTAL__NUMBER__OF__RECORDS"/>
+                    </pfx:totalNumberOfRecords>
+                </pfx:SearchCustomerResponse>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SearchCustomer">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>528</pd:x>
+        <pd:y>114</pd:y>
+        <config>
+            <processName>/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/SearchCustomer/Sub/SearchCustomer.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$CDM_To_AESchema/root/ns:CustomerSearchRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CDM_To_AESchema">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>389</pd:x>
+        <pd:y>113</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="ns:CustomerSearchRequest"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ns:CustomerSearchRequest>
+                    <SERVICE__NAME>
+                        <xsl:value-of select="$_globalVariables/ns8:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/PPLSFTService/ExternalService/SearchCustomer"/>
+                    </SERVICE__NAME>
+                    <xsl:if test="exists($Start/root/pfx:SearchCustomerRequest/pfx:BAN)">
+                        <ACCOUNT__NUMBER>
+                            <xsl:choose>
+                                <xsl:when test="exists($Start/root/pfx:SearchCustomerRequest/pfx:BAN)">
+                                    <xsl:value-of select="$Start/root/pfx:SearchCustomerRequest/pfx:BAN"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </ACCOUNT__NUMBER>
+                    </xsl:if>
+                    <ORG__ID>
+                        <xsl:value-of select="$Start/root/pfx:SearchCustomerRequest/pfx:orgID"/>
+                    </ORG__ID>
+                    <xsl:if test="$Convert-MSISDN-Format/root/MSISDN">
+                        <MSISDN>
+                            <xsl:value-of select="$Convert-MSISDN-Format/root/MSISDN"/>
+                        </MSISDN>
+                    </xsl:if>
+                    <xsl:if test="(exists($Start/root/pfx:SearchCustomerRequest/pfx:DOB) and (not(exists($Start/root/pfx:SearchCustomerRequest/pfx:BAN)))) and &#xA;(not(exists($Start/root/pfx:SearchCustomerRequest/pfx:MSISDN))) and (not(exists($Start/root/pfx:SearchCustomerRequest/pfx:ICCID)))">
+                        <DOB>
+                            <xsl:value-of select="tib:format-date('yyyy-MM-dd',$Start/root/pfx:SearchCustomerRequest/pfx:DOB)"/>
+                        </DOB>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/pfx:SearchCustomerRequest/pfx:ICCID">
+                        <ICCID>
+                            <xsl:value-of select="$Start/root/pfx:SearchCustomerRequest/pfx:ICCID"/>
+                        </ICCID>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/pfx:SearchCustomerRequest/pfx:postCode">
+                        <POSTCODE>
+                            <xsl:value-of select="$Start/root/pfx:SearchCustomerRequest/pfx:postCode"/>
+                        </POSTCODE>
+                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="($Start/root/pfx:SearchCustomerRequest/pfx:includeTerminatedAccounts=&quot;true&quot;)">
+                            <INCLUDE__TERMINATED__CUSTOMERS>
+                                <xsl:value-of select="&quot;Y&quot;"/>
+                            </INCLUDE__TERMINATED__CUSTOMERS>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <INCLUDE__TERMINATED__CUSTOMERS>
+                                <xsl:value-of select="&quot;N&quot;"/>
+                            </INCLUDE__TERMINATED__CUSTOMERS>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </ns:CustomerSearchRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Convert MSISDN Format">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>252</pd:x>
+        <pd:y>123</pd:y>
+        <config>
+            <processName>/Common/Convert MSISDN format.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <MSISDN>
+                    <xsl:value-of select="$Start/root/pfx:SearchCustomerRequest/pfx:MSISDN"/>
+                </MSISDN>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>770</pd:x>
+        <pd:y>113</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$AESchema_To_CDM/root"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>141</pd:x>
+        <pd:y>113</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns7:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx:SearchCustomerRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CDM_To_AESchema</pd:from>
+        <pd:to>SearchCustomer</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Convert MSISDN Format</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SearchCustomer</pd:from>
+        <pd:to>AESchema_To_CDM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AESchema_To_CDM</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Convert MSISDN Format</pd:from>
+        <pd:to>CDM_To_AESchema</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

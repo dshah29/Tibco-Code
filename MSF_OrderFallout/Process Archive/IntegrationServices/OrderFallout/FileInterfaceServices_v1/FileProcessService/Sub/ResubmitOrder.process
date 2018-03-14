@@ -1,0 +1,792 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/aff/orderservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns12="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns5="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns7="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://xmlns.example.com/1301395797508" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/aff/commontypes" xmlns:ns1="http://www.tibco.com/aff/order" xmlns:ns4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/aff/order" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/oms/order.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1301395797508" location="/SharedResources/WebServiceDefinitions/Interface/FOS/Concrete/jms/OrderServiceJMS.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/ResubmitOrder.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>52</pd:startX>
+    <pd:startY>77</pd:startY>
+    <pd:returnBindings>
+        <pfx:SubmitOrderResponseMsg/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1347</pd:endX>
+    <pd:endY>181</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="ns4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1461064237994/ResubmitOrder</pd:targetNamespace>
+    <pd:group name="Resubmit Order">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>133</pd:x>
+        <pd:y>3</pd:y>
+        <pd:width>1046</pd:width>
+        <pd:height>345</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-Resubmit-Order-Request/Output/Rows/root</pd:over>
+            <pd:iterationElementSlot>Current_Order</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>GenerateUUID</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Write Resubmit Order Response</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GenerateUUID</pd:from>
+            <pd:to>GetOMSOrders</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GetOMSOrders</pd:from>
+            <pd:to>WithdrawOrder</pd:to>
+            <pd:xpathDescription/>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GetOMSOrders</pd:from>
+            <pd:to>Order Not Found</pd:to>
+            <pd:xpathDescription/>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-52378</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Order Not Found</pd:from>
+            <pd:to>Generate Error</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Order Not Found</pd:from>
+            <pd:to>Render Resubmit Order Response</pd:to>
+            <pd:xpathDescription>Not Found</pd:xpathDescription>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$_error_GetOMSOrders/ns4:Exception/ns3:ErrorReport/MsgCode='TIBCO-AFF-OMS-100005'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GetOMSOrders</pd:from>
+            <pd:to>Complete Order</pd:to>
+            <pd:xpathDescription>Order Completed</pd:xpathDescription>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders[1]/ns:Order/ns1:header/ns1:status='COMPLETE'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>WithdrawOrder</pd:from>
+            <pd:to>Render Resubmit Order Response</pd:to>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Complete Order</pd:from>
+            <pd:to>Map Order</pd:to>
+            <pd:xpathDescription>Resubmit Order</pd:xpathDescription>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>tib:trim($Current_Order/root/Action)='Resubmit'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render Resubmit Order Response</pd:from>
+            <pd:to>Write Resubmit Order Response</pd:to>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>WithdrawOrder</pd:from>
+            <pd:to>Map Order</pd:to>
+            <pd:xpathDescription>Resubmit Order</pd:xpathDescription>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>tib:trim($Current_Order/root/Action)='Resubmit'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SubmitOrder</pd:from>
+            <pd:to>Render Resubmit Order Response</pd:to>
+            <pd:lineType>One Bend</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Map Order</pd:from>
+            <pd:to>SubmitOrder</pd:to>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Complete Order</pd:from>
+            <pd:to>Render Resubmit Order Response</pd:to>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GetOMSOrders</pd:from>
+            <pd:to>CancelOrder</pd:to>
+            <pd:xpathDescription>Cancel Order</pd:xpathDescription>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders[1]/ns:Order/ns1:header/ns1:status!='COMPLETE'
+and
+tib:trim($Current_Order/root/Action)='Cancel'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>CancelOrder</pd:from>
+            <pd:to>Render Resubmit Order Response</pd:to>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="WithdrawOrder">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>426</pd:x>
+            <pd:y>152</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/withdrawOrder.process</processName>
+            </config>
+            <pd:inputBindings>
+                <pfx:WithdrawOrderRequestMsg>
+                    <withdraworderreqparameters>
+                        <ns:WithdrawOrderRequest>
+                            <xsl:attribute name="ExternalBusinessTransactionID">
+                                <xsl:value-of select="$GenerateUUID/UUID"/>
+                            </xsl:attribute>
+                            <ns:orderRef>
+                                <xsl:value-of select="$Current_Order/root/OrderRef"/>
+                            </ns:orderRef>
+                        </ns:WithdrawOrderRequest>
+                    </withdraworderreqparameters>
+                </pfx:WithdrawOrderRequestMsg>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="GenerateUUID">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>228</pd:x>
+            <pd:y>68</pd:y>
+            <config>
+                <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="GetOMSOrders">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>229</pd:x>
+            <pd:y>213</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/getOMSOrders.process</processName>
+            </config>
+            <pd:inputBindings>
+                <pfx:GetOrdersRequestMsg>
+                    <getordersreqparameters>
+                        <ns:GetOrdersRequest>
+                            <xsl:attribute name="ExternalBusinessTransactionID">
+                                <xsl:value-of select="$GenerateUUID/UUID"/>
+                            </xsl:attribute>
+                            <ns:orderRef>
+                                <xsl:value-of select="$Current_Order/root/OrderRef"/>
+                            </ns:orderRef>
+                        </ns:GetOrdersRequest>
+                    </getordersreqparameters>
+                </pfx:GetOrdersRequestMsg>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Order Not Found">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>374</pd:x>
+            <pd:y>283</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Generate Error">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>197</pd:x>
+            <pd:y>284</pd:y>
+            <config>
+                <faultName>Schema0</faultName>
+            </config>
+            <pd:inputBindings>
+                <ns5:ActivityInput>
+                    <data>
+                        <ns4:Exception>
+                            <xsl:copy-of select="$_error/ns3:ErrorReport"/>
+                        </ns4:Exception>
+                    </data>
+                </ns5:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Complete Order">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>527</pd:x>
+            <pd:y>236</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Render Resubmit Order Response">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>1031</pd:x>
+            <pd:y>68</pd:y>
+            <config>
+                <ParseSharedConfig>/SharedResources/DataFormats/OrderTemplates/OrderResubmitResponseFormat.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <root>
+                        <UserID>
+                            <xsl:value-of select="$Current_Order/root/UserID"/>
+                        </UserID>
+                        <OrderRef>
+                            <xsl:value-of select="$Current_Order/root/OrderRef"/>
+                        </OrderRef>
+                        <xsl:choose>
+                            <xsl:when test="exists($GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders/ns:Order[1]/ns1:header/ns1:status)">
+                                <Status>
+                                    <xsl:value-of select="$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders/ns:Order[1]/ns1:header/ns1:status"/>
+                                </Status>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <Status>
+                                    <xsl:value-of select="'UNKNOWN'"/>
+                                </Status>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:choose>
+                            <xsl:when test="tib:trim($Current_Order/root/Action)='Resubmit' and&#xA;$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders[1]/ns:Order/ns1:header/ns1:status='COMPLETE'">
+                                <Message>
+                                    <xsl:value-of select="concat('Order was completed-New Order Submitted with OrderRef =',$Current_Order/root/OrderRef,'-1')"/>
+                                </Message>
+                            </xsl:when>
+                            <xsl:when test="$_error_GetOMSOrders/ns4:Exception/ns3:ErrorReport/MsgCode='TIBCO-AFF-OMS-100005'">
+                                <Message>
+                                    <xsl:value-of select="'Order Not Found'"/>
+                                </Message>
+                            </xsl:when>
+                            <xsl:when test="tib:trim($Current_Order/root/Action)='Withdraw' and&#xA;$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders[1]/ns:Order/ns1:header/ns1:status='COMPLETE'">
+                                <Message>
+                                    <xsl:value-of select="concat('Order Completed can not be Withdrawn; OrderRef =',$Current_Order/root/OrderRef)"/>
+                                </Message>
+                            </xsl:when>
+                            <xsl:when test="tib:trim($Current_Order/root/Action)='Cancel' and&#xA;$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders[1]/ns:Order/ns1:header/ns1:status='COMPLETE'">
+                                <Message>
+                                    <xsl:value-of select="concat('Order Completed can not be Cancelled; OrderRef =',$Current_Order/root/OrderRef)"/>
+                                </Message>
+                            </xsl:when>
+                            <xsl:when test="tib:trim($Current_Order/root/Action)='Withdraw' and&#xA;exists($WithdrawOrder/pfx:WithdrawOrderResponseMsg/withdrawtorderresparameters/ns:WithdrawOrderResponse)">
+                                <Message>
+                                    <xsl:value-of select="$WithdrawOrder/pfx:WithdrawOrderResponseMsg/withdrawtorderresparameters/ns:WithdrawOrderResponse/ns:message"/>
+                                </Message>
+                            </xsl:when>
+                            <xsl:when test="tib:trim($Current_Order/root/Action)='Cancel' and&#xA;exists($CancelOrder/pfx:CancelOrderResponseMsg/canceltorderresparameters/ns:CancelOrderResponse)">
+                                <Message>
+                                    <xsl:value-of select="$CancelOrder/pfx:CancelOrderResponseMsg/canceltorderresparameters/ns:CancelOrderResponse/ns:message"/>
+                                </Message>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <Message>
+                                    <xsl:value-of select="concat('Order Resubmitted with OrderRef =',$Current_Order/root/OrderRef)"/>
+                                </Message>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </root>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Write Resubmit Order Response">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>1091</pd:x>
+            <pd:y>273</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns12:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="$Start/root/ResponseFileName"/>
+                    </fileName>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$i=1">
+                            <textContent>
+                                <xsl:value-of select="concat('UserID,','OrderRef,','Order Status,','Message',&quot;&#xA;&quot;,$Render-Resubmit-Order-Response/Text)"/>
+                            </textContent>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <textContent>
+                                <xsl:value-of select="$Render-Resubmit-Order-Response/Text"/>
+                            </textContent>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <addLineSeparator>
+                        <xsl:value-of select="0"/>
+                    </addLineSeparator>
+                </ns12:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="SubmitOrder">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>970</pd:x>
+            <pd:y>145</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>false</append>
+                <createMissingDirectories>true</createMissingDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns12:WriteActivityInputTextClass>
+                    <xsl:variable name="FirstPartOfFileName" select="'SubmitOrder'"/>
+                    <xsl:variable name="SecondPartOfFileName" select="tib:substring-after-last(substring-before($Start/root/RequestFileName,'.csv'),'_')"/>
+                    <xsl:variable name="FileName" select="concat($FirstPartOfFileName,'_',$SecondPartOfFileName,'.csv')"/>
+                    <fileName>
+                        <xsl:value-of select="concat(substring-before($_globalVariables/ns7:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Local/LocalFileDirectoryRequest,'*.csv'),$FileName)"/>
+                    </fileName>
+                    <textContent>
+                        <xsl:value-of select="tib:render-xml($Map-Order/ns1:orderRequest,false(),true())"/>
+                    </textContent>
+                </ns12:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Map Order">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>789</pd:x>
+            <pd:y>196</pd:y>
+            <config>
+                <element ref="ns1:orderRequest"/>
+            </config>
+            <pd:inputBindings>
+                <xsl:for-each select="$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders/ns:Order[1]">
+                    <ns1:orderRequest>
+                        <xsl:choose>
+                            <xsl:when test="$GetOMSOrders/pfx:GetOrdersResponseMsg/getordersresparameters/ns:GetOrdersResponse/ns:Orders[1]/ns:Order/ns1:header/ns1:status='COMPLETE'">
+                                <ns1:orderRef>
+                                    <xsl:value-of select="concat(ns1:orderRef,'-1')"/>
+                                </ns1:orderRef>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <ns1:orderRef>
+                                    <xsl:value-of select="ns1:orderRef"/>
+                                </ns1:orderRef>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:for-each select="ns1:header">
+                            <ns1:header>
+                                <xsl:if test="ns1:description">
+                                    <ns1:description>
+                                        <xsl:value-of select="ns1:description"/>
+                                    </ns1:description>
+                                </xsl:if>
+                                <ns1:customerID>
+                                    <xsl:value-of select="ns1:customerID"/>
+                                </ns1:customerID>
+                                <xsl:if test="ns1:orderPriority">
+                                    <ns1:orderPriority>
+                                        <xsl:value-of select="ns1:orderPriority"/>
+                                    </ns1:orderPriority>
+                                </xsl:if>
+                                <xsl:copy-of select="ns1:invoiceAddress"/>
+                                <xsl:copy-of select="ns1:deliveryAddress"/>
+                                <xsl:if test="ns1:notes">
+                                    <ns1:notes>
+                                        <xsl:value-of select="ns1:notes"/>
+                                    </ns1:notes>
+                                </xsl:if>
+                                <xsl:for-each select="ns1:slaID">
+                                    <ns1:slaID>
+                                        <xsl:value-of select="."/>
+                                    </ns1:slaID>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns1:udf">
+                                    <ns1:udf>
+                                        <ns1:name>
+                                            <xsl:value-of select="ns1:name"/>
+                                        </ns1:name>
+                                        <ns1:value>
+                                            <xsl:value-of select="ns1:value"/>
+                                        </ns1:value>
+                                        <xsl:for-each select="ns1:extension">
+                                            <ns1:extension/>
+                                        </xsl:for-each>
+                                    </ns1:udf>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns1:extension">
+                                    <ns1:extension/>
+                                </xsl:for-each>
+                            </ns1:header>
+                        </xsl:for-each>
+                        <xsl:for-each select="ns1:line">
+                            <ns1:line>
+                                <ns1:lineNumber>
+                                    <xsl:value-of select="ns1:lineNumber"/>
+                                </ns1:lineNumber>
+                                <xsl:if test="ns1:subscriberID">
+                                    <ns1:subscriberID>
+                                        <xsl:value-of select="ns1:subscriberID"/>
+                                    </ns1:subscriberID>
+                                </xsl:if>
+                                <ns1:productID>
+                                    <xsl:value-of select="ns1:productID"/>
+                                </ns1:productID>
+                                <xsl:if test="ns1:productVersion">
+                                    <ns1:productVersion>
+                                        <xsl:value-of select="ns1:productVersion"/>
+                                    </ns1:productVersion>
+                                </xsl:if>
+                                <ns1:quantity>
+                                    <xsl:value-of select="ns1:quantity"/>
+                                </ns1:quantity>
+                                <ns1:uom>
+                                    <xsl:value-of select="ns1:uom"/>
+                                </ns1:uom>
+                                <xsl:for-each select="ns1:deliveryAddress">
+                                    <ns1:deliveryAddress>
+                                        <ns2:line1>
+                                            <xsl:value-of select="ns2:line1"/>
+                                        </ns2:line1>
+                                        <xsl:if test="ns2:line2">
+                                            <ns2:line2>
+                                                <xsl:value-of select="ns2:line2"/>
+                                            </ns2:line2>
+                                        </xsl:if>
+                                        <xsl:if test="ns2:line3">
+                                            <ns2:line3>
+                                                <xsl:value-of select="ns2:line3"/>
+                                            </ns2:line3>
+                                        </xsl:if>
+                                        <ns2:locality>
+                                            <xsl:value-of select="ns2:locality"/>
+                                        </ns2:locality>
+                                        <xsl:if test="ns2:region">
+                                            <ns2:region>
+                                                <xsl:value-of select="ns2:region"/>
+                                            </ns2:region>
+                                        </xsl:if>
+                                        <ns2:country>
+                                            <xsl:value-of select="ns2:country"/>
+                                        </ns2:country>
+                                        <ns2:postCode>
+                                            <xsl:value-of select="ns2:postCode"/>
+                                        </ns2:postCode>
+                                        <xsl:if test="ns2:supplementaryLocation">
+                                            <ns2:supplementaryLocation>
+                                                <xsl:value-of select="ns2:supplementaryLocation"/>
+                                            </ns2:supplementaryLocation>
+                                        </xsl:if>
+                                    </ns1:deliveryAddress>
+                                </xsl:for-each>
+                                <ns1:action>
+                                    <xsl:value-of select="ns1:action"/>
+                                </ns1:action>
+                                <xsl:if test="ns1:actionMode">
+                                    <ns1:actionMode>
+                                        <xsl:value-of select="ns1:actionMode"/>
+                                    </ns1:actionMode>
+                                </xsl:if>
+                                <ns1:requiredByDate>
+                                    <xsl:value-of select="ns1:requiredByDate"/>
+                                </ns1:requiredByDate>
+                                <xsl:if test="ns1:linkID">
+                                    <ns1:linkID>
+                                        <xsl:value-of select="ns1:linkID"/>
+                                    </ns1:linkID>
+                                </xsl:if>
+                                <xsl:if test="ns1:inventoryID">
+                                    <ns1:inventoryID>
+                                        <xsl:value-of select="ns1:inventoryID"/>
+                                    </ns1:inventoryID>
+                                </xsl:if>
+                                <xsl:if test="ns1:notes">
+                                    <ns1:notes>
+                                        <xsl:value-of select="ns1:notes"/>
+                                    </ns1:notes>
+                                </xsl:if>
+                                <xsl:for-each select="ns1:slaID">
+                                    <ns1:slaID>
+                                        <xsl:value-of select="."/>
+                                    </ns1:slaID>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns1:udf">
+                                    <ns1:udf>
+                                        <ns1:name>
+                                            <xsl:value-of select="ns1:name"/>
+                                        </ns1:name>
+                                        <ns1:value>
+                                            <xsl:value-of select="ns1:value"/>
+                                        </ns1:value>
+                                        <xsl:for-each select="ns1:extension">
+                                            <ns1:extension/>
+                                        </xsl:for-each>
+                                    </ns1:udf>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns1:characteristic">
+                                    <ns1:characteristic>
+                                        <ns1:name>
+                                            <xsl:value-of select="ns1:name"/>
+                                        </ns1:name>
+                                        <ns1:description>
+                                            <xsl:value-of select="ns1:description"/>
+                                        </ns1:description>
+                                        <xsl:for-each select="ns1:value">
+                                            <ns1:value>
+                                                <ns1:name>
+                                                    <xsl:value-of select="ns1:name"/>
+                                                </ns1:name>
+                                                <ns1:type>
+                                                    <xsl:value-of select="ns1:type"/>
+                                                </ns1:type>
+                                                <xsl:if test="ns1:value">
+                                                    <ns1:value>
+                                                        <xsl:value-of select="ns1:value"/>
+                                                    </ns1:value>
+                                                </xsl:if>
+                                                <xsl:if test="ns1:valueFrom">
+                                                    <ns1:valueFrom>
+                                                        <xsl:value-of select="ns1:valueFrom"/>
+                                                    </ns1:valueFrom>
+                                                </xsl:if>
+                                                <xsl:if test="ns1:valueTo">
+                                                    <ns1:valueTo>
+                                                        <xsl:value-of select="ns1:valueTo"/>
+                                                    </ns1:valueTo>
+                                                </xsl:if>
+                                                <xsl:for-each select="ns1:extension">
+                                                    <ns1:extension/>
+                                                </xsl:for-each>
+                                            </ns1:value>
+                                        </xsl:for-each>
+                                        <xsl:for-each select="ns1:extension">
+                                            <ns1:extension/>
+                                        </xsl:for-each>
+                                    </ns1:characteristic>
+                                </xsl:for-each>
+                                <xsl:if test="ns1:customerItemID">
+                                    <ns1:customerItemID>
+                                        <xsl:value-of select="ns1:customerItemID"/>
+                                    </ns1:customerItemID>
+                                </xsl:if>
+                                <xsl:for-each select="ns1:extension">
+                                    <ns1:extension/>
+                                </xsl:for-each>
+                            </ns1:line>
+                        </xsl:for-each>
+                    </ns1:orderRequest>
+                </xsl:for-each>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="CancelOrder">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>357</pd:x>
+            <pd:y>68</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/cancelOrder.process</processName>
+            </config>
+            <pd:inputBindings>
+                <pfx:CancelOrderRequestMsg>
+                    <cancelorderreqparameters>
+                        <ns:CancelOrderRequest>
+                            <xsl:attribute name="ExternalBusinessTransactionID">
+                                <xsl:value-of select="$GenerateUUID/UUID"/>
+                            </xsl:attribute>
+                            <ns:orderRef>
+                                <xsl:value-of select="$Current_Order/root/OrderRef"/>
+                            </ns:orderRef>
+                            <ns:rollback>
+                                <xsl:value-of select="false()"/>
+                            </ns:rollback>
+                        </ns:CancelOrderRequest>
+                    </cancelorderreqparameters>
+                </pfx:CancelOrderRequestMsg>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>354</pd:x>
+        <pd:y>390</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>469</pd:x>
+        <pd:y>400</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns3:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>583</pd:x>
+        <pd:y>400</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns4:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Resubmit Order Request">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>55</pd:x>
+        <pd:y>190</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/SharedResources/DataFormats/OrderTemplates/OrderResubmitRequestFormat.sharedparse</ParseSharedConfig>
+            <SkipBlankLines>true</SkipBlankLines>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1246</pd:x>
+        <pd:y>183</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Resubmit Order Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Resubmit Order</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Resubmit Order Request</pd:from>
+        <pd:to>Resubmit Order</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

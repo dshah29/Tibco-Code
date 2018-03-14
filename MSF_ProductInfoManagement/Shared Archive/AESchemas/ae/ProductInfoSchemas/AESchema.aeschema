@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sequence name="ProductID">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="AnyHash">
+        <elementType isRef="true">/AESchemas/ae/ProductInfoSchemas/AESchemaTypes.aeschema#class.AnyHash</elementType>
+    </sequence>
+    <sequence name="prod">
+        <elementType isRef="true">/AESchemas/ae/ProductInfoSchemas/AESchemaTypes.aeschema#class.SingleProduct</elementType>
+    </sequence>
+    <sequence name="productcharacteristics">
+        <elementType isRef="true">/AESchemas/ae/ProductInfoSchemas/AESchemaTypes.aeschema#class.SingleProduct</elementType>
+    </sequence>
+    <sequence name="Discount">
+        <elementType isRef="true">/AESchemas/ae/ProductInfoSchemas/AESchemaTypes.aeschema#class.DiscountSingle</elementType>
+    </sequence>
+    <sequence name="productpricespecification">
+        <elementType isRef="true">/AESchemas/ae/ProductInfoSchemas/AESchemaTypes.aeschema#class.ProductPriceSpecSingle</elementType>
+    </sequence>
+    <sequence name="CustomerPrice">
+        <elementType isRef="true">/AESchemas/ae/ProductInfoSchemas/AESchemaTypes.aeschema#class.CustomerPrice</elementType>
+    </sequence>
+    <class name="fHUK_RetrievePackagePriceHistoryRequest">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AccountNumber</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>StartDate</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>EndDate</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+    <class name="fh_uk_getProductPriceRequest">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AccountNumber</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>OrgID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>EffectiveDate</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PackageAggregationOption</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TargetProduct</name>
+            <attributeType isRef="true">/AESchemas/ae/ProductInfoSchemas/AESchemaTypes.aeschema#class.TargetProductSingle</attributeType>
+        </attribute>
+    </class>
+    <class name="fh_uk_getProductPriceReply">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ExistingProducts</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">#sequence.prod</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TargetProducts</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">#sequence.prod</attributeType>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrievePackagePriceHistoryReply">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CustomerPrice</name>
+            <attributeType isRef="true">#sequence.CustomerPrice</attributeType>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="appnError">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ErrorCode</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ErrorDescription</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>StatusCode</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+</Repository:repository>

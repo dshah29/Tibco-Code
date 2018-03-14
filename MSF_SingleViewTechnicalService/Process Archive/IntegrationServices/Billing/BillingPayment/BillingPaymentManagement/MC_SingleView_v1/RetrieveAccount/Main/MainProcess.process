@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Request" xmlns:ns5="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:ns6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TRETypes" xmlns:ns7="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns3="http://www.tibco.com/pe/SignalInActivitySchema" xmlns:pfx5="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TRETypes" schemaLocation="/AESchemas/ae/TRETypes.aeschema"/>
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/RetrieveAccount/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:RetrieveAccountRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>31</pd:startX>
+    <pd:startY>60</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$CreateResponse/pfx5:RetrieveAccountResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:RetrieveAccountResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>755</pd:endX>
+    <pd:endY>60</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="Create Request">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>264</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <element ref="pfx6:fH3G__RetrieveAccount"/>
+        </config>
+        <pd:inputBindings>
+            <pfx6:fH3G__RetrieveAccount>
+                <AccountNumber>
+                    <xsl:value-of select="$Start/root/pfx5:RetrieveAccountRequest/pfx5:accountNumber"/>
+                </AccountNumber>
+                <xsl:if test="$Start/root/pfx5:RetrieveAccountRequest/pfx5:effectiveDate">
+                    <EffectiveDate>
+                        <xsl:value-of select="$Start/root/pfx5:RetrieveAccountRequest/pfx5:effectiveDate"/>
+                    </EffectiveDate>
+                </xsl:if>
+            </pfx6:fH3G__RetrieveAccount>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>514</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <element ref="pfx5:RetrieveAccountResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx5:RetrieveAccountResponse>
+                <pfx5:AccountDetails>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_NUMBER']/value">
+                        <pfx5:accountNumber>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_NUMBER']/value"/>
+                        </pfx5:accountNumber>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_NAME']/value">
+                        <pfx5:accountName>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_NAME']/value"/>
+                        </pfx5:accountName>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PARENT_ACCOUNT_NUMBER']/value">
+                        <pfx5:parentAccountNumber>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PARENT_ACCOUNT_NUMBER']/value"/>
+                        </pfx5:parentAccountNumber>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ROOT_ACCOUNT_NUMBER']/value">
+                        <pfx5:rootAccountNumber>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ROOT_ACCOUNT_NUMBER']/value"/>
+                        </pfx5:rootAccountNumber>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LAST_MODIFIED']/value">
+                        <pfx5:lastModified>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LAST_MODIFIED']/value"/>
+                        </pfx5:lastModified>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_START_DATE']/value">
+                        <pfx5:effectiveStartDate>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_START_DATE']/value"/>
+                        </pfx5:effectiveStartDate>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_END_DATE']/value">
+                        <pfx5:effectiveEndDate>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_END_DATE']/value"/>
+                        </pfx5:effectiveEndDate>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_TYPE_NAME']/value">
+                        <pfx5:accountTypeName>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_TYPE_NAME']/value"/>
+                        </pfx5:accountTypeName>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_TYPE_ID']/value">
+                        <pfx5:accountTypeID>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_TYPE_ID']/value"/>
+                        </pfx5:accountTypeID>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_STATUS_CODE']/value">
+                        <pfx5:accountStatusCode>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_STATUS_CODE']/value"/>
+                        </pfx5:accountStatusCode>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CREATED_DATE']/value">
+                        <pfx5:createdDate>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CREATED_DATE']/value"/>
+                        </pfx5:createdDate>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CONTACT_ID']/value">
+                        <pfx5:contactID>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CONTACT_ID']/value"/>
+                        </pfx5:contactID>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='REPORT_LEVEL_CODE']/value">
+                        <pfx5:reportLevelCode>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='REPORT_LEVEL_CODE']/value"/>
+                        </pfx5:reportLevelCode>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[starts-with(name,'LINE')]/value">
+                        <pfx5:postalAddress>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE1']/value">
+                                <ns7:flatNumber>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE1']/value"/>
+                                </ns7:flatNumber>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE2']/value">
+                                <ns7:houseNumber>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE2']/value"/>
+                                </ns7:houseNumber>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE3']/value">
+                                <ns7:houseName>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE3']/value"/>
+                                </ns7:houseName>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE4']/value">
+                                <ns7:streetLine1>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE4']/value"/>
+                                </ns7:streetLine1>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE5']/value">
+                                <ns7:streetLine2>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE5']/value"/>
+                                </ns7:streetLine2>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE6']/value">
+                                <ns7:streetLine3>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE6']/value"/>
+                                </ns7:streetLine3>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE7']/value">
+                                <ns7:postCode>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='LINE7']/value"/>
+                                </ns7:postCode>
+                            </xsl:if>
+                        </pfx5:postalAddress>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CURRENCY_ID']/value">
+                        <pfx5:currencyID>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CURRENCY_ID']/value"/>
+                        </pfx5:currencyID>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='BILL_CYCLE_ID']/value">
+                        <pfx5:billCycleID>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='BILL_CYCLE_ID']/value"/>
+                        </pfx5:billCycleID>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='BILLING_PRIORITY']/value">
+                        <pfx5:billingPriority>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='BILLING_PRIORITY']/value"/>
+                        </pfx5:billingPriority>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='BILLING_CONFIGURATION_CODE']/value">
+                        <pfx5:billingConfigurationCode>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='BILLING_CONFIGURATION_CODE']/value"/>
+                        </pfx5:billingConfigurationCode>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SUPPRESS_IND_CODE']/value">
+                        <pfx5:suppressIndCode>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SUPPRESS_IND_CODE']/value"/>
+                        </pfx5:suppressIndCode>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SUPPRESS_BILL_CYCLE_COUNT']/value">
+                        <pfx5:suppressBillCycleCount>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SUPPRESS_BILL_CYCLE_COUNT']/value"/>
+                        </pfx5:suppressBillCycleCount>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SUPPRESS_UNTIL_ISSUE_DATE']/value">
+                        <pfx5:suppressUntilIssueDate>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SUPPRESS_UNTIL_ISSUE_DATE']/value"/>
+                        </pfx5:suppressUntilIssueDate>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='INVOICE_FORMAT_NAME']/value">
+                        <pfx5:invoiceFormatName>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='INVOICE_FORMAT_NAME']/value"/>
+                        </pfx5:invoiceFormatName>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='INVOICE_FORMAT_ID']/value">
+                        <pfx5:invoiceFormatID>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='INVOICE_FORMAT_ID']/value"/>
+                        </pfx5:invoiceFormatID>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CREDIT_LIMIT']/value">
+                        <pfx5:creditLimit>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CREDIT_LIMIT']/value"/>
+                        </pfx5:creditLimit>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_CREDIT_LIMIT']/value">
+                        <pfx5:effectiveCreditLimit>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_CREDIT_LIMIT']/value"/>
+                        </pfx5:effectiveCreditLimit>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='VOLUNTARY_CREDIT_LIMIT']/value">
+                        <pfx5:voluntaryCreditLimit>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='VOLUNTARY_CREDIT_LIMIT']/value"/>
+                        </pfx5:voluntaryCreditLimit>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CrEDIT_CLASS_CODE']/value">
+                        <pfx5:creditClassCode>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CrEDIT_CLASS_CODE']/value"/>
+                        </pfx5:creditClassCode>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TAX_CLASS_CODE']/value">
+                        <pfx5:taxClassCode>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TAX_CLASS_CODE']/value"/>
+                        </pfx5:taxClassCode>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PAYMENT_METHOD_CODE']/value">
+                        <pfx5:paymentMethodCode>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PAYMENT_METHOD_CODE']/value"/>
+                        </pfx5:paymentMethodCode>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PRE_AUTHORISED_FLAG']/value">
+                        <pfx5:preAuthorisedFlag>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PRE_AUTHORISED_FLAG']/value"/>
+                        </pfx5:preAuthorisedFlag>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SALES_CHANNEL']/value">
+                        <pfx5:salesChannel>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SALES_CHANNEL']/value"/>
+                        </pfx5:salesChannel>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SALES_AGENT']/value">
+                        <pfx5:salesAgent>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SALES_AGENT']/value"/>
+                        </pfx5:salesAgent>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='COMPANY_NUMBER']/value">
+                        <pfx5:companyNumber>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='COMPANY_NUMBER']/value"/>
+                        </pfx5:companyNumber>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CUSTOMER_CLASSIFICATION']/value">
+                        <pfx5:customerClassification>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CUSTOMER_CLASSIFICATION']/value"/>
+                        </pfx5:customerClassification>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNTING_METHOD']/value">
+                        <pfx5:accountingMethod>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNTING_METHOD']/value"/>
+                        </pfx5:accountingMethod>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='COLLECTION_AGENT']/value">
+                        <pfx5:collectionAgent>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='COLLECTION_AGENT']/value"/>
+                        </pfx5:collectionAgent>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='COLLECTION_STATUS']/value">
+                        <pfx5:collectionStatus>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='COLLECTION_STATUS']/value"/>
+                        </pfx5:collectionStatus>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SHADOW_CREDIT_LIMIT']/value">
+                        <pfx5:shadowCreditLimit>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SHADOW_CREDIT_LIMIT']/value"/>
+                        </pfx5:shadowCreditLimit>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TRANSACTION_LIMIT']/value">
+                        <pfx5:transactionLimit>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TRANSACTION_LIMIT']/value"/>
+                        </pfx5:transactionLimit>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='VIP_FLAG']/value">
+                        <pfx5:VIPFlag>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='VIP_FLAG']/value"/>
+                        </pfx5:VIPFlag>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PRE_RATING_METHOD']/value">
+                        <pfx5:proRatingMethod>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='PRE_RATING_METHOD']/value"/>
+                        </pfx5:proRatingMethod>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EXTERNAL_CUMTOMETR_ID']/value">
+                        <pfx5:externalCustomerID>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EXTERNAL_CUMTOMETR_ID']/value"/>
+                        </pfx5:externalCustomerID>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TIME_BAND_PROFILE']/value">
+                        <pfx5:timeBandProfile>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TIME_BAND_PROFILE']/value"/>
+                        </pfx5:timeBandProfile>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_OPTION']">
+                        <pfx5:AccountOption>
+                            <pfx5:accountOption>
+                                <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACCOUNT_OPTION']/value"/>
+                            </pfx5:accountOption>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DESCRIPTION']/value">
+                                <pfx5:description>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DESCRIPTION']/value"/>
+                                </pfx5:description>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_START_DATE']/value">
+                                <pfx5:effectiveStartDate>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_START_DATE']/value"/>
+                                </pfx5:effectiveStartDate>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_END_DATE']/value">
+                                <pfx5:effectiveEndDate>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EFFECTIVE_END_DATE']/value"/>
+                                </pfx5:effectiveEndDate>
+                            </xsl:if>
+                        </pfx5:AccountOption>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EXEMPTION']">
+                        <pfx5:Exemption>
+                            <pfx5:exemption>
+                                <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EXEMPTION']/value"/>
+                            </pfx5:exemption>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DESCRIPTION']/value">
+                                <pfx5:description>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DESCRIPTION']/value"/>
+                                </pfx5:description>
+                            </xsl:if>
+                        </pfx5:Exemption>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ENTITY']">
+                        <pfx5:LeagalEntity>
+                            <pfx5:entity>
+                                <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ENTITY']/value"/>
+                            </pfx5:entity>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='INFORMAtION']/value">
+                                <pfx5:information>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='INFORMAtION']/value"/>
+                                </pfx5:information>
+                            </xsl:if>
+                        </pfx5:LeagalEntity>
+                    </xsl:if>
+                    <xsl:if test="exists($RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TRIGGER'])">
+                        <pfx5:TriggeredAction>
+                            <pfx5:trigger>
+                                <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='TRIGGER']/value"/>
+                            </pfx5:trigger>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACTION']/value">
+                                <pfx5:action>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='ACTION']/value"/>
+                                </pfx5:action>
+                            </xsl:if>
+                        </pfx5:TriggeredAction>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='AUTO_TOPUP_AMOUNT']/value">
+                        <pfx5:autoTopupAmount>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='AUTO_TOPUP_AMOUNT']/value"/>
+                        </pfx5:autoTopupAmount>
+                    </xsl:if>
+                    <xsl:if test="exists($RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DAY']) &#xA;and exists($RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='MONTH'])">
+                        <pfx5:SpecialDay>
+                            <pfx5:day>
+                                <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DAY']/value"/>
+                            </pfx5:day>
+                            <pfx5:month>
+                                <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='MONTH']/value"/>
+                            </pfx5:month>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='YEAR']/value">
+                                <pfx5:year>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='YEAR']/value"/>
+                                </pfx5:year>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SPECIAL_DAY_CODE']/value">
+                                <pfx5:specialDayCode>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SPECIAL_DAY_CODE']/value"/>
+                                </pfx5:specialDayCode>
+                            </xsl:if>
+                        </pfx5:SpecialDay>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[starts-with(name,'DISPLAY')]">
+                        <pfx5:OutputOption>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DISPLAY_MEDIUM']/value">
+                                <pfx5:displayMedium>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DISPLAY_MEDIUM']/value"/>
+                                </pfx5:displayMedium>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DISPLAY_SECTION']/value">
+                                <pfx5:displaySection>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DISPLAY_SECTION']/value"/>
+                                </pfx5:displaySection>
+                            </xsl:if>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DISPLAY_STATUS']/value">
+                                <pfx5:displayStatus>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='DISPLAY_STATUS']/value"/>
+                                </pfx5:displayStatus>
+                            </xsl:if>
+                        </pfx5:OutputOption>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='RETIREMENT_TYPE']/value">
+                        <pfx5:retirementType>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='RETIREMENT_TYPE']/value"/>
+                        </pfx5:retirementType>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CREDIT_COMMENTS']/value">
+                        <pfx5:creditComments>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='CREDIT_COMMENTS']/value"/>
+                        </pfx5:creditComments>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[starts-with(name,'SPEND_LIMIT')]/value">
+                        <pfx5:SpendLimit>
+                            <pfx5:spendLimitType>
+                                <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SPEND_LIMIT_TYPE']/value"/>
+                            </pfx5:spendLimitType>
+                            <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SPEND_LIMIT_VALUE']/value">
+                                <pfx5:spendLimitValue>
+                                    <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='SPEND_LIMIT_VALUE']/value"/>
+                                </pfx5:spendLimitValue>
+                            </xsl:if>
+                        </pfx5:SpendLimit>
+                    </xsl:if>
+                    <xsl:if test="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EUDRL_ALERT_FLAG']/value">
+                        <pfx5:eudrlAlertFlag>
+                            <xsl:value-of select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/AccountDetails/item[name='EUDRL_ALERT_FLAG']/value"/>
+                        </pfx5:eudrlAlertFlag>
+                    </xsl:if>
+                </pfx5:AccountDetails>
+                <xsl:for-each select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/PrimaryContact">
+                    <pfx5:PrimaryContact>
+                        <xsl:if test="item[name='CONTACT_ID']/value">
+                            <pfx5:contactID>
+                                <xsl:value-of select="item[name='CONTACT_ID']/value"/>
+                            </pfx5:contactID>
+                        </xsl:if>
+                        <xsl:if test="item[name='CONTACT_TYPE_ID']/value">
+                            <pfx5:contactTypeID>
+                                <xsl:value-of select="item[name='CONTACT_TYPE_ID']/value"/>
+                            </pfx5:contactTypeID>
+                        </xsl:if>
+                        <xsl:if test="item[name='TITLE']/value">
+                            <pfx5:title>
+                                <xsl:value-of select="item[name='TITLE']/value"/>
+                            </pfx5:title>
+                        </xsl:if>
+                        <xsl:if test="item[name='GIVEN_NAMES']/value">
+                            <pfx5:givenNames>
+                                <xsl:value-of select="item[name='GIVEN_NAMES']/value"/>
+                            </pfx5:givenNames>
+                        </xsl:if>
+                        <xsl:if test="item[name='FAMILY_NAME']/value">
+                            <pfx5:familyName>
+                                <xsl:value-of select="item[name='FAMILY_NAME']/value"/>
+                            </pfx5:familyName>
+                        </xsl:if>
+                        <xsl:if test="item[name='OFFICIAL_NAME']/value">
+                            <pfx5:officialName>
+                                <xsl:value-of select="item[name='OFFICIAL_NAME']/value"/>
+                            </pfx5:officialName>
+                        </xsl:if>
+                        <xsl:if test="item[name='PREFERRED_NAME']/value">
+                            <pfx5:preferredName>
+                                <xsl:value-of select="item[name='PREFERRED_NAME']/value"/>
+                            </pfx5:preferredName>
+                        </xsl:if>
+                        <xsl:if test="item[name='GENDER_CODE']/value">
+                            <pfx5:genderCode>
+                                <xsl:value-of select="item[name='GENDER_CODE']/value"/>
+                            </pfx5:genderCode>
+                        </xsl:if>
+                        <xsl:if test="item[name='EFFECTIVE_START_DATE']/value">
+                            <pfx5:effectiveStartDate>
+                                <xsl:value-of select="item[name='EFFECTIVE_START_DATE']/value"/>
+                            </pfx5:effectiveStartDate>
+                        </xsl:if>
+                        <xsl:if test="item[name='EFFECTIVE_END_DATE']/value">
+                            <pfx5:effectiveEndDate>
+                                <xsl:value-of select="item[name='EFFECTIVE_END_DATE']/value"/>
+                            </pfx5:effectiveEndDate>
+                        </xsl:if>
+                        <xsl:if test="item[name='CONTACT_STATUS_CODE']/value">
+                            <pfx5:contactStatusCode>
+                                <xsl:value-of select="item[name='CONTACT_STATUS_CODE']/value"/>
+                            </pfx5:contactStatusCode>
+                        </xsl:if>
+                        <xsl:if test="item[name='DISABILITY_CATEGORY']/value">
+                            <pfx5:disabilityCategory>
+                                <xsl:value-of select="item[name='DISABILITY_CATEGORY']/value"/>
+                            </pfx5:disabilityCategory>
+                        </xsl:if>
+                        <xsl:if test="exists(item[starts-with(name,'LINE')])">
+                            <pfx5:postalAddress>
+                                <xsl:if test="item[name='LINE1']/value">
+                                    <ns7:flatNumber>
+                                        <xsl:value-of select="item[name='LINE1']/value"/>
+                                    </ns7:flatNumber>
+                                </xsl:if>
+                                <xsl:if test="item[name='LINE2']/value">
+                                    <ns7:houseNumber>
+                                        <xsl:value-of select="item[name='LINE2']/value"/>
+                                    </ns7:houseNumber>
+                                </xsl:if>
+                                <xsl:if test="item[name='LINE3']/value">
+                                    <ns7:houseName>
+                                        <xsl:value-of select="item[name='LINE3']/value"/>
+                                    </ns7:houseName>
+                                </xsl:if>
+                                <xsl:if test="item[name='LINE4']/value">
+                                    <ns7:streetLine1>
+                                        <xsl:value-of select="item[name='LINE4']/value"/>
+                                    </ns7:streetLine1>
+                                </xsl:if>
+                                <xsl:if test="item[name='LINE5']/value">
+                                    <ns7:streetLine2>
+                                        <xsl:value-of select="item[name='LINE5']/value"/>
+                                    </ns7:streetLine2>
+                                </xsl:if>
+                                <xsl:if test="item[name='LINE6']/value">
+                                    <ns7:streetLine3>
+                                        <xsl:value-of select="item[name='LINE6']/value"/>
+                                    </ns7:streetLine3>
+                                </xsl:if>
+                                <xsl:if test="item[name='LINE7']/value">
+                                    <ns7:postCode>
+                                        <xsl:value-of select="item[name='LINE7']/value"/>
+                                    </ns7:postCode>
+                                </xsl:if>
+                            </pfx5:postalAddress>
+                        </xsl:if>
+                        <xsl:if test="item[name='PHONE_NR']/value">
+                            <pfx5:phoneNR>
+                                <xsl:value-of select="item[name='PHONE_NR']/value"/>
+                            </pfx5:phoneNR>
+                        </xsl:if>
+                        <xsl:if test="item[name='FAX_PHONE_NR']/value">
+                            <pfx5:faxPhoneNR>
+                                <xsl:value-of select="item[name='FAX_PHONE_NR']/value"/>
+                            </pfx5:faxPhoneNR>
+                        </xsl:if>
+                        <xsl:if test="item[name='EMAIL_ADDRESS']/value">
+                            <pfx5:emailAddress>
+                                <xsl:value-of select="item[name='EMAIL_ADDRESS']/value"/>
+                            </pfx5:emailAddress>
+                        </xsl:if>
+                        <xsl:if test="item[name='WRITTEN_LANGUAGE_CODE']/value">
+                            <pfx5:writtenLanguageCode>
+                                <xsl:value-of select="item[name='WRITTEN_LANGUAGE_CODE']/value"/>
+                            </pfx5:writtenLanguageCode>
+                        </xsl:if>
+                        <xsl:if test="item[name='SPOKEN_LANGUAGE_CODE']/value">
+                            <pfx5:spokenLanguageCode>
+                                <xsl:value-of select="item[name='SPOKEN_LANGUAGE_CODE']/value"/>
+                            </pfx5:spokenLanguageCode>
+                        </xsl:if>
+                        <xsl:if test="item[name='PASSWORD']/value">
+                            <pfx5:password>
+                                <xsl:value-of select="item[name='PASSWORD']/value"/>
+                            </pfx5:password>
+                        </xsl:if>
+                        <xsl:if test="item[name='PREFERRED_CONTACT_METHOD']/value">
+                            <pfx5:preferredContactMethod>
+                                <xsl:value-of select="item[name='PREFERRED_CONTACT_METHOD']/value"/>
+                            </pfx5:preferredContactMethod>
+                        </xsl:if>
+                        <xsl:if test="item[name='BIRTH_DATE']/value">
+                            <pfx5:birthDate>
+                                <xsl:value-of select="item[name='BIRTH_DATE']/value"/>
+                            </pfx5:birthDate>
+                        </xsl:if>
+                        <xsl:if test="item[name='LAST_MODIFIED']/value">
+                            <pfx5:lastModified>
+                                <xsl:value-of select="item[name='LAST_MODIFIED']/value"/>
+                            </pfx5:lastModified>
+                        </xsl:if>
+                    </pfx5:PrimaryContact>
+                </xsl:for-each>
+                <xsl:for-each select="$RetrieveAccount-SV-Adapter/root/ns5:fH3G__RetrieveAccount/InvoiceFormats">
+                    <pfx5:InvoiceFormat>
+                        <xsl:if test="item[name='ACCOUNT_NUMBER']/value">
+                            <pfx5:accountNumber>
+                                <xsl:value-of select="item[name='ACCOUNT_NUMBER']/value"/>
+                            </pfx5:accountNumber>
+                        </xsl:if>
+                        <xsl:if test="item[name='SEQ_NR']/value">
+                            <pfx5:seqNR>
+                                <xsl:value-of select="item[name='SEQ_NR']/value"/>
+                            </pfx5:seqNR>
+                        </xsl:if>
+                        <xsl:if test="item[name='INVOICE_FORMAT_NAME']/value">
+                            <pfx5:invoiceFormatName>
+                                <xsl:value-of select="item[name='INVOICE_FORMAT_NAME']/value"/>
+                            </pfx5:invoiceFormatName>
+                        </xsl:if>
+                        <xsl:if test="item[name='INVOICE_FORMAT_ID']/value">
+                            <pfx5:invoiceFormatID>
+                                <xsl:value-of select="item[name='INVOICE_FORMAT_ID']/value"/>
+                            </pfx5:invoiceFormatID>
+                        </xsl:if>
+                        <xsl:if test="item[name='NUM_EXTRA_INVOICE_COPIES']/value">
+                            <pfx5:numExtraInvoiceCopies>
+                                <xsl:value-of select="item[name='NUM_EXTRA_INVOICE_COPIES']/value"/>
+                            </pfx5:numExtraInvoiceCopies>
+                        </xsl:if>
+                        <xsl:if test="item[name='INV_SUMMARY_DETAIL_FLAG']/value">
+                            <pfx5:InvSummaryDetailFlag>
+                                <xsl:value-of select="item[name='INV_SUMMARY_DETAIL_FLAG']/value"/>
+                            </pfx5:InvSummaryDetailFlag>
+                        </xsl:if>
+                        <xsl:if test="item[name='HOLD_BILL_FLAG']/value">
+                            <pfx5:holdBillFlag>
+                                <xsl:value-of select="item[name='HOLD_BILL_FLAG']/value"/>
+                            </pfx5:holdBillFlag>
+                        </xsl:if>
+                        <xsl:if test="item[name='SUPPRESS_STATEMENT_DETAILS_FLAG']/value">
+                            <pfx5:suppressStatementDetailsFlag>
+                                <xsl:value-of select="item[name='SUPPRESS_STATEMENT_DETAILS_FLAG']/value"/>
+                            </pfx5:suppressStatementDetailsFlag>
+                        </xsl:if>
+                        <xsl:if test="item[name='CONTACT_ID']/value">
+                            <pfx5:contactID>
+                                <xsl:value-of select="item[name='CONTACT_ID']/value"/>
+                            </pfx5:contactID>
+                        </xsl:if>
+                        <xsl:if test="item[name='EFFECTIVE_START_DATE']/value">
+                            <pfx5:effectiveStartDate>
+                                <xsl:value-of select="item[name='EFFECTIVE_START_DATE']/value"/>
+                            </pfx5:effectiveStartDate>
+                        </xsl:if>
+                        <xsl:if test="item[name='EFFECTIVE_END_DATE']/value">
+                            <pfx5:effectiveEndDate>
+                                <xsl:value-of select="item[name='EFFECTIVE_END_DATE']/value"/>
+                            </pfx5:effectiveEndDate>
+                        </xsl:if>
+                    </pfx5:InvoiceFormat>
+                </xsl:for-each>
+            </pfx5:RetrieveAccountResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RetrieveAccount SV Adapter">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>384</pd:x>
+        <pd:y>68</pd:y>
+        <config>
+            <processName>/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/RetrieveAccount/Sub/RetrieveAccount SV Adapter.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Request/pfx6:fH3G__RetrieveAccount"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>631</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$CreateResponse/pfx5:RetrieveAccountResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>133</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx5:RetrieveAccountRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Create Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateResponse</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Request</pd:from>
+        <pd:to>RetrieveAccount SV Adapter</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RetrieveAccount SV Adapter</pd:from>
+        <pd:to>CreateResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

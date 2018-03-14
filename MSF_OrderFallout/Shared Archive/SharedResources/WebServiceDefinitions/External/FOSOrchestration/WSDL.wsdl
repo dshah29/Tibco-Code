@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" xmlns:ns3="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/PlanItemExecuteReply.xsd" xmlns:tns="http://xmlns.example.com/1441787653389" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.example.com/1441787653389">
+    <import namespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" location="../../../SchemaDefinitions/External/BussnessExceptionHandler/OrderFalloutBusinessException.xsd"/>
+    <import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" location="../../../SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorExecutionService.xsd"/>
+    <import namespace="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/PlanItemExecuteReply.xsd" location="../../../SchemaDefinitions/External/BussnessExceptionHandler/PlanItemExecuteReply.xsd"/>
+    <message name="getPlanRequest">
+        <part name="getPlanRequest" element="ns:GetPlanRequest"/>
+    </message>
+    <message name="getPlanReply">
+        <part name="getPlanReply" element="ns:GetPlanReply"/>
+    </message>
+    <message name="getOrderRequest">
+        <part name="getOrderRequest" element="ns:GetOrderRequest"/>
+    </message>
+    <message name="getOrderReply">
+        <part name="getOrderReply" element="ns:GetOrderReply"/>
+    </message>
+    <message name="getPlanItemsRequest">
+        <part name="getPlanItemsRequest" element="ns:GetPlanItemsRequest"/>
+    </message>
+    <message name="getPlanItemsReply">
+        <part name="getPlanItemsReply" element="ns:GetPlanItemsReply"/>
+    </message>
+    <message name="setPlanItemsRequest">
+        <part name="setPlanItemsRequest" element="ns:SetPlanItemRequest"/>
+    </message>
+    <message name="setPlanItemsReply">
+        <part name="setPlanItemsReply" element="ns:SetPlanItemReply"/>
+    </message>
+    <message name="planItemexecuteReplyRequest">
+        <part name="planItemexecuteReplyRequest" element="ns3:PlanItemExecuteReplyRequest"/>
+    </message>
+    <message name="planItemexecuteReplyResponse">
+        <part name="PlanItemExecuteReplyResponse" element="ns3:PlanItemExecuteReplyResponse"/>
+    </message>
+    <portType name="FOSInterfaceServicePortType">
+        <operation name="getPlanDetails">
+            <input name="getPlanReq" message="tns:getPlanRequest"/>
+            <output name="getPlanRep" message="tns:getPlanReply"/>
+        </operation>
+        <operation name="getOrderDetails">
+            <input message="tns:getOrderRequest"/>
+            <output message="tns:getOrderReply"/>
+        </operation>
+        <operation name="getPlanItems">
+            <input message="tns:getPlanItemsRequest"/>
+            <output message="tns:getPlanItemsReply"/>
+        </operation>
+        <operation name="setPlanItems">
+            <input message="tns:setPlanItemsRequest"/>
+            <output message="tns:setPlanItemsReply"/>
+        </operation>
+        <operation name="planItemexecuteReply">
+            <input message="tns:planItemexecuteReplyRequest"/>
+            <output message="tns:planItemexecuteReplyResponse"/>
+        </operation>
+    </portType>
+</definitions>

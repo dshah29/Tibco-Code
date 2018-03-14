@@ -1,0 +1,1294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="CUSTOMER_KEY">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCOUNT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CRM_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+    <class name="Address_1">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_1</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_2</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_3</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_4</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>POSTCODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>COUNTRY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="CustomerKey">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCOUNT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CRM_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>POSTCODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DOB</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HOUSE_NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HOUSE_NUMBER</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="HandsetStockCheck">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HANDSET_ID </name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="HandsetAllocation">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRODUCT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HANDSET_RESERVATION_CODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="CONTACT">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>FIRSTNAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SURNAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRIMARY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="SERVICE">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SERVICE_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRICEPLAN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">#class.PricePlan</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCOUNT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HANDSET</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">#class.HandSet</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTRACT_START_DT</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTRACT_END_DT</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DEALER_CODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>STATUS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDON_LIST</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqAddonList</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TERM_ELAPSED</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CURRENT_TERM</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SERVICE_LIST</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqServiceList</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTRACTTYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CE_ATTRIBUTES</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqCE_ATTRIBUTES</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ISID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>IMSI</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DISCONNECTDATE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="ADDON">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DESCRIPTION</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDON_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACTIVATE_DT</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DISCONNECT_DT</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="PricePlan">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRICE_PLAN_NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRICE_PLAN_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="CustomerName">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TITLE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>FORENAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SURNAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="SERVICE_LIST">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SERVICE_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+    </class>
+    <class name="HandSet">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HANDSET_NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HANDSET_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="INTERACTION">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>START_DATE_TIME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>END_DATE_TIME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTACT_METHOD</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTACT_REASON</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTACT_SUB_REASON</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AGENT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTACT_NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NOTES_LIST</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqNote</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTACT_OUTCOME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="NOTE">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NOTE_DESCRIPTION</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DATE_TIME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="SERVICE_CHANGE">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CHANGE_DESCRIPTION</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CHANGE_TYPE_LIST</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqChangeType</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DATE_RAISED</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>COMPLETED_DATE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AGENT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>STATUS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="CHANGE_TYPE">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CHANGE_TYPE_DESCRIPTION</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRODUCT_DESCRIPTION</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>EFFECTIVE_DATE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="Accessories">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCESSORYID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqAccessoryID</attributeType>
+        </attribute>
+    </class>
+    <class name="AccessoryList">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCESSORY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.Accessory</attributeType>
+        </attribute>
+    </class>
+    <class name="Case">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>OPENCASEID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="ConsumerAgentSummaryProfile">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CUSTOMER_VALUE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CUSTOMER_NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCOUNT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>FIRST_NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>COLLECTIONS_FLAG</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SURNAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTRACT_START_DATE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MEMORABLE_NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MEMORABLE_PLACE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CURRENT_TERM_REMAINING</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CURRENT_PRICE_PLAN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CURRENT_CONTRACT_TERM</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DOB</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CONTRACT_END_DATE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="ACCESSORIES_LIST">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCESSORY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqAccessory</attributeType>
+        </attribute>
+    </class>
+    <class name="TelNos">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CM_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NUMBER</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PURPOSE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRIMARY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="EmailAddress">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CM_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PURPOSE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRIMARY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="Permissions">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_POST</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_MOBILE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_HOME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_MMS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_SMS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_VIDEO</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_EMAIL</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_AUDIO</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCEPTS_FAX</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="Delivery_Address">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESSLINE1</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESSLINE2</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESSLINE3</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESSLINE4</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>POSTCODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TOWN_CITY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>FLAT_NUMBER</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HOUSE_NUMBER</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="ACCESSORY1">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCESSORY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">#class.ACCESSORYTYPE</attributeType>
+        </attribute>
+    </class>
+    <class name="ACESSORYLIST">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AccessoryID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="Accessory">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AccessoryID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AccReservationCode</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>StatusCode</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ErrorCode</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ErrorDescription</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="ACCESSORYTYPE">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACC_RESERVATION_CODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACCESSORYID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="Address">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CM_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRIMARY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HOUSE_NUMBER</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>FLAT_NUMBER</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_1</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_2</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_3</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADDRESS_LINE_4</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TOWN_CITY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>COUNTY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>POSTCODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>COUNTRY</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="ADD_ONS">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>H1UK_ADDON</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="ResultStatus">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>STATUS_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="Details">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TITLE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>FORENAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MIDDLE_NAMES</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SURNAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>GENDER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>BIRTH_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="CE_ATTR">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>VALUE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="CCS_Price">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DISPLAY_AMOUNT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.r8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="consumerkey">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>BAN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>CRMID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="Product">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="consumer_key">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>BAN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="CCS_Product">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TYPE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NAME</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>IMEI</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESERVATION_CODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>EXTERNAL_FULFIL</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>INSTANCE_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PRICE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqPrices</attributeType>
+        </attribute>
+    </class>
+    <class name="ProductCharge">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ProductID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ProductMRC</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ProductName</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ProductRental</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ProductType</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ActiveStartDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ActiveEndDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="BILATERAL_INFORMATION">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>VALUE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="USER_IDENTIFIER">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MSISDN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>IMSI</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ICCID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+</Repository:repository>

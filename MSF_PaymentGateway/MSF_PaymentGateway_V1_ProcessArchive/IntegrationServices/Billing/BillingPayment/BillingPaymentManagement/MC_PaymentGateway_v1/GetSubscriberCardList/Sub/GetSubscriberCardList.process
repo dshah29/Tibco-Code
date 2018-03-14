@@ -1,0 +1,640 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1" xmlns:XMLUtil="java://com.tibco.tibcobw.customfunctions.XMLUtils" xmlns:ns12="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns13="www.tibco.com/plugin/Sleep" xmlns:ns6="http://www.tibco.com/pe/EngineTypes" xmlns:ns7="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1" xmlns:ns2="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns3="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:pfx5="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PGAJ2eeAdapter_1/Response" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PaymentGatewayAdapter_1/Response" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PGAJ2eeAdapter_1/Request" xmlns:pfx2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PaymentGatewayAdapter_1/Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PaymentGatewayAdapter_1/Request" schemaLocation="/AESchemas/ae/PaymentGatewayAdapter_1/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PaymentGatewayAdapter_1/Response" schemaLocation="/AESchemas/ae/PaymentGatewayAdapter_1/Response.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PGAJ2eeAdapter_1/Request" schemaLocation="/AESchemas/ae/PGAJ2eeAdapter_1/Request.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1.xsd"/>
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/GetSubscriberCardList/Sub/GetSubscriberCardList.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx:GetSubscriberCardListRequest"/>
+    <pd:startX>27</pd:startX>
+    <pd:startY>234</pd:startY>
+    <pd:returnBindings>
+        <xsl:copy-of select="$GetCardListResponse/pfx:GetSubscriberCardListResponse"/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx:GetSubscriberCardListResponse"/>
+    <pd:endX>1561</pd:endX>
+    <pd:endY>229</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="ns5:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1422514851442</pd:targetNamespace>
+    <pd:group name="Retry on Communication Error">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>410</pd:x>
+        <pd:y>12</pd:y>
+        <pd:width>432</pd:width>
+        <pd:height>424</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>repeat</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>loopCount</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:repeatCondition>exists($PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse)</pd:repeatCondition>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>PGA Adapter</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PGA Adapter</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Sleep</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>CreateException_RVSendError</pd:from>
+            <pd:to>GenerateRVSendError</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PGA Adapter</pd:from>
+            <pd:to>Check For Retry</pd:to>
+            <pd:lineType>Straight</pd:lineType>
+            <pd:lineColor>-65536</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Check For Retry</pd:from>
+            <pd:to>CreateException_RVSendError</pd:to>
+            <pd:xpathDescription>No Retry</pd:xpathDescription>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$loopCount&gt;$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/EAIService/GetSubscriberCardList/SendRetries</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log</pd:from>
+            <pd:to>Sleep</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Check For Retry</pd:from>
+            <pd:to>Log</pd:to>
+            <pd:xpathDescription/>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="CreateException_RVSendError">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>601</pd:x>
+            <pd:y>222</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Exceptions/CreateException_RVSendError.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <destinationName>
+                        <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/ServiceName"/>
+                    </destinationName>
+                    <rvSubject>
+                        <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/EAIService/GetSubscriberCardList/Subject"/>
+                    </rvSubject>
+                    <xsl:copy-of select="$_error/ns6:ErrorReport"/>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="GenerateRVSendError">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>727</pd:x>
+            <pd:y>220</pd:y>
+            <config>
+                <faultName>Schema0</faultName>
+            </config>
+            <pd:inputBindings>
+                <ns12:ActivityInput>
+                    <data>
+                        <xsl:copy-of select="$CreateException_RVSendError/root/ns5:Exception"/>
+                    </data>
+                </ns12:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="PGA Adapter">
+            <pd:type>com.tibco.plugin.ae.AEPublisherActivity</pd:type>
+            <pd:resourceType>ae.aepalette.aePubActivity</pd:resourceType>
+            <pd:x>485</pd:x>
+            <pd:y>82</pd:y>
+            <config>
+                <ae.aepalette.sharedProperties.transportChoice>rv</ae.aepalette.sharedProperties.transportChoice>
+                <ae.aepalette.sharedProperties.useRequestReply>true</ae.aepalette.sharedProperties.useRequestReply>
+                <ae.aepalette.sharedProperties.transportType>rv</ae.aepalette.sharedProperties.transportType>
+                <ae.aepalette.sharedProperties.msgFormat>aeRvMsg</ae.aepalette.sharedProperties.msgFormat>
+                <ae.aepalette.sharedProperties.customRequest>/AESchemas/ae/PGAJ2eeAdapter_1/Request.aeschema#class.SubscriberCardListRequest</ae.aepalette.sharedProperties.customRequest>
+                <ae.aepalette.sharedProperties.customReply>/AESchemas/ae/PGAJ2eeAdapter_1/Response.aeschema#class.SubscriberCardListResponse</ae.aepalette.sharedProperties.customReply>
+                <ae.aepalette.sharedProperties.rvSubject>%%IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/EAIService/GetSubscriberCardList/Subject%%</ae.aepalette.sharedProperties.rvSubject>
+                <ae.aepalette.sharedProperties.rvSessionService>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Service%%</ae.aepalette.sharedProperties.rvSessionService>
+                <ae.aepalette.sharedProperties.rvSessionNetwork>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Network%%</ae.aepalette.sharedProperties.rvSessionNetwork>
+                <ae.aepalette.sharedProperties.rvSessionDaemon>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Daemon%%</ae.aepalette.sharedProperties.rvSessionDaemon>
+            </config>
+            <pd:inputBindings>
+                <aePubInputType>
+                    <requestTimeout>
+                        <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/EAIService/GetSubscriberCardList/TimeoutSec*1000"/>
+                    </requestTimeout>
+                    <body>
+                        <xsl:copy-of select="$GetCardListRequest/pfx3:SubscriberCardListRequest"/>
+                    </body>
+                </aePubInputType>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Check For Retry">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>489</pd:x>
+            <pd:y>222</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Sleep">
+            <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+            <pd:resourceType>ae.activities.sleep</pd:resourceType>
+            <pd:x>706</pd:x>
+            <pd:y>357</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns13:SleepInputSchema>
+                    <IntervalInMillisec>
+                        <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/EAIService/GetSubscriberCardList/RetryIntervalSec*1000"/>
+                    </IntervalInMillisec>
+                </ns13:SleepInputSchema>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Log">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>490</pd:x>
+            <pd:y>360</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Logging/Log.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <level>
+                        <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Logging/Levels/INFO"/>
+                    </level>
+                    <message>
+                        <xsl:value-of select="concat('RV Exception: ', $_error/ns6:ErrorReport/MsgCode, ' on operation attempt ', $loopCount, ' - Retrying after pause *******')"/>
+                    </message>
+                    <processName>
+                        <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns6:ProcessContext/ProcessId)"/>
+                    </processName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Check Status Code">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>956</pd:x>
+        <pd:y>229</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateException_ResponseCodeError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1108</pd:x>
+        <pd:y>357</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ResponseCodeError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ResponseCode>
+                    <xsl:value-of select="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__CODE"/>
+                </ResponseCode>
+                <xsl:if test="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__DESCRIPTION">
+                    <ResponseMessage>
+                        <xsl:value-of select="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__DESCRIPTION"/>
+                    </ResponseMessage>
+                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__CODE=$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/AdapterErrors/GetSubscriberCardList/NoCardFound">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/CardNotFound/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/CardNotFound/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__CODE=$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/AdapterErrors/GetSubscriberCardList/DBError">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/DatabaseError/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/DatabaseError/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__CODE=$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/AdapterErrors/GetSubscriberCardList/InvalidParam">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/InvalidInputParamaeter/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/InvalidInputParamaeter/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__CODE=$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/AdapterErrors/GetSubscriberCardList/UnexpectedError">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/UnexpectedError/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/UnexpectedError/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/ERROR__CODE=$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/AdapterErrors/GetSubscriberCardList/ParamsMissing">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/InvalidInputParamaeter/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Exceptions/PGAServiceErrors/InvalidInputParamaeter/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:otherwise/>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GenerateKnownError">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>1272</pd:x>
+        <pd:y>357</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_ResponseCodeError/root/ns5:Exception"/>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetCardListRequest">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>224</pd:x>
+        <pd:y>234</pd:y>
+        <config>
+            <element ref="pfx3:SubscriberCardListRequest"/>
+        </config>
+        <pd:inputBindings>
+            <pfx3:SubscriberCardListRequest>
+                <ACCOUNT__NUMBER>
+                    <xsl:value-of select="$Start/pfx:GetSubscriberCardListRequest/pfx:BAN"/>
+                </ACCOUNT__NUMBER>
+            </pfx3:SubscriberCardListRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetCardListResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1303</pd:x>
+        <pd:y>229</pd:y>
+        <config>
+            <element ref="pfx:GetSubscriberCardListResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:GetSubscriberCardListResponse>
+                <pfx:PaymentCards>
+                    <xsl:for-each select="$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/CARD__DETAILS__LIST/item">
+                        <pfx:PaymentCard>
+                            <pfx:cardID>
+                                <xsl:value-of select="CARD__ID"/>
+                            </pfx:cardID>
+                            <pfx:acquirerID>
+                                <xsl:value-of select="ACQUIRER__ID"/>
+                            </pfx:acquirerID>
+                            <pfx:obscuredCardNumber>
+                                <xsl:value-of select="CARD__NUMBER"/>
+                            </pfx:obscuredCardNumber>
+                            <pfx:PaymentCardDetails>
+                                <xsl:if test="(exists(ISSUE__NUMBER) and tib:trim(ISSUE__NUMBER)!=&quot;&quot;)">
+                                    <xsl:if test="not((ISSUE__NUMBER/@xsi:nil=(&quot;true&quot;)) or (ISSUE__NUMBER/@xsi:nil=(&quot;1&quot;)))">
+                                        <ns:issueNumber>
+                                            <xsl:value-of select="ISSUE__NUMBER"/>
+                                        </ns:issueNumber>
+                                    </xsl:if>
+                                </xsl:if>
+                                <xsl:if test="(exists(CARD__TYPE) and tib:trim(CARD__TYPE)!=&quot;&quot;)">
+                                    <ns:creditCardType>
+                                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns7:GlobalVariables/Enumerations/CDM/Billing/BillingCommon/BillingEnumerations/BillingTypes/PAYMENT_CARD_TYPE, CARD__TYPE)"/>
+                                    </ns:creditCardType>
+                                </xsl:if>
+                                <xsl:if test="(exists(START__DATE) and tib:trim(START__DATE)!=&quot;&quot;)">
+                                    <xsl:if test="not((START__DATE/@xsi:nil=(&quot;true&quot;)) or (START__DATE/@xsi:nil=(&quot;1&quot;)))">
+                                        <ns:cardStartDate>
+                                            <xsl:value-of select="START__DATE"/>
+                                        </ns:cardStartDate>
+                                    </xsl:if>
+                                </xsl:if>
+                                <xsl:if test="(exists(EXPIRY__DATE) and tib:trim(EXPIRY__DATE)!=&quot;&quot;)">
+                                    <xsl:if test="not((EXPIRY__DATE/@xsi:nil=(&quot;true&quot;)) or (EXPIRY__DATE/@xsi:nil=(&quot;1&quot;)))">
+                                        <ns:cardExpiryDate>
+                                            <xsl:value-of select="EXPIRY__DATE"/>
+                                        </ns:cardExpiryDate>
+                                    </xsl:if>
+                                </xsl:if>
+                                <ns2:individual>
+                                    <ns2:personalDetails>
+                                        <xsl:if test="(exists(HOLDER__NAME) and tib:trim(HOLDER__NAME)!=&quot;&quot;)">
+                                            <xsl:if test="not((HOLDER__NAME/@xsi:nil=(&quot;true&quot;)) or (HOLDER__NAME/@xsi:nil=(&quot;1&quot;)))">
+                                                <ns2:fullName>
+                                                    <xsl:value-of select="HOLDER__NAME"/>
+                                                </ns2:fullName>
+                                            </xsl:if>
+                                        </xsl:if>
+                                    </ns2:personalDetails>
+                                </ns2:individual>
+                            </pfx:PaymentCardDetails>
+                            <xsl:if test="(exists(POST__CODE) and tib:trim(POST__CODE)!=&quot;&quot;)">
+                                <xsl:if test="not((POST__CODE/@xsi:nil=(&quot;true&quot;)) or (POST__CODE/@xsi:nil=(&quot;1&quot;)))">
+                                    <pfx:postcodeNumber>
+                                        <xsl:value-of select="POST__CODE"/>
+                                    </pfx:postcodeNumber>
+                                </xsl:if>
+                            </xsl:if>
+                            <xsl:if test="(exists(ADDRESS) and tib:trim(ADDRESS)!=&quot;&quot;)">
+                                <xsl:if test="not((ADDRESS/@xsi:nil=(&quot;true&quot;)) or (ADDRESS/@xsi:nil=(&quot;1&quot;)))">
+                                    <pfx:addressNumber>
+                                        <xsl:value-of select="ADDRESS"/>
+                                    </pfx:addressNumber>
+                                </xsl:if>
+                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="PAYMENT__METHOD__TYPE=$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/PaymentMethodType/DIRECT-DEBIT">
+                                    <pfx:paymentMethodType>
+                                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns7:GlobalVariables/Enumerations/CDM/Billing/BillingCommon/BillingEnumerations/BillingTypes/PAYMENT_TYPES, $_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/PaymentMethod/DIRECT_DEBIT_GetSubscriberCardList)"/>
+                                    </pfx:paymentMethodType>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <pfx:paymentMethodType>
+                                        <xsl:value-of select="XMLUtil:validate($_globalVariables/ns7:GlobalVariables/Enumerations/CDM/Billing/BillingCommon/BillingEnumerations/BillingTypes/PAYMENT_TYPES, $_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/PaymentMethod/CREDITCARD)"/>
+                                    </pfx:paymentMethodType>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <pfx:cardSynonym>
+                                <xsl:value-of select="CARD__SYNONYM"/>
+                            </pfx:cardSynonym>
+                            <pfx:creationDateTime>
+                                <xsl:value-of select="CREATE__DATE"/>
+                            </pfx:creationDateTime>
+                            <xsl:choose>
+                                <xsl:when test="DEFAULT__CARD=$_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/DefaultCard/Yes">
+                                    <pfx:defaultCard>
+                                        <xsl:value-of select="true()"/>
+                                    </pfx:defaultCard>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <pfx:defaultCard>
+                                        <xsl:value-of select="false()"/>
+                                    </pfx:defaultCard>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </pfx:PaymentCard>
+                    </xsl:for-each>
+                </pfx:PaymentCards>
+            </pfx:GetSubscriberCardListResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>959</pd:x>
+        <pd:y>357</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns6:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$PGA-Adapter/PublisherOutput"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogRequest">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>337</pd:x>
+        <pd:y>234</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogRequest.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns6:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx:GetSubscriberCardListRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogSuccessResponse">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1161</pd:x>
+        <pd:y>229</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns6:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$PGA-Adapter/PublisherOutput"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1445</pd:x>
+        <pd:y>229</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns6:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$GetCardListResponse/pfx:GetSubscriberCardListResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>114</pd:x>
+        <pd:y>234</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns6:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx:GetSubscriberCardListRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetCardListResponse</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Check Status Code</pd:from>
+        <pd:to>LogSuccessResponse</pd:to>
+        <pd:xpathDescription>Status=Success</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$PGA-Adapter/PublisherOutput/body/pfx5:SubscriberCardListResponse/RESULT__STATUS/STATUS__CODE = $_globalVariables/ns7:GlobalVariables/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/Status_SuccessCode</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetCardListRequest</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_ResponseCodeError</pd:from>
+        <pd:to>GenerateKnownError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetCardListRequest</pd:from>
+        <pd:to>LogRequest</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogRequest</pd:from>
+        <pd:to>Retry on Communication Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogSuccessResponse</pd:from>
+        <pd:to>GetCardListResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Check Status Code</pd:from>
+        <pd:to>LogError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogError</pd:from>
+        <pd:to>CreateException_ResponseCodeError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Retry on Communication Error</pd:from>
+        <pd:to>Check Status Code</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

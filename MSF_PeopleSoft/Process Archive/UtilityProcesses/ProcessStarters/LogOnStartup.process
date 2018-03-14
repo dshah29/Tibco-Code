@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns22="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:logging="java://com.tibco.tibcobw.customfunctions.Logging" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/serviceinstancecontext/v1" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:ns6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1" xmlns:ns7="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xmlutil="java://com.tibco.tibcobw.customfunctions.XMLUtils" xmlns:pfx="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns8="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/processstats/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/xsd/internal/common/commondefinitions/msf/loggingconfig/v1" xmlns:pfx2="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelControl.xsd">
+    <xsd:import namespace="http://three.co.uk/xsd/internal/common/commondefinitions/msf/loggingconfig/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/LoggingConfig_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/Enumerations_v1.xsd"/>
+    <pd:name>UtilityProcesses/ProcessStarters/LogOnStartup.process</pd:name>
+    <pd:startName>onStartup</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="onStartup">
+        <pd:type>com.tibco.pe.core.OnStartupEventSource</pd:type>
+        <pd:resourceType>ae.activities.onStartup</pd:resourceType>
+        <pd:x>51</pd:x>
+        <pd:y>182</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1360</pd:endX>
+    <pd:endY>373</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349784983964</pd:targetNamespace>
+    <pd:activity name="GenerateUUID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>179</pd:x>
+        <pd:y>182</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Default Enumerations">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>495</pd:x>
+        <pd:y>43</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Common/CommonDefinitions/MSF/StandardEnumerations.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Log Level">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>1055</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <variableConfig>/LogLevelControl/SharedVariable/LogLevelControl.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Initialise">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>953</pd:x>
+        <pd:y>373</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Load Enumerations">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>839</pd:x>
+        <pd:y>182</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="list" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence/>
+                                                <xsd:attribute name="value" type="xsd:string" use="required"/>
+                                                <xsd:attribute name="response" type="xsd:string" use="required"/>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                    <xsd:attribute name="name" type="xsd:string" use="required"/>
+                                    <xsd:attribute name="caseSensitive" type="xsd:boolean" use="required"/>
+                                    <xsd:attribute name="normalised" type="xsd:boolean" use="required"/>
+                                    <xsd:attribute name="useSpaces" type="xsd:boolean" use="required"/>
+                                    <xsd:attribute name="response" type="xsd:string" use="required"/>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$Select-Enumerations-Source/ns6:EnumerationSets/ns6:EnumerationSet">
+                    <list>
+                        <xsl:variable name="listName" select="current()/@name"/>
+                        <xsl:variable name="normalised" select="current()/@normalised"/>
+                        <xsl:variable name="useSpaces" select="true()"/>
+                        <xsl:variable name="caseSensitive" select="current()/@caseSensitive"/>
+                        <xsl:attribute name="name">
+                            <xsl:value-of select="$listName"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="caseSensitive">
+                            <xsl:value-of select="$caseSensitive"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="normalised">
+                            <xsl:value-of select="$normalised"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="response">
+                            <xsl:value-of select="xmlutil:defineValidationList($listName,  $caseSensitive = &quot;true&quot;, $useSpaces = &quot;true&quot;, $normalised = &quot;true&quot;)"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="useSpaces">
+                            <xsl:value-of select="$useSpaces"/>
+                        </xsl:attribute>
+                        <xsl:for-each select="ns6:enumeration">
+                            <item>
+                                <xsl:attribute name="value">
+                                    <xsl:value-of select="current()/@value"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="response">
+                                    <xsl:value-of select="xmlutil:addValidationValue($listName, current()/@value)"/>
+                                </xsl:attribute>
+                            </item>
+                        </xsl:for-each>
+                        <xsl:for-each select="ns6:regexp">
+                            <item>
+                                <xsl:attribute name="value">
+                                    <xsl:value-of select="current()/@expression"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="response">
+                                    <xsl:value-of select="xmlutil:addValidationRegexp($listName, current()/@expression)"/>
+                                </xsl:attribute>
+                            </item>
+                        </xsl:for-each>
+                    </list>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Load Logging Config">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>821</pd:x>
+        <pd:y>381</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="system" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                            <xsd:element name="service" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:variable name="serviceName" select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                <xsl:for-each select="$Parse-Logging-Config-XML/pfx3:LoggingSystemConfig/pfx3:SystemConfigs/pfx3:LoggingConfig">
+                    <system>
+                        <xsl:value-of select="logging:setLogLevel(current()/pfx3:context, current()/pfx3:level, true())"/>
+                    </system>
+                </xsl:for-each>
+                <xsl:for-each select="$Parse-Logging-Config-XML/pfx3:LoggingSystemConfig/pfx3:ServiceConfigs/pfx3:ServiceConfig[pfx3:serviceName = $serviceName]/pfx3:LoggingConfigs/pfx3:LoggingConfig">
+                    <service>
+                        <xsl:value-of select="logging:setLogLevel(current()/pfx3:context, current()/pfx3:level, false())"/>
+                    </service>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>694</pd:x>
+        <pd:y>528</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Parse Enumerations File">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>565</pd:x>
+        <pd:y>190</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="ns6:EnumerationSets"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Read-Enumerations-File/ns7:ReadActivityOutputTextClass/fileContent/textContent"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Logging Config XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>694</pd:x>
+        <pd:y>381</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx3:LoggingSystemConfig"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Read-Logging-Config-File/ns7:ReadActivityOutputTextClass/fileContent/textContent"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read Enumerations File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>423</pd:x>
+        <pd:y>190</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns8:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/DataFormats/Enumerations/ConfigFile"/>
+                </fileName>
+            </ns8:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Read Logging Config File">
+        <pd:type>com.tibco.plugin.file.FileReadActivity</pd:type>
+        <pd:resourceType>ae.activities.FileReadActivity</pd:resourceType>
+        <pd:x>554</pd:x>
+        <pd:y>381</pd:y>
+        <config>
+            <encoding>text</encoding>
+        </config>
+        <pd:inputBindings>
+            <ns8:ReadActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/CLE/ConfigFile"/>
+                </fileName>
+            </ns8:ReadActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Select Enumerations Source">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>713</pd:x>
+        <pd:y>197</pd:y>
+        <config>
+            <element ref="ns6:EnumerationSets"/>
+        </config>
+        <pd:inputBindings>
+            <xsl:choose>
+                <xsl:when test="exists($Parse-Enumerations-File/ns6:EnumerationSets)">
+                    <xsl:copy-of select="$Parse-Enumerations-File/ns6:EnumerationSets"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="$Get-Default-Enumerations/ns6:EnumerationSets"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SendLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1235</pd:x>
+        <pd:y>129</pd:y>
+        <config>
+            <processName>/Interface/JMS/SendLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/Environment/CommonLE/ApplicationID"/>
+                    </ns22:ApplicationID>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                    </ns22:ComponentName>
+                    <ns22:Hostname>
+                        <xsl:value-of select="BW:getHostName()"/>
+                    </ns22:Hostname>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:TransactionDomain>
+                        <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Component/Domain"/>
+                    </ns22:TransactionDomain>
+                    <ns22:TransactionID>
+                        <xsl:value-of select="$GenerateUUID/UUID"/>
+                    </ns22:TransactionID>
+                    <ns22:Message>
+                        <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Service/ServiceStart/Description"/>
+                    </ns22:Message>
+                    <ns22:Transaction>
+                        <xsl:value-of select="tib:render-xml($Load-Enumerations/root, true(), false())"/>
+                    </ns22:Transaction>
+                </ns22:Header>
+                <Category>
+                    <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Service/CLECategory"/>
+                </Category>
+                <Status>
+                    <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Service/ServiceStart/Code"/>
+                </Status>
+                <Audit>
+                    <xsl:value-of select="false()"/>
+                </Audit>
+            </ns12:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Service ContextVariable">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>297</pd:x>
+        <pd:y>190</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Common/CommonDefinitions/MSF/GlobalServiceContext.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings>
+            <ns5:ServiceInstanceContext>
+                <ns5:ServiceInstanceID>
+                    <xsl:value-of select="$GenerateUUID/UUID"/>
+                </ns5:ServiceInstanceID>
+                <ns5:Hostname>
+                    <xsl:value-of select="BW:getHostName()"/>
+                </ns5:Hostname>
+                <ns5:StartTime>
+                    <xsl:value-of select="current-dateTime()"/>
+                </ns5:StartTime>
+            </ns5:ServiceInstanceContext>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Get Log Level</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Log Level</pd:from>
+        <pd:to>SendLog</pd:to>
+        <pd:xpathDescription>Logging Enabled</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Get-Log-Level/pfx2:LogLevelState/LogLevel &gt;= $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/INFO</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SendLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise</pd:from>
+        <pd:to>Get Log Level</pd:to>
+        <pd:xpathDescription>CLE</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx:GlobalVariables/MSF/CLE/Enabled ="true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Service ContextVariable</pd:from>
+        <pd:to>Read Enumerations File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GenerateUUID</pd:from>
+        <pd:to>Set Service ContextVariable</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Default Enumerations</pd:from>
+        <pd:to>Select Enumerations Source</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>onStartup</pd:from>
+        <pd:to>GenerateUUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Load Enumerations</pd:from>
+        <pd:to>Read Logging Config File</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read Logging Config File</pd:from>
+        <pd:to>Parse Logging Config XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read Logging Config File</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Logging Config XML</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Logging Config XML</pd:from>
+        <pd:to>Load Logging Config</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Load Logging Config</pd:from>
+        <pd:to>Initialise</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>Initialise</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Load Logging Config</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read Enumerations File</pd:from>
+        <pd:to>Get Default Enumerations</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Read Enumerations File</pd:from>
+        <pd:to>Parse Enumerations File</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Enumerations File</pd:from>
+        <pd:to>Select Enumerations Source</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Enumerations File</pd:from>
+        <pd:to>Get Default Enumerations</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Select Enumerations Source</pd:from>
+        <pd:to>Load Enumerations</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

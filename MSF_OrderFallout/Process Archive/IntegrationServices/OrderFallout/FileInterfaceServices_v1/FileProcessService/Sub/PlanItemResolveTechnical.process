@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Pluggable/GUI/Exception/ExceptionResolution" xmlns:ns13="http://www.tibco.com/CommonLE2/namespace/Public/Pluggable/GUI/Exception/ExceptionIDList" xmlns:pfx="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns4="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" xmlns:ns0="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:pfx5="http://www.tibco.com/CommonLE2/ExceptionManagement/GUIServices" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx6="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider">
+    <xsd:import namespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" schemaLocation="/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/OrderFalloutBusinessException.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorProviderService.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/CommonLE2/ExceptionManagement/GUIServices" location="/SharedResources/WebServiceDefinitions/External/CLE/ResolveExeption.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/PlanItemResolveTechnical.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>111</pd:startX>
+    <pd:startY>72</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1165</pd:endX>
+    <pd:endY>186</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1444148669528/PlanItemResolveTechnical</pd:targetNamespace>
+    <pd:group name="PlanItem Resolve Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>189</pd:x>
+        <pd:y>2</pd:y>
+        <pd:width>811</pd:width>
+        <pd:height>349</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-PlanItem-Resolve-CLE-Request/Output/Rows/root</pd:over>
+            <pd:iterationElementSlot>Current_TransactionID</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>GenerateUUID</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Write PlanItem Resolve CLE Response</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GenerateUUID</pd:from>
+            <pd:to>Query CLE ExceptionID</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Query CLE ExceptionID</pd:from>
+            <pd:to>Delete Exception Status</pd:to>
+            <pd:xpathDescription>Delete</pd:xpathDescription>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>count($Query-CLE-ExceptionID/resultSet/Record) &gt;0 and
+$Current_TransactionID/root/Status='Delete'</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Resolve Exception Status</pd:from>
+            <pd:to>Render PlanItem Resolve CLE Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Delete Exception Status</pd:from>
+            <pd:to>Render PlanItem Resolve CLE Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render PlanItem Resolve CLE Response</pd:from>
+            <pd:to>Write PlanItem Resolve CLE Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PIF Resolution</pd:from>
+            <pd:to>Resolve Exception Status</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse PIF Request</pd:from>
+            <pd:to>PIF Resolution</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Query CLE ExceptionID</pd:from>
+            <pd:to>Parse PIF Request</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="GenerateUUID">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>272</pd:x>
+            <pd:y>180</pd:y>
+            <config>
+                <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Query CLE ExceptionID">
+            <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+            <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+            <pd:x>381</pd:x>
+            <pd:y>190</pd:y>
+            <config>
+                <timeout>10</timeout>
+                <commit>false</commit>
+                <maxRows>100</maxRows>
+                <emptyStrAsNil>false</emptyStrAsNil>
+                <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-CLE-Connection.sharedjdbc</jdbcSharedConfig>
+                <statement>select * from  CLEUSER.EXCEPTIONREC where  CLEUSER.EXCEPTIONREC.EXCEPTIONID=?</statement>
+                <Prepared_Param_DataType>
+                    <parameter>
+                        <parameterName>transationId</parameterName>
+                        <dataType>VARCHAR</dataType>
+                    </parameter>
+                </Prepared_Param_DataType>
+                <wizardData/>
+                <oraObjects/>
+                <oraTables/>
+                <QueryOutputCachedSchemaColumns>APPLICATIONID</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>EXCEPTIONID</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>-5</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>EXCEPTIONCODE</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>COMPONENTNAME</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>HOSTNAME</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>TRANSACTIONDOMAIN</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>TRANSACTIONID</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>TRANSACTIONTYPE</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>FILENAME</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>INTERFACEID</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>TIME_STAMP</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>TIMESTAMP</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>MESSAGE</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>TRANSACTIONDATA</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>TRANSACTIONDATAAFTER</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>NOTIFICATIONCHNL</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>REPLYDESTINATION</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>STACKTRACE</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>STATUS</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>RESOLUTIONDESCRIPTION</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>DATAENCODING</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>CORRELATIONID</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>RENDERID</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>RESOLVEDELAYTIME</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>TIMESTAMP</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>EVENTTYPE</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>JMSPROPERTIES</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>CUSTOM</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>MCE_SEVERITY</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>MCE_TYPE</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>MCE_FAULTCODE</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>MCE_OPERATION</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>MCE_CONTEXT</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+                <QueryOutputCachedSchemaColumns>MCE_CONTEXT2</QueryOutputCachedSchemaColumns>
+                <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+                <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+                <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            </config>
+            <pd:inputBindings>
+                <jdbcQueryActivityInput>
+                    <transationId>
+                        <xsl:value-of select="$Current_TransactionID/root/TransactionID"/>
+                    </transationId>
+                </jdbcQueryActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Resolve Exception Status">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>658</pd:x>
+            <pd:y>78</pd:y>
+            <config>
+                <timeout>0</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx5:intfExceptions-service</service>
+                <servicePort>intfwsResolveExceptionsEndpoint1</servicePort>
+                <operation>ResolveExceptionsOp</operation>
+                <soapAction>/ExceptionManagement/GUIServices/intfResolveExceptions-service.serviceagent/intfwsResolveExceptionsEndpoint1/ResolveExceptionsOp</soapAction>
+                <endpointURL>%%IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/CLEServices/ResolveException-EndPointURL%%</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <ns12:ExceptionResolutionRecordList>
+                        <ns12:ExceptionResolutionRecord>
+                            <ns12:ExceptionID>
+                                <xsl:value-of select="$Query-CLE-ExceptionID/resultSet/Record[1]/EXCEPTIONID"/>
+                            </ns12:ExceptionID>
+                            <ns12:ResolutionDesc>
+                                <xsl:value-of select="$Current_TransactionID/root/Resolution"/>
+                            </ns12:ResolutionDesc>
+                            <ns12:Status>
+                                <xsl:value-of select="'Resolved'"/>
+                            </ns12:Status>
+                        </ns12:ExceptionResolutionRecord>
+                    </ns12:ExceptionResolutionRecordList>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Delete Exception Status">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>601</pd:x>
+            <pd:y>270</pd:y>
+            <config>
+                <timeout>0</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx5:intfExceptions-service</service>
+                <servicePort>intfwsResolveExceptionsEndpoint1</servicePort>
+                <operation>DeleteExceptionsOp</operation>
+                <soapAction>/ExceptionManagement/GUIServices/intfExceptions-service.serviceagent//DeleteExceptionsOp</soapAction>
+                <endpointURL>%%IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/CLEServices/ResolveException-EndPointURL%%</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <ns13:ExceptionIDList>
+                        <ns13:ExceptionIDRecord>
+                            <ns13:EXCEPTIONID>
+                                <xsl:value-of select="$Query-CLE-ExceptionID/resultSet/Record[1]/EXCEPTIONID"/>
+                            </ns13:EXCEPTIONID>
+                        </ns13:ExceptionIDRecord>
+                    </ns13:ExceptionIDList>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Render PlanItem Resolve CLE Response">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>769</pd:x>
+            <pd:y>196</pd:y>
+            <config>
+                <ParseSharedConfig>/SharedResources/DataFormats/PlanItemResolveTemplate/PlanItemResolveResponseFormat.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <root>
+                        <UserID>
+                            <xsl:value-of select="$Current_TransactionID/root/UserID"/>
+                        </UserID>
+                        <ExceptionID>
+                            <xsl:value-of select="$Current_TransactionID/root/TransactionID"/>
+                        </ExceptionID>
+                        <Resolution>
+                            <xsl:value-of select="$Current_TransactionID/root/Resolution"/>
+                        </Resolution>
+                        <Code>
+                            <xsl:value-of select="0"/>
+                        </Code>
+                        <Message>
+                            <xsl:value-of select="'Success'"/>
+                        </Message>
+                    </root>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Write PlanItem Resolve CLE Response">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>901</pd:x>
+            <pd:y>195</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns1:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="$Start/root/ResponseFileName"/>
+                    </fileName>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$i=1">
+                            <textContent>
+                                <xsl:value-of select="concat('UserID,','ExceptionID,','PlanID,','PlanItemID,','Resolution,','Code,','Message,',&quot;&#xA;&quot;,$Render-PlanItem-Resolve-CLE-Response/Text)"/>
+                            </textContent>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <textContent>
+                                <xsl:value-of select="$Render-PlanItem-Resolve-CLE-Response/Text"/>
+                            </textContent>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <addLineSeparator>
+                        <xsl:value-of select="0"/>
+                    </addLineSeparator>
+                </ns1:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="PIF Resolution">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>536</pd:x>
+            <pd:y>70</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/planItemFailedResponse.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <pfx6:PlanItemFailedReply>
+                        <xsl:attribute name="pfx6:businessTransactionID">
+                            <xsl:value-of select="$GenerateUUID/UUID"/>
+                        </xsl:attribute>
+                        <ns0:resultStatus>
+                            <ns0:deployment>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns0:deployment>
+                            <ns0:service>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns0:service>
+                            <ns0:operation>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns0:operation>
+                            <ns0:severity>
+                                <xsl:value-of select="&quot;E&quot;"/>
+                            </ns0:severity>
+                            <ns0:code>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns0:code>
+                            <ns0:message>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns0:message>
+                        </ns0:resultStatus>
+                        <pfx6:orderID>
+                            <xsl:value-of select="$Parse-PIF-Request/pfx6:PlanItemFailedRequest/pfx6:orderID"/>
+                        </pfx6:orderID>
+                        <pfx6:orderRef>
+                            <xsl:value-of select="$Parse-PIF-Request/pfx6:PlanItemFailedRequest/pfx6:orderRef"/>
+                        </pfx6:orderRef>
+                        <pfx6:planID>
+                            <xsl:value-of select="$Parse-PIF-Request/pfx6:PlanItemFailedRequest/pfx6:planID"/>
+                        </pfx6:planID>
+                        <pfx6:planItemID>
+                            <xsl:value-of select="$Parse-PIF-Request/pfx6:PlanItemFailedRequest/pfx6:planItem/pfx6:planItemID"/>
+                        </pfx6:planItemID>
+                        <xsl:choose>
+                            <xsl:when test="lower-case($Parse-PlanItem-Resolve-CLE-Request/Output/Rows/root[1]/Resolution)=lower-case($_globalVariables/ns4:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionRetry)">
+                                <pfx6:retry/>
+                            </xsl:when>
+                            <xsl:when test="lower-case($Parse-PlanItem-Resolve-CLE-Request/Output/Rows/root[1]/Resolution)=lower-case($_globalVariables/ns4:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionResume)">
+                                <pfx6:complete/>
+                            </xsl:when>
+                            <xsl:when test="lower-case($Parse-PlanItem-Resolve-CLE-Request/Output/Rows/root[1]/Resolution)=lower-case($_globalVariables/ns4:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionComplete)">
+                                <pfx6:complete/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <pfx6:retry/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </pfx6:PlanItemFailedReply>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Parse PIF Request">
+            <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+            <pd:x>413</pd:x>
+            <pd:y>69</pd:y>
+            <config>
+                <inputStyle>text</inputStyle>
+                <xsdVersion>default</xsdVersion>
+                <validateOutput>false</validateOutput>
+                <term ref="pfx6:PlanItemFailedRequest"/>
+            </config>
+            <pd:inputBindings>
+                <xmlString>
+                    <xsl:value-of select="$Query-CLE-ExceptionID/resultSet/Record[1]/TRANSACTIONDATA"/>
+                </xmlString>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Parse PlanItem Resolve CLE Request">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>113</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/SharedResources/DataFormats/PlanItemResolveTemplate/PlanItemResolveCLEFormat.sharedparse</ParseSharedConfig>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1074</pd:x>
+        <pd:y>186</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>PlanItem Resolve Group</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse PlanItem Resolve CLE Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse PlanItem Resolve CLE Request</pd:from>
+        <pd:to>PlanItem Resolve Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

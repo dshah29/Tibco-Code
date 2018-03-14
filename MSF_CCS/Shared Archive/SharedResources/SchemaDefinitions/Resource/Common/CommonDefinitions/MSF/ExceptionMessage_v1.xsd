@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:exm="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptionmessage/v1"
+	 xmlns:exc="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1"
+	 xmlns:scx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1"
+	 xmlns:mcx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptionmessage/v1"
+	 version="$Id: ExceptionMessage_v1.xsd 4015 2015-06-16 17:18:54Z rarmitag $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="Exception_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" schemaLocation="ServiceContext_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" schemaLocation="MessageContext_v1.xsd"/>
+	<xs:element name="ExceptionMessage" type="exm:ExceptionMessage"/>
+	<xs:complexType name="ExceptionMessage">
+		<xs:sequence>
+			<xs:element ref="exc:Exception"/>
+			<xs:element ref="scx:ServiceContext"/>
+			<xs:element ref="mcx:MessageContext" minOccurs="0"/>
+			<xs:element name="Payload" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

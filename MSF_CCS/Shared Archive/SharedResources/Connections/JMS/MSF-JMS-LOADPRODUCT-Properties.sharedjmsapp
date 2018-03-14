@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>MSF-JMS-LOADPRODUCT-Properties</name>
+    <resourceType>ae.shared.JMSAppPropResource</resourceType>
+    <config>
+        <Properties>
+            <row>
+                <PropertyName>PRODUCT_ID</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+            <row>
+                <PropertyName>PRODUCT_NAME</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+            <row>
+                <PropertyName>LAST_UPDATED</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+            <row>
+                <PropertyName>END_OF_LIFE</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+        </Properties>
+    </config>
+</BWSharedResource>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns9="http://www.tibco.com/schemas/OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns6="http://three.co.uk/xsd/interface/customer/custinteraction/custintrmanagement/journeymanager/datapersistence/v1" xmlns:ns10="http://xmlns.tibco.com/encodings/mime" xmlns:ns7="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:pfx="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns8="http://www.tibco.com/schemas/Order Fallout Workspace/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns1="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx3="http://xmlns.example.com/1444127067216" xmlns:pfx2="http://three.co.uk/wsdl/interface/customer/custinteraction/custintrmanagement/journeymanager/datapersistence/v1">
+    <wsdl:import namespace="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" location="/SharedResources/WebServiceDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.wsdl"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/interface/customer/custinteraction/custintrmanagement/journeymanager/datapersistence/v1" location="/SharedResources/WebServiceDefinitions/Interface/Customer/CustInteraction/CustIntrManagement/JourneyManager/DataPersistence_v1.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1444127067216" location="/SharedResources/WebServiceDefinitions/External/BulkResolution/BulkResolution.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/BulkRelease_v1/Service/ReceiveBulkRelease.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx3:BulkResolutionRequest"/>
+    <pd:startX>47</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings>
+        <pfx3:BulkResolutionResponse>
+            <BulkResolutionResponse>
+                <ns9:BulkResolutionResponse>
+                    <ns9:Status>
+                        <xsl:value-of select="&quot;Success&quot;"/>
+                    </ns9:Status>
+                </ns9:BulkResolutionResponse>
+            </BulkResolutionResponse>
+        </pfx3:BulkResolutionResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx3:BulkResolutionResponse"/>
+    <pd:endX>903</pd:endX>
+    <pd:endY>62</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355136884829</pd:targetNamespace>
+    <pd:activity name="Audit End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>640</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Audit Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>379</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx3:BulkResolutionRequest/BulkResolutionRequest/ns9:BulkResolutionRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Main">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>509</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/BulkRelease_v1/Main/MainBulkReleaseProcess.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:BulkResolutionRequest>
+                <BulkResolutionRequest>
+                    <xsl:copy-of select="$Start/pfx3:BulkResolutionRequest/BulkResolutionRequest/ns9:BulkResolutionRequest"/>
+                </BulkResolutionRequest>
+            </pfx3:BulkResolutionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>439</pd:x>
+        <pd:y>293</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Catch Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>460</pd:x>
+        <pd:y>429</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+            <catchAll>false</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>590</pd:x>
+        <pd:y>301</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>185</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ReceiveError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Initialise">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>176</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Initialise Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>110</pd:x>
+        <pd:y>185</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>742</pd:x>
+        <pd:y>301</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>735</pd:x>
+        <pd:y>434</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Catch-Exception/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>384</pd:x>
+        <pd:y>185</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Receive-Error/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>785</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <body>
+                    <xsl:value-of select="string($Start/pfx3:BulkResolutionRequest/BulkResolutionRequest/ns9:BulkResolutionRequest)"/>
+                </body>
+                <response>
+                    <xsl:copy-of select="$Start/pfx3:BulkResolutionRequest/BulkResolutionRequest/ns9:BulkResolutionRequest"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>275</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx3:BulkResolutionRequest/BulkResolutionRequest/ns9:BulkResolutionRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Initialise</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit Start</pd:from>
+        <pd:to>Call Main</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Main</pd:from>
+        <pd:to>Audit End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise Receive Error</pd:from>
+        <pd:to>Create Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Receive Error</pd:from>
+        <pd:to>Log Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch Exception</pd:from>
+        <pd:to>Log Exception Catch Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>Audit Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Receive Error</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch Exception</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Initialise</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Initialise Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit End</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

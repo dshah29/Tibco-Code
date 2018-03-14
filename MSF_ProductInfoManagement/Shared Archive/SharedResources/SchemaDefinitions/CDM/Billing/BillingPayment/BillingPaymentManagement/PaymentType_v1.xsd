@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:payType="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1" xmlns:cheq="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/chequedetails/v1" xmlns:cc="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1" xmlns:dCrd="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/debitcarddetails/v1" xmlns:dd="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/directdebitdetails/v1" xmlns:vouch="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/voucher/v1" xmlns:csh="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/cash/v1" xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" xmlns:addToBill="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/addtobill/v1" targetNamespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1" version="$Id: PaymentType_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/chequedetails/v1" schemaLocation="ChequeDetails_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1" schemaLocation="CreditCardDetails_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/debitcarddetails/v1" schemaLocation="DebitCardDetails_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/voucher/v1" schemaLocation="Voucher_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/cash/v1" schemaLocation="Cash_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/directdebitdetails/v1" schemaLocation="DirectDebitDetails_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/addtobill/v1" schemaLocation="AddToBill_V1.xsd"/>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="PaymentType">
+		<xsd:sequence>
+			<xsd:element name="totalAmountPaid" type="BASE:PRICE"/>
+			<xsd:element ref="cheq:chequeDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="cc:creditCardDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="dCrd:debitCardDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="dd:directDebitDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="csh:cashDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="vouch:voucherDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="addToBill:addToBill" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PaymentType" type="payType:PaymentType"/>
+	<xsd:element name="paymentType" type="payType:PaymentType">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element PaymentType instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

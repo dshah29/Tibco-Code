@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns4="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:ns3="http://api.brm.n2.tibco.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns5="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" xmlns:pfx="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" schemaLocation="/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/OrderFalloutBusinessException.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorProviderService.xsd"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/ExceptionQueryTechnical.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>31</pd:startX>
+    <pd:startY>54</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1268</pd:endX>
+    <pd:endY>206</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <DateTimeVariable>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="CurrentDateTime" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </DateTimeVariable>
+        <Count>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Count" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Count>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1444148669528/ExceptionQueryTechnical</pd:targetNamespace>
+    <pd:group name="Iterate Over Rows">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>419</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>664</pd:width>
+        <pd:height>411</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Query-CLE-ExceptionID/resultSet/Record</pd:over>
+            <pd:iterationElementSlot>Current_Exception</pd:iterationElementSlot>
+            <pd:indexSlot>j</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Parse PIF Failed Request</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ProcessData</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Parse PIF Failed Request</pd:from>
+            <pd:to>TransformSearchString</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign</pd:from>
+            <pd:to>ProcessData</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>TransformSearchString</pd:from>
+            <pd:to>Assign</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Assign">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>865</pd:x>
+            <pd:y>79</pd:y>
+            <config>
+                <variableName>Count</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:choose>
+                        <xsl:when test="($TransformSearchString/root/OrderRefFlag = &quot;true&quot; or$TransformSearchString/root/OrderRefFlag=&quot;&quot;)  and ($TransformSearchString/root/OrderIDFlag=&quot;true&quot; or$TransformSearchString/root/OrderIDFlag=&quot;&quot; )&#xA;and ($TransformSearchString/root/ExceptionIDFlag=&quot;true&quot; or$TransformSearchString/root/ExceptionIDFlag=&quot;&quot; ) and ($TransformSearchString/root/FromDateFlag=&quot;-1&quot; or$TransformSearchString/root/FromDateFlag=&quot;0&quot; or $TransformSearchString/root/FromDateFlag=&quot;&quot; )&#xA;and ($TransformSearchString/root/ToDateFlag=&quot;1&quot; or$TransformSearchString/root/ToDateFlag=&quot;0&quot; or $TransformSearchString/root/ToDateFlag=&quot;&quot; )">
+                            <Count>
+                                <xsl:value-of select="$Count/root/Count+1"/>
+                            </Count>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <Count>
+                                <xsl:value-of select="$Count/root/Count"/>
+                            </Count>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Parse PIF Failed Request">
+            <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+            <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+            <pd:x>589</pd:x>
+            <pd:y>90</pd:y>
+            <config>
+                <inputStyle>text</inputStyle>
+                <xsdVersion>default</xsdVersion>
+                <validateOutput>false</validateOutput>
+                <term ref="pfx5:PlanItemFailedRequest"/>
+            </config>
+            <pd:inputBindings>
+                <xmlString>
+                    <xsl:value-of select="$Current_Exception/Record/TRANSACTIONDATA"/>
+                </xmlString>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:group name="ProcessData">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>539</pd:x>
+            <pd:y>188</pd:y>
+            <pd:width>432</pd:width>
+            <pd:height>156</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$Parse-Exception-Query-Request/Output/Rows/root</pd:over>
+                <pd:iterationElementSlot>row</pd:iterationElementSlot>
+                <pd:indexSlot>i</pd:indexSlot>
+                <pd:activityOutputName/>
+                <pd:accumulateOutput>false</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>Render Exception Query Response</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Write Exception Query Response</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Render Exception Query Response</pd:from>
+                <pd:to>Write Exception Query Response</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="Render Exception Query Response">
+                <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+                <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+                <pd:x>675</pd:x>
+                <pd:y>281</pd:y>
+                <config>
+                    <ParseSharedConfig>/SharedResources/DataFormats/TechnicalExceptionQueryTemplates/ExceptionQueryResponseFormat.sharedparse</ParseSharedConfig>
+                </config>
+                <pd:inputBindings>
+                    <Rows>
+                        <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                            <xsl:when test="($TransformSearchString/root/OrderRefFlag = &quot;true&quot; or$TransformSearchString/root/OrderRefFlag=&quot;&quot;)  and ($TransformSearchString/root/OrderIDFlag=&quot;true&quot; or$TransformSearchString/root/OrderIDFlag=&quot;&quot; )&#xA;and ($TransformSearchString/root/ExceptionIDFlag=&quot;true&quot; or$TransformSearchString/root/ExceptionIDFlag=&quot;&quot; ) and ($TransformSearchString/root/FromDateFlag=&quot;-1&quot; or$TransformSearchString/root/FromDateFlag=&quot;0&quot; or $TransformSearchString/root/FromDateFlag=&quot;&quot; )&#xA;and ($TransformSearchString/root/ToDateFlag=&quot;1&quot; or$TransformSearchString/root/ToDateFlag=&quot;0&quot; or $TransformSearchString/root/ToDateFlag=&quot;&quot; )">
+                                <root>
+                                    <ExceptionID>
+                                        <xsl:value-of select="$Current_Exception/Record/EXCEPTIONID"/>
+                                    </ExceptionID>
+                                    <OrderRef>
+                                        <xsl:value-of select="$Parse-PIF-Failed-Request/pfx5:PlanItemFailedRequest/pfx5:orderRef"/>
+                                    </OrderRef>
+                                    <OrderID>
+                                        <xsl:value-of select="$Parse-PIF-Failed-Request/pfx5:PlanItemFailedRequest/pfx5:orderID"/>
+                                    </OrderID>
+                                    <DateCreated>
+                                        <xsl:value-of select="$Current_Exception/Record/TIME_STAMP"/>
+                                    </DateCreated>
+                                    <ErrorCode>
+                                        <xsl:value-of select="$Current_Exception/Record/EXCEPTIONCODE"/>
+                                    </ErrorCode>
+                                    <ErrorDescription>
+                                        <xsl:value-of select="$Parse-PIF-Failed-Request/pfx5:PlanItemFailedRequest/ns5:message[1]/ns5:description"/>
+                                    </ErrorDescription>
+                                    <State>
+                                        <xsl:value-of select="$Current_Exception/Record/STATUS"/>
+                                    </State>
+                                    <PlanID>
+                                        <xsl:value-of select="$Parse-PIF-Failed-Request/pfx5:PlanItemFailedRequest/pfx5:planID"/>
+                                    </PlanID>
+                                    <PlanitemID>
+                                        <xsl:value-of select="$Parse-PIF-Failed-Request/pfx5:PlanItemFailedRequest/pfx5:planItem/pfx5:planItemID"/>
+                                    </PlanitemID>
+                                </root>
+                            </xsl:when>
+                        </xsl:choose>
+                    </Rows>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Write Exception Query Response">
+                <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+                <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+                <pd:x>840</pd:x>
+                <pd:y>278</pd:y>
+                <config>
+                    <encoding>text</encoding>
+                    <compressFile>None</compressFile>
+                    <append>true</append>
+                </config>
+                <pd:inputBindings>
+                    <ns1:WriteActivityInputTextClass>
+                        <fileName>
+                            <xsl:value-of select="$Start/root/ResponseFileName"/>
+                        </fileName>
+                        <xsl:choose>
+                            <xsl:when test="$j=1">
+                                <textContent>
+                                    <xsl:value-of select="concat('ExceptionID,','OrderRef,','OrderID,','DateCreated,','ErrorCode,','ErrorDescription,','State,','PlanID,','PlanItemID,',&quot;&#xD;&#xA;&quot;,$Render-Exception-Query-Response/Text)"/>
+                                </textContent>
+                            </xsl:when>
+                            <xsl:when test="string-length($row/root/Records)=0">
+                                <textContent>
+                                    <xsl:value-of select="$Render-Exception-Query-Response/Text"/>
+                                </textContent>
+                            </xsl:when>
+                            <xsl:when test="$Count/root/Count&lt;=$Parse-Exception-Query-Request/Output/Rows/root/Records">
+                                <textContent>
+                                    <xsl:value-of select="$Render-Exception-Query-Response/Text"/>
+                                </textContent>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <textContent>
+                                    <xsl:value-of select="&quot;&quot;"/>
+                                </textContent>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <addLineSeparator>
+                            <xsl:value-of select="0"/>
+                        </addLineSeparator>
+                    </ns1:WriteActivityInputTextClass>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+        <pd:activity name="TransformSearchString">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>734</pd:x>
+            <pd:y>81</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="root">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="OrderRefFlag" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="OrderIDFlag" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="ExceptionIDFlag" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="FromDateFlag" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="ToDateFlag" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <OrderRefFlag>
+                        <xsl:value-of select="if (exists($Validate-Fields/root/OrderRef)) then $Validate-Fields/root/OrderRef=$Parse-PIF-Failed-Request/pfx5:PlanItemFailedRequest/pfx5:orderRef  else &quot;&quot;"/>
+                    </OrderRefFlag>
+                    <OrderIDFlag>
+                        <xsl:value-of select="if (exists($Validate-Fields/root/OrderID)) then $Validate-Fields/root/OrderID=$Parse-PIF-Failed-Request/pfx5:PlanItemFailedRequest/pfx5:orderID  else &quot;&quot;"/>
+                    </OrderIDFlag>
+                    <ExceptionIDFlag>
+                        <xsl:value-of select="if (exists($Validate-Fields/root/ExceptionID)) then $Validate-Fields/root/ExceptionID=$Current_Exception/Record/EXCEPTIONID  else &quot;&quot;"/>
+                    </ExceptionIDFlag>
+                    <FromDateFlag>
+                        <xsl:value-of select="if (exists($Parse-Exception-Query-Request/Output/Rows/root[1]/From_Date)) then tib:compare-date(tib:parse-date('yyyy-MM-dd',$Parse-Exception-Query-Request/Output/Rows/root[1]/From_Date), $Current_Exception/Record/TIME_STAMP)  else &quot;&quot;"/>
+                    </FromDateFlag>
+                    <ToDateFlag>
+                        <xsl:value-of select="if (exists($Parse-Exception-Query-Request/Output/Rows/root[1]/To_Date)) then tib:compare-date(tib:parse-date('yyyy-MM-dd',$Parse-Exception-Query-Request/Output/Rows/root[1]/To_Date), $Current_Exception/Record/TIME_STAMP)  else &quot;&quot;"/>
+                    </ToDateFlag>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Parse Exception Query Request">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>135</pd:x>
+        <pd:y>66</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/SharedResources/DataFormats/TechnicalExceptionQueryTemplates/ExceptionQueryRequestFormat.sharedparse</ParseSharedConfig>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+            <SkipBlankLines>true</SkipBlankLines>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Query CLE ExceptionID">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>130</pd:x>
+        <pd:y>227</pd:y>
+        <config>
+            <timeout>10</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>select * from CLEUSER.EXCEPTIONREC where CLEUSER.EXCEPTIONREC.TRANSACTIONDOMAIN='PIF/PQF Handler' and CLEUSER.EXCEPTIONREC.STATUS ='Notified'  order by TIME_STAMP desc</statement>
+            <wizardData/>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-CLE-Connection.sharedjdbc</jdbcSharedConfig>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>APPLICATIONID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EXCEPTIONID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>-5</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EXCEPTIONCODE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>COMPONENTNAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>HOSTNAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>TRANSACTIONDOMAIN</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>TRANSACTIONID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>TRANSACTIONTYPE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>FILENAME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>INTERFACEID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>TIME_STAMP</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>TIMESTAMP</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>MESSAGE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>TRANSACTIONDATA</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>TRANSACTIONDATAAFTER</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>NOTIFICATIONCHNL</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>REPLYDESTINATION</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>STACKTRACE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>STATUS</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>RESOLUTIONDESCRIPTION</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>DATAENCODING</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>CORRELATIONID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>RENDERID</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>RESOLVEDELAYTIME</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>93</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>TIMESTAMP</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>EVENTTYPE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>JMSPROPERTIES</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2005</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>CLOB</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>CUSTOM</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>MCE_SEVERITY</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>MCE_TYPE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>MCE_FAULTCODE</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>MCE_OPERATION</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>MCE_CONTEXT</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <QueryOutputCachedSchemaColumns>MCE_CONTEXT2</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+            <Prepared_Param_DataType/>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1157</pd:x>
+        <pd:y>202</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Validate-Fields">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>232</pd:x>
+        <pd:y>219</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="OrderRef" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="OrderID" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="ExceptionID" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="FromDate" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="ToDate" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:if test="exists($Parse-Exception-Query-Request/Output/Rows/root[1]/OrderRef) and string-length($Parse-Exception-Query-Request/Output/Rows/root[1]/OrderRef)!=0">
+                    <OrderRef>
+                        <xsl:value-of select="$Parse-Exception-Query-Request/Output/Rows/root[1]/OrderRef"/>
+                    </OrderRef>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Parse-Exception-Query-Request/Output/Rows/root[1]/OrderID) and string-length($Parse-Exception-Query-Request/Output/Rows/root[1]/OrderID)!=0">
+                    <OrderID>
+                        <xsl:value-of select="$Parse-Exception-Query-Request/Output/Rows/root[1]/OrderID"/>
+                    </OrderID>
+                </xsl:if>
+                <xsl:if test="exists($Parse-Exception-Query-Request/Output/Rows/root[1]/ExceptionID) and string-length($Parse-Exception-Query-Request/Output/Rows/root[1]/ExceptionID)!=0">
+                    <xsl:if test="$Parse-Exception-Query-Request/Output/Rows/root[1]/ExceptionID">
+                        <ExceptionID>
+                            <xsl:value-of select="$Parse-Exception-Query-Request/Output/Rows/root[1]/ExceptionID"/>
+                        </ExceptionID>
+                    </xsl:if>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Parse-Exception-Query-Request/Output/Rows/root[1]/From_Date) and string-length($Parse-Exception-Query-Request/Output/Rows/root[1]/From_Date)!=0">
+                    <FromDate>
+                        <xsl:value-of select="$Parse-Exception-Query-Request/Output/Rows/root[1]/From_Date"/>
+                    </FromDate>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Parse-Exception-Query-Request/Output/Rows/root[1]/To_Date) and string-length($Parse-Exception-Query-Request/Output/Rows/root[1]/To_Date)!=0">
+                    <ToDate>
+                        <xsl:value-of select="$Parse-Exception-Query-Request/Output/Rows/root[1]/To_Date"/>
+                    </ToDate>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Assign-InitialValue">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>336</pd:x>
+        <pd:y>225</pd:y>
+        <config>
+            <variableName>Count</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Count>
+                    <xsl:value-of select="0"/>
+                </Count>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Exception Query Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Exception Query Request</pd:from>
+        <pd:to>Query CLE ExceptionID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Iterate Over Rows</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Query CLE ExceptionID</pd:from>
+        <pd:to>Validate-Fields</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Validate-Fields</pd:from>
+        <pd:to>Assign-InitialValue</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign-InitialValue</pd:from>
+        <pd:to>Iterate Over Rows</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

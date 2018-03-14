@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:ps="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:baseTypes="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1"
+	 xmlns="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1"
+	 targetNamespace="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" schemaLocation="../../../../CDM/Product/ProductSpecification/ProductSpecificationManagement/ProductSpecification_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../../../CDM/Product/ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../../CDM/Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Organisation_v1.xsd"/>
+	<xs:element name="UpdateContractRequest" type="UpdateContractRequest"/>
+	<xs:element name="UpdateContractResponse" type="UpdateContractResponse"/>
+	<xs:element name="CreateContractRequest" type="CreateContractRequest"/>
+	<xs:element name="CreateContractResponse" type="CreateContractResponse"/>
+	<xs:complexType name="ContractDefn">
+		<xs:sequence>
+			<xs:element name="contractNumber" type="xs:string"/>
+			<xs:element name="conditionsID" type="POSITIVEINT"/>
+			<xs:element name="orgID" type="TYP:ORGANISATION_LIST"/>
+			<xs:element name="startDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="endDate" type="xs:dateTime"/>
+			<xs:element name="durationInMonths" type="DurationDefn"/>
+			<xs:element name="changeEvent" type="EventDefn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="POSITIVEINT">
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[0-99]+"/>
+			<xs:minInclusive value="0"/>
+			<xs:maxInclusive value="99"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_DurationDefn">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="18"/>
+			<xs:enumeration value="24"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DurationDefn">
+		<xs:union memberTypes="_DurationDefn xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="_EventDefn">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Annual RPI Cycle"/>
+			<xs:enumeration value="Contract Start"/>
+			<xs:enumeration value="Contract Extension"/>
+			<xs:enumeration value="Change Of Ownership"/>
+			<xs:enumeration value="Change Price Plan"/>
+			<xs:enumeration value="Manual Update"/>
+			<xs:enumeration value="New Hand Set"/>
+			<xs:enumeration value="New Sale"/>
+			<xs:enumeration value="Notice Of Variation"/>
+			<xs:enumeration value="Post To Pre"/>
+			<xs:enumeration value="Send Handset"/>
+			<xs:enumeration value="Tariff Change"/>
+			<xs:enumeration value="Update Handset"/>
+			<xs:enumeration value="Upgrade"/>
+			<xs:enumeration value="Upgrade Reversal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventDefn">
+		<xs:union memberTypes="_EventDefn xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="UpdateContractRequest">
+		<xs:sequence>
+			<xs:element name="BAN" type="baseTypes:BAN"/>
+			<xs:element name="effectiveDate" type="xs:dateTime" minOccurs="0"/>
+			<xs:element name="contract" type="ContractDefn"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UpdateContractResponse">
+		<xs:sequence>
+			<xs:element name="BAN" type="baseTypes:BAN"/>
+			<xs:element name="transactionID" type="xs:string"/>
+			<xs:element name="Status" type="Status"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreateContractRequest">
+		<xs:sequence>
+			<xs:element name="BAN" type="baseTypes:BAN"/>
+			<xs:element name="contract" type="ContractDefn"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CreateContractResponse">
+		<xs:sequence>
+			<xs:element name="BAN" type="baseTypes:BAN"/>
+			<xs:element name="transactionID" type="xs:string"/>
+			<xs:element name="Status" type="Status"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Status">
+		<xs:all>
+			<xs:element name="statusCode" type="xs:int"/>
+			<xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="errorDescription" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+</xs:schema>

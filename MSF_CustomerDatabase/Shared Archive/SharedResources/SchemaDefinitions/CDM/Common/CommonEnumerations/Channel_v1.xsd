@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:CHNL="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1"
+	 version="$Id: Channel_v1.xsd 5602 2016-01-21 16:27:07Z prachand $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:simpleType name="_SALES_CHANNEL">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Direct_E-commerce"/>
+			<xsd:enumeration value="Direct_Retail"/>
+			<xsd:enumeration value="Contact_Centre"/>
+			<xsd:enumeration value="Direct_Telesales"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SALES_CHANNEL">
+		<xsd:union memberTypes="CHNL:_SALES_CHANNEL xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="FULFILLMENT_CHANNEL">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="RETAIL"/>
+			<xsd:enumeration value="DISTANCE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="salesChannel" type="CHNL:SALES_CHANNEL"/>
+	<xsd:element name="fulfillmentChannel" type="CHNL:FULFILLMENT_CHANNEL"/>
+</xsd:schema>

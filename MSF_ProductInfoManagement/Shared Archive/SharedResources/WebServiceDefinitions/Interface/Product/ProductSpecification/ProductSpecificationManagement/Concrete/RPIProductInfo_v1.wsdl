@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/concrete/rpiproductinfo/v1" xmlns:ns0="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="Untitled" targetNamespace="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/concrete/rpiproductinfo/v1">
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" location="../RPIProductInfo_v1.wsdl"/>
+    <wsdl:service name="ProductInfo_v1">
+        <wsdl:port name="SOAPHTTPBinding" binding="tns:SOAPHTTPBindingBinding">
+            <soap:address location="http://localhost:9999/ConcreteWSDL/ProductInfo_v1.serviceagent/SOAPHTTPBinding"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:binding name="SOAPHTTPBindingBinding" type="ns0:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetPackagePriceHistory">
+            <soap:operation style="document" soapAction="SOAPHTTP/GetPackagePriceHistory"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="request"/>
+                <soap:header use="literal" message="ns0:MessageContext" part="context"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="response"/>
+                <soap:header use="literal" message="ns0:MessageContext" part="context"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault use="literal" name="fault1"/>
+                <soap:header use="literal" message="ns0:ExceptionInfo" part="fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetProductPrices">
+            <soap:operation style="document" soapAction="SOAPHTTP/GetProductPrices"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="request"/>
+                <soap:header use="literal" message="ns0:MessageContext" part="context"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="response"/>
+                <soap:header use="literal" message="ns0:MessageContext" part="context"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault use="literal" name="fault1"/>
+                <soap:header use="literal" message="ns0:ExceptionInfo" part="fault"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

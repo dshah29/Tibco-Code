@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:pfx15="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:pfx14="http://xmlns.example.com/1429509590402" xmlns:pfx13="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pfx12="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx11="http://www.tibco.com/aff/commontypes" xmlns:pfx10="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:pfx5="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:pfx9="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1" xmlns:pfx8="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:pfx7="http://xmlns.example.com/1301395797508" xmlns:pfx6="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns14="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns9="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" xmlns:ns12="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:ns13="http://tibco.com/namespaces/tnt/plugins/soap" xmlns:ns6="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" xmlns:pfx="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" xmlns:ns10="http://www.tibco.com/aff/order" xmlns:ns7="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:ns11="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:ns8="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://www.tibco.com/aff/orderservice" xmlns:ns3="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Reply.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/MC_SO_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/aff/orderservice" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/aopd/AOPDService.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" location="/SharedResources/WebServiceDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/Concrete/MC_SinvleView_v1.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1301395797508" location="/SharedResources/WebServiceDefinitions/Interface/FOS/Concrete/jms/OrderServiceJMS.wsdl"/>
+    <pd:name>IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx6:SubmitServiceOrderRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>28</pd:startX>
+    <pd:startY>223</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Map_FOM_to_CDM/root/pfx6:SubmitServiceOrderResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx6:SubmitServiceOrderResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>954</pd:endX>
+    <pd:endY>225</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1441189605215</pd:targetNamespace>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>843</pd:x>
+        <pd:y>226</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Map_FOM_to_CDM/root/pfx6:SubmitServiceOrderResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>134</pd:x>
+        <pd:y>221</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx6:SubmitServiceOrderRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateBusinessException">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>269</pd:x>
+        <pd:y>354</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="&quot;ERR-RPI-SOM-0020&quot;"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="&quot;ERROR&quot;"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="&quot;Missing DATA. Missing Mandatory or conditional data on the input request.&quot;"/>
+                </Description>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="MissingMandatoryElement-Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>272</pd:x>
+        <pd:y>455</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateBusinessException/root/pfx3:Exception"/>
+                </data>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateBusinessException_FCDataIssue">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>299</pd:x>
+        <pd:y>620</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="'ERR-RPI-SOM-0010'"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="&quot;ERROR&quot;"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="concat('Invalid Data : Invalid data in the input request. Additional Information : ', $_error_GetProducts/pfx3:Exception/pfx15:ExceptionInfo/@comment[1])"/>
+                </Description>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Business-Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>297</pd:x>
+        <pd:y>775</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateBusinessException_FCDataIssue/root/pfx3:Exception"/>
+                </data>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateTechnicalException">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>508</pd:x>
+        <pd:y>602</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateTechnicalException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="&quot;ERR-RPI-SOM-0030&quot;"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="&quot;ERROR&quot;"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_error_GetProducts/pfx3:Exception/pfx15:ExceptionInfo/@description[1]"/>
+                </Description>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null-1">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>422</pd:x>
+        <pd:y>476</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate-Technical-Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>510</pd:x>
+        <pd:y>775</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns2:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateTechnicalException/root/pfx3:Exception"/>
+                </data>
+            </ns2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map_CDM_to_FOM">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>483</pd:x>
+        <pd:y>222</pd:y>
+        <config>
+            <element ref="ns4:SubmitOrderRequest"/>
+        </config>
+        <pd:inputBindings>
+            <ns4:SubmitOrderRequest>
+                <xsl:attribute name="ExternalBusinessTransactionID">
+                    <xsl:value-of select="$GetInputMessageContext/root/ns14:MessageContext/ns14:TransactionID"/>
+                </xsl:attribute>
+                <ns4:orderRequest>
+                    <ns10:orderRef>
+                        <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:orderID"/>
+                    </ns10:orderRef>
+                    <ns10:header>
+                        <xsl:choose>
+                            <xsl:when test="exists($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:customerID)">
+                                <ns10:customerID>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:customerAccountID"/>
+                                </ns10:customerID>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <ns10:subscriberID>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:customerID"/>
+                                </ns10:subscriberID>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:type=&quot;BILLING&quot;">
+                            <ns10:invoiceAddress>
+                                <pfx11:line1>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine1"/>
+                                </pfx11:line1>
+                                <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine2">
+                                    <pfx11:line2>
+                                        <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine2"/>
+                                    </pfx11:line2>
+                                </xsl:if>
+                                <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine3">
+                                    <pfx11:line3>
+                                        <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine3"/>
+                                    </pfx11:line3>
+                                </xsl:if>
+                                <pfx11:locality>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:county"/>
+                                </pfx11:locality>
+                                <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:city">
+                                    <pfx11:region>
+                                        <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:city"/>
+                                    </pfx11:region>
+                                </xsl:if>
+                                <pfx11:country>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:country"/>
+                                </pfx11:country>
+                                <pfx11:postCode>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:postCode"/>
+                                </pfx11:postCode>
+                            </ns10:invoiceAddress>
+                        </xsl:if>
+                        <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:type!=&quot;BILLING&quot;">
+                            <ns10:deliveryAddress>
+                                <pfx11:line1>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine1"/>
+                                </pfx11:line1>
+                                <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine2">
+                                    <pfx11:line2>
+                                        <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine2"/>
+                                    </pfx11:line2>
+                                </xsl:if>
+                                <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine3">
+                                    <pfx11:line3>
+                                        <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:streetLine3"/>
+                                    </pfx11:line3>
+                                </xsl:if>
+                                <pfx11:locality>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:county"/>
+                                </pfx11:locality>
+                                <xsl:if test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:city">
+                                    <pfx11:region>
+                                        <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:city"/>
+                                    </pfx11:region>
+                                </xsl:if>
+                                <pfx11:country>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:country"/>
+                                </pfx11:country>
+                                <pfx11:postCode>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns7:address/ns7:postCode"/>
+                                </pfx11:postCode>
+                            </ns10:deliveryAddress>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF)">
+                            <xsl:for-each select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF">
+                                <ns10:udf>
+                                    <ns10:name>
+                                        <xsl:value-of select="pfx8:name"/>
+                                    </ns10:name>
+                                    <ns10:value>
+                                        <xsl:value-of select="pfx8:value"/>
+                                    </ns10:value>
+                                </ns10:udf>
+                            </xsl:for-each>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:totalOrderCost)">
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;totalOrderCost&quot;"/>
+                                </ns10:name>
+                                <ns10:value>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:totalOrderCost"/>
+                                </ns10:value>
+                            </ns10:udf>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:orderCurrency)">
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;orderCurrency&quot;"/>
+                                </ns10:name>
+                                <ns10:value>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:orderCurrency"/>
+                                </ns10:value>
+                            </ns10:udf>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:customerID)">
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;customerID&quot;"/>
+                                </ns10:name>
+                                <ns10:value>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:customerID"/>
+                                </ns10:value>
+                            </ns10:udf>
+                        </xsl:if>
+                        <xsl:if test="exists($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:customerAccountID)">
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;customerAccountID&quot;"/>
+                                </ns10:name>
+                                <ns10:value>
+                                    <xsl:value-of select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/ns6:customerAccountID"/>
+                                </ns10:value>
+                            </ns10:udf>
+                        </xsl:if>
+                    </ns10:header>
+                    <xsl:for-each select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx9:orderItem">
+                        <ns10:line>
+                            <ns10:lineNumber>
+                                <xsl:value-of select="pfx9:orderItemDetails/pfx9:orderItemID"/>
+                            </ns10:lineNumber>
+                            <xsl:if test="../../pfx6:ServiceOrder/ns6:customerID">
+                                <ns10:subscriberID>
+                                    <xsl:value-of select="../../pfx6:ServiceOrder/ns6:customerID"/>
+                                </ns10:subscriberID>
+                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF[pfx8:name='isBillingIDUsed']/pfx8:value='true'">
+                                    <xsl:variable name="var3" select="pfx9:productDetails/pfx9:productID"/>
+                                    <xsl:for-each select="$GetProducts/root/ns11:GetProductsResponse/ns11:PredefinedTransformation/ns11:From[ns11:name=&quot;BillingID&quot;]/ns11:value=$var3">
+                                        <ns10:productID>
+                                            <xsl:value-of select="$GetProducts/root/ns11:GetProductsResponse/ns11:PredefinedTransformation[ns11:From/ns11:name=&quot;BillingID&quot; and ns11:From/ns11:value=$var3]/ns11:To[ns11:name=&quot;ProductID&quot;]/ns11:value[1]"/>
+                                        </ns10:productID>
+                                    </xsl:for-each>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <ns10:productID>
+                                        <xsl:value-of select="pfx9:productDetails/pfx9:productID"/>
+                                    </ns10:productID>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <ns10:quantity>
+                                <xsl:value-of select="pfx9:productDetails/pfx9:quantity"/>
+                            </ns10:quantity>
+                            <ns10:uom>
+                                <xsl:value-of select="'UOM'"/>
+                            </ns10:uom>
+                            <xsl:choose>
+                                <xsl:when test="exists(pfx8:UDF[pfx8:name='action']/pfx8:value)">
+                                    <ns10:action>
+                                        <xsl:value-of select="pfx8:UDF[pfx8:name='action']/pfx8:value"/>
+                                    </ns10:action>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <ns10:action>
+                                        <xsl:value-of select="&quot;PROVIDE&quot;"/>
+                                    </ns10:action>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <ns10:requiredByDate>
+                                <xsl:value-of select="current-dateTime()"/>
+                            </ns10:requiredByDate>
+                            <xsl:variable name="var" select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx9:orderItem/pfx8:UDF/pfx8:name"/>
+                            <xsl:variable name="var2" select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx9:orderItem/pfx8:UDF/pfx8:name"/>
+                            <xsl:choose>
+                                <xsl:when test="pfx8:UDF[$var=&quot;productType&quot;]/pfx8:value=&quot;BasePlan&quot; &#xA;or pfx8:UDF[$var2=&quot;productType&quot;]/pfx8:value=&quot;Addon&quot;">
+                                    <ns10:linkID>
+                                        <xsl:value-of select="concat(&quot;BL_&quot;,../../pfx6:ServiceOrder/ns6:orderID)"/>
+                                    </ns10:linkID>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <ns10:linkID>
+                                        <xsl:value-of select="concat(&quot;PL_&quot;,../../pfx6:ServiceOrder/ns6:orderID)"/>
+                                    </ns10:linkID>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <xsl:for-each select="pfx8:UDF">
+                                <ns10:udf>
+                                    <ns10:name>
+                                        <xsl:value-of select="pfx8:name"/>
+                                    </ns10:name>
+                                    <ns10:value>
+                                        <xsl:value-of select="pfx8:value"/>
+                                    </ns10:value>
+                                </ns10:udf>
+                            </xsl:for-each>
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;LinkID&quot;"/>
+                                </ns10:name>
+                                <xsl:choose>
+                                    <xsl:when test="pfx8:UDF[$var=&quot;productType&quot;]/pfx8:value=&quot;BasePlan&quot; &#xA;or pfx8:UDF[$var2=&quot;productType&quot;]/pfx8:value=&quot;Addon&quot;">
+                                        <ns10:value>
+                                            <xsl:value-of select="concat(&quot;BL_&quot;,../../pfx6:ServiceOrder/ns6:orderID)"/>
+                                        </ns10:value>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <ns10:value>
+                                            <xsl:value-of select="concat(&quot;PL_&quot;,../../pfx6:ServiceOrder/ns6:orderID)"/>
+                                        </ns10:value>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ns10:udf>
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;productCost&quot;"/>
+                                </ns10:name>
+                                <ns10:value>
+                                    <xsl:value-of select="../../pfx6:ServiceOrder/pfx9:orderItem/pfx9:productDetails/pfx9:productCost"/>
+                                </ns10:value>
+                            </ns10:udf>
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;productDescription&quot;"/>
+                                </ns10:name>
+                                <ns10:value>
+                                    <xsl:value-of select="../../pfx6:ServiceOrder/pfx9:orderItem/pfx9:productDetails/pfx9:productDescription"/>
+                                </ns10:value>
+                            </ns10:udf>
+                            <ns10:udf>
+                                <ns10:name>
+                                    <xsl:value-of select="&quot;orderItemStatus&quot;"/>
+                                </ns10:name>
+                                <ns10:value>
+                                    <xsl:value-of select="../../pfx6:ServiceOrder/pfx9:orderItem/pfx9:orderItemDetails/pfx9:orderItemStatus"/>
+                                </ns10:value>
+                            </ns10:udf>
+                        </ns10:line>
+                    </xsl:for-each>
+                </ns4:orderRequest>
+            </ns4:SubmitOrderRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetProducts">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>424</pd:x>
+        <pd:y>352</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ServiceClient/GetProducts.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ns11:GetProductsRequest>
+                    <ns11:ProductFilter>
+                        <ns11:repository>
+                            <xsl:value-of select="&quot;PRODUCT&quot;"/>
+                        </ns11:repository>
+                    </ns11:ProductFilter>
+                    <ns11:View>
+                        <ns11:Return>
+                            <ns11:type>
+                                <xsl:value-of select="'CompatibleSegment'"/>
+                            </ns11:type>
+                            <ns11:type>
+                                <xsl:value-of select="'Characteristic'"/>
+                            </ns11:type>
+                        </ns11:Return>
+                    </ns11:View>
+                    <xsl:for-each select="$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx9:orderItem">
+                        <ns11:PredefinedTransformation>
+                            <ns11:Segment>
+                                <xsl:value-of select="../../pfx6:ServiceOrder/pfx8:UDF[pfx8:name='CUSTOMER_TYPE']/pfx8:value"/>
+                            </ns11:Segment>
+                            <ns11:From>
+                                <ns11:name>
+                                    <xsl:value-of select="'BillingID'"/>
+                                </ns11:name>
+                                <ns11:value>
+                                    <xsl:value-of select="pfx9:productDetails/pfx9:productID"/>
+                                </ns11:value>
+                            </ns11:From>
+                            <ns11:To>
+                                <ns11:name>
+                                    <xsl:value-of select="'ProductID'"/>
+                                </ns11:name>
+                            </ns11:To>
+                        </ns11:PredefinedTransformation>
+                    </xsl:for-each>
+                </ns11:GetProductsRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="submitOrder">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>592</pd:x>
+        <pd:y>223</pd:y>
+        <config>
+            <processName>/UtilityProcesses/FOSDataAccessInterfaces/submitOrder.process</processName>
+        </config>
+        <pd:inputBindings>
+            <pfx7:SubmitOrderRequestMsg>
+                <submitorderreqparameters>
+                    <xsl:copy-of select="$Map_CDM_to_FOM/ns4:SubmitOrderRequest"/>
+                </submitorderreqparameters>
+            </pfx7:SubmitOrderRequestMsg>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map_FOM_to_CDM">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>710</pd:x>
+        <pd:y>222</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx6:SubmitServiceOrderResponse"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx6:SubmitServiceOrderResponse>
+                    <pfx6:orderID>
+                        <xsl:value-of select="$submitOrder/pfx7:SubmitOrderResponseMsg/submitorderresparameters/ns4:SubmitOrderResponse/ns4:orderRef"/>
+                    </pfx6:orderID>
+                    <pfx6:orderStatus>
+                        <xsl:value-of select="&quot;PENDING&quot;"/>
+                    </pfx6:orderStatus>
+                </pfx6:SubmitServiceOrderResponse>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="isBillingIDUsed">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>351</pd:x>
+        <pd:y>221</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetInputMessageContext">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>241</pd:x>
+        <pd:y>222</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetInputMessageContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateBusinessException</pd:from>
+        <pd:to>MissingMandatoryElement-Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateBusinessException_FCDataIssue</pd:from>
+        <pd:to>Generate-Business-Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null-1</pd:from>
+        <pd:to>CreateBusinessException_FCDataIssue</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null-1</pd:from>
+        <pd:to>CreateTechnicalException</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_error_GetProducts/pfx3:Exception/pfx15:ExceptionInfo/@exceptionType='TECHNICAL'</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateTechnicalException</pd:from>
+        <pd:to>Generate-Technical-Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map_CDM_to_FOM</pd:from>
+        <pd:to>submitOrder</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts</pd:from>
+        <pd:to>Map_CDM_to_FOM</pd:to>
+        <pd:xpathDescription>Product Present</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>string-length($GetProducts/root/ns11:GetProductsResponse/ns12:productSpecification/ns12:productID)&gt;0 or
+string-length($GetProducts/root/ns11:GetProductsResponse/ns11:PredefinedTransformation[1]/ns11:To/ns11:value)&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts</pd:from>
+        <pd:to>Null-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts</pd:from>
+        <pd:to>CreateBusinessException_FCDataIssue</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>submitOrder</pd:from>
+        <pd:to>Map_FOM_to_CDM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map_FOM_to_CDM</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>isBillingIDUsed</pd:from>
+        <pd:to>Map_CDM_to_FOM</pd:to>
+        <pd:xpathDescription>No</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF[$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF/pfx8:name='isBillingIDUsed']/pfx8:value='false'
+and string-length($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF[../../pfx6:ServiceOrder/pfx8:UDF/pfx8:name='isStatusNotificationNeeded']/pfx8:value)&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>isBillingIDUsed</pd:from>
+        <pd:to>GetProducts</pd:to>
+        <pd:xpathDescription>Yes</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>not($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF[$Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF/pfx8:name='isBillingIDUsed']/pfx8:value='false')
+and string-length($Start/root/pfx6:SubmitServiceOrderRequest/pfx6:ServiceOrder/pfx8:UDF[../../pfx6:ServiceOrder/pfx8:UDF/pfx8:name='isStatusNotificationNeeded']/pfx8:value)&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>isBillingIDUsed</pd:from>
+        <pd:to>CreateBusinessException</pd:to>
+        <pd:xpathDescription>MissingData</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetInputMessageContext</pd:from>
+        <pd:to>isBillingIDUsed</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

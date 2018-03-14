@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <designer>
+        <lockedProperties>
+            <locked>
+                <properties>name</properties>
+            </locked>
+        </lockedProperties>
+        <fixedChildren>
+            <fixed>
+                <resource>/Classes</resource>
+                <children>domain,domainLDAPRPCOperation,apachecatalogentry,apachecatalogentryLDAPRPCOperation,h3orgperson,h3orgpersonLDAPRPCOperation</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/h3orgpersonLDAPRPCOperation</resource>
+                <children>h3orgpersonLDAPOperation</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/h3orgpersonLDAPRPCOperation/h3orgpersonLDAPOperation/Exceptions</resource>
+                <children>MException</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/h3orgpersonLDAPRPCOperation/h3orgpersonLDAPOperation/Parameters</resource>
+                <children>h3orgperson</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/apachecatalogentryLDAPRPCOperation</resource>
+                <children>apachecatalogentryLDAPOperation</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/apachecatalogentryLDAPRPCOperation/apachecatalogentryLDAPOperation/Exceptions</resource>
+                <children>MException</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/apachecatalogentryLDAPRPCOperation/apachecatalogentryLDAPOperation/Parameters</resource>
+                <children>apachecatalogentry</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/domainLDAPRPCOperation</resource>
+                <children>domainLDAPOperation</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/domainLDAPRPCOperation/domainLDAPOperation/Exceptions</resource>
+                <children>MException</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/domainLDAPRPCOperation/domainLDAPOperation/Parameters</resource>
+                <children>domain</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/h3orgperson</resource>
+                <children>OpCode,DN,NewDN,ObjectClass,SearchCondition,AliasDerefFlag,Password,Attributes,h3orgperson</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/apachecatalogentry</resource>
+                <children>OpCode,DN,NewDN,ObjectClass,SearchCondition,AliasDerefFlag,Password,Attributes,apachecatalogentry</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/domain</resource>
+                <children>OpCode,DN,NewDN,ObjectClass,SearchCondition,AliasDerefFlag,Password,Attributes,domain</children>
+            </fixed>
+        </fixedChildren>
+        <resourceDescriptions/>
+    </designer>
+    <class name="domain">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>OpCode</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NewDN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ObjectClass</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SearchCondition</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AliasDerefFlag</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>Password</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>Attributes</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>domain</name>
+            <attributeType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/native.aeschema#class.domain</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+    </class>
+    <rpcClass name="domainLDAPRPCOperation">
+        <operation>
+            <oneway>false</oneway>
+            <name>domainLDAPOperation</name>
+            <returnType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema.aeschema#class.domain</returnType>
+            <parameter>
+                <direction>in</direction>
+                <name>domain</name>
+                <parameterType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain.aeschema#class.domain</parameterType>
+            </parameter>
+            <raises>
+                <name>MException</name>
+                <raisesType isRef="true">/AESchemas/ae.aeschema#scalar.string</raisesType>
+            </raises>
+        </operation>
+    </rpcClass>
+    <class name="apachecatalogentry">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>OpCode</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NewDN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ObjectClass</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SearchCondition</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AliasDerefFlag</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>Password</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>Attributes</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>apachecatalogentry</name>
+            <attributeType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/native.aeschema#class.apachecatalogentry</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+    </class>
+    <rpcClass name="apachecatalogentryLDAPRPCOperation">
+        <operation>
+            <oneway>false</oneway>
+            <name>apachecatalogentryLDAPOperation</name>
+            <returnType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema.aeschema#class.apachecatalogentry</returnType>
+            <parameter>
+                <direction>in</direction>
+                <name>apachecatalogentry</name>
+                <parameterType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain.aeschema#class.apachecatalogentry</parameterType>
+            </parameter>
+            <raises>
+                <name>MException</name>
+                <raisesType isRef="true">/AESchemas/ae.aeschema#scalar.string</raisesType>
+            </raises>
+        </operation>
+    </rpcClass>
+    <class name="h3orgperson">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>OpCode</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>NewDN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ObjectClass</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SearchCondition</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AliasDerefFlag</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>Password</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>Attributes</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>h3orgperson</name>
+            <attributeType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/native.aeschema#class.h3orgperson</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+    </class>
+    <rpcClass name="h3orgpersonLDAPRPCOperation">
+        <operation>
+            <oneway>false</oneway>
+            <name>h3orgpersonLDAPOperation</name>
+            <returnType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema.aeschema#class.h3orgperson</returnType>
+            <parameter>
+                <direction>in</direction>
+                <name>h3orgperson</name>
+                <parameterType isRef="true">/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain.aeschema#class.h3orgperson</parameterType>
+            </parameter>
+            <raises>
+                <name>MException</name>
+                <raisesType isRef="true">/AESchemas/ae.aeschema#scalar.string</raisesType>
+            </raises>
+        </operation>
+    </rpcClass>
+</Repository:repository>

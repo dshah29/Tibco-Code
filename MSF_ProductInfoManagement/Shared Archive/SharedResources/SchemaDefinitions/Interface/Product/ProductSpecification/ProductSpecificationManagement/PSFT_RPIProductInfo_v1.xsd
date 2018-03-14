@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:ps="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:baseTypes="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1"
+	 xmlns:disct="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" schemaLocation="../../../../CDM/Product/ProductSpecification/ProductSpecificationManagement/ProductSpecification_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../../../CDM/Product/ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../../CDM/Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Organisation_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/Discount_v1.xsd"/>
+	<xs:complexType name="DiscountDefn">
+		<xs:sequence>
+			<xs:element name="discountType" type="xs:string"/>
+			<xs:element name="discountValue" type="xs:float"/>
+			<xs:element name="discountStart" type="xs:string"/>
+			<xs:element name="discountEnd" type="xs:string" minOccurs="0"/>
+			<xs:element name="calculationType" type="xs:string"/>
+			<xs:element name="discountReason" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductPriceSpecificationDetailsDefn">
+		<xs:sequence>
+			<xs:element name="price" type="xs:float"/>
+			<xs:element name="priceDuration" type="xs:string" minOccurs="0"/>
+			<xs:element name="currency" type="xs:string" minOccurs="0"/>
+			<xs:element name="recurringChargeFrequency" type="xs:string" minOccurs="0"/>
+			<xs:element name="discount" type="DiscountDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductSpecificationDetailsDefn">
+		<xs:sequence>
+			<xs:element name="productID" type="pductBASE:ProductID"/>
+			<xs:element name="productName" type="xs:string" minOccurs="0"/>
+			<xs:element name="productDescription" type="xs:string" minOccurs="0"/>
+			<xs:element name="classification" type="ps:_PRODUCT_TYPE"/>
+			<xs:element name="lifecycleStatus" type="pductBASE:_PRODUCT_STATUS"/>
+			<xs:element name="subProductDetails" type="ProductSpecificationDetailsDefn" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="startDateTime" type="xs:string"/>
+			<xs:element name="endDateTime" type="xs:string" minOccurs="0"/>
+			<xs:element name="productPriceSpecification" type="ProductPriceSpecificationDetailsDefn" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductIDsDefn">
+		<xs:sequence>
+			<xs:element name="productID" type="pductBASE:ProductID" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TargetProductsDefn">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="baseTypes:BAN" minOccurs="0"/>
+			<xs:element name="ProductIDs" type="ProductIDsDefn"/>
+			<xs:element name="event" type="EventDefn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CustomerPriceDefn">
+		<xs:sequence>
+			<xs:element name="planID" type="pductBASE:ProductID"/>
+			<xs:element name="effectiveStartDate" type="xs:string"/>
+			<xs:element name="effectiveEndDate" type="xs:string"/>
+			<xs:element name="event" type="EventDefn"/>
+			<xs:element name="price" type="baseTypes:PRICE"/>
+			<xs:element name="totalPercentageDiscount" type="xs:float"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="POSITIVEINT">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_DurationDefn">
+		<xs:restriction base="xs:integer">
+			<xs:enumeration value="1"/>
+			<xs:enumeration value="6"/>
+			<xs:enumeration value="12"/>
+			<xs:enumeration value="18"/>
+			<xs:enumeration value="24"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DurationDefn">
+		<xs:union memberTypes="_DurationDefn xs:integer"/>
+	</xs:simpleType>
+	<xs:simpleType name="_EventDefn">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Annual RPI Cycle"/>
+			<xs:enumeration value="Contract Start"/>
+			<xs:enumeration value="Contract Extension"/>
+			<xs:enumeration value="Change Of Ownership"/>
+			<xs:enumeration value="Change Price Plan"/>
+			<xs:enumeration value="Manual Update"/>
+			<xs:enumeration value="New Hand Set"/>
+			<xs:enumeration value="New Sale"/>
+			<xs:enumeration value="Post To Pre"/>
+			<xs:enumeration value="Send Handset"/>
+			<xs:enumeration value="Tariff Change"/>
+			<xs:enumeration value="Update Handset"/>
+			<xs:enumeration value="Upgrade"/>
+			<xs:enumeration value="Upgrade Reversal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventDefn">
+		<xs:union memberTypes="_EventDefn xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="GetProductPricesRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="accountNumber" type="baseTypes:BAN"/>
+				<xs:element name="TargetProducts" type="TargetProductsDefn"/>
+			</xs:choice>
+			<xs:element name="orgID" type="TYP:ORGANISATION_LIST"/>
+			<xs:element name="effectiveDate" type="xs:string" minOccurs="0"/>
+			<xs:element name="packageAggregation" type="POSITIVEINT"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetProductPricesResponse">
+		<xs:sequence>
+			<xs:element name="ExistingProducts" type="ProductSpecificationDetailsDefn" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="TargetProducts" type="ProductSpecificationDetailsDefn" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Status" type="ResultStatusDefn" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetPackagePriceHistoryRequest">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="accountNumber" type="baseTypes:BAN"/>
+				<xs:element name="MSISDN" type="baseTypes:CTN"/>
+			</xs:choice>
+			<xs:element name="startDate" type="xs:string" minOccurs="0"/>
+			<xs:element name="endDate" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetPackagePriceHistoryResponse">
+		<xs:sequence>
+			<xs:element name="CustomerPrice" type="CustomerPriceDefn" maxOccurs="unbounded"/>
+			<xs:element name="Status" type="ResultStatusDefn" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultStatusDefn">
+		<xs:all>
+			<xs:element name="StatusCode" type="xs:int"/>
+			<xs:element name="ErrorCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="ErrorDescription" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:element name="GetProductPricesRequest" type="GetProductPricesRequest"/>
+	<xs:element name="GetProductPricesResponse" type="GetProductPricesResponse"/>
+	<xs:element name="GetPackagePriceHistoryRequest" type="GetPackagePriceHistoryRequest"/>
+	<xs:element name="GetPackagePriceHistoryResponse" type="GetPackagePriceHistoryResponse"/>
+</xs:schema>

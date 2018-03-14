@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="Message">
+        <attribute>
+            <name>XMLMessage</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+        </attribute>
+    </class>
+    <rpcClass name="CRMConnector_crm2eai">
+        <operation>
+            <name>PubSyncMessage</name>
+            <returnType isRef="true">/AESchemas/ae.aeschema#scalar.i4</returnType>
+            <oneway>false</oneway>
+            <parameter>
+                <name>RequestMessage</name>
+                <parameterType isRef="true">#class.Message</parameterType>
+                <direction>in</direction>
+            </parameter>
+            <parameter>
+                <name>ResponseMessage</name>
+                <parameterType isRef="true">#class.Message</parameterType>
+                <direction>inout</direction>
+            </parameter>
+        </operation>
+    </rpcClass>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

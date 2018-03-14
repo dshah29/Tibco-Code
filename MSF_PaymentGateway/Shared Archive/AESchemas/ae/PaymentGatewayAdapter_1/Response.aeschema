@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="UpdateContactHistory">
+        <attribute>
+            <name>AccountNumber</name>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="CreatePaymentTransactionResponse">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_BATCH_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_SOURCE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_TYPE_CODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_BAN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>TARGET_BAN</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESULT_STATUS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+    <class name="CreateAuthRequestID">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>false</isWriteable>
+            <name>AUTH_REQUEST_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>false</isWriteable>
+            <name>RESULT_STATUS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+        </attribute>
+    </class>
+    <class name="TakePayment">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PGA_AUTHORISATION_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>AUTHORISATION_CODE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESPONSE_INDICATOR</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ACQUIRER</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MERCHANT</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>REFERRAL_TELEPHONE</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESULT_STATUS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+        </attribute>
+    </class>
+    <class name="AuthoriseRefund">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PGA_AUTHORISATION_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>BATCH_ID</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESULT_STATUS</name>
+            <isKey>false</isKey>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+        </attribute>
+    </class>
+    <class name="CreatePaymentID">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_POSTED</name>
+            <attributeType isRef="true">/AESchemas/ae/PaymentGatewayAdapter_1/Common.aeschema#class.PaymentPosted</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+        </attribute>
+    </class>
+    <class name="ChangePaymentMethod">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+        </attribute>
+    </class>
+    <class name="GetPaymentMethodDetails">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_DETAILS</name>
+            <attributeType isRef="true">/AESchemas/ae/PaymentGatewayAdapter_1/Common.aeschema#union.PaymentDetails</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PAYMENT_METHOD_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+</Repository:repository>

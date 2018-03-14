@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:usg="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1"
+	 version="$Id: ProductUsage_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="ProductUsageDetails">
+		<xsd:sequence>
+			<xsd:element name="allowanceID" type="pductBASE:AllowanceID"/>
+			<xsd:element name="refreshDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="unitsUsed" type="BASE:PopulatedString"/>
+			<xsd:element name="unitsAvailable" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ProductUsage" type="usg:ProductUsageDetails"/>
+	<xsd:element name="productUsage" type="usg:ProductUsageDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element ProductUsage instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

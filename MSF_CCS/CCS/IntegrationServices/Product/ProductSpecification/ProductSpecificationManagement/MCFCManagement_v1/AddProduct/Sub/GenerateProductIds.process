@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/productIdReferences/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:pfx5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx8="http://www.three.co.uk/ccs/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.three.co.uk/ccs/" schemaLocation="/SharedResources/SchemaDefinitions/External/CCS/CentralCatalogueServices.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/productIdReferences/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Product/ProductSpecification/ProductSpecificationManagement/ProductIdReferences.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/GenerateProductIds.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx8:release"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>56</pd:startX>
+    <pd:startY>136</pd:startY>
+    <pd:returnBindings>
+        <xsl:copy-of select="$SetVariable-Product-Ids/pfx:productDefinations"/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx:productDefinations"/>
+    <pd:endX>273</pd:endX>
+    <pd:endY>135</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx5:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1418812148777</pd:targetNamespace>
+    <pd:activity name="SetVariable Product Ids">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>161</pd:x>
+        <pd:y>143</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Product/ProductSpecification/ProductSpecificationManagement/Product Id References.jobsharedvariable</variableConfig>
+            <showResult>true</showResult>
+        </config>
+        <pd:inputBindings>
+            <pfx:productDefinations>
+                <xsl:for-each select="$Start/root/pfx8:release/pfx8:productDefinition">
+                    <pfx:productDefination>
+                        <pfx:productName>
+                            <xsl:value-of select="@name"/>
+                        </pfx:productName>
+                        <pfx:productID>
+                            <xsl:value-of select="if(exists(./pfx8:attribute[upper-case(@name)='PEOPLESOFTID']))&#xA;then ./pfx8:attribute[upper-case(@name)='PEOPLESOFTID']&#xA;else if(exists(./pfx8:attribute[upper-case(@name)='SHORTCODE']))&#xA;then ./pfx8:attribute[upper-case(@name)='SHORTCODE']&#xA;else  ./@name"/>
+                        </pfx:productID>
+                    </pfx:productDefination>
+                </xsl:for-each>
+            </pfx:productDefinations>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SetVariable Product Ids</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetVariable Product Ids</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:inLine="http://www.tibco.com/bs3.0/_SzyRMHt4EeSo3_y7hOrSaQ/PQFExceptionHandlingProcess_v1037">
+    <name>SecurityPolicyAssociation_PQFException</name>
+    <resourceType>ws.security.policy.association.resource</resourceType>
+    <config>
+        <applyTo>/IntegrationServices/OrderFallout/FOSExceptionHandler_v1/Sub/SendException_BPM.process/PQF_BPM_Trigger</applyTo>
+        <systemSecuritySubject>/IntegrationServices/OrderFallout/FOSExceptionHandler_v1/Sub/SendException_BPM.process/PQFExceptionHandlingProcess_v1037_EP/CreatePQFEvent</systemSecuritySubject>
+        <inbound>
+            <selectSignatureParts/>
+            <selectEncryptionParts/>
+        </inbound>
+        <outbound>
+            <selectSignatureParts/>
+            <selectEncryptionParts/>
+        </outbound>
+        <outboundMessagePolicy>/SharedResources/Policies/BPM/SecurityPolicy_BPM.securityPolicy</outboundMessagePolicy>
+    </config>
+</BWSharedResource>

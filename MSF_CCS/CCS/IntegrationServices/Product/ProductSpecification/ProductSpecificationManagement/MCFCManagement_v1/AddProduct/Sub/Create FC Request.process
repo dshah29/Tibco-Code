@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/objectReferenceLookup/v1" xmlns:ns6="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/productIdReferences/v1" xmlns:pfx="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/Internal/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:pfx5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx3="http://schemas.tibco.com/bw/plugins/http/5.0/httpExceptions" xmlns:pfx2="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:pfx8="http://www.three.co.uk/ccs/" xmlns:pfx7="http://www.tibco.com/cim/services/workitem/wsdl/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pfx6="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/cim/services/workitem/wsdl/2.0" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FC/Workitem_Action.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FC/MasterCatalogRecord_Action.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/ccs/" schemaLocation="/SharedResources/SchemaDefinitions/External/CCS/CentralCatalogueServices.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" location="/SharedResources/SchemaDefinitions/Resource/FC/Cim_Services.wsdl"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/Create FC Request.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx8:release"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>41</pd:startX>
+    <pd:startY>125</pd:startY>
+    <pd:returnBindings>
+        <group>
+            <add>
+                <xsl:copy-of select="$Add-FC-Req/root/ns2:DataService"/>
+            </add>
+            <modify>
+                <xsl:copy-of select="$Modify-FC-Req/root/ns2:DataService"/>
+            </modify>
+        </group>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="group">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="add">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element ref="ns2:DataService"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="modify">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element ref="ns2:DataService"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>783</pd:endX>
+    <pd:endY>125</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx5:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1418812148777</pd:targetNamespace>
+    <pd:activity name="Add FC Req">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>455</pd:x>
+        <pd:y>124</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="ns2:DataService"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Start/root/pfx8:release/pfx8:productDefinition[1]">
+                    <ns2:DataService>
+                        <xsl:attribute name="version">
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/FCVersion"/>
+                        </xsl:attribute>
+                        <ns2:Identity>
+                            <ns2:DirectoryPath>
+                                <ns2:Directory>
+                                    <xsl:attribute name="type">
+                                        <xsl:value-of select="&quot;Enterprise&quot;"/>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Enterprise"/>
+                                </ns2:Directory>
+                                <ns2:Directory>
+                                    <xsl:attribute name="type">
+                                        <xsl:value-of select="&quot;User&quot;"/>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/User"/>
+                                </ns2:Directory>
+                            </ns2:DirectoryPath>
+                            <ns2:Authentication>
+                                <xsl:attribute name="type">
+                                    <xsl:value-of select="&quot;Password&quot;"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Password"/>
+                            </ns2:Authentication>
+                        </ns2:Identity>
+                        <ns2:Transaction>
+                            <ns2:Command>
+                                <xsl:variable name="var_ProductName" select="current()/@name"/>
+                                <xsl:variable name="var_ProductID" select="($Get-ProductIds/ns6:productDefinations/ns6:productDefination[ns6:productName=$var_ProductName]/ns6:productID)[1]"/>
+                                <xsl:variable name="var_CCS_ProductType" select="upper-case(current()/@type)"/>
+                                <xsl:variable name="var_FC" select="($GetStaticData/ns5:objectLookupReference/ns5:catalogs/ns5:catalog[upper-case(@ccsProductType)=$var_CCS_ProductType])[1]"/>
+                                <xsl:variable name="var_FC_Repository" select="upper-case($var_FC/ns5:masterCatalogName)"/>
+                                <xsl:variable name="var_Product_Class" select="$var_FC/ns5:class"/>
+                                <xsl:variable name="var_Product_SubClass" select="$var_FC/ns5:subClass"/>
+                                <xsl:attribute name="type">
+                                    <xsl:value-of select="&quot;Add&quot;"/>
+                                </xsl:attribute>
+                                <ns2:MasterCatalogRecord>
+                                    <xsl:attribute name="etype">
+                                        <xsl:value-of select="&quot;Entity&quot;"/>
+                                    </xsl:attribute>
+                                    <xsl:attribute name="commandqualifier">
+                                        <xsl:value-of select="&quot;Validate/Process&quot;"/>
+                                    </xsl:attribute>
+                                    <ns2:ExternalKeys>
+                                        <ns2:Key>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;string&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="$var_FC_Repository"/>
+                                        </ns2:Key>
+                                        <ns2:Key>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;string&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="$var_ProductID"/>
+                                        </ns2:Key>
+                                    </ns2:ExternalKeys>
+                                    <ns2:EntityData>
+                                        <ns2:Attribute>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;Name&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;string&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="$var_ProductName"/>
+                                        </ns2:Attribute>
+                                        <ns2:Attribute>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;string&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="$var_ProductID"/>
+                                        </ns2:Attribute>
+                                        <xsl:choose>
+                                            <xsl:when test="exists(pfx8:attribute[@name='Description']) and pfx8:attribute[@name='Description']!=&quot;&quot;">
+                                                <ns2:Attribute>
+                                                    <xsl:attribute name="name">
+                                                        <xsl:value-of select="&quot;SHORTDESC&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:attribute name="type">
+                                                        <xsl:value-of select="&quot;string&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:value-of select="pfx8:attribute[@name='Description']"/>
+                                                </ns2:Attribute>
+                                                <ns2:Attribute>
+                                                    <xsl:attribute name="name">
+                                                        <xsl:value-of select="&quot;LongDesc&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:attribute name="type">
+                                                        <xsl:value-of select="&quot;string&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:value-of select="pfx8:attribute[@name='Description']"/>
+                                                </ns2:Attribute>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <ns2:Attribute>
+                                                    <xsl:attribute name="name">
+                                                        <xsl:value-of select="&quot;SHORTDESC&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:attribute name="type">
+                                                        <xsl:value-of select="&quot;string&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:value-of select="$var_ProductName"/>
+                                                </ns2:Attribute>
+                                                <ns2:Attribute>
+                                                    <xsl:attribute name="name">
+                                                        <xsl:value-of select="&quot;LongDesc&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:attribute name="type">
+                                                        <xsl:value-of select="&quot;string&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:value-of select="$var_ProductName"/>
+                                                </ns2:Attribute>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                        <xsl:choose>
+                                            <xsl:when test="$var_FC_Repository=&quot;PRICE&quot;">
+                                                <ns2:Attribute>
+                                                    <xsl:attribute name="name">
+                                                        <xsl:value-of select="&quot;RECORD_TYPE&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:attribute name="type">
+                                                        <xsl:value-of select="&quot;string&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:value-of select="&quot;PRODUCT&quot;"/>
+                                                </ns2:Attribute>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <ns2:Attribute>
+                                                    <xsl:attribute name="name">
+                                                        <xsl:value-of select="&quot;RECORD_TYPE&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:attribute name="type">
+                                                        <xsl:value-of select="&quot;string&quot;"/>
+                                                    </xsl:attribute>
+                                                    <xsl:value-of select="$var_Product_Class"/>
+                                                </ns2:Attribute>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                        <ns2:Attribute>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;SubsetType&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;string&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="$var_Product_SubClass"/>
+                                        </ns2:Attribute>
+                                        <xsl:if test="$var_FC_Repository=&quot;PRODUCT&quot;">
+                                            <ns2:Attribute>
+                                                <xsl:attribute name="name">
+                                                    <xsl:value-of select="&quot;SingleUse&quot;"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="type">
+                                                    <xsl:value-of select="&quot;boolean&quot;"/>
+                                                </xsl:attribute>
+                                                <xsl:value-of select="true()"/>
+                                            </ns2:Attribute>
+                                        </xsl:if>
+                                        <ns2:Attribute>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;StartDate&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;date&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="&quot;2013-01-01&quot;"/>
+                                        </ns2:Attribute>
+                                        <ns2:Attribute>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;EndDate&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;date&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="&quot;2099-01-01&quot;"/>
+                                        </ns2:Attribute>
+                                        <ns2:Attribute>
+                                            <xsl:attribute name="name">
+                                                <xsl:value-of select="&quot;lifecyclestatus&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;string&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:value-of select="&quot;Active&quot;"/>
+                                        </ns2:Attribute>
+                                    </ns2:EntityData>
+                                    <ns2:RelationshipData>
+                                        <xsl:for-each select="pfx8:attribute&#xA;{-- Product Characteristics--}">
+                                            <ns2:Relationship>
+                                                <xsl:attribute name="incremental">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="delete">
+                                                    <xsl:value-of select="false()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="checkExistence">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <xsl:choose>
+                                                    <xsl:when test="$var_FC_Repository=&quot;PRICE&quot;">
+                                                        <ns2:RelationType>
+                                                            <xsl:value-of select="&quot;CharacteristicCharge&quot;"/>
+                                                        </ns2:RelationType>
+                                                    </xsl:when>
+                                                    <xsl:when test="$var_FC_Repository=&quot;ALLOWANCE&quot;">
+                                                        <ns2:RelationType>
+                                                            <xsl:value-of select="&quot;AllowanceRequiresCharacteristic&quot;"/>
+                                                        </ns2:RelationType>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <ns2:RelationType>
+                                                            <xsl:value-of select="&quot;Characteristic&quot;"/>
+                                                        </ns2:RelationType>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                                <ns2:RelatedEntities>
+                                                    <ns2:MasterCatalogRecord>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="commandqualifier">
+                                                            <xsl:value-of select="&quot;Validate/Process&quot;"/>
+                                                        </xsl:attribute>
+                                                        <ns2:ExternalKeys>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;CHARACTERISTIC&quot;"/>
+                                                            </ns2:Key>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="@name"/>
+                                                            </ns2:Key>
+                                                        </ns2:ExternalKeys>
+                                                        <ns2:EntityData>
+                                                            <ns2:Attribute>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;RelationshipValue&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="."/>
+                                                            </ns2:Attribute>
+                                                        </ns2:EntityData>
+                                                    </ns2:MasterCatalogRecord>
+                                                </ns2:RelatedEntities>
+                                            </ns2:Relationship>
+                                        </xsl:for-each>
+                                        <xsl:for-each select="pfx8:attribute[upper-case(@name)='BILLINGCUSTOMERTYPE']">
+                                            <ns2:Relationship>
+                                                <xsl:attribute name="incremental">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="delete">
+                                                    <xsl:value-of select="false()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="checkExistence">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <ns2:RelationType>
+                                                    <xsl:value-of select="&quot;CompatibleSegment&quot;"/>
+                                                </ns2:RelationType>
+                                                <ns2:RelatedEntities>
+                                                    <ns2:MasterCatalogRecord>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="commandqualifier">
+                                                            <xsl:value-of select="&quot;Validate/Process&quot;"/>
+                                                        </xsl:attribute>
+                                                        <ns2:ExternalKeys>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;SEGMENT&quot;"/>
+                                                            </ns2:Key>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="if(.=&quot;Std-Contract&quot;) then 'CONSUMER' &#xA;else if(.=&quot;Business-Contract&quot;) then 'BUSINESS'&#xA;else 'CONSUMER'"/>
+                                                            </ns2:Key>
+                                                        </ns2:ExternalKeys>
+                                                    </ns2:MasterCatalogRecord>
+                                                </ns2:RelatedEntities>
+                                            </ns2:Relationship>
+                                        </xsl:for-each>
+                                        <xsl:for-each select="current()/pfx8:prodRef&#xA;{-- ProductComprisedOf--}">
+                                            <xsl:variable name="var_ProdRef_Type" select="upper-case(current()/@type)"/>
+                                            <xsl:variable name="var_ProdRef_Name" select="current()/@name"/>
+                                            <xsl:variable name="var_ProdRef_Repository" select="upper-case(($GetStaticData/ns5:objectLookupReference/ns5:catalogs/ns5:catalog[upper-case(@ccsProductType)=$var_ProdRef_Type]/ns5:masterCatalogName)[1])"/>
+                                            <xsl:variable name="var_ProdRef_Relationship" select="($GetStaticData/ns5:objectLookupReference/ns5:relationships/ns5:relationship[upper-case(@fcParentCatalog)=$var_FC_Repository and upper-case(@fcChildCatalog) = $var_ProdRef_Repository])"/>
+                                            <ns2:Relationship>
+                                                <xsl:attribute name="incremental">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="delete">
+                                                    <xsl:value-of select="false()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="checkExistence">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <ns2:RelationType>
+                                                    <xsl:value-of select="$var_ProdRef_Relationship"/>
+                                                </ns2:RelationType>
+                                                <ns2:RelatedEntities>
+                                                    <ns2:MasterCatalogRecord>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="commandqualifier">
+                                                            <xsl:value-of select="&quot;Validate/Process&quot;"/>
+                                                        </xsl:attribute>
+                                                        <ns2:ExternalKeys>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="$var_ProdRef_Repository"/>
+                                                            </ns2:Key>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="$Get-ProductIds/ns6:productDefinations/ns6:productDefination[ns6:productName=$var_ProdRef_Name]/ns6:productID"/>
+                                                            </ns2:Key>
+                                                        </ns2:ExternalKeys>
+                                                        <xsl:choose>
+                                                            <xsl:when test="($var_CCS_ProductType=&quot;TARIFF&quot; or $var_CCS_ProductType=&quot;BASE PLAN&quot;)&#xA;and&#xA;$var_ProdRef_Type=&quot;SERVICE&quot;">
+                                                                <ns2:EntityData>
+                                                                    <ns2:Attribute>
+                                                                        <xsl:attribute name="name">
+                                                                            <xsl:value-of select="&quot;SequenceNumber&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:attribute name="type">
+                                                                            <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:value-of select="2.0"/>
+                                                                    </ns2:Attribute>
+                                                                    <ns2:Attribute>
+                                                                        <xsl:attribute name="name">
+                                                                            <xsl:value-of select="&quot;CeaseSequenceNumber&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:attribute name="type">
+                                                                            <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:value-of select="2.0"/>
+                                                                    </ns2:Attribute>
+                                                                    <ns2:Attribute>
+                                                                        <xsl:attribute name="name">
+                                                                            <xsl:value-of select="&quot;UpdateSequenceNumber&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:attribute name="type">
+                                                                            <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:value-of select="2.0"/>
+                                                                    </ns2:Attribute>
+                                                                    <ns2:Attribute>
+                                                                        <xsl:attribute name="name">
+                                                                            <xsl:value-of select="&quot;AutoProvision&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:attribute name="type">
+                                                                            <xsl:value-of select="&quot;boolean&quot;"/>
+                                                                        </xsl:attribute>
+                                                                        <xsl:value-of select="true()"/>
+                                                                    </ns2:Attribute>
+                                                                </ns2:EntityData>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <xsl:choose>
+                                                                    <xsl:when test="$var_ProdRef_Relationship!=&quot;ProductPricedBy&quot; and&#xA;$var_ProdRef_Relationship!=&quot;ProductRequiredForAllowance&quot; and&#xA;$var_ProdRef_Relationship!=&quot;PriceAlteredByAllowance&quot;">
+                                                                        <ns2:EntityData>
+                                                                            <ns2:Attribute>
+                                                                                <xsl:attribute name="name">
+                                                                                    <xsl:value-of select="&quot;SequenceNumber&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:attribute name="type">
+                                                                                    <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:value-of select="1.0"/>
+                                                                            </ns2:Attribute>
+                                                                            <ns2:Attribute>
+                                                                                <xsl:attribute name="name">
+                                                                                    <xsl:value-of select="&quot;CeaseSequenceNumber&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:attribute name="type">
+                                                                                    <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:value-of select="1.0"/>
+                                                                            </ns2:Attribute>
+                                                                            <ns2:Attribute>
+                                                                                <xsl:attribute name="name">
+                                                                                    <xsl:value-of select="&quot;UpdateSequenceNumber&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:attribute name="type">
+                                                                                    <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:value-of select="1.0"/>
+                                                                            </ns2:Attribute>
+                                                                            <ns2:Attribute>
+                                                                                <xsl:attribute name="name">
+                                                                                    <xsl:value-of select="&quot;AutoProvision&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:attribute name="type">
+                                                                                    <xsl:value-of select="&quot;boolean&quot;"/>
+                                                                                </xsl:attribute>
+                                                                                <xsl:value-of select="true()"/>
+                                                                            </ns2:Attribute>
+                                                                        </ns2:EntityData>
+                                                                    </xsl:when>
+                                                                </xsl:choose>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
+                                                    </ns2:MasterCatalogRecord>
+                                                </ns2:RelatedEntities>
+                                            </ns2:Relationship>
+                                        </xsl:for-each>
+                                        <xsl:if test="($var_CCS_ProductType=&quot;TARIFF&quot; or&#xA;$var_CCS_ProductType=&quot;BASE PLAN&quot;)">
+                                            <ns2:Relationship>
+                                                <xsl:variable name="var_ProdRef_Name" select="&quot;SER_UPDATE_Voice&quot;"/>
+                                                <xsl:variable name="var_ProdRef_Type" select="&quot;SERVICE&quot;"/>
+                                                <xsl:variable name="var_ProdRef_Repository" select="&quot;PRODUCT&quot;"/>
+                                                <xsl:variable name="var_ProdRef_Relationship" select="($GetStaticData/ns5:objectLookupReference/ns5:relationships/ns5:relationship[upper-case(@fcParentCatalog)=$var_FC_Repository and upper-case(@fcChildCatalog) = $var_ProdRef_Repository])"/>
+                                                <xsl:attribute name="incremental">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="delete">
+                                                    <xsl:value-of select="false()"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="checkExistence">
+                                                    <xsl:value-of select="true()"/>
+                                                </xsl:attribute>
+                                                <ns2:RelationType>
+                                                    <xsl:value-of select="$var_ProdRef_Relationship"/>
+                                                </ns2:RelationType>
+                                                <ns2:RelatedEntities>
+                                                    <ns2:MasterCatalogRecord>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="commandqualifier">
+                                                            <xsl:value-of select="&quot;Validate/Process&quot;"/>
+                                                        </xsl:attribute>
+                                                        <ns2:ExternalKeys>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="$var_ProdRef_Repository"/>
+                                                            </ns2:Key>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;SER_UPDATE_Voice&quot;"/>
+                                                            </ns2:Key>
+                                                        </ns2:ExternalKeys>
+                                                        <ns2:EntityData>
+                                                            <ns2:Attribute>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;SequenceNumber&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="1.0"/>
+                                                            </ns2:Attribute>
+                                                            <ns2:Attribute>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;CeaseSequenceNumber&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="1.0"/>
+                                                            </ns2:Attribute>
+                                                            <ns2:Attribute>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;UpdateSequenceNumber&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;decimal&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="1.0"/>
+                                                            </ns2:Attribute>
+                                                            <ns2:Attribute>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;AutoProvision&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;boolean&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="true()"/>
+                                                            </ns2:Attribute>
+                                                        </ns2:EntityData>
+                                                    </ns2:MasterCatalogRecord>
+                                                </ns2:RelatedEntities>
+                                            </ns2:Relationship>
+                                        </xsl:if>
+                                        <xsl:if test="upper-case($var_FC_Repository)=&quot;PRODUCT&quot;">
+                                            <ns2:Relationship>
+                                                <ns2:RelationType>
+                                                    <xsl:value-of select="&quot;PRODUCTHASPROVIDEPLANFRAGMENT&quot;"/>
+                                                </ns2:RelationType>
+                                                <ns2:RelatedEntities>
+                                                    <ns2:MasterCatalogRecord>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <ns2:ExternalKeys>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;PLANFRAGMENT&quot;"/>
+                                                            </ns2:Key>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;NON_EXECUTING&quot;"/>
+                                                            </ns2:Key>
+                                                        </ns2:ExternalKeys>
+                                                    </ns2:MasterCatalogRecord>
+                                                </ns2:RelatedEntities>
+                                            </ns2:Relationship>
+                                        </xsl:if>
+                                        <xsl:if test="upper-case($var_FC_Repository)=&quot;PRODUCT&quot;">
+                                            <ns2:Relationship>
+                                                <ns2:RelationType>
+                                                    <xsl:value-of select="&quot;PRODUCTHASUPDATEPLANFRAGMENT&quot;"/>
+                                                </ns2:RelationType>
+                                                <ns2:RelatedEntities>
+                                                    <ns2:MasterCatalogRecord>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <ns2:ExternalKeys>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;PLANFRAGMENT&quot;"/>
+                                                            </ns2:Key>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;NON_EXECUTING&quot;"/>
+                                                            </ns2:Key>
+                                                        </ns2:ExternalKeys>
+                                                    </ns2:MasterCatalogRecord>
+                                                </ns2:RelatedEntities>
+                                            </ns2:Relationship>
+                                        </xsl:if>
+                                        <xsl:if test="upper-case($var_FC_Repository)=&quot;PRODUCT&quot;">
+                                            <ns2:Relationship>
+                                                <ns2:RelationType>
+                                                    <xsl:value-of select="&quot;PRODUCTHASCANCELPLANFRAGMENT&quot;"/>
+                                                </ns2:RelationType>
+                                                <ns2:RelatedEntities>
+                                                    <ns2:MasterCatalogRecord>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <ns2:ExternalKeys>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;PLANFRAGMENT&quot;"/>
+                                                            </ns2:Key>
+                                                            <ns2:Key>
+                                                                <xsl:attribute name="name">
+                                                                    <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:attribute name="type">
+                                                                    <xsl:value-of select="&quot;string&quot;"/>
+                                                                </xsl:attribute>
+                                                                <xsl:value-of select="&quot;NON_EXECUTING&quot;"/>
+                                                            </ns2:Key>
+                                                        </ns2:ExternalKeys>
+                                                    </ns2:MasterCatalogRecord>
+                                                </ns2:RelatedEntities>
+                                            </ns2:Relationship>
+                                        </xsl:if>
+                                    </ns2:RelationshipData>
+                                </ns2:MasterCatalogRecord>
+                            </ns2:Command>
+                        </ns2:Transaction>
+                    </ns2:DataService>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Get ProductIds">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>241</pd:x>
+        <pd:y>125</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Product/ProductSpecification/ProductSpecificationManagement/Product Id References.jobsharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetStaticData">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>134</pd:x>
+        <pd:y>125</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Product/ProductSpecification/ProductSpecificationManagement/Object Lookup Reference.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Modify FC Req">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>572</pd:x>
+        <pd:y>125</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="ns2:DataService"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$Add-FC-Req/root/ns2:DataService">
+                    <ns2:DataService>
+                        <xsl:attribute name="version">
+                            <xsl:value-of select="@version"/>
+                        </xsl:attribute>
+                        <xsl:copy-of select="ns2:Identity"/>
+                        <xsl:copy-of select="ns2:Context"/>
+                        <xsl:for-each select="ns2:Transaction">
+                            <ns2:Transaction>
+                                <xsl:copy-of select="ns2:Context"/>
+                                <xsl:for-each select="*">
+                                    <xsl:for-each select="../ns2:Command">
+                                        <ns2:Command>
+                                            <xsl:attribute name="type">
+                                                <xsl:value-of select="&quot;Modify&quot;"/>
+                                            </xsl:attribute>
+                                            <xsl:if test="@id">
+                                                <xsl:attribute name="id">
+                                                    <xsl:value-of select="@id"/>
+                                                </xsl:attribute>
+                                            </xsl:if>
+                                            <xsl:if test="ns2:StartCount">
+                                                <ns2:StartCount>
+                                                    <xsl:value-of select="ns2:StartCount"/>
+                                                </ns2:StartCount>
+                                            </xsl:if>
+                                            <xsl:if test="ns2:MaxCount">
+                                                <ns2:MaxCount>
+                                                    <xsl:value-of select="ns2:MaxCount"/>
+                                                </ns2:MaxCount>
+                                            </xsl:if>
+                                            <xsl:if test="ns2:OrderByColumnList">
+                                                <ns2:OrderByColumnList>
+                                                    <xsl:value-of select="ns2:OrderByColumnList"/>
+                                                </ns2:OrderByColumnList>
+                                            </xsl:if>
+                                            <xsl:choose>
+                                                <xsl:when test="exists(ns2:Entity)">
+                                                    <xsl:copy-of select="ns2:Entity"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:copy-of select="ns2:MasterCatalogRecord"/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                            <xsl:copy-of select="ns2:ResultList"/>
+                                        </ns2:Command>
+                                    </xsl:for-each>
+                                </xsl:for-each>
+                                <xsl:copy-of select="ns2:TransactionResult"/>
+                            </ns2:Transaction>
+                        </xsl:for-each>
+                        <xsl:copy-of select="ns2:Result"/>
+                    </ns2:DataService>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>692</pd:x>
+        <pd:y>125</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Add-FC-Req/root"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>340</pd:x>
+        <pd:y>125</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$GetStaticData/ns5:objectLookupReference"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>GetStaticData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Modify FC Req</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get ProductIds</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetStaticData</pd:from>
+        <pd:to>Get ProductIds</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Add FC Req</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Add FC Req</pd:from>
+        <pd:to>Modify FC Req</pd:to>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

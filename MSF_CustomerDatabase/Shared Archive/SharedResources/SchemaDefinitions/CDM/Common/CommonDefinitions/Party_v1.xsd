@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:pty="http://three.co.uk/xsd/cdm/common/commondefinitions/party/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/party/v1"
+	 version="$Id: Party_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!--Defines a list of lifecycle statuses for Party and Party Role-->
+	<xsd:simpleType name="__PARTY_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ACTIVE"/>
+			<xsd:enumeration value="INACTIVE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_PARTY_STATUS">
+		<xsd:union memberTypes="pty:__PARTY_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="PartyDetails">
+		<xsd:sequence>
+			<xsd:element name="partyID" type="BASE:PopulatedString"/>
+			<xsd:element name="partyStatus" type="pty:_PARTY_STATUS" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Party" type="pty:PartyDetails"/>
+	<xsd:element name="party" type="pty:PartyDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Party instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

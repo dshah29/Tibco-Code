@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions" xmlns:ns6="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:pfx="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://schemas.tibco.com/bw/plugins/http/5.0/httpExceptions" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx4="http://www.tibco.com/aff/oms/service/soap" xmlns:pfx3="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:pfx2="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd" xmlns:pfx9="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pfx8="http://xmlns.example.com/1301395797508" xmlns:pfx7="http://www.tibco.com/bs3.0/_SzyRMHt4EeSo3_y7hOrSaQ/PIFExceptionHandlingProcess_String" xmlns:pfx6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/exceptionClassification/exceptionClassification.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/classes/message.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" location="/SharedResources/SchemaDefinitions/Resource/FC/Cim_Services.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/ExceptionClassificationHandler_v1/Main/Main.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>76</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Map-Data/pfx2:exceptionClassification"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>653</pd:endX>
+    <pd:endY>59</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx6:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1416832133808/Main</pd:targetNamespace>
+    <pd:activity name="CLE Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>481</pd:x>
+        <pd:y>168</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateTechnicalException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/ExceptionCodes/MSF/Unclassified-Errors/Internal-Error/Code"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/ExceptionCodes/MSF/Unclassified-Errors/Internal-Error/Description"/>
+                </Description>
+                <xsl:copy-of select="$_error/ns2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CLE Exception HTTPSendError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>168</pd:x>
+        <pd:y>176</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_HTTPSendError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <destinationName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/GetProducts/EndPointURL"/>
+                </destinationName>
+                <httpURL>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/GetProducts/EndPointURL"/>
+                </httpURL>
+                <xsl:copy-of select="$_error/ns2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error CLE">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>629</pd:x>
+        <pd:y>168</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CLE-Exception/root/pfx6:Exception"/>
+                </data>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error HTTP">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>330</pd:x>
+        <pd:y>176</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CLE-Exception-HTTPSendError/root/pfx6:Exception"/>
+                </data>
+            </pfx5:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetProducts">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>166</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/ExceptionClassificationHandler_v1/Sub/GetProducts.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ns6:GetProductsRequest>
+                    <ns6:ProductFilter>
+                        <ns6:repository>
+                            <xsl:value-of select="&quot;EXCEPTIONCLASSIFICATION&quot;"/>
+                        </ns6:repository>
+                    </ns6:ProductFilter>
+                </ns6:GetProductsRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SetVariable">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>478</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Variable/Error Code List.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$GetProducts/exceptionClassifications">
+                <pfx2:exceptionClassifications>
+                    <xsl:for-each select="exceptionClassification">
+                        <pfx2:exceptionClassification>
+                            <pfx2:exceptionCode>
+                                <xsl:value-of select="exceptionCode"/>
+                            </pfx2:exceptionCode>
+                            <xsl:for-each select="classification">
+                                <pfx2:classification>
+                                    <pfx2:exceptionType>
+                                        <xsl:value-of select="exceptionType"/>
+                                    </pfx2:exceptionType>
+                                    <pfx2:exceptionMessage>
+                                        <xsl:value-of select="exceptionMessage"/>
+                                    </pfx2:exceptionMessage>
+                                </pfx2:classification>
+                            </xsl:for-each>
+                        </pfx2:exceptionClassification>
+                    </xsl:for-each>
+                </pfx2:exceptionClassifications>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>CLE Exception HTTPSendError</pd:from>
+        <pd:to>Generate Error HTTP</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetVariable</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetVariable</pd:from>
+        <pd:to>CLE Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CLE Exception</pd:from>
+        <pd:to>Generate Error CLE</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>GetProducts</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts</pd:from>
+        <pd:to>SetVariable</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts</pd:from>
+        <pd:to>CLE Exception HTTPSendError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

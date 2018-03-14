@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd"
+	 targetNamespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="PIF_BusinessExceptionRequest" type="PIFBusinessException"/>
+	<xs:element name="PIF_BusinessExceptionResponse" type="PIFBusinessException"/>
+	<xs:element name="PQF_BusinessExceptionRequest" type="PQFBusinessException"/>
+	<xs:element name="PQF_BusinessExceptionResponse" type="PQFBusinessException"/>
+	<xs:complexType name="PIFBusinessException">
+		<xs:sequence>
+			<xs:element name="businessTransactionID" type="xs:string"/>
+			<xs:element name="correlationID" type="xs:string"/>
+			<xs:element name="planItemID" type="xs:string"/>
+			<xs:element name="planID" type="xs:string"/>
+			<xs:element name="orderID" type="xs:string"/>
+			<xs:element name="orderRef" type="xs:string"/>
+			<xs:element name="processComponentID" type="xs:string"/>
+			<xs:element name="processComponentName" type="xs:string"/>
+			<xs:element name="productID" type="xs:string"/>
+			<xs:element name="action" type="xs:string"/>
+			<xs:element name="actionMode" type="xs:string" minOccurs="0"/>
+			<xs:element name="status" type="xs:string"/>
+			<xs:element name="payload" type="xs:string" minOccurs="0"/>
+			<xs:element name="resolution" type="xs:string" minOccurs="0"/>
+			<xs:element name="resolutionDescription" type="xs:string" minOccurs="0"/>
+			<xs:element name="errorCode" type="xs:string"/>
+			<xs:element name="errorMessage" type="xs:string"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PQFBusinessException">
+		<xs:sequence>
+			<xs:element name="businessTransactionID" type="xs:string"/>
+			<xs:element name="correlationID" type="xs:string"/>
+			<xs:element name="orderID" type="xs:string"/>
+			<xs:element name="orderRef" type="xs:string"/>
+			<xs:element name="payload" type="xs:string" minOccurs="0"/>
+			<xs:element name="resolution" type="xs:string" minOccurs="0"/>
+			<xs:element name="resolutionDescription" type="xs:string" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="feasibilityFailed">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="completed" type="xs:boolean"/>
+							<xs:element name="passed" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="opdFailed">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="completed" type="xs:boolean"/>
+							<xs:element name="success" type="xs:boolean"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="errorCode" type="xs:string"/>
+			<xs:element name="errorMessage" type="xs:string"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Checked -->
+	<xs:element name="GetOrderRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="orderID" type="xs:string"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetOrderReply">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="order" type="orderGetType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetPlanRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="planID" type="xs:string"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetPlanReply">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="plan" type="planGetType" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetPlanItemsRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="planID" type="xs:string"/>
+				<xs:element name="udfFlavor" type="xs:string" minOccurs="0"/>
+				<xs:element name="planItem" type="planItemGetType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetPlanItemsReply">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="planItem" type="planItemGetType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SetPlanItemRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="planID" type="xs:string"/>
+				<xs:element name="planItem" type="planItemSetType"/>
+				<xs:element name="replace" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SetPlanItemReply">
+		<xs:complexType>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SetPlanRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="plan" type="planSetType"/>
+				<xs:element name="replace" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SetPlanReply">
+		<xs:complexType>
+			<xs:attribute name="businessTransactionID" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="udfMatchType">
+		<xs:attribute name="name" type="xs:anySimpleType" default="*"/>
+		<xs:attribute name="flavor" type="xs:anySimpleType" default="*"/>
+	</xs:complexType>
+	<xs:complexType name="udfSetType">
+		<xs:sequence>
+			<xs:element name="evaluationPriority" type="xs:string" minOccurs="0"/>
+			<xs:element name="type" type="xs:string" minOccurs="0"/>
+			<xs:element name="flavor" type="xs:string" minOccurs="0"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="value" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="udfGetType">
+		<xs:sequence>
+			<xs:element name="type" type="xs:string" minOccurs="0"/>
+			<xs:element name="flavor" type="xs:string" minOccurs="0"/>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="value" type="xs:string" minOccurs="0"/>
+			<xs:element name="originalValue" type="xs:string" minOccurs="0"/>
+			<xs:element name="lastModified" type="xs:dateTime" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="planItemSetType">
+		<xs:sequence>
+			<xs:element name="planItemID" type="xs:string"/>
+			<xs:element name="planItemName" type="xs:string" minOccurs="0"/>
+			<xs:element name="udf" type="udfSetType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="planSetType">
+		<xs:sequence>
+			<xs:element name="planID" type="xs:string"/>
+			<xs:element name="orderID" type="xs:string"/>
+			<xs:element name="orderRef" type="xs:string"/>
+			<xs:element name="udf" type="udfSetType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="planItem" type="planItemSetType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="planItemGetType">
+		<xs:sequence>
+			<xs:element name="planItemID" type="xs:string"/>
+			<xs:element name="planItemName" type="xs:string" minOccurs="0"/>
+			<xs:element name="udf" type="udfGetType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="parentID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="childID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="siblingID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="dependentID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="planGetType">
+		<xs:sequence>
+			<xs:element name="planID" type="xs:string"/>
+			<xs:element name="orderID" type="xs:string"/>
+			<xs:element name="orderRef" type="xs:string"/>
+			<xs:element name="udf" type="udfGetType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="planItem" type="planItemGetType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="status" type="xs:string"/>
+			<xs:element name="planDescription" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="orderGetType">
+		<xs:sequence>
+			<xs:element name="orderID" type="xs:string"/>
+			<xs:element name="orderRef" type="xs:string"/>
+			<xs:element name="planID" type="xs:string" minOccurs="0"/>
+			<xs:element name="status" type="xs:string"/>
+			<xs:element name="serializedOrder" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:exi="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"
+	 version="$Id: ExceptionInfo_v1.xsd 4015 2015-06-16 17:18:54Z rarmitag $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="ExceptionInfo" type="exi:ExceptionInfo"/>
+	<xs:complexType name="ExceptionInfo">
+		<xs:attribute name="exceptionID" type="xs:string" use="required"/>
+		<xs:attribute name="exceptionType" type="xs:string" use="required"/>
+		<xs:attribute name="timestamp" type="xs:dateTime" use="required"/>
+		<xs:attribute name="exceptionCode" type="xs:string" use="required"/>
+		<xs:attribute name="transactionID" type="xs:string" use="required"/>
+		<xs:attribute name="context" type="xs:string"/>
+		<xs:attribute name="context2" type="xs:string"/>
+		<xs:attribute name="severity" type="xs:string"/>
+		<xs:attribute name="faultCode" type="xs:string"/>
+		<xs:attribute name="comment" type="xs:string"/>
+		<xs:attribute name="description" type="xs:string"/>
+		<xs:anyAttribute namespace="##any" processContents="lax"/>
+	</xs:complexType>
+</xs:schema>

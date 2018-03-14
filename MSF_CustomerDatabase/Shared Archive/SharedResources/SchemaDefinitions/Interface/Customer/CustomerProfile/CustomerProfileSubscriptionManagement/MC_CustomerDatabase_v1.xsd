@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custDBase="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:billBASE="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1"
+	 xmlns:cust="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1" schemaLocation="../../../../CDM/Customer/CustomerProfile/CustomerPersonalInformationManagement/Customer_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../../../CDM/Customer/CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../../CDM/Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<!--Used to get access to the customer elements in the CDM, this is what will be stored in the BLOB of customer database.-->
+	<xs:complexType name="CustomerDetails">
+		<xs:sequence>
+			<xs:element ref="cust:customer"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--Adding customer details -->
+	<xs:complexType name="AddCustomerDetailsRequest">
+		<xs:sequence>
+			<xs:element ref="custDBase:AddCustomerDetailsRequests"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddCustomerDetailsResponse">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- removing a customer from the database-->
+	<xs:complexType name="DeleteCustomerDetailsRequest">
+		<xs:sequence>
+			<xs:element ref="custDBase:DeleteCustomerDetailsRequests"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteCustomerDetailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MSISDN" type="BASE:MSISDN" minOccurs="0"/>
+				<xs:element name="accountID" type="BASE:BAN" minOccurs="0"/>
+				<xs:element name="CRMID" type="BASE:PopulatedString" minOccurs="0"/>
+				<xs:sequence minOccurs="0">
+					<xs:element name="end10" type="BASE:VersionMarker"/>
+					<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="DeleteCustomerDetailsResponse">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- finally the query mechanism-->
+	<xs:complexType name="QueryCustomerDetailsRequest">
+		<xs:sequence>
+			<xs:element name="MSISDN" type="BASE:MSISDN" minOccurs="0"/>
+			<xs:element name="accountID" type="BASE:BAN" minOccurs="0"/>
+			<xs:element name="CRMID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="end10" type="BASE:VersionMarker"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueryCustomerDetailsResponse">
+		<xs:sequence>
+			<xs:element ref="custDBase:CustomerDetails"/>
+			<xs:element name="lastUpdate" type="xs:dateTime"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AddCustomerDetailsRequest" type="custDBase:AddCustomerDetailsRequest"/>
+	<xs:element name="AddCustomerDetailsResponse" type="custDBase:AddCustomerDetailsResponse"/>
+	<xs:element name="DeleteCustomerDetailsRequest" type="custDBase:DeleteCustomerDetailsRequest"/>
+	<xs:element name="DeleteCustomerDetailsResponse" type="custDBase:DeleteCustomerDetailsResponse"/>
+	<xs:element name="QueryCustomerDetailsRequest" type="custDBase:QueryCustomerDetailsRequest"/>
+	<xs:element name="QueryCustomerDetailsResponse" type="custDBase:QueryCustomerDetailsResponse"/>
+	<xs:element name="CustomerDetails" type="custDBase:CustomerDetails"/>
+	<xs:element name="AddCustomerDetailRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MSISDN" type="BASE:MSISDN" minOccurs="0"/>
+				<xs:element name="accountID" type="BASE:BAN" minOccurs="0"/>
+				<xs:element name="CRMID" type="BASE:PopulatedString" minOccurs="0"/>
+				<xs:element ref="custDBase:CustomerDetails"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddCustomerDetailsRequests">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="custDBase:AddCustomerDetailRequest" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeleteCustomerDetailsRequests">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="custDBase:DeleteCustomerDetailRequest" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

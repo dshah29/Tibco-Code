@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:ordItm="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1"
+	 xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:ordBASE="http://three.co.uk/xsd/cdm/order/ordertypes/orderbasetypes/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1"
+	 version="$Id: OrderItem_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" schemaLocation="../../Common/CommonDefinitions/Individual_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/order/ordertypes/orderbasetypes/v1" schemaLocation="../OrderTypes/OrderBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../Product/ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!--Defines a list of lifecycle statuses for OrderItems-->
+	<xsd:simpleType name="__ORDERITEM_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PENDING DELIVERY"/>
+			<xsd:enumeration value="DELIVERED"/>
+			<xsd:enumeration value="PROVISIONED"/>
+			<xsd:enumeration value="PENDING"/>
+			<xsd:enumeration value="CANCELLED"/>
+			<xsd:enumeration value="NOT PROVISIONED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_ORDERITEM_STATUS">
+		<xsd:union memberTypes="ordItm:__ORDERITEM_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="OrderItemDetails">
+		<xsd:sequence>
+			<xsd:element name="orderItemID" type="ordBASE:OrderItemID"/>
+			<xsd:element ref="addr:address" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="orderItemStatus" type="ordItm:_ORDERITEM_STATUS"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductDetails">
+		<xsd:sequence>
+			<xsd:element name="productID" type="pductBASE:ProductID"/>
+			<xsd:element name="productDescription" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="productCost" type="BASE:PRICE" minOccurs="0"/>
+			<xsd:element name="quantity" type="xsd:integer"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderItem">
+		<xsd:sequence>
+			<xsd:element name="orderItemDetails" type="ordItm:OrderItemDetails"/>
+			<xsd:element name="productDetails" type="ordItm:ProductDetails"/>
+			<xsd:element ref="ind:individual" minOccurs="0"/>
+			<xsd:element ref="udf:UDF" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="OrderItem" type="ordItm:OrderItem"/>
+	<xsd:element name="orderItem" type="ordItm:OrderItem">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element OrderItem instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

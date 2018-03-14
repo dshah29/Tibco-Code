@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns1="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="ServiceName_vn">
+        <wsdl:port binding="tns:PortTypeEndpoint1Binding" name="PortTypeEndpoint1">
+            <soap:address location=""/>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">MCE.DEV.MSF-IS.REQ.STREAM.X.SERVICENAME.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="OperationName">
+            <wsdl:input message="tns:OperationRequest"/>
+            <wsdl:output message="tns:OperationReply"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PortTypeEndpoint1Binding" type="tns:PortType">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="OperationName">
+            <soap:operation soapAction="PortTypeEndpoint1/OperationName" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="OperationRequest">
+        <wsdl:part element="ns1:OperationRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="OperationReply">
+        <wsdl:part element="ns1:OperationReply" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="part1"/>
+    </wsdl:message>
+</wsdl:definitions>

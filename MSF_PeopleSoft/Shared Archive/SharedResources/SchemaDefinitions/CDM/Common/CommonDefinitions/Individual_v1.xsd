@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 version="$Id: Individual_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!-- defines the current marital status of a contact-->
+	<xsd:simpleType name="__MARITAL_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MARRIED"/>
+			<xsd:enumeration value="SEPARATED"/>
+			<xsd:enumeration value="SINGLE"/>
+			<xsd:enumeration value="DIVORCED"/>
+			<xsd:enumeration value="WIDOWED"/>
+			<xsd:enumeration value="NOT DISCLOSED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_MARITAL_STATUS">
+		<xsd:union memberTypes="ind:__MARITAL_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+
+	<!-- a collection of employment statuses-->
+	<xsd:simpleType name="__EMPLOYMENT_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="EMPLOYED"/>
+			<xsd:enumeration value="SELF EMPLOYED"/>
+			<xsd:enumeration value="UNEMPLOYED"/>
+			<xsd:enumeration value="STUDENT"/>
+			<xsd:enumeration value="RETIRED"/>
+			<xsd:enumeration value="SOLE TRADER"/>
+			<xsd:enumeration value="COMPANY DIRECTOR"/>
+			<xsd:enumeration value="PARTNERSHIP"/>
+			<xsd:enumeration value="OTHER"/>
+			<xsd:enumeration value="PART TIME"/>
+			<xsd:enumeration value="CORPORATE EMPLOYEE"/>
+			<xsd:enumeration value="NON UK STUDENT"/>
+			<xsd:enumeration value="DEPENDANT SPOUSE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_EMPLOYMENT_STATUS">
+		<xsd:union memberTypes="ind:__EMPLOYMENT_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+
+	<!-- -->
+	<xsd:complexType name="PersonalDetails">
+		<xsd:sequence>
+			<xsd:element name="title" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="firstName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="middleName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="lastName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="fullName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="maritalStatus" type="ind:_MARITAL_STATUS" minOccurs="0"/>
+			<xsd:element name="dob" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="gender" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="townOfBirth" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="language" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="countryOfResidence" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PersonalDetails" type="ind:PersonalDetails"/>
+
+	<!-- -->
+	<xsd:complexType name="EmploymentDetails">
+		<xsd:sequence>
+			<xsd:element name="occupation" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="employmentStatus" type="ind:_EMPLOYMENT_STATUS" minOccurs="0"/>
+			<xsd:element name="jobTitle" type="xsd:string" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EmploymentDetails" type="ind:EmploymentDetails"/>
+
+	<!-- -->
+	<xsd:complexType name="DeathDetails">
+		<xsd:sequence>
+			<xsd:element name="deceased" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="dateOfDeath" type="xsd:date" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DeathDetails" type="ind:DeathDetails"/>
+
+	<!--An aggregation of the pre-defined elements above-->
+	<xsd:complexType name="Individual">
+		<xsd:sequence>
+			<xsd:element name="personalDetails" type="ind:PersonalDetails"/>
+			<xsd:element name="employmentDetails" type="ind:EmploymentDetails" minOccurs="0"/>
+			<xsd:element name="deathDetails" type="ind:DeathDetails" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Individual" type="ind:Individual"/>
+	<xsd:element name="individual" type="ind:Individual">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Individual instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

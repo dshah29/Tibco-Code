@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:AST_TYP="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assettypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assettypes/v1"
+	 version="$Id: AssetTypes_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!-- defines asset specific location types, typically for stock and customer service agents-->
+	<xs:simpleType name="__LOCATION_TYPES__BASE__">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="STORE"/>
+			<xs:enumeration value="WAREHOUSE"/>
+			<xs:enumeration value="CALLCENTRE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_LOCATION_TYPES">
+		<xs:union memberTypes="AST_TYP:__LOCATION_TYPES__BASE__ BASE:PopulatedString"/>
+	</xs:simpleType>
+	<xs:element name="locationTypes" type="AST_TYP:_LOCATION_TYPES"/>
+</xs:schema>

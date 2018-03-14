@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/xsd/peoplesoft/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:pfx2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProductInfoSchemas/AESchema" xmlns:pfx="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProductInfoSchemas/AESchema" schemaLocation="/AESchemas/ae/ProductInfoSchemas/AESchema.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetPackagePriceHistory/Sub/SemanticAdapter/AE To CDM.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="XMLMessage" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>79</pd:startX>
+    <pd:startY>60</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$AE-To-CDM/pfx:GetPackagePriceHistoryRequest"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:GetPackagePriceHistoryRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>379</pd:endX>
+    <pd:endY>60</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1443711420829/AE To CDM</pd:targetNamespace>
+    <pd:activity name="AE To CDM">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>281</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <element ref="pfx:GetPackagePriceHistoryRequest"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:GetPackagePriceHistoryRequest>
+                <xsl:choose>
+                    <xsl:when test="string-length($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/MSISDN)>0">
+                        <xsl:choose>
+                            <xsl:when test="substring($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/MSISDN,1,2)=&quot;44&quot;">
+                                <pfx:MSISDN>
+                                    <xsl:value-of select="concat(0,substring-after($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/MSISDN,'44'))"/>
+                                </pfx:MSISDN>
+                            </xsl:when>
+                            <xsl:when test="substring($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/MSISDN,1,3)=&quot;353&quot;">
+                                <pfx:MSISDN>
+                                    <xsl:value-of select="concat(0,substring-after($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/MSISDN,'353'))"/>
+                                </pfx:MSISDN>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <pfx:MSISDN>
+                                    <xsl:value-of select="$Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/MSISDN"/>
+                                </pfx:MSISDN>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <pfx:accountNumber>
+                            <xsl:value-of select="$Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/accountNumber"/>
+                        </pfx:accountNumber>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="string-length($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/startDate)>0">
+                    <pfx:startDate>
+                        <xsl:value-of select="concat(translate($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/startDate, ' ', 'T'),'-00:00')"/>
+                    </pfx:startDate>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="string-length($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/endDate)>0">
+                    <pfx:endDate>
+                        <xsl:value-of select="concat(translate($Parse-Peoplesoft-Message/GetPackagePriceHistoryRequest/endDate, ' ', 'T'),'-00:00')"/>
+                    </pfx:endDate>
+                </xsl:if>
+            </pfx:GetPackagePriceHistoryRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Peoplesoft Message">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>180</pd:x>
+        <pd:y>68</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term ref="pfx4:GetPackagePriceHistoryRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Start/root/XMLMessage"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>AE To CDM</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Peoplesoft Message</pd:from>
+        <pd:to>AE To CDM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Peoplesoft Message</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:label>
+        <pd:name>Label</pd:name>
+        <pd:description>concat('&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;GetPackagePriceHistoryRequest ','xmlns = "http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1"&gt;', substring-after($Start/root/XMLMessage,'&lt;GetPackagePriceHistoryRequest&gt;'))</pd:description>
+        <pd:x>416</pd:x>
+        <pd:y>177</pd:y>
+        <pd:width>732</pd:width>
+        <pd:height>82</pd:height>
+        <pd:fontColor>-16777216</pd:fontColor>
+        <pd:color>-1</pd:color>
+        <pd:type>solid</pd:type>
+        <pd:thickness>0</pd:thickness>
+        <pd:fade>true</pd:fade>
+    </pd:label>
+</pd:ProcessDefinition>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pfx6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/RetrieveProductPrices/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:RetrieveProductPricesRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>31</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$CreateResponse/pfx:RetrieveProductPricesResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:RetrieveProductPricesResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>919</pd:endX>
+    <pd:endY>67</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1441188291513</pd:targetNamespace>
+    <pd:activity name="CamelCase to UpperCase">
+        <pd:type>com.tibco.plugin.xml.XMLTransformActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLTransformActivity</pd:resourceType>
+        <pd:x>397</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <engine>Saxon</engine>
+            <stylesheet>/SharedResources/XSLT/Billing/BillingPayment/BillingPaymentManagement/CamelCase_2_UpperCase.xsl</stylesheet>
+        </config>
+        <pd:inputBindings>
+            <textInput>
+                <xmlString>
+                    <xsl:value-of select="tib:render-xml($Create-Request/pfx6:fHUK__RetrieveProductPrices)"/>
+                </xmlString>
+            </textInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Request">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>304</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <element ref="pfx6:fHUK__RetrieveProductPrices"/>
+        </config>
+        <pd:inputBindings>
+            <pfx6:fHUK__RetrieveProductPrices>
+                <AccountNumber>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/pfx:RetrieveProductPricesRequest/pfx:accountNumber)">
+                            <xsl:value-of select="$Start/root/pfx:RetrieveProductPricesRequest/pfx:accountNumber"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </AccountNumber>
+                <OrganisationID>
+                    <xsl:value-of select="$Start/root/pfx:RetrieveProductPricesRequest/pfx:orgID"/>
+                </OrganisationID>
+                <EffectiveDate>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/pfx:RetrieveProductPricesRequest/pfx:effectiveDate)">
+                            <xsl:value-of select="$Start/root/pfx:RetrieveProductPricesRequest/pfx:effectiveDate"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </EffectiveDate>
+                <TargetProducts>
+                    <xsl:for-each select="$Start/root/pfx:RetrieveProductPricesRequest/pfx:targetProducts">
+                        <item>
+                            <xsl:value-of select="."/>
+                        </item>
+                    </xsl:for-each>
+                </TargetProducts>
+                <PackageAggregationOption>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/pfx:RetrieveProductPricesRequest/pfx:packageAggregationOption)">
+                            <xsl:value-of select="$Start/root/pfx:RetrieveProductPricesRequest/pfx:packageAggregationOption"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </PackageAggregationOption>
+                <Event>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/pfx:RetrieveProductPricesRequest/pfx:event)">
+                            <xsl:value-of select="$Start/root/pfx:RetrieveProductPricesRequest/pfx:event"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </Event>
+                <TransactionID>
+                    <xsl:value-of select="$GetContext/root/ns2:MessageContext/ns2:TransactionID"/>
+                </TransactionID>
+            </pfx6:fHUK__RetrieveProductPrices>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>721</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <element ref="pfx:RetrieveProductPricesResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:RetrieveProductPricesResponse>
+                <xsl:if test="count($GetProductPrices-SV-Adapter/root/ns1:fHUK__RetrieveProductPrices/ExistingProductPrices/*)>0">
+                    <xsl:for-each select="$GetProductPrices-SV-Adapter/root/ns1:fHUK__RetrieveProductPrices/ExistingProductPrices/*">
+                        <pfx:ExistingProductPrice>
+                            <pfx:productID>
+                                <xsl:value-of select="current()/value/*[name=&quot;PRODUCT_ID&quot;]/value"/>
+                            </pfx:productID>
+                            <pfx:price>
+                                <xsl:value-of select="current()/value/*[name=&quot;PRICE&quot;]/value"/>
+                            </pfx:price>
+                            <xsl:if test="exists(current()/value/*[name=&quot;DISCOUNT_PERCENTAGE&quot;]/value)">
+                                <pfx:discountPercentage>
+                                    <xsl:value-of select="current()/value/*[name=&quot;DISCOUNT_PERCENTAGE&quot;]/value"/>
+                                </pfx:discountPercentage>
+                            </xsl:if>
+                        </pfx:ExistingProductPrice>
+                    </xsl:for-each>
+                </xsl:if>
+                <xsl:if test="count($GetProductPrices-SV-Adapter/root/ns1:fHUK__RetrieveProductPrices/TargetProductPrices/*)>0">
+                    <xsl:for-each select="$GetProductPrices-SV-Adapter/root/ns1:fHUK__RetrieveProductPrices/TargetProductPrices/*">
+                        <pfx:TargetProductPrice>
+                            <pfx:productID>
+                                <xsl:value-of select="current()/value/*[name=&quot;PRODUCT_ID&quot;]/value"/>
+                            </pfx:productID>
+                            <pfx:price>
+                                <xsl:value-of select="current()/value/*[name=&quot;PRICE&quot;]/value"/>
+                            </pfx:price>
+                            <xsl:if test="exists(current()/value/*[name=&quot;DISCOUNT_PERCENTAGE&quot;]/value)">
+                                <pfx:discountPercentage>
+                                    <xsl:value-of select="current()/value/*[name=&quot;DISCOUNT_PERCENTAGE&quot;]/value"/>
+                                </pfx:discountPercentage>
+                            </xsl:if>
+                        </pfx:TargetProductPrice>
+                    </xsl:for-each>
+                </xsl:if>
+            </pfx:RetrieveProductPricesResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetContext">
+        <pd:type>com.tibco.ae.tools.palettes.servicepalette.GetContextActivity</pd:type>
+        <pd:resourceType>service.activity.getContext</pd:resourceType>
+        <pd:x>206</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <variableConfig>/SharedResources/ContextResources/InputContext.contextResource</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetProductPrices SV Adapter">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>612</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <processName>/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/RetrieveProductPrices/Sub/GetProductPrices SV Adapter.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Parse-XML/pfx6:fHUK__RetrieveProductPrices"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>510</pd:x>
+        <pd:y>61</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term ref="pfx6:fHUK__RetrieveProductPrices"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$CamelCase-to-UpperCase/xmlString"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>825</pd:x>
+        <pd:y>66</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$CreateResponse/pfx:RetrieveProductPricesResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>116</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx:RetrieveProductPricesRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateResponse</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProductPrices SV Adapter</pd:from>
+        <pd:to>CreateResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Request</pd:from>
+        <pd:to>CamelCase to UpperCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CamelCase to UpperCase</pd:from>
+        <pd:to>Parse XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse XML</pd:from>
+        <pd:to>GetProductPrices SV Adapter</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetContext</pd:from>
+        <pd:to>Create Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

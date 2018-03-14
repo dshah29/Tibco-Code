@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/productIdReferences/v1"
+	 targetNamespace="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/productIdReferences/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="productDefinations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="productDefination" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="productDefination">
+		<xs:complexType>
+<xs:sequence>
+<xs:element name="productName" type="xs:string"/>
+<xs:element name="productID" type="xs:string"/>
+</xs:sequence></xs:complexType>
+	</xs:element>
+</xs:schema>

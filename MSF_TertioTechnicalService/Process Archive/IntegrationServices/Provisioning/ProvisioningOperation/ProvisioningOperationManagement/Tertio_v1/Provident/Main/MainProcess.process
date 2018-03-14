@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:ns5="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Response" xmlns:ns6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pfx="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns3="http://www.tibco.com/pe/SignalInActivitySchema" xmlns:pfx5="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx7="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Request" xmlns:pfx6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TertioAdapter_1/Request" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/MC_Tertio_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TertioAdapter_1/Request" schemaLocation="/AESchemas/ae/TertioAdapter_1/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Request" schemaLocation="/AESchemas/ae/ProvidentAdapter_1/Request.aeschema"/>
+    <pd:name>IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/Tertio_v1/Provident/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:ProvidentRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>30</pd:startX>
+    <pd:startY>63</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$CreateResponse/pfx5:ProvidentResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:ProvidentResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>854</pd:endX>
+    <pd:endY>63</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="Create Request">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>364</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx7:ProvidentRequest"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx7:ProvidentRequest>
+                    <TRANSACTION__ID>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:TransactionID"/>
+                    </TRANSACTION__ID>
+                    <xsl:choose>
+                        <xsl:when test="$Start/root/pfx5:ProvidentRequest/pfx5:ProvisioningAction=&quot;CHANGETARIFF&quot;">
+                            <SO__TYPE>
+                                <xsl:value-of select="&quot;CHANGE_TARIFF&quot;"/>
+                            </SO__TYPE>
+                        </xsl:when>
+                        <xsl:when test="$Start/root/pfx5:ProvidentRequest/pfx5:ProvisioningAction=&quot;POSUPGRADE&quot;">
+                            <SO__TYPE>
+                                <xsl:value-of select="&quot;POS_UPGRADE&quot;"/>
+                            </SO__TYPE>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <SO__TYPE>
+                                <xsl:value-of select="$Start/root/pfx5:ProvidentRequest/pfx5:ProvisioningAction"/>
+                            </SO__TYPE>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/pfx5:ProvidentRequest/pfx5:OrderPriority)">
+                            <ORDER__PRIORITY>
+                                <xsl:choose>
+                                    <xsl:when test="exists($Start/root/pfx5:ProvidentRequest/pfx5:OrderPriority)">
+                                        <xsl:value-of select="$Start/root/pfx5:ProvidentRequest/pfx5:OrderPriority"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ORDER__PRIORITY>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <ORDER__PRIORITY>
+                                <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/Tertio_v1/OrderPriority"/>
+                            </ORDER__PRIORITY>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <PUBLISHER__ID>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/ProvidentAdapter/UserName"/>
+                    </PUBLISHER__ID>
+                    <PUBLISHER__PWD>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/ProvidentAdapter/Password"/>
+                    </PUBLISHER__PWD>
+                    <Attributes>
+                        <xsl:for-each select="$Start/root/pfx5:ProvidentRequest/pfx5:RequestAttributes">
+                            <item>
+                                <NAME>
+                                    <xsl:value-of select="ns4:name"/>
+                                </NAME>
+                                <VALUE>
+                                    <xsl:value-of select="ns4:value"/>
+                                </VALUE>
+                            </item>
+                        </xsl:for-each>
+                    </Attributes>
+                </pfx7:ProvidentRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>611</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <element ref="pfx5:ProvidentResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ProvidentResponse>
+                <pfx5:ProvisioningAction>
+                    <xsl:value-of select="$Provident-Request/root/ns5:ProvidentResponse/SO__TYPE"/>
+                </pfx5:ProvisioningAction>
+                <xsl:for-each select="$Provident-Request/root/ns5:ProvidentResponse/Attributes/item">
+                    <pfx5:ResponseAttributes>
+                        <ns4:name>
+                            <xsl:value-of select="NAME"/>
+                        </ns4:name>
+                        <ns4:value>
+                            <xsl:value-of select="VALUE"/>
+                        </ns4:value>
+                    </pfx5:ResponseAttributes>
+                </xsl:for-each>
+            </pfx5:ProvidentResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Provident Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>487</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <processName>/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/Tertio_v1/Provident/Sub/Provident Request.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Request/root/pfx7:ProvidentRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>730</pd:x>
+        <pd:y>65</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$CreateResponse/pfx5:ProvidentResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>125</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetContext">
+        <pd:type>com.tibco.ae.tools.palettes.servicepalette.GetContextActivity</pd:type>
+        <pd:resourceType>service.activity.getContext</pd:resourceType>
+        <pd:x>216</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <variableConfig>/SharedResources/ContextResources/InputContext.contextResource</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="SetVariable">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>291</pd:x>
+        <pd:y>143</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Common/CommonDefinitions/MSF/MessageContext.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings>
+            <group>
+                <param>
+                    <id>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/@messageID[1]"/>
+                    </id>
+                    <type>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/@messageType[1]"/>
+                    </type>
+                    <timestamp>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/@timestamp[1]"/>
+                    </timestamp>
+                    <TimetoLive>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/@TimeToLive[1]"/>
+                    </TimetoLive>
+                    <root>
+                        <xsl:value-of select="&quot;&quot;"/>
+                    </root>
+                    <CorrID>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:CorrelationID"/>
+                    </CorrID>
+                    <TransID>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:TransactionID"/>
+                    </TransID>
+                    <BusinessKey>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:BusinessKey"/>
+                    </BusinessKey>
+                    <ApplicationID>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:ApplicationID"/>
+                    </ApplicationID>
+                    <UserID>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:UserID"/>
+                    </UserID>
+                    <SIID>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:ServiceInstanceID"/>
+                    </SIID>
+                    <SP>
+                        <xsl:value-of select="$GetContext/root/ns6:MessageContext/ns6:SourceProcess"/>
+                    </SP>
+                </param>
+            </group>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateResponse</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Request</pd:from>
+        <pd:to>Provident Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Provident Request</pd:from>
+        <pd:to>CreateResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetContext</pd:from>
+        <pd:to>SetVariable</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetVariable</pd:from>
+        <pd:to>Create Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

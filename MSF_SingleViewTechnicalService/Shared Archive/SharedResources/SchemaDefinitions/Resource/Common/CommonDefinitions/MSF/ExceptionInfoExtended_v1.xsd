@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:ext="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfoextended/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfoextended/v1"
+	 version="$Id: ExceptionInfoExtended_v1.xsd 4015 2015-06-16 17:18:54Z rarmitag $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:attribute name="ResponseCode" type="xs:string"/>
+	<xs:attribute name="ResponseMessage" type="xs:string"/>
+	<xs:attribute name="RVSubject" type="xs:string"/>
+	<xs:attribute name="JMSDestinationName" type="xs:string"/>
+	<xs:attribute name="HTTPURL" type="xs:string"/>
+	<xs:attribute name="FilePath" type="xs:string"/>
+	<xs:attribute name="Operation" type="xs:string"/>
+	<xs:attribute name="Service" type="xs:string"/>
+</xs:schema>

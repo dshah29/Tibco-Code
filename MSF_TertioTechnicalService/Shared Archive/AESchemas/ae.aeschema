@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <scalar name="fixed">
+        <dataTypeName>fixed</dataTypeName>
+        <conversion isRef="true">/AESchemas/java.aeschema#scalar.bigDecimal</conversion>
+    </scalar>
+    <scalar name="assocList">
+        <dataTypeName>assocList</dataTypeName>
+    </scalar>
+    <scalar name="void"/>
+    <scalar name="ui8">
+        <javaClass>java.lang.Long</javaClass>
+    </scalar>
+    <scalar name="ui4">
+        <javaClass>java.lang.Long</javaClass>
+    </scalar>
+    <scalar name="ui2">
+        <javaClass>java.lang.Integer</javaClass>
+    </scalar>
+    <scalar name="ui1">
+        <javaClass>java.lang.Short</javaClass>
+    </scalar>
+    <scalar name="time">
+        <javaClass>java.util.Date</javaClass>
+    </scalar>
+    <scalar name="string">
+        <dataTypeName>string</dataTypeName>
+        <javaClass>java.lang.String</javaClass>
+    </scalar>
+    <scalar name="r8">
+        <javaClass>java.lang.Double</javaClass>
+    </scalar>
+    <scalar name="r4">
+        <javaClass>java.lang.Float</javaClass>
+    </scalar>
+    <scalar name="interval"/>
+    <scalar name="i8">
+        <javaClass>java.lang.Long</javaClass>
+    </scalar>
+    <scalar name="i4">
+        <dataTypeName>i4</dataTypeName>
+        <javaClass>java.lang.Integer</javaClass>
+    </scalar>
+    <scalar name="i2">
+        <javaClass>java.lang.Short</javaClass>
+    </scalar>
+    <scalar name="i1">
+        <javaClass>java.lang.Short</javaClass>
+    </scalar>
+    <scalar name="dateTime.tz"/>
+    <scalar name="dateTime">
+        <dataTypeName>dateTime</dataTypeName>
+        <javaClass>java.util.Date</javaClass>
+    </scalar>
+    <scalar name="date">
+        <javaClass>java.util.Date</javaClass>
+    </scalar>
+    <scalar name="char">
+        <javaClass>java.lang.String</javaClass>
+    </scalar>
+    <scalar name="byte">
+        <javaClass>java.lang.Byte</javaClass>
+    </scalar>
+    <scalar name="boolean">
+        <javaClass>java.lang.Boolean</javaClass>
+    </scalar>
+    <scalar name="binary">
+        <javaClass>java.lang.Byte[]</javaClass>
+    </scalar>
+    <scalar name="any"/>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

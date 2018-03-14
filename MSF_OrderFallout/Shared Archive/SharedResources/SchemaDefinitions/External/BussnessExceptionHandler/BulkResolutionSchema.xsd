@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="BulkResolutionRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ErrorCode"/>
+				<xs:element ref="Resolution" minOccurs="0"/>
+				<xs:element ref="ResolutionDescription" minOccurs="0"/>
+				<xs:element ref="CreateFileFlag"/>
+				<xs:element ref="FilterString" minOccurs="0"/>
+				<xs:element ref="UserID"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ErrorCode" type="xs:string"/>
+	<xs:element name="Resolution" type="xs:string"/>
+	<xs:element name="ResolutionDescription" type="xs:string"/>
+	<xs:element name="BulkResolutionResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Status"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Status" type="xs:string"/>
+	<xs:element name="CreateFileFlag" type="xs:boolean"/>
+	<xs:element name="FilterString" type="xs:string"/>
+	<xs:element name="UserID" type="xs:string"/>
+</xs:schema>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns1="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://three.co.uk/wsdl/interface/customer/customerprofile/customerprofilesubscriptionmanagement/mccustomerdatabase/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://three.co.uk/wsdl/interface/customer/customerprofile/customerprofilesubscriptionmanagement/mccustomerdatabase/v1">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/MC_CustomerDatabase_v1.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="CustomerDatabase_v1">
+        <wsdl:port binding="tns:SOAPHTTPBinding" name="SOAPHTTP">
+            <soap:address location="http://localhost:6060/IntegrationServices/Customer/CustomerProfile/CustomerProfileSubscriptionManagement_v1/Service/CustomerService.serviceagent/SOAPHTTP"/>
+        </wsdl:port>
+        <wsdl:port binding="tns:SOAPJMSBinding" name="SOAPJMS">
+            <soap:address location=""/>
+            <jndi:context>
+                <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://tgs-3uk-centos64-1:7242</jndi:property>
+            </jndi:context>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">UK.DEV.REQ.CUST.CUSTPROF.CUSTPROFSUBMGT.MCCUSTOMERDATABASE.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="PortType">
+        <wsdl:operation name="AddCustomerDetails">
+            <wsdl:input message="tns:AddCustomerDetailsRequest"/>
+            <wsdl:output message="tns:AddCustomerDetailsResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="QueryCustomerDetails">
+            <wsdl:input message="tns:QueryCustomerDetailsRequest"/>
+            <wsdl:output message="tns:QueryCustomerDetailsResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerDetails">
+            <wsdl:input message="tns:DeleteCustomerDetailsRequest"/>
+            <wsdl:output message="tns:DeleteCustomerDetailsResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SOAPHTTPBinding" type="tns:PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="AddCustomerDetails">
+            <soap:operation soapAction="SOAPHTTP/AddCustomerDetails" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="QueryCustomerDetails">
+            <soap:operation soapAction="SOAPHTTP/QueryCustomerDetails" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerDetails">
+            <soap:operation soapAction="SOAPHTTP/DeleteCustomerDetails" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SOAPJMSBinding" type="tns:PortType">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="AddCustomerDetails">
+            <soap:operation soapAction="SOAPJMS/AddCustomerDetails" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="QueryCustomerDetails">
+            <soap:operation soapAction="SOAPJMS/QueryCustomerDetails" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeleteCustomerDetails">
+            <soap:operation soapAction="SOAPJMS/DeleteCustomerDetails" style="document"/>
+            <wsdl:input>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="part1" use="literal"/>
+                <soap:header message="tns:MessageContext" part="part1" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="AddCustomerDetailsRequest">
+        <wsdl:part element="ns1:AddCustomerDetailsRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="AddCustomerDetailsResponse">
+        <wsdl:part element="ns1:AddCustomerDetailsResponse" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="QueryCustomerDetailsRequest">
+        <wsdl:part element="ns1:QueryCustomerDetailsRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="QueryCustomerDetailsResponse">
+        <wsdl:part element="ns1:QueryCustomerDetailsResponse" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteCustomerDetailsRequest">
+        <wsdl:part element="ns1:DeleteCustomerDetailsRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="DeleteCustomerDetailsResponse">
+        <wsdl:part element="ns1:DeleteCustomerDetailsResponse" name="part1"/>
+    </wsdl:message>
+</wsdl:definitions>

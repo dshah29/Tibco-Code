@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="www.tibco.com/plugin/be" xmlns:aff="java://com.tibco.aff.xpath.functions.AFFCustomFunctions" xmlns:ns5="http://schemas.tibco.com/bw/plugins/jms/5.0/jmsExceptions" xmlns:ns12="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns6="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions" xmlns:ns7="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:ns2="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://www.tibco.com/pe/EngineTypes" xmlns:ns3="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:pfx5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="www.tibco.com/be/ontology/aff/tds/events/plan/GenericPlanResponseEvent" xmlns:pfx3="http://www.tibco.com/pe/SignalInActivitySchema" xmlns:pfx2="www.tibco.com/be/ontology/aff/tds/events/plan/GetPlanRequestEvent">
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/tds/sharedResources/schemas/services/TransientDataStoreService.xsd"/>
+    <pd:name>UtilityProcesses/FOSDataAccessInterfaces/getPlan.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx:GetPlanRequest"/>
+    <pd:startX>27</pd:startX>
+    <pd:startY>146</pd:startY>
+    <pd:returnBindings>
+        <pfx:GetPlanReply>
+            <xsl:if test="$Start/pfx:GetPlanRequest/@businessTransactionID">
+                <xsl:attribute name="businessTransactionID">
+                    <xsl:value-of select="$Start/pfx:GetPlanRequest/@businessTransactionID"/>
+                </xsl:attribute>
+            </xsl:if>
+            <ns2:resultStatus>
+                <ns2:deployment>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/Deployment"/>
+                </ns2:deployment>
+                <ns2:service>
+                    <xsl:value-of select="$MapConstants/constants/service"/>
+                </ns2:service>
+                <ns2:operation>
+                    <xsl:value-of select="$MapConstants/constants/operation"/>
+                </ns2:operation>
+                <ns2:severity>
+                    <xsl:value-of select="&quot;S&quot;"/>
+                </ns2:severity>
+                <ns2:code>
+                    <xsl:value-of select="$Get-Plan/ns3:ActivityOutput/OtherProperties/messageCode"/>
+                </ns2:code>
+                <ns2:message>
+                    <xsl:value-of select="$Get-Plan/ns3:ActivityOutput/OtherProperties/message"/>
+                </ns2:message>
+            </ns2:resultStatus>
+            <xsl:copy-of select="$Parse-Response/pfx:GetPlanReply/pfx:plan"/>
+        </pfx:GetPlanReply>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endDescription>This process sends a request to TDS to retrieve plan items.</pd:endDescription>
+    <pd:endType ref="pfx:GetPlanReply"/>
+    <pd:endX>801</pd:endX>
+    <pd:endY>147</pd:endY>
+    <pd:errorSchemas>
+        <GetPlan_Exception ref="pfx5:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1279641856336/getPlans</pd:targetNamespace>
+    <pd:activity name="CreateException JMSReceiveError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>491</pd:x>
+        <pd:y>263</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_JMSReceiveError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <serviceName>
+                    <xsl:value-of select="&quot;%%Destinations/Queues/FOS/GetPlanRequest%%&quot;"/>
+                </serviceName>
+                <jmsQueueOrTopicName>
+                    <xsl:value-of select="&quot;Queue&quot;"/>
+                </jmsQueueOrTopicName>
+                <xsl:copy-of select="$_error/ns4:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException XMLParseError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>614</pd:x>
+        <pd:y>263</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_XMLParseError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns4:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate JMS Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>356</pd:x>
+        <pd:y>258</pd:y>
+        <config>
+            <faultName>GetPlan_Exception</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException-JMSReceiveError/root/pfx5:Exception"/>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Parse Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>745</pd:x>
+        <pd:y>262</pd:y>
+        <config>
+            <faultName>GetPlan_Exception</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException-XMLParseError/root/pfx5:Exception"/>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GenerateUUID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>195</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Plan">
+        <pd:type>com.tibco.plugin.jms.JMSQueueRequestReplyActivity</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueRequestReplyActivity</pd:resourceType>
+        <pd:x>488</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <PermittedMessageType>Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>%%Destinations/Queues/FOS/GetPlanRequest%%</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-FOM-Connection.sharedjmscon</ConnectionReference>
+            <ApplicationProperties>/SharedResources/Connections/JMS/Application Properties/Get Plan.sharedjmsapp</ApplicationProperties>
+        </config>
+        <pd:inputBindings>
+            <ns3:ActivityInput>
+                <JMSExpiration>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/UtilityProcesses/FOSDataAccessInterfaces/JMSExpiration"/>
+                </JMSExpiration>
+                <requestTimeout>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/UtilityProcesses/FOSDataAccessInterfaces/requestTimeout"/>
+                </requestTimeout>
+                <OtherProperties>
+                    <_nm_>
+                        <xsl:value-of select="$MapConstants/constants/_nm_"/>
+                    </_nm_>
+                    <businessTransactionID>
+                        <xsl:value-of select="$Start/pfx:GetPlanRequest/@businessTransactionID"/>
+                    </businessTransactionID>
+                    <planID>
+                        <xsl:value-of select="$Start/pfx:GetPlanRequest/pfx:planID"/>
+                    </planID>
+                    <correlationID>
+                        <xsl:value-of select="$MapConstants/constants/correlationID"/>
+                    </correlationID>
+                    <requestReply>
+                        <xsl:value-of select="true()"/>
+                    </requestReply>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx:GetPlanRequest/pfx:idsOnly)">
+                            <idsOnly>
+                                <xsl:value-of select="true()"/>
+                            </idsOnly>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <idsOnly>
+                                <xsl:value-of select="false()"/>
+                            </idsOnly>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/pfx:GetPlanRequest/pfx:includeItems)">
+                            <includeItems>
+                                <xsl:value-of select="true()"/>
+                            </includeItems>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <includeItems>
+                                <xsl:value-of select="false()"/>
+                            </includeItems>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </OtherProperties>
+                <Body>
+                    <xsl:value-of select="$RenderReq/xmlString"/>
+                </Body>
+            </ns3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="MapConstants">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>291</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <element>
+                <xsd:element name="constants">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="_nm_" type="xsd:string"/>
+                            <xsd:element name="correlationID" type="xsd:string"/>
+                            <xsd:element name="service" type="xsd:string"/>
+                            <xsd:element name="operation" type="xsd:string"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <constants>
+                <_nm_>
+                    <xsl:value-of select="&quot;GetPlanRequestEvent&quot;"/>
+                </_nm_>
+                <correlationID>
+                    <xsl:value-of select="$GenerateUUID/UUID"/>
+                </correlationID>
+                <service>
+                    <xsl:value-of select="&quot;TransientDataStoreService&quot;"/>
+                </service>
+                <operation>
+                    <xsl:value-of select="&quot;getPlan&quot;"/>
+                </operation>
+            </constants>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Not Found">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>488</pd:x>
+        <pd:y>35</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Parse Response">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>611</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx:GetPlanReply"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Get-Plan/ns3:ActivityOutput/Body"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RenderReq">
+        <pd:type>com.tibco.plugin.xml.XMLRendererActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLRendererActivity</pd:resourceType>
+        <pd:x>387</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <renderAsText>text</renderAsText>
+            <validateInput>false</validateInput>
+            <textEncoding>UTF-8</textEncoding>
+            <term ref="pfx:GetPlanRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xsl:copy-of select="$Start/pfx:GetPlanRequest"/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>714</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns4:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Parse-Response/pfx:GetPlanReply"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>106</pd:x>
+        <pd:y>146</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns4:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx:GetPlanRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>MapConstants</pd:from>
+        <pd:to>RenderReq</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Plan</pd:from>
+        <pd:to>Parse Response</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Response</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RenderReq</pd:from>
+        <pd:to>Get Plan</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Plan</pd:from>
+        <pd:to>Not Found</pd:to>
+        <pd:xpathDescription>Not Found</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Get-Plan/ns3:ActivityOutput/Body=""</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Not Found</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GenerateUUID</pd:from>
+        <pd:to>MapConstants</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Plan</pd:from>
+        <pd:to>CreateException JMSReceiveError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Response</pd:from>
+        <pd:to>CreateException XMLParseError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException JMSReceiveError</pd:from>
+        <pd:to>Generate JMS Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException XMLParseError</pd:from>
+        <pd:to>Generate Parse Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GenerateUUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:label>
+        <pd:name>Label</pd:name>
+        <pd:description>OrderExecution [OE] To Transient Data Store [TDS]
+
+Process will GetPlans from TDS component.
+
+
+Event Path         : "www.tibco.com/be/ontology/aff/tds/events/plan/GetPlansRequestEvent"
+Event Name       : "GetPlansRequestEvent"
+Queue Name     : "tibco.aff.tds.plan.read.request"
+
+</pd:description>
+        <pd:x>321</pd:x>
+        <pd:y>580</pd:y>
+        <pd:width>641</pd:width>
+        <pd:height>166</pd:height>
+        <pd:fontName>Dialog.bold-plain-12</pd:fontName>
+        <pd:fontColor>-16777216</pd:fontColor>
+        <pd:color>-13369345</pd:color>
+        <pd:type>solid</pd:type>
+        <pd:thickness>0</pd:thickness>
+        <pd:fade>true</pd:fade>
+    </pd:label>
+</pd:ProcessDefinition>

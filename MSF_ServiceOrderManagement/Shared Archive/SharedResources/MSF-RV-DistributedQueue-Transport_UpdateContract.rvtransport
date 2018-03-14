@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <config>
+        <workerWeight>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/WorkerWeight%%</workerWeight>
+        <workerTasks>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/WorkerTasks%%</workerTasks>
+        <workerCompleteTime>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/WorkerCompleteTime%%</workerCompleteTime>
+        <schedulerWeight>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/SchedulerWeight%%</schedulerWeight>
+        <scheduleHeartbeat>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/SchedulerHeartbeat%%</scheduleHeartbeat>
+        <scheduleActivation>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/SchedulerActivation%%</scheduleActivation>
+        <showExpertSettings>certifiedQ</showExpertSettings>
+        <useSsl>false</useSsl>
+        <ns0:ssl xmlns:ns0="http://www.tibco.com/xmlns/aemeta/services/2002"/>
+        <daemon>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/Daemon%%</daemon>
+        <network>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/Network%%</network>
+        <service>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/Service%%</service>
+        <cmqName>%%SharedResources/Connections/RV/CMQName_UpdateContract%%</cmqName>
+    </config>
+</BWSharedResource>

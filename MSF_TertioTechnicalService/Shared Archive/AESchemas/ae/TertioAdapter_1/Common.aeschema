@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="serviceOrderResp">
+        <attribute>
+            <name>SEQ</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>EPTs</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/TertioAdapter_1.aeschema#sequence.seqEPT</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TIME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="serviceOrderReq">
+        <attribute>
+            <name>SEQ</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>keys</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/TertioAdapter_1.aeschema#sequence.sequenceKey</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>serviceElements</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/TertioAdapter_1.aeschema#sequence.seqServiceElement</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="elementAttribute">
+        <attribute>
+            <name>NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>VALUE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="childServiceElement">
+        <attribute>
+            <name>ELEMENT_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>elementAttributes</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/TertioAdapter_1.aeschema#sequence.seqElementAttribute</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="EPT">
+        <attribute>
+            <name>NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>RESULT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NE_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NE_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TEXT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="serviceElement">
+        <attribute>
+            <name>ELEMENT_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>elementAttributes</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/TertioAdapter_1.aeschema#sequence.seqElementAttribute</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>childServiceElements</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/TertioAdapter_1.aeschema#sequence.seqChildServiceElement</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="key">
+        <attribute>
+            <name>NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>VALUE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

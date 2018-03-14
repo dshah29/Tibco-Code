@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ServiceContext_v1.xsd"/>
+    <pd:name>UtilityProcesses/MessageContext/GetOutputMessageContextAsString.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>63</pd:startX>
+    <pd:startY>63</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <MessageContextString>
+                <xsl:value-of select="$Variable0/root/MessageContextString"/>
+            </MessageContextString>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="MessageContextString" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>667</pd:endX>
+    <pd:endY>63</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="MessageContextString" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1349861455557</pd:targetNamespace>
+    <pd:activity name="Assign">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>524</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <MessageContextString>
+                    <xsl:value-of select="concat($Get-Output-Message-Context/ns1:MessageContext/@messageID[1], &quot;:&quot;, &#xA;$Get-Output-Message-Context/ns1:MessageContext/@messageType[1], &quot;:&quot;, &#xA;$Get-Output-Message-Context/ns1:MessageContext/ns1:CorrelationID, &quot;:&quot;, &#xA;$Get-Output-Message-Context/ns1:MessageContext/ns1:TransactionID, &quot;:&quot;, &#xA;$Get-Output-Message-Context/ns1:MessageContext/ns1:BusinessKey, &quot;:&quot;, &#xA;$Get-Output-Message-Context/ns1:MessageContext/ns1:ApplicationID , &quot;:&quot;, &#xA;$Get-Output-Message-Context/ns1:MessageContext/ns1:UserID , &quot;:&quot;, &#xA;$Get-Output-Message-Context/ns1:MessageContext/ns1:ServiceInstanceID  )"/>
+                </MessageContextString>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>560</pd:x>
+        <pd:y>240</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Output Message Context">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>375</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <variableConfig>/SharedResources/JobSharedVariables/OutputMessageContext.jobsharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Init">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>226</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <MessageContextString>
+                    <xsl:value-of select="&quot;&quot;"/>
+                </MessageContextString>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Init</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Init</pd:from>
+        <pd:to>Get Output Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Output Message Context</pd:from>
+        <pd:to>Assign</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Assign</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

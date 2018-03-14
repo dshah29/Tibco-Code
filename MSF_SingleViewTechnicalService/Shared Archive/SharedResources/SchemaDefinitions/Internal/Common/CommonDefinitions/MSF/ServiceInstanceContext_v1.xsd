@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:sicx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/serviceinstancecontext/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/serviceinstancecontext/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="ServiceInstanceID" type="xs:string"/>
+	<xs:element name="Hostname" type="xs:string"/>
+	<xs:complexType name="ServiceInstanceContext">
+		<xs:sequence>
+			<xs:element ref="sicx:ServiceInstanceID"/>
+			<xs:element ref="sicx:Hostname"/>
+			<xs:element ref="sicx:StartTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceInstanceContext" type="sicx:ServiceInstanceContext"/>
+	<xs:element name="StartTime" type="xs:dateTime"/>
+</xs:schema>

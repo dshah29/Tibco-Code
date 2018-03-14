@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions">
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/UpdateProductCharacteristics.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="ProductID" type="xsd:string"/>
+                    <xsd:element name="Name" type="xsd:string"/>
+                    <xsd:element name="Value" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>62</pd:startX>
+    <pd:startY>253</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>668</pd:endX>
+    <pd:endY>263</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1446199983134</pd:targetNamespace>
+    <pd:activity name="QueryProductCharacteristics">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>236</pd:x>
+        <pd:y>116</pd:y>
+        <config>
+            <timeout>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/GetProducts/TimeoutSec%%</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>select count(*) from SVOS_PRODUCT_CHARACTERISTICS where PRODUCT_ID=? and NAME=?</statement>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>COUNT</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <PRODUCT_ID>
+                    <xsl:value-of select="$Start/root/ProductID"/>
+                </PRODUCT_ID>
+                <NAME>
+                    <xsl:value-of select="$Start/root/Name"/>
+                </NAME>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InsertProductCharacteristics">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>449</pd:x>
+        <pd:y>46</pd:y>
+        <config>
+            <timeout>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/GetProducts/TimeoutSec%%</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>INSERT INTO SVOS_PRODUCT_CHARACTERISTICS ( PRODUCT_ID,NAME,VALUE,LAST_UPDATED)
+VALUES (?,?,?,sysdate)</statement>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>VALUE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <PRODUCT_ID>
+                    <xsl:value-of select="$Start/root/ProductID"/>
+                </PRODUCT_ID>
+                <NAME>
+                    <xsl:value-of select="$Start/root/Name"/>
+                </NAME>
+                <VALUE>
+                    <xsl:value-of select="$Start/root/Value"/>
+                </VALUE>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UpdateProductCharacteristics">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>447</pd:x>
+        <pd:y>195</pd:y>
+        <config>
+            <timeout>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/GetProducts/TimeoutSec%%</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>UPDATE SVOS_PRODUCT_CHARACTERISTICS SET VALUE=?,LAST_UPDATED=sysdate where PRODUCT_ID=? and NAME=?</statement>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>VALUE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>NAME</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <VALUE>
+                    <xsl:value-of select="$Start/root/Value"/>
+                </VALUE>
+                <PRODUCT_ID>
+                    <xsl:value-of select="$Start/root/ProductID"/>
+                </PRODUCT_ID>
+                <NAME>
+                    <xsl:value-of select="$Start/root/Name"/>
+                </NAME>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="QueryProductBarcode">
+        <pd:type>com.tibco.plugin.jdbc.JDBCQueryActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCQueryActivity</pd:resourceType>
+        <pd:x>236</pd:x>
+        <pd:y>403</pd:y>
+        <config>
+            <timeout>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/GetProducts/TimeoutSec%%</timeout>
+            <commit>false</commit>
+            <maxRows>100</maxRows>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>select count(*) from SVOS_PRODUCT_BARCODES where PRODUCT_ID=? and BARCODE=?</statement>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>BARCODE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+            <oraObjects/>
+            <oraTables/>
+            <QueryOutputCachedSchemaColumns>COUNT</QueryOutputCachedSchemaColumns>
+            <QueryOutputCachedSchemaDataTypes>2</QueryOutputCachedSchemaDataTypes>
+            <QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>
+            <QueryOutputCachedSchemaStatus>OptionalElement</QueryOutputCachedSchemaStatus>
+        </config>
+        <pd:inputBindings>
+            <jdbcQueryActivityInput>
+                <PRODUCT_ID>
+                    <xsl:value-of select="$Start/root/ProductID"/>
+                </PRODUCT_ID>
+                <BARCODE>
+                    <xsl:value-of select="$Start/root/Value"/>
+                </BARCODE>
+            </jdbcQueryActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InsertProductBarcode">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>449</pd:x>
+        <pd:y>342</pd:y>
+        <config>
+            <timeout>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/GetProducts/TimeoutSec%%</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>INSERT INTO SVOS_PRODUCT_BARCODES ( PRODUCT_ID,BARCODE,LAST_UPDATED)
+VALUES (?,?,sysdate)</statement>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>BARCODE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <PRODUCT_ID>
+                    <xsl:value-of select="$Start/root/ProductID"/>
+                </PRODUCT_ID>
+                <BARCODE>
+                    <xsl:value-of select="$Start/root/Value"/>
+                </BARCODE>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="UpdateProductBarcode">
+        <pd:type>com.tibco.plugin.jdbc.JDBCUpdateActivity</pd:type>
+        <pd:resourceType>ae.activities.JDBCUpdateActivity</pd:resourceType>
+        <pd:x>450</pd:x>
+        <pd:y>467</pd:y>
+        <config>
+            <timeout>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/GetProducts/TimeoutSec%%</timeout>
+            <commit>false</commit>
+            <emptyStrAsNil>false</emptyStrAsNil>
+            <statement>UPDATE SVOS_PRODUCT_BARCODES SET LAST_UPDATED=sysdate where PRODUCT_ID=? and BARCODE=?</statement>
+            <jdbcSharedConfig>/SharedResources/Connections/JDBC/MSF-JDBC-Connection1.sharedjdbc</jdbcSharedConfig>
+            <Prepared_Param_DataType>
+                <parameter>
+                    <parameterName>PRODUCT_ID</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+                <parameter>
+                    <parameterName>BARCODE</parameterName>
+                    <dataType>VARCHAR</dataType>
+                </parameter>
+            </Prepared_Param_DataType>
+        </config>
+        <pd:inputBindings>
+            <jdbcUpdateActivityInput>
+                <PRODUCT_ID>
+                    <xsl:value-of select="$Start/root/ProductID"/>
+                </PRODUCT_ID>
+                <BARCODE>
+                    <xsl:value-of select="$Start/root/Value"/>
+                </BARCODE>
+            </jdbcUpdateActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>QueryProductCharacteristics</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>QueryProductCharacteristics</pd:from>
+        <pd:to>InsertProductCharacteristics</pd:to>
+        <pd:xpathDescription>count 0</pd:xpathDescription>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$QueryProductCharacteristics/resultSet/Record/COUNT =0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InsertProductCharacteristics</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>QueryProductCharacteristics</pd:from>
+        <pd:to>UpdateProductCharacteristics</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UpdateProductCharacteristics</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>QueryProductBarcode</pd:to>
+        <pd:xpathDescription>Barcode</pd:xpathDescription>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>tib:trim(upper-case($Start/root/Name))="BARCODE"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>QueryProductBarcode</pd:from>
+        <pd:to>InsertProductBarcode</pd:to>
+        <pd:xpathDescription>count 0</pd:xpathDescription>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$QueryProductBarcode/resultSet/Record/COUNT =0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InsertProductBarcode</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>QueryProductBarcode</pd:from>
+        <pd:to>UpdateProductBarcode</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>UpdateProductBarcode</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

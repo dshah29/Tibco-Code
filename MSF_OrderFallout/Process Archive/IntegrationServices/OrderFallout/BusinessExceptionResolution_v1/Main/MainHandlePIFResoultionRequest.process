@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" xmlns:ns6="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns7="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:pfx="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ResolutionReply.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" xmlns:ns1="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/ExceptionContext/ExceptionContext.xsd" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://xmlns.example.com/BEHResolution_v1" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx3="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd" xmlns:pfx2="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider">
+    <xsd:import namespace="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ResolutionReply.xsd" schemaLocation="/SharedResources/Schemas/Public/Exception/ResolutionReply.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd" schemaLocation="/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorProviderService.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/BEHResolution_v1" location="/SharedResources/WebServiceDefinitions/External/BEH/BEHResolution_v1.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/BusinessExceptionResolution_v1/Main/MainHandlePIFResoultionRequest.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx5:PIFResolutionMessage"/>
+    <pd:startX>239</pd:startX>
+    <pd:startY>149</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>483</pd:endX>
+    <pd:endY>149</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1416994053845</pd:targetNamespace>
+    <pd:activity name="PIF Reply Resolution">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>364</pd:x>
+        <pd:y>157</pd:y>
+        <config>
+            <processName>/UtilityProcesses/FOSDataAccessInterfaces/planItemFailedResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx2:PlanItemFailedReply>
+                    <xsl:attribute name="pfx2:businessTransactionID">
+                        <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:businessTransactionID"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="correlationID">
+                        <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:correlationID"/>
+                    </xsl:attribute>
+                    <ns7:resultStatus>
+                        <ns7:deployment>
+                            <xsl:value-of select="$_processContext/ns3:ProcessContext/ProjectName"/>
+                        </ns7:deployment>
+                        <ns7:service>
+                            <xsl:value-of select="$_processContext/ns3:ProcessContext/ProjectName"/>
+                        </ns7:service>
+                        <ns7:operation>
+                            <xsl:value-of select="&quot;PIF&quot;"/>
+                        </ns7:operation>
+                        <ns7:severity>
+                            <xsl:value-of select="&quot;E&quot;"/>
+                        </ns7:severity>
+                        <ns7:code>
+                            <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:errorCode"/>
+                        </ns7:code>
+                        <ns7:message>
+                            <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:errorMessage"/>
+                        </ns7:message>
+                    </ns7:resultStatus>
+                    <pfx2:orderID>
+                        <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:orderID"/>
+                    </pfx2:orderID>
+                    <pfx2:orderRef>
+                        <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:orderRef"/>
+                    </pfx2:orderRef>
+                    <pfx2:planID>
+                        <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:planID"/>
+                    </pfx2:planID>
+                    <pfx2:planItemID>
+                        <xsl:value-of select="$Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:planItemID"/>
+                    </pfx2:planItemID>
+                    <xsl:choose>
+                        <xsl:when test="lower-case($Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:resolution)=lower-case($_globalVariables/ns6:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionRetry)">
+                            <pfx2:retry/>
+                        </xsl:when>
+                        <xsl:when test="lower-case($Start/pfx5:PIFResolutionMessage/resolution/ns5:PIF_BusinessExceptionResponse/ns5:resolution)=lower-case($_globalVariables/ns6:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/PlanItemFailHandler/PIFResoultionResume)">
+                            <pfx2:complete/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx2:complete/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </pfx2:PlanItemFailedReply>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>PIF Reply Resolution</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>PIF Reply Resolution</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

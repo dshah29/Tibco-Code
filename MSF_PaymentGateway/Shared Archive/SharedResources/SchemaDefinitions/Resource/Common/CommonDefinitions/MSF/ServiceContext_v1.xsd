@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:scx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1"
+	 version="$Id: ServiceContext_v1.xsd 4015 2015-06-16 17:18:54Z rarmitag $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="ServiceContext">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="scx:ServiceInstanceID" minOccurs="0"/>
+				<xs:element ref="scx:ServiceEngineID" minOccurs="0"/>
+				<xs:element ref="scx:Hostname" minOccurs="0"/>
+				<xs:element ref="scx:InitialProcessName" minOccurs="0"/>
+				<xs:element ref="scx:InitialProcessShortName" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceInstanceID" type="xs:string"/>
+	<xs:element name="InitialProcessName" type="xs:string"/>
+	<xs:element name="InitialProcessShortName" type="xs:string"/>
+	<xs:element name="Hostname" type="xs:string"/>
+	<xs:element name="ServiceEngineID" type="xs:string"/>
+</xs:schema>

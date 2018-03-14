@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns22="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:logging="java://com.tibco.tibcobw.customfunctions.Logging" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:pfx="http://www.tibco.com/pe/DeployedVarsType" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/processstats/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelControl.xsd">
+    <pd:name>UtilityProcesses/Logging/Log.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="level" type="xsd:int"/>
+                    <xsd:element name="message" type="xsd:string"/>
+                    <xsd:element name="errorCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="processName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="payload" minOccurs="0">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:any processContents="skip"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>76</pd:startX>
+    <pd:startY>303</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>895</pd:endX>
+    <pd:endY>303</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="currentLevel" type="xsd:string"/>
+                        <xsd:element name="msgCode" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1349784983964</pd:targetNamespace>
+    <pd:activity name="Call Log Debug">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>379</pd:x>
+        <pd:y>468</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/Sub/LogDebug.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/payload)">
+                        <message>
+                            <xsl:value-of select="concat($Start/root/message, &quot;&#xA;&quot;,  tib:render-xml($Start/root/payload, true(), true()))"/>
+                        </message>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <message>
+                            <xsl:value-of select="$Start/root/message"/>
+                        </message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Log Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>379</pd:x>
+        <pd:y>783</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/Sub/LogError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/payload)">
+                        <message>
+                            <xsl:value-of select="concat($Start/root/message, '&#xA;',  tib:render-xml($Start/root/payload, true(), true()))"/>
+                        </message>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <message>
+                            <xsl:value-of select="$Start/root/message"/>
+                        </message>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="$Start/root/errorCode">
+                    <errorCode>
+                        <xsl:value-of select="$Start/root/errorCode"/>
+                    </errorCode>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Log Info">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>379</pd:x>
+        <pd:y>573</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/Sub/LogInfo.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/payload)">
+                        <message>
+                            <xsl:value-of select="concat($Start/root/message, '&#xA;',  tib:render-xml($Start/root/payload, true(), true()))"/>
+                        </message>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <message>
+                            <xsl:value-of select="$Start/root/message"/>
+                        </message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Log Warn">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>379</pd:x>
+        <pd:y>678</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/Sub/LogWarn.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/payload)">
+                        <message>
+                            <xsl:value-of select="concat($Start/root/message, '&#xA;',  tib:render-xml($Start/root/payload, true(), true()))"/>
+                        </message>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <message>
+                            <xsl:value-of select="$Start/root/message"/>
+                        </message>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="DEBUG">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>218</pd:x>
+        <pd:y>422</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Log Level">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>403</pd:x>
+        <pd:y>171</pd:y>
+        <config>
+            <variableConfig>/LogLevelControl/SharedVariable/LogLevelControl.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetInputMessageContext">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>405</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetServiceContext">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>535</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ServiceContext/GetServiceContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetStatsForProcess">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>660</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ProcessStats/GetStatsForProcess.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:if test="$Start/root/processName">
+                    <processName>
+                        <xsl:value-of select="$Start/root/processName"/>
+                    </processName>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SendLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>783</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <processName>/Interface/JMS/SendLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <xsl:variable name="timestamp" select="tib:timestamp()"/>
+            <ns12:LogRequest>
+                <ns22:Header>
+                    <ns22:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/Environment/CommonLE/ApplicationID"/>
+                    </ns22:ApplicationID>
+                    <ns22:ComponentName>
+                        <xsl:value-of select="$_processContext/ns1:ProcessContext/ProjectName"/>
+                    </ns22:ComponentName>
+                    <ns22:Hostname>
+                        <xsl:value-of select="$GetServiceContext/root/ns3:ServiceContext/ns3:Hostname"/>
+                    </ns22:Hostname>
+                    <ns22:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns22:Timestamp>
+                    <ns22:TransactionDomain>
+                        <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Component/Domain"/>
+                    </ns22:TransactionDomain>
+                    <ns22:TransactionType>
+                        <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Component/Classification"/>
+                    </ns22:TransactionType>
+                    <ns22:TransactionID>
+                        <xsl:value-of select="$GetInputMessageContext/root/ns2:MessageContext/ns2:TransactionID"/>
+                    </ns22:TransactionID>
+                    <xsl:if test="$GetServiceContext/root/ns3:ServiceContext/ns3:InitialProcessShortName">
+                        <ns22:CorrelationID>
+                            <xsl:value-of select="$GetServiceContext/root/ns3:ServiceContext/ns3:InitialProcessShortName"/>
+                        </ns22:CorrelationID>
+                    </xsl:if>
+                    <ns22:Message>
+                        <xsl:value-of select="$Start/root/message"/>
+                    </ns22:Message>
+                    <xsl:if test="exists($Start/root/payload)">
+                        <ns22:Transaction>
+                            <xsl:value-of select="tib:render-xml($Start/root/payload/*, true(), false())"/>
+                        </ns22:Transaction>
+                    </xsl:if>
+                </ns22:Header>
+                <xsl:if test="exists($GetStatsForProcess/root/ns4:ProcessStats/ns4:startTimestamp)">
+                    <TimeDuration>
+                        <xsl:value-of select="$timestamp - $GetStatsForProcess/root/ns4:ProcessStats/ns4:startTimestamp"/>
+                    </TimeDuration>
+                </xsl:if>
+                <Category>
+                    <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Logging/CLECategory"/>
+                </Category>
+                <xsl:choose>
+                    <xsl:when test="$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/DEBUG">
+                        <Status>
+                            <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Logging/LogDebug/Code"/>
+                        </Status>
+                    </xsl:when>
+                    <xsl:when test="$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/INFO">
+                        <Status>
+                            <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Logging/LogInfo/Code"/>
+                        </Status>
+                    </xsl:when>
+                    <xsl:when test="$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/WARN">
+                        <Status>
+                            <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Logging/LogWarn/Code"/>
+                        </Status>
+                    </xsl:when>
+                    <xsl:when test="$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/ERROR">
+                        <Status>
+                            <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Logging/LogError/Code"/>
+                        </Status>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Status>
+                            <xsl:value-of select="$_globalVariables/pfx:GlobalVariables/MSF/Logging/LogInfo/Code"/>
+                        </Status>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="exists($GetStatsForProcess/root/startTimestamp)">
+                    <FileSize>
+                        <xsl:value-of select="$timestamp - $GetStatsForProcess/root/startTimestamp"/>
+                    </FileSize>
+                </xsl:if>
+                <Audit>
+                    <xsl:value-of select="false()"/>
+                </Audit>
+            </ns12:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>77</pd:x>
+        <pd:y>200</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="logLevel" type="xsd:int"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/processName)">
+                        <logLevel>
+                            <xsl:value-of select="logging:getLogLevel($Start/root/processName)"/>
+                        </logLevel>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <logLevel>
+                            <xsl:value-of select="-1"/>
+                        </logLevel>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Call Log Debug</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>DEBUG</pd:to>
+        <pd:xpathDescription>enabled</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx:GlobalVariables/MSF/Logging/LogEnabled="true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>DEBUG</pd:from>
+        <pd:to>Call Log Debug</pd:to>
+        <pd:xpathDescription>DEBUG</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/DEBUG</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>DEBUG</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>DEBUG</pd:from>
+        <pd:to>Call Log Info</pd:to>
+        <pd:xpathDescription>INFO</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/INFO</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>DEBUG</pd:from>
+        <pd:to>Call Log Warn</pd:to>
+        <pd:xpathDescription>WARN</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/WARN</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>DEBUG</pd:from>
+        <pd:to>Call Log Error</pd:to>
+        <pd:xpathDescription>ERROR</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/level = $_globalVariables/pfx:GlobalVariables/MSF/Logging/Levels/ERROR</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Log Info</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Log Warn</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Log Error</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:xpathDescription>CLE</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx:GlobalVariables/MSF/CLE/Enabled ="true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Log Level</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Log Level</pd:from>
+        <pd:to>GetInputMessageContext</pd:to>
+        <pd:xpathDescription>Logging Enabled</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/level &lt;= $Get-Log-Level/pfx2:LogLevelState/LogLevel</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetInputMessageContext</pd:from>
+        <pd:to>GetServiceContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetServiceContext</pd:from>
+        <pd:to>GetStatsForProcess</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SendLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetStatsForProcess</pd:from>
+        <pd:to>SendLog</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Get Log Level</pd:to>
+        <pd:xpathDescription>Not Configured</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Map-Data/root/logLevel &lt; 0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>GetInputMessageContext</pd:to>
+        <pd:xpathDescription>Enabled</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Map-Data/root/logLevel &gt;= $Start/root/level</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>End</pd:to>
+        <pd:xpathDescription>Not Enabled</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,643 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1" xmlns:ns3="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1" xmlns:pfx5="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx8="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:pfx7="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1" xmlns:pfx6="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/GetProducts.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:GetProductsRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>30</pd:startX>
+    <pd:startY>163</pd:startY>
+    <pd:returnBindings>
+        <root/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1047</pd:endX>
+    <pd:endY>167</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Counter" type="xsd:int" minOccurs="0"/>
+                        <xsd:element name="Range" type="xsd:int" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/13551410324323243/GetProducts</pd:targetNamespace>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>195</pd:x>
+        <pd:y>33</pd:y>
+        <pd:width>733</pd:width>
+        <pd:height>257</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>repeat</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:outSlot>FP</pd:outSlot>
+            <pd:activityOutputName>QueryResponse</pd:activityOutputName>
+            <pd:repeatCondition>not(exists($LookupRecord-Request/root/pfx:DataService/pfx:Transaction/pfx:Response/pfx:MasterCatalogRecord))</pd:repeatCondition>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>QueryRequest</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SendSVOSCoreEvent</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>QueryRequest</pd:from>
+            <pd:to>LookupRecord Request</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>LookupRecord Request</pd:from>
+            <pd:to>QueryResponse</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>QueryResponse</pd:from>
+            <pd:to>Assign</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign</pd:from>
+            <pd:to>SendSVOSCoreEvent</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="LookupRecord Request">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>412</pd:x>
+            <pd:y>178</pd:y>
+            <config>
+                <processName>/IntegrationServices/Product/ServiceClient/LookupRecord_Request.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:copy-of select="$QueryRequest/root/pfx:DataService"/>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="QueryRequest">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>289</pd:x>
+            <pd:y>168</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="root">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element ref="pfx:DataService"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <pfx:DataService>
+                        <xsl:attribute name="version">
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/FCVersion"/>
+                        </xsl:attribute>
+                        <pfx:Identity>
+                            <pfx:DirectoryPath>
+                                <pfx:Directory>
+                                    <xsl:attribute name="type">
+                                        <xsl:value-of select="&quot;Enterprise&quot;"/>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Enterprise"/>
+                                </pfx:Directory>
+                                <pfx:Directory>
+                                    <xsl:attribute name="type">
+                                        <xsl:value-of select="&quot;User&quot;"/>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/User"/>
+                                </pfx:Directory>
+                            </pfx:DirectoryPath>
+                            <pfx:Authentication>
+                                <xsl:attribute name="type">
+                                    <xsl:value-of select="&quot;Password&quot;"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Password"/>
+                            </pfx:Authentication>
+                        </pfx:Identity>
+                        <pfx:Transaction>
+                            <xsl:for-each select="$Start/root/pfx5:GetProductsRequest/pfx5:ProductFilter">
+                                <pfx:Command>
+                                    <xsl:attribute name="type">
+                                        <xsl:value-of select="&quot;Query&quot;"/>
+                                    </xsl:attribute>
+                                    <pfx:StartCount>
+                                        <xsl:value-of select="$Variable0/root/Counter"/>
+                                    </pfx:StartCount>
+                                    <pfx:MaxCount>
+                                        <xsl:value-of select="$Variable0/root/Range"/>
+                                    </pfx:MaxCount>
+                                    <pfx:MasterCatalogRecord>
+                                        <xsl:attribute name="etype">
+                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                        </xsl:attribute>
+                                        <pfx:ExternalKeys>
+                                            <xsl:choose>
+                                                <xsl:when test="exists(current()/pfx5:repository)">
+                                                    <pfx:Key>
+                                                        <xsl:attribute name="name">
+                                                            <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="type">
+                                                            <xsl:value-of select="&quot;string&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:value-of select="pfx5:repository"/>
+                                                    </pfx:Key>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <pfx:Key>
+                                                        <xsl:attribute name="name">
+                                                            <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="type">
+                                                            <xsl:value-of select="&quot;string&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:value-of select="&quot;PRODUCT&quot;"/>
+                                                    </pfx:Key>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                            <xsl:if test="exists(pfx5:productID)">
+                                                <xsl:if test="pfx5:productID">
+                                                    <pfx:Key>
+                                                        <xsl:attribute name="name">
+                                                            <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="type">
+                                                            <xsl:value-of select="&quot;string&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:if test="pfx5:productID/@operation">
+                                                            <xsl:attribute name="operator">
+                                                                <xsl:value-of select="pfx5:productID/@operation"/>
+                                                            </xsl:attribute>
+                                                        </xsl:if>
+                                                        <xsl:value-of select="pfx5:productID"/>
+                                                    </pfx:Key>
+                                                </xsl:if>
+                                            </xsl:if>
+                                            <xsl:if test="exists(pfx5:productName)">
+                                                <xsl:if test="pfx5:productName">
+                                                    <pfx:Key>
+                                                        <xsl:attribute name="name">
+                                                            <xsl:value-of select="&quot;Name&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="type">
+                                                            <xsl:value-of select="&quot;string&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:if test="pfx5:productName/@operation">
+                                                            <xsl:attribute name="operator">
+                                                                <xsl:value-of select="pfx5:productName/@operation"/>
+                                                            </xsl:attribute>
+                                                        </xsl:if>
+                                                        <xsl:value-of select="pfx5:productName"/>
+                                                    </pfx:Key>
+                                                </xsl:if>
+                                            </xsl:if>
+                                            <xsl:if test="exists(pfx5:class)">
+                                                <xsl:if test="pfx5:class">
+                                                    <pfx:Key>
+                                                        <xsl:attribute name="name">
+                                                            <xsl:value-of select="&quot;RECORD_TYPE&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="type">
+                                                            <xsl:value-of select="&quot;string&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:if test="pfx5:class/@operation">
+                                                            <xsl:attribute name="operator">
+                                                                <xsl:value-of select="pfx5:class/@operation"/>
+                                                            </xsl:attribute>
+                                                        </xsl:if>
+                                                        <xsl:value-of select="pfx5:class"/>
+                                                    </pfx:Key>
+                                                </xsl:if>
+                                            </xsl:if>
+                                            <xsl:if test="exists(pfx5:subClass)">
+                                                <xsl:if test="pfx5:subClass">
+                                                    <pfx:Key>
+                                                        <xsl:attribute name="name">
+                                                            <xsl:value-of select="&quot;SubsetType&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:attribute name="type">
+                                                            <xsl:value-of select="&quot;string&quot;"/>
+                                                        </xsl:attribute>
+                                                        <xsl:if test="pfx5:subClass/@operation">
+                                                            <xsl:attribute name="operator">
+                                                                <xsl:value-of select="pfx5:subClass/@operation"/>
+                                                            </xsl:attribute>
+                                                        </xsl:if>
+                                                        <xsl:value-of select="pfx5:subClass"/>
+                                                    </pfx:Key>
+                                                </xsl:if>
+                                            </xsl:if>
+                                        </pfx:ExternalKeys>
+                                        <xsl:if test="exists($Start/root/pfx5:GetProductsRequest/pfx5:View/pfx5:Return)">
+                                            <pfx:Return>
+                                                <pfx:RelationshipData>
+                                                    <xsl:choose>
+                                                        <xsl:when test="$Start/root/pfx5:GetProductsRequest/pfx5:View/pfx5:Return/pfx5:type">
+                                                            <xsl:for-each select="$Start/root/pfx5:GetProductsRequest/pfx5:View/pfx5:Return/pfx5:type">
+                                                                <pfx:Relationship>
+                                                                    <pfx:RelationType>
+                                                                        <xsl:value-of select="."/>
+                                                                    </pfx:RelationType>
+                                                                    <pfx:RelationDepth>
+                                                                        <xsl:value-of select="1"/>
+                                                                    </pfx:RelationDepth>
+                                                                </pfx:Relationship>
+                                                            </xsl:for-each>
+                                                        </xsl:when>
+                                                        <xsl:when test="$Start/root/pfx5:GetProductsRequest/pfx5:View/pfx5:Return/pfx5:allRelationships">
+                                                            <pfx:Relationship>
+                                                                <pfx:RelationType>
+                                                                    <xsl:value-of select="&quot;ProductComprisedOf&quot;"/>
+                                                                </pfx:RelationType>
+                                                                <pfx:RelationDepth>
+                                                                    <xsl:value-of select="1"/>
+                                                                </pfx:RelationDepth>
+                                                            </pfx:Relationship>
+                                                            <pfx:Relationship>
+                                                                <pfx:RelationType>
+                                                                    <xsl:value-of select="&quot;ProductPricedBy&quot;"/>
+                                                                </pfx:RelationType>
+                                                                <pfx:RelationDepth>
+                                                                    <xsl:value-of select="1"/>
+                                                                </pfx:RelationDepth>
+                                                            </pfx:Relationship>
+                                                            <pfx:Relationship>
+                                                                <pfx:RelationType>
+                                                                    <xsl:value-of select="&quot;PriceAlteredByAllowance&quot;"/>
+                                                                </pfx:RelationType>
+                                                                <pfx:RelationDepth>
+                                                                    <xsl:value-of select="1"/>
+                                                                </pfx:RelationDepth>
+                                                            </pfx:Relationship>
+                                                            <pfx:Relationship>
+                                                                <pfx:RelationType>
+                                                                    <xsl:value-of select="&quot;Characteristic&quot;"/>
+                                                                </pfx:RelationType>
+                                                                <pfx:RelationDepth>
+                                                                    <xsl:value-of select="1"/>
+                                                                </pfx:RelationDepth>
+                                                            </pfx:Relationship>
+                                                        </xsl:when>
+                                                        <xsl:when test="$Start/root/pfx5:GetProductsRequest/pfx5:View/pfx5:Return/pfx5:allCharacteristics">
+                                                            <pfx:Relationship>
+                                                                <pfx:RelationType>
+                                                                    <xsl:value-of select="&quot;Characteristic&quot;"/>
+                                                                </pfx:RelationType>
+                                                                <pfx:RelationDepth>
+                                                                    <xsl:value-of select="1"/>
+                                                                </pfx:RelationDepth>
+                                                            </pfx:Relationship>
+                                                        </xsl:when>
+                                                    </xsl:choose>
+                                                </pfx:RelationshipData>
+                                            </pfx:Return>
+                                        </xsl:if>
+                                        <pfx:RelationshipData>
+                                            <xsl:for-each select="../pfx5:View/pfx5:Relation/pfx5:Relationship">
+                                                <pfx:Relationship>
+                                                    <pfx:RelationType>
+                                                        <xsl:value-of select="pfx5:type"/>
+                                                    </pfx:RelationType>
+                                                    <pfx:RelationshipAttributes>
+                                                        <xsl:attribute name="etype">
+                                                            <xsl:value-of select="&quot;Entity&quot;"/>
+                                                        </xsl:attribute>
+                                                        <pfx:Attribute>
+                                                            <xsl:attribute name="name">
+                                                                <xsl:value-of select="&quot;relationshipValue&quot;"/>
+                                                            </xsl:attribute>
+                                                            <xsl:attribute name="type">
+                                                                <xsl:value-of select="&quot;string&quot;"/>
+                                                            </xsl:attribute>
+                                                            <xsl:value-of select="pfx5:relationshipValue"/>
+                                                        </pfx:Attribute>
+                                                    </pfx:RelationshipAttributes>
+                                                    <pfx:RelationDepth>
+                                                        <xsl:value-of select="1"/>
+                                                    </pfx:RelationDepth>
+                                                </pfx:Relationship>
+                                            </xsl:for-each>
+                                        </pfx:RelationshipData>
+                                    </pfx:MasterCatalogRecord>
+                                </pfx:Command>
+                            </xsl:for-each>
+                        </pfx:Transaction>
+                    </pfx:DataService>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="QueryResponse">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>540</pd:x>
+            <pd:y>169</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="group">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element ref="pfx5:GetProductsResponse"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <group>
+                    <pfx5:GetProductsResponse>
+                        <xsl:if test="exists($LookupRecord-Request/root/pfx:DataService/pfx:Transaction/pfx:Response/pfx:MasterCatalogRecord)">
+                            <xsl:for-each select="$LookupRecord-Request/root/pfx:DataService/pfx:Transaction/pfx:Response/pfx:MasterCatalogRecord">
+                                <pfx6:productSpecification>
+                                    <xsl:variable name="var_PRODUCTID" select="upper-case(&quot;PRODUCTID&quot;)"/>
+                                    <xsl:variable name="var_Name" select="upper-case(&quot;Name&quot;)"/>
+                                    <xsl:variable name="var_SHORTDESC" select="upper-case(&quot;SHORTDESC&quot;)"/>
+                                    <xsl:variable name="var_RECORD_TYPE" select="upper-case(&quot;RECORD_TYPE&quot;)"/>
+                                    <xsl:variable name="var_SUBSET_TYPE" select="upper-case(&quot;SUBSETTYPE&quot;)"/>
+                                    <xsl:variable name="var_lifecyclestatus" select="upper-case(&quot;lifecyclestatus&quot;)"/>
+                                    <xsl:variable name="var_StartDate" select="upper-case(&quot;StartDate&quot;)"/>
+                                    <xsl:variable name="var_StartTime" select="upper-case(&quot;StartTime&quot;)"/>
+                                    <xsl:variable name="var_EndDate" select="upper-case(&quot;EndDate&quot;)"/>
+                                    <xsl:variable name="var_EndTime" select="upper-case(&quot;EndTime&quot;)"/>
+                                    <xsl:variable name="var_rel_ProductComprisedOf" select="upper-case('ProductComprisedOf')"/>
+                                    <xsl:variable name="var_rel_ProductPricedBy" select="upper-case('ProductPricedBy')"/>
+                                    <xsl:variable name="var_rel_CHARACTERISTIC" select="upper-case('CHARACTERISTIC')"/>
+                                    <xsl:variable name="var_rel_PriceAlteredByAllowance" select="upper-case('PriceAlteredByAllowance')"/>
+                                    <pfx6:productID>
+                                        <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_PRODUCTID]"/>
+                                    </pfx6:productID>
+                                    <xsl:if test="string-length(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_Name])>0">
+                                        <pfx6:productName>
+                                            <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_Name]"/>
+                                        </pfx6:productName>
+                                    </xsl:if>
+                                    <pfx6:productDescription>
+                                        <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_SHORTDESC]"/>
+                                    </pfx6:productDescription>
+                                    <pfx6:classification>
+                                        <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_RECORD_TYPE]"/>
+                                    </pfx6:classification>
+                                    <pfx6:lifecycleStatus>
+                                        <xsl:value-of select="{-- pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_lifecyclestatus] --}&#xA;&quot;Available&quot;"/>
+                                    </pfx6:lifecycleStatus>
+                                    <xsl:if test="exists(pfx:RelationshipData/pfx:Relationship[upper-case(pfx:RelationType)=$var_rel_ProductComprisedOf]/pfx:RelatedEntities/pfx:MasterCatalogRecord)">
+                                        <pfx6:subProductDetails>
+                                            <xsl:for-each select="pfx:RelationshipData/pfx:Relationship[upper-case(pfx:RelationType)=$var_rel_ProductComprisedOf]/pfx:RelatedEntities/pfx:MasterCatalogRecord">
+                                                <pfx6:productSpecification>
+                                                    <pfx6:productID>
+                                                        <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_PRODUCTID]"/>
+                                                    </pfx6:productID>
+                                                    <xsl:if test="string-length(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_Name])>0">
+                                                        <pfx6:productName>
+                                                            <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_Name]"/>
+                                                        </pfx6:productName>
+                                                    </xsl:if>
+                                                    <pfx6:productDescription>
+                                                        <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_SHORTDESC]"/>
+                                                    </pfx6:productDescription>
+                                                    <pfx6:classification>
+                                                        <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_RECORD_TYPE]"/>
+                                                    </pfx6:classification>
+                                                    <pfx6:lifecycleStatus>
+                                                        <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_lifecyclestatus]"/>
+                                                    </pfx6:lifecycleStatus>
+                                                    <pfx6:startDateTime>
+                                                        <xsl:value-of select="if(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_StartDate]!=&quot;&quot;) &#xA;then concat(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_StartDate],'00:00:00')&#xA;else '2001-01-01T00:00:00'"/>
+                                                    </pfx6:startDateTime>
+                                                    <pfx6:endDateTime>
+                                                        <xsl:value-of select="if(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_EndDate]!=&quot;&quot;) &#xA;then concat(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_EndDate],'00:00:00')&#xA;else '2099-01-01T00:00:00'"/>
+                                                    </pfx6:endDateTime>
+                                                    <pfx7:productPriceSpecification>
+                                                        <pfx7:price>
+                                                            <xsl:value-of select="0"/>
+                                                        </pfx7:price>
+                                                    </pfx7:productPriceSpecification>
+                                                </pfx6:productSpecification>
+                                            </xsl:for-each>
+                                        </pfx6:subProductDetails>
+                                    </xsl:if>
+                                    <pfx6:startDateTime>
+                                        <xsl:value-of select="if(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_StartDate]!=&quot;&quot;) &#xA;then concat(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_StartDate],'T00:00:00')&#xA;else '2001-01-01T00:00:00'"/>
+                                    </pfx6:startDateTime>
+                                    <pfx6:endDateTime>
+                                        <xsl:value-of select="if(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_EndDate]!=&quot;&quot;) &#xA;then concat(pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_EndDate],'T00:00:00')&#xA;else '2099-01-01T00:00:00'"/>
+                                    </pfx6:endDateTime>
+                                    <xsl:choose>
+                                        <xsl:when test="exists(pfx:RelationshipData/pfx:Relationship[upper-case(pfx:RelationType)=$var_rel_ProductPricedBy]/pfx:RelatedEntities/pfx:MasterCatalogRecord)">
+                                            <xsl:for-each select="pfx:RelationshipData/pfx:Relationship[upper-case(pfx:RelationType)=$var_rel_ProductPricedBy]/pfx:RelatedEntities/pfx:MasterCatalogRecord">
+                                                <pfx7:productPriceSpecification>
+                                                    <pfx7:price>
+                                                        <xsl:value-of select="0"/>
+                                                    </pfx7:price>
+                                                </pfx7:productPriceSpecification>
+                                            </xsl:for-each>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <pfx7:productPriceSpecification>
+                                                <pfx7:price>
+                                                    <xsl:value-of select="0"/>
+                                                </pfx7:price>
+                                            </pfx7:productPriceSpecification>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                    <pfx6:productCharacteristics>
+                                        <xsl:for-each select="pfx:RelationshipData/pfx:Relationship[upper-case(pfx:RelationType)=$var_rel_CHARACTERISTIC]/pfx:RelatedEntities/pfx:MasterCatalogRecord">
+                                            <pfx8:UDF>
+                                                <pfx8:name>
+                                                    <xsl:value-of select="pfx:ExternalKeys/pfx:Key[upper-case(@name)=$var_PRODUCTID]"/>
+                                                </pfx8:name>
+                                                <xsl:choose>
+                                                    <xsl:when test="string-length(following-sibling::pfx:RelationshipAttributes/pfx:Attribute[upper-case(@name)=upper-case('RelationshipValue')])>0">
+                                                        <pfx8:value>
+                                                            <xsl:value-of select="following-sibling::pfx:RelationshipAttributes/pfx:Attribute[upper-case(@name)=upper-case('RelationshipValue')]"/>
+                                                        </pfx8:value>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <pfx8:value>
+                                                            <xsl:value-of select="&quot;NA&quot;"/>
+                                                        </pfx8:value>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </pfx8:UDF>
+                                        </xsl:for-each>
+                                        <pfx8:UDF>
+                                            <pfx8:name>
+                                                <xsl:value-of select="&quot;ProductType&quot;"/>
+                                            </pfx8:name>
+                                            <pfx8:value>
+                                                <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_SUBSET_TYPE]"/>
+                                            </pfx8:value>
+                                        </pfx8:UDF>
+                                    </pfx6:productCharacteristics>
+                                    <xsl:for-each select="pfx:RelationshipData/pfx:Relationship[upper-case(pfx:RelationType)=$var_rel_PriceAlteredByAllowance]/pfx:RelatedEntities/pfx:MasterCatalogRecord">
+                                        <ns3:productAllowance>
+                                            <ns3:allowanceID>
+                                                <xsl:value-of select="pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_PRODUCTID]"/>
+                                            </ns3:allowanceID>
+                                            <ns3:lifeCycleStatus>
+                                                <xsl:value-of select="{-- pfx:EntityData/pfx:Attribute[upper-case(@name)=$var_lifecyclestatus] --}&#xA;&quot;Available&quot;"/>
+                                            </ns3:lifeCycleStatus>
+                                            <ns3:allowanceValue>
+                                                <xsl:value-of select="0"/>
+                                            </ns3:allowanceValue>
+                                            <ns3:allowanceValueCurrency>
+                                                <xsl:value-of select="&quot;GBP&quot;"/>
+                                            </ns3:allowanceValueCurrency>
+                                        </ns3:productAllowance>
+                                    </xsl:for-each>
+                                </pfx6:productSpecification>
+                            </xsl:for-each>
+                        </xsl:if>
+                    </pfx5:GetProductsResponse>
+                </group>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Assign">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>662</pd:x>
+            <pd:y>170</pd:y>
+            <config>
+                <variableName>Variable0</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <Counter>
+                        <xsl:value-of select="$Variable0/root/Range+$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/StartCount"/>
+                    </Counter>
+                    <Range>
+                        <xsl:value-of select="$Variable0/root/Range + $_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/MaxCount"/>
+                    </Range>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="SendSVOSCoreEvent">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>814</pd:x>
+            <pd:y>170</pd:y>
+            <config>
+                <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/SendSVOSCoreEvent.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:for-each select="$QueryResponse/group/pfx5:GetProductsResponse/pfx6:productSpecification">
+                        <Products>
+                            <ProductID>
+                                <xsl:value-of select="pfx6:productID"/>
+                            </ProductID>
+                            <ProductName>
+                                <xsl:value-of select="pfx6:productDescription"/>
+                            </ProductName>
+                            <xsl:if test="pfx6:endDateTime">
+                                <ProductEndOfLife>
+                                    <xsl:value-of select="pfx6:endDateTime"/>
+                                </ProductEndOfLife>
+                            </xsl:if>
+                            <ProductType>
+                                <xsl:value-of select="current()/pfx6:productCharacteristics/pfx8:UDF[pfx8:name=&quot;ProductType&quot;]/pfx8:value"/>
+                            </ProductType>
+                            <pfx5:Characteristics>
+                                <xsl:for-each select="pfx6:productCharacteristics/pfx8:UDF">
+                                    <pfx5:UDF>
+                                        <pfx5:name>
+                                            <xsl:value-of select="pfx8:name"/>
+                                        </pfx5:name>
+                                        <pfx5:value>
+                                            <xsl:value-of select="pfx8:value"/>
+                                        </pfx5:value>
+                                    </pfx5:UDF>
+                                </xsl:for-each>
+                            </pfx5:Characteristics>
+                        </Products>
+                    </xsl:for-each>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Initialize">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>117</pd:x>
+        <pd:y>162</pd:y>
+        <config>
+            <variableName>Variable0</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Counter>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/StartCount"/>
+                </Counter>
+                <Range>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/MaxCount"/>
+                </Range>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Initialize</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialize</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

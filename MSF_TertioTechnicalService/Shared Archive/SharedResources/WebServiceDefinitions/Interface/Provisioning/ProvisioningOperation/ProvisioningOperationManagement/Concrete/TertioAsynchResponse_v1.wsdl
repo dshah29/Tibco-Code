@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns1="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" xmlns:ns3="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:tns="http://xmlns.example.com/1454429760625" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:ns0="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://xmlns.example.com/1454429760625">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+        </xs:schema>
+        <xsd:schema xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" version="$Id: UDF_v1.xsd 5229 2015-10-21 10:25:34Z mgarg $">
+            <xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"/>
+            <xsd:complexType name="UserDefinedField">
+                <xsd:sequence>
+                    <xsd:element name="name" type="BASE:PopulatedString"/>
+                    <xsd:element name="value" type="BASE:PopulatedString"/>
+                    <xsd:element minOccurs="0" name="dateExpressed" type="xsd:date"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="UDF" type="udf:UserDefinedField"/>
+        </xsd:schema>
+        <xs:schema xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tertio="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1">
+            <xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"/>
+            <xs:complexType name="ProvidentRequest">
+                <xs:sequence>
+                    <xs:element name="ProvisioningAction" type="xs:string"/>
+                    <xs:element minOccurs="0" name="OrderPriority" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="RequestAttributes" type="udf:UserDefinedField"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ProvidentResponse">
+                <xs:sequence>
+                    <xs:element name="ProvisioningAction" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="ResponseAttributes" type="udf:UserDefinedField"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="ProvidentRequest" type="tertio:ProvidentRequest"/>
+            <xs:element name="ProvidentResponse" type="tertio:ProvidentResponse"/>
+        </xs:schema>
+        <xsd:schema xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" version="$Id: BaseTypes_v1.xsd 5229 2015-10-21 10:25:34Z mgarg $">
+            <xsd:simpleType name="BAN">
+                <xsd:restriction base="xsd:integer">
+                    <xsd:pattern value="[0-9]+"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="BEN">
+                <xsd:restriction base="xsd:integer">
+                    <xsd:pattern value="[0-9]+"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="CTN">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="(07|[+]?447)[0-9]{9}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="EMAILADDRESS">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="([\.a-zA-Z0-9_\-])+@([\.a-zA-Z0-9_\-])+(([\.a-zA-Z0-9_\-])*\.([\.a-zA-Z0-9_\-])+)+"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="ICCID">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[0-9]{19,22}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="IMEI">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[0-9]{15,16}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="IMSI">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[0-9]{15}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="MSISDN">
+                <xsd:restriction base="BASE:CTN"/>
+            </xsd:simpleType>
+            <xsd:simpleType name="PHONENUMBER">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[+]?[0-9]{5,15}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="POSITIVEINT">
+                <xsd:restriction base="xsd:integer">
+                    <xsd:pattern value="[0-9]+"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="POSTCODE">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[a-zA-Z0-9 ]{2,20}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="PRICE">
+                <xsd:restriction base="xsd:decimal"/>
+            </xsd:simpleType>
+            <xsd:simpleType name="PopulatedString">
+                <xsd:restriction base="xsd:string">
+                    <xsd:minLength value="1"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="SIM">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[0-9]{19,22}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="SMSNUMBER">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="[+]?[0-9]{3,15}"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="SMTP_EMAILADDRESS">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="([\.a-zA-Z0-9_\-])+@([\.a-zA-Z0-9_\-])+(([\.a-zA-Z0-9_\-])*\.([\.a-zA-Z0-9_\-])+)+"/>
+                    <xsd:pattern value="[^&lt;]*&lt;([\.a-zA-Z0-9_\-])+@([\.a-zA-Z0-9_\-])+(([\.a-zA-Z0-9_\-])*\.([\.a-zA-Z0-9_\-])+)+>"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="UUID">
+                <xsd:restriction base="xsd:string">
+                    <xsd:pattern value="([a-fA-F0-9]{8})-([a-fA-F0-9]{4})-([a-fA-F0-9]{4})-([a-fA-F0-9]{4})-([a-fA-F0-9]{12})"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:simpleType name="VersionMarker">
+                <xsd:restriction base="xsd:string">
+                    <xsd:maxLength value="0"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+            <xsd:element name="BAN" type="BASE:BAN"/>
+            <xsd:element name="BEN" type="BASE:BEN"/>
+            <xsd:element name="CTN" type="BASE:CTN"/>
+            <xsd:element name="EMAILADDRESS" type="BASE:EMAILADDRESS"/>
+            <xsd:element name="ICCID" type="BASE:ICCID"/>
+            <xsd:element name="IMEI" type="BASE:IMEI"/>
+            <xsd:element name="IMSI" type="BASE:IMSI"/>
+            <xsd:element name="MSISDN" type="BASE:MSISDN"/>
+            <xsd:element name="PHONENUMBER" type="BASE:PHONENUMBER"/>
+            <xsd:element name="POSITIVEINT" type="BASE:POSITIVEINT"/>
+            <xsd:element name="POSTCODE" type="BASE:POSTCODE"/>
+            <xsd:element name="PRICE" type="BASE:PRICE"/>
+            <xsd:element name="SIM" type="BASE:SIM"/>
+            <xsd:element name="SMTP_EMAILADDRESS" type="BASE:SMTP_EMAILADDRESS"/>
+            <xsd:element name="UUID" type="BASE:UUID"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:service name="TertioAsynchResponse_v1">
+        <wsdl:port binding="tns:SOAPJMSBinding" name="SOAPJMS">
+            <soap:address location=""/>
+            <jms:connectionFactory>TopicConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="topic">MCE.DEV.REQ.PROV.PROVOPS.PROVOPSMGT.MCTERTIOASYNCHRESP.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="TertioAsynchResponse_v1">
+        <wsdl:operation name="ProvidentResponse">
+            <wsdl:input message="tns:ProvidentResponseRequest"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SOAPJMSBinding" type="tns:TertioAsynchResponse_v1">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="bytes"/>
+        <wsdl:operation name="ProvidentResponse">
+            <soap:operation soapAction="SOAPJMS/ProvidentResponse" style="document"/>
+            <wsdl:input>
+                <soap:body parts="request" use="literal"/>
+                <soap:header message="tns:MessageContext" part="context" use="literal"/>
+            </wsdl:input>
+            <wsdl:fault name="ExceptionInfo">
+                <soap:fault name="ExceptionInfo" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns0:MessageContext" name="context"/>
+    </wsdl:message>
+    <wsdl:message name="ProvidentResponseRequest">
+        <wsdl:part element="ns1:ProvidentResponse" name="request"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="fault"/>
+    </wsdl:message>
+</wsdl:definitions>

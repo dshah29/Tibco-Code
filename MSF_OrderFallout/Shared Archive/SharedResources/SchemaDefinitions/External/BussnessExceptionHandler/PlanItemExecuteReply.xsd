@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/PlanItemExecuteReply.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/PlanItemExecuteReply.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="PlanItemExecuteReplyRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PlanID"/>
+				<xs:element ref="PlanItemID"/>
+				<xs:element ref="ErrorCode"/>
+				<xs:element ref="OrderID"/>
+				<xs:element ref="OrderRef"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PlanItemExecuteReplyResponse">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Status"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PlanID" type="xs:string"/>
+	<xs:element name="PlanItemID" type="xs:string"/>
+	<xs:element name="ErrorCode" type="xs:string"/>
+	<xs:element name="OrderID" type="xs:string"/>
+	<xs:element name="OrderRef" type="xs:string"/>
+	<xs:element name="Status" type="xs:string"/>
+</xs:schema>

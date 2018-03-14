@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>MSF-JMS-SOAP-Properties</name>
+    <resourceType>ae.shared.JMSAppPropResource</resourceType>
+    <config>
+        <Properties>
+            <row>
+                <PropertyName>JMS_TIBCO_COMPRESS</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+            <row>
+                <PropertyName>JMS_TIBCO_SENDER</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+            <row>
+                <PropertyName>JMS_TIBCO_PRESERVE_UNDELIVERED</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+            <row>
+                <PropertyName>JMS_TIBCO_MSG_TRACE</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+            <row>
+                <PropertyName>SoapAction</PropertyName>
+                <Type>string</Type>
+                <Cardinality>optional</Cardinality>
+            </row>
+        </Properties>
+    </config>
+</BWSharedResource>

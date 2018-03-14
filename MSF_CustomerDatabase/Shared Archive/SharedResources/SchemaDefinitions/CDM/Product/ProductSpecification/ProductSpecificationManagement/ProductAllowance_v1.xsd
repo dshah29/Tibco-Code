@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:alw="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1"
+	 version="$Id: ProductAllowance_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../../Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="ProductAllowanceDetails">
+		<xsd:sequence>
+			<xsd:element name="allowanceID" type="pductBASE:AllowanceID"/>
+			<xsd:element name="allowanceName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="allowanceCharactersitcs" type="udf:UserDefinedField" minOccurs="0"/>
+			<xsd:element name="allowanceDescription" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="lifeCycleStatus" type="pductBASE:_PRODUCT_STATUS"/>
+			<xsd:element name="allowanceValue" type="BASE:PopulatedString"/>
+			<xsd:element name="allowanceValueCurrency" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ProductAllowance" type="alw:ProductAllowanceDetails"/>
+	<xsd:element name="productAllowance" type="alw:ProductAllowanceDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element ProductAllowance instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

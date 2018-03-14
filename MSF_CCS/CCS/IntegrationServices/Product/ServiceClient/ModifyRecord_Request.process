@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:ns2="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns41="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/Internal/v1" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:pfx5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn" xmlns:pfx3="http://schemas.tibco.com/bw/plugins/http/5.0/httpExceptions" xmlns:pfx2="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FC/MasterCatalogRecord_Action.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" location="/SharedResources/SchemaDefinitions/Resource/FC/Cim_Services.wsdl"/>
+    <pd:name>IntegrationServices/Product/ServiceClient/ModifyRecord_Request.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="group">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="ns2:DataService"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>86</pd:startX>
+    <pd:startY>267</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <SucessCount>
+                <xsl:value-of select="$ModifyRecord/outputMessage/ns2:DataService/ns2:Transaction[1]/ns2:TransactionResult/ns2:SuccessCount"/>
+            </SucessCount>
+            <xsl:copy-of select="$ModifyRecord/outputMessage/ns2:DataService"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="SucessCount" type="xsd:string"/>
+                    <xsd:element ref="ns2:DataService" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1627</pd:endX>
+    <pd:endY>263</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="ns3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1418812148777</pd:targetNamespace>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>314</pd:x>
+        <pd:y>41</pd:y>
+        <pd:width>688</pd:width>
+        <pd:height>438</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>repeat</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>loopCount</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:repeatCondition>$ModifyRecord/outputMessage/ns2:DataService/ns2:Transaction/ns2:TransactionResult/ns2:SuccessCount &lt;=1</pd:repeatCondition>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>ModifyRecord</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ModifyRecord</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Sleep</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ModifyRecord</pd:from>
+            <pd:to>Null</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-52429</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null</pd:from>
+            <pd:to>Create Exception Send Error</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$loopCount &gt; $_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/RetryCount</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Create Exception Send Error</pd:from>
+            <pd:to>Generate Exception</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null</pd:from>
+            <pd:to>Log</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log</pd:from>
+            <pd:to>Sleep</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="ModifyRecord">
+            <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+            <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+            <pd:x>443</pd:x>
+            <pd:y>102</pd:y>
+            <config>
+                <timeout>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Timeout%%</timeout>
+                <soapAttachmentStyle>SwA</soapAttachmentStyle>
+                <timeoutType>Seconds</timeoutType>
+                <service>pfx:CIMServices</service>
+                <servicePort>CIMHttpPort</servicePort>
+                <operation>MasterCatalogRecordAction</operation>
+                <soapAction>MasterCatalogRecordAction</soapAction>
+                <endpointURL>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/EndPointURL%%</endpointURL>
+                <authScheme>NONE</authScheme>
+            </config>
+            <pd:inputBindings>
+                <inputMessage>
+                    <xsl:copy-of select="$Start/group/ns2:DataService"/>
+                </inputMessage>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Null">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>438</pd:x>
+            <pd:y>272</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="Log">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>575</pd:x>
+            <pd:y>426</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Logging/Log.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <level>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Logging/Levels/INFO"/>
+                    </level>
+                    <message>
+                        <xsl:value-of select="concat('JMS Exception: ', $_error/ns1:ErrorReport/MsgCode, ' on operation attempt ', $loopCount, ' - Retrying after pause *******')"/>
+                    </message>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Sleep">
+            <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+            <pd:resourceType>ae.activities.sleep</pd:resourceType>
+            <pd:x>744</pd:x>
+            <pd:y>426</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns0:SleepInputSchema>
+                    <IntervalInMillisec>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/RetryInterval * 1000"/>
+                    </IntervalInMillisec>
+                </ns0:SleepInputSchema>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Create Exception Send Error">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>612</pd:x>
+            <pd:y>282</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Exceptions/CreateException_JMSSendError.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <destinationName>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/EndPointURL"/>
+                    </destinationName>
+                    <jmsQueueOrTopicName>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/EndPointURL"/>
+                    </jmsQueueOrTopicName>
+                    <xsl:copy-of select="$_error/ns1:ErrorReport"/>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Generate Exception">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>775</pd:x>
+            <pd:y>276</pd:y>
+            <config>
+                <faultName>Schema0</faultName>
+            </config>
+            <pd:inputBindings>
+                <ns4:ActivityInput>
+                    <data>
+                        <xsl:copy-of select="$Create-Exception-Send-Error/root/ns3:Exception"/>
+                    </data>
+                </ns4:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Create Known Business Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1299</pd:x>
+        <pd:y>539</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ExceptionCodes/RecordExists/Code"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ExceptionCodes/RecordExists/Description"/>
+                </Description>
+                <xsl:copy-of select="$_error/ns1:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Known Business Exception">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>1584</pd:x>
+        <pd:y>536</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns4:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$Create-Known-Business-Exception/root/ns3:Exception"/>
+                </data>
+            </ns4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogResponse">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1292</pd:x>
+        <pd:y>380</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$ModifyRecord/outputMessage"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Response Code Check">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>1292</pd:x>
+        <pd:y>273</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1465</pd:x>
+        <pd:y>265</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$ModifyRecord/outputMessage/ns2:DataService"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>200</pd:x>
+        <pd:y>269</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/group/ns2:DataService"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Response Code Check</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Code Check</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($ModifyRecord/outputMessage)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Code Check</pd:from>
+        <pd:to>LogResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Known Business Exception</pd:from>
+        <pd:to>Generate Known Business Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogResponse</pd:from>
+        <pd:to>Create Known Business Exception</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

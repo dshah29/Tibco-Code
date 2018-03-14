@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:ns4="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns5="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:ns6="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" targetNamespace="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+    <import namespace="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" location="../../../../../SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1.xsd"/>
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <message name="GetProductPricesRequest">
+        <part element="ns6:GetProductPricesRequest" name="request"/>
+    </message>
+    <message name="GetProductPricesResponse">
+        <part element="ns6:GetProductPricesResponse" name="response"/>
+    </message>
+    <message name="ExceptionInfo">
+        <part name="fault" element="ns2:ExceptionInfo"/>
+    </message>
+    <message name="MessageContext">
+        <part element="ns3:MessageContext" name="context"/>
+    </message>
+    <message name="GetPackagePriceHistoryRequest">
+        <part element="ns6:GetPackagePriceHistoryRequest" name="request"/>
+    </message>
+    <message name="GetPackagePriceHistoryResponse">
+        <part element="ns6:GetPackagePriceHistoryResponse" name="response"/>
+    </message>
+    <portType name="PortType">
+        <operation name="GetProductPrices">
+            <input message="ns4:GetProductPricesRequest"/>
+            <output message="ns4:GetProductPricesResponse"/>
+            <fault message="ns4:ExceptionInfo" name="fault1"/>
+        </operation>
+        <operation name="GetPackagePriceHistory">
+            <input message="ns4:GetPackagePriceHistoryRequest"/>
+            <output message="ns4:GetPackagePriceHistoryResponse"/>
+            <fault message="ns4:ExceptionInfo" name="fault1"/>
+        </operation>
+    </portType>
+</definitions>

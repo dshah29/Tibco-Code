@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:ord="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1"
+	 xmlns:ordItm="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:disct="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:payType="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1"
+	 xmlns:ordBASE="http://three.co.uk/xsd/cdm/order/ordertypes/orderbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1"
+	 version="$Id: Order_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1" schemaLocation="../../Common/CommonDefinitions/Discount_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1" schemaLocation="../../Billing/BillingPayment/BillingPaymentManagement/PaymentType_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1" schemaLocation="OrderItem_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/order/ordertypes/orderbasetypes/v1" schemaLocation="../OrderTypes/OrderBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!--Defines a list of lifecycle statuses for Order-->
+	<xsd:simpleType name="__ORDER_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PENDING"/>
+			<xsd:enumeration value="COMPLETED"/>
+			<xsd:enumeration value="CANCELLED"/>
+			<xsd:enumeration value="OPEN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_ORDER_STATUS">
+		<xsd:union memberTypes="ord:__ORDER_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="OrderDetails">
+		<xsd:sequence>
+			<xsd:element name="orderID" type="ordBASE:OrderID"/>
+			<xsd:element name="orderStatus" type="ord:_ORDER_STATUS"/>
+			<xsd:element name="orderDate" type="xsd:date"/>
+			<xsd:element name="dateOrderFulfilled" type="xsd:date" minOccurs="0"/>
+			<xsd:element ref="disct:discount" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="totalOrderCost" type="BASE:PopulatedString"/>
+			<xsd:element name="orderCurrency" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="customerID" type="BASE:PopulatedString"/>
+			<xsd:element name="customerAccountID" type="BASE:PopulatedString"/>
+			<xsd:element ref="udf:UDF" minOccurs="0" maxOccurs="unbounded"/>
+
+			<!-- we will use the type in address to define invoice address -->
+			<xsd:element ref="addr:address" minOccurs="0"/>
+			<xsd:element ref="ordItm:orderItem" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="OrderPayment">
+		<xsd:sequence>
+			<xsd:element name="paymentID" type="BASE:PopulatedString"/>
+			<xsd:element ref="payType:paymentType" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="paymentDate" type="xsd:date"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Simple aggregation point.-->
+	<xsd:complexType name="Order">
+		<xsd:sequence>
+			<xsd:element name="orderDetails" type="ord:OrderDetails"/>
+			<xsd:element name="orderPayment" type="ord:OrderPayment" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--This is used for reference purposes-->
+	<xsd:element name="Order" type="ord:Order"/>
+	<xsd:element name="order" type="ord:Order">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Order instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://api.brm.n2.tibco.com" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://services.brm.n2.tibco.com/WorkItemManagementService_1.6.0" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:pfx3="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" xmlns:pfx2="http://www.tibco.com/aff/oms/service/soap" xmlns:pfx="http://services.brm.n2.tibco.com/WorkListService_1.6.0">
+    <wsdl:import namespace="http://services.brm.n2.tibco.com/WorkListService_1.6.0" location="/SharedResources/WebServiceDefinitions/Interface/BPM/WorkList.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/BulkRelease_v1/Sub/CreateCSVFile.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="ErrorCode" type="xsd:string"/>
+                    <xsd:element name="FilterString" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="UserID" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>39</pd:startX>
+    <pd:startY>228</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1163</pd:endX>
+    <pd:endY>216</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables>
+        <DateTimeVariable>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="CurrentDateTime" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </DateTimeVariable>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1444137149965</pd:targetNamespace>
+    <pd:group name="OuterGroup">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>325</pd:x>
+        <pd:y>48</pd:y>
+        <pd:width>548</pd:width>
+        <pd:height>348</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$getWorkListItems/ns:getWorkListItemsResponse/workItems</pd:over>
+            <pd:iterationElementSlot>currentWorkitem</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>getPlanItems</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Write-Exception-Query-Response</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>InnerGroup</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>getPlanItems</pd:from>
+            <pd:to>InnerGroup</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>getPlanItems</pd:from>
+            <pd:to>Render-Exception-Query-Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render-Exception-Query-Response</pd:from>
+            <pd:to>Write-Exception-Query-Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="getPlanItems">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>414</pd:x>
+            <pd:y>232</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/getPlanItems.process</processName>
+            </config>
+            <pd:inputBindings>
+                <pfx4:GetPlanItemsRequest>
+                    <pfx4:planID>
+                        <xsl:value-of select="$getWorkListItems/ns:getWorkListItemsResponse/workItems[$i]/attributes/@attribute4"/>
+                    </pfx4:planID>
+                    <pfx4:planItem>
+                        <pfx4:planItemID>
+                            <xsl:value-of select="$getWorkListItems/ns:getWorkListItemsResponse/workItems[$i]/attributes/@attribute3"/>
+                        </pfx4:planItemID>
+                    </pfx4:planItem>
+                </pfx4:GetPlanItemsRequest>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:group name="InnerGroup">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>483</pd:x>
+            <pd:y>88</pd:y>
+            <pd:width>304</pd:width>
+            <pd:height>159</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$getPlanItems/pfx4:GetPlanItemsReply/pfx4:planItem/pfx4:udf</pd:over>
+                <pd:iterationElementSlot>currudf</pd:iterationElementSlot>
+                <pd:indexSlot>j</pd:indexSlot>
+                <pd:outSlot>testrender</pd:outSlot>
+                <pd:activityOutputName>Render PlanItems Data</pd:activityOutputName>
+                <pd:accumulateOutput>false</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>Render PlanItems Data</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Write-PlanItemResponse</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Render PlanItems Data</pd:from>
+                <pd:to>Write-PlanItemResponse</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="Render PlanItems Data">
+                <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+                <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+                <pd:x>586</pd:x>
+                <pd:y>182</pd:y>
+                <config>
+                    <ParseSharedConfig>/SharedResources/DataFormats/PlanItemGetTemplates/PlanItemGetResponseFormat.sharedparse</ParseSharedConfig>
+                </config>
+                <pd:inputBindings>
+                    <Rows>
+                        <xsl:if test="contains($Start/root/FilterString, concat(',',$currudf/pfx4:udf/pfx4:name,','))">
+                            <root>
+                                <UserID>
+                                    <xsl:value-of select="$Start/root/UserID"/>
+                                </UserID>
+                                <xsl:if test="$currentWorkitem/workItems/attributes/@attribute28">
+                                    <OrderRef>
+                                        <xsl:value-of select="$currentWorkitem/workItems/attributes/@attribute28"/>
+                                    </OrderRef>
+                                </xsl:if>
+                                <PlanID>
+                                    <xsl:value-of select="$currentWorkitem/workItems/attributes/@attribute4"/>
+                                </PlanID>
+                                <PlanItemID>
+                                    <xsl:value-of select="$currentWorkitem/workItems/attributes/@attribute3"/>
+                                </PlanItemID>
+                                <flavour>
+                                    <xsl:value-of select="$currudf/pfx4:udf/pfx4:flavor"/>
+                                </flavour>
+                                <Name>
+                                    <xsl:value-of select="$currudf/pfx4:udf/pfx4:name"/>
+                                </Name>
+                                <Value>
+                                    <xsl:value-of select="$currudf/pfx4:udf/pfx4:value"/>
+                                </Value>
+                            </root>
+                        </xsl:if>
+                    </Rows>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Write-PlanItemResponse">
+                <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+                <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+                <pd:x>699</pd:x>
+                <pd:y>172</pd:y>
+                <config>
+                    <encoding>text</encoding>
+                    <compressFile>None</compressFile>
+                    <append>true</append>
+                </config>
+                <pd:inputBindings>
+                    <ns2:WriteActivityInputTextClass>
+                        <fileName>
+                            <xsl:value-of select="concat($_globalVariables/ns3:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Local/LocalFileDirectoryResponse,$_globalVariables/ns3:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/FileName/PlanItemQuery,&quot;.csv&quot;)"/>
+                        </fileName>
+                        <xsl:choose>
+                            <xsl:when test="$i=1and $j =1">
+                                <textContent>
+                                    <xsl:value-of select="concat('UserID,','OrderRef,','PlanID,','PlanItemID,','Flavour,','Name,','Value',&quot;&#xA;&quot;,$Render-PlanItems-Data/Text)"/>
+                                </textContent>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <textContent>
+                                    <xsl:value-of select="$Render-PlanItems-Data/Text"/>
+                                </textContent>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <addLineSeparator>
+                            <xsl:value-of select="0"/>
+                        </addLineSeparator>
+                    </ns2:WriteActivityInputTextClass>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+        <pd:activity name="Render-Exception-Query-Response">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>556</pd:x>
+            <pd:y>302</pd:y>
+            <config>
+                <ParseSharedConfig>/SharedResources/DataFormats/BusinessExceptionQueryTemplates/ExceptionQueryResponseFormat.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <root>
+                        <WorkItemID>
+                            <xsl:value-of select="$currentWorkitem/workItems/id/@id"/>
+                        </WorkItemID>
+                        <OrderRef>
+                            <xsl:value-of select="$currentWorkitem/workItems/attributes/@attribute28"/>
+                        </OrderRef>
+                        <OrderID>
+                            <xsl:value-of select="$currentWorkitem/workItems/attributes/@attribute27"/>
+                        </OrderID>
+                        <DateCreated>
+                            <xsl:value-of select="$currentWorkitem/workItems/header/@startDate"/>
+                        </DateCreated>
+                        <ErrorCode>
+                            <xsl:value-of select="$currentWorkitem/workItems/attributes/@attribute32"/>
+                        </ErrorCode>
+                    </root>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Write-Exception-Query-Response">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>732</pd:x>
+            <pd:y>301</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+            </config>
+            <pd:inputBindings>
+                <ns2:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="concat($_globalVariables/ns3:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Local/LocalFileDirectoryResponse,$_globalVariables/ns3:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/FileName/ListExceptions,'.csv')"/>
+                    </fileName>
+                    <xsl:choose>
+                        <xsl:when test="$i=1">
+                            <textContent>
+                                <xsl:value-of select="concat('WorkItemID,','OrderRef,','OrderID,','DateCreated,','ErrorCode,','ErrorDescription,','State,','PlanID,','PlanItemID,',&quot;&#xD;&#xA;&quot;,$Render-Exception-Query-Response/Text)"/>
+                            </textContent>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <textContent>
+                                <xsl:value-of select="$Render-Exception-Query-Response/Text"/>
+                            </textContent>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </ns2:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="AssignFileName">
+        <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+        <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+        <pd:x>253</pd:x>
+        <pd:y>229</pd:y>
+        <config>
+            <variableName>DateTimeVariable</variableName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <CurrentDateTime>
+                    <xsl:value-of select="concat(substring-before(current-dateTime(),&quot;:&quot;), substring(current-dateTime(), 15, 2))"/>
+                </CurrentDateTime>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="getWorkListItems">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>138</pd:x>
+        <pd:y>228</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/BulkRelease_v1/Sub/GetWorkListItems.process</processName>
+        </config>
+        <pd:inputBindings>
+            <getWorkListItemsRequest>
+                <ErrorCode>
+                    <xsl:value-of select="$Start/root/ErrorCode"/>
+                </ErrorCode>
+            </getWorkListItemsRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files PlanItem Response">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>944</pd:x>
+        <pd:y>230</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Write-PlanItemResponse/ns2:WriteActivityOutputClass/fileInfo/fullName"/>
+                </LocalResponseFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put File Exception Query Response">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1065</pd:x>
+        <pd:y>234</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Write-Exception-Query-Response/ns2:WriteActivityOutputClass/fileInfo/fullName"/>
+                </LocalResponseFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>getWorkListItems</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>getWorkListItems</pd:from>
+        <pd:to>AssignFileName</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>OuterGroup</pd:from>
+        <pd:to>SFTP Put Files PlanItem Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AssignFileName</pd:from>
+        <pd:to>OuterGroup</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files PlanItem Response</pd:from>
+        <pd:to>SFTP Put File Exception Query Response</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put File Exception Query Response</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

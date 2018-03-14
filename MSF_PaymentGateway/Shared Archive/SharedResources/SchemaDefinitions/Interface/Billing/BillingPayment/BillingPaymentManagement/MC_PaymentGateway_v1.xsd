@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:cc="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1"
+	 xmlns:bnkDtls="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1"
+	 xmlns:CHNL="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:payGatewy="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1"
+	 xmlns:BILL_TYP="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingtypes/v1"
+	 xmlns:payDtls="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymentdetails/v1"
+	 xmlns:billBASE="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1"
+	 xmlns:ns0="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1.xsd"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 targetNamespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../../CDM/Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Types_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1" schemaLocation="../../../../CDM/Billing/BillingPayment/BillingPaymentManagement/CreditCardDetails_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1" schemaLocation="../../../../CDM/Billing/BillingPayment/BillingPaymentManagement/BankDetails_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Channel_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Status_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingtypes/v1" schemaLocation="../../../../CDM/Billing/BillingCommon/BillingEnumerations/BillingTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymentdetails/v1" schemaLocation="../../../../CDM/Billing/BillingPayment/BillingPaymentManagement/PaymentDetails_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1" schemaLocation="../../../../CDM/Billing/BillingTypes/BillingBaseTypes_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/Address_v1.xsd"/>
+	<xs:simpleType name="__PAYMENT_METHOD_TYPE__BASE__">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RECURRING"/>
+			<xs:enumeration value="DIRECT-DEBIT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_PAYMENT_METHOD_TYPE">
+		<xs:union memberTypes="payGatewy:__PAYMENT_METHOD_TYPE__BASE__ BASE:PopulatedString"/>
+	</xs:simpleType>
+	<xs:simpleType name="__BANK_ACCOUNT_TYPE__BASE__">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UK000005010"/>
+			<xs:enumeration value="UK000005011"/>
+			<xs:enumeration value="Single"/>
+			<xs:enumeration value="Single Signatory"/>
+			<xs:enumeration value="14"/>
+			<xs:enumeration value="15"/>
+			<xs:enumeration value="Joint Signatory"/>
+			<xs:enumeration value="Joint"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="_BANK_ACCOUNT_TYPE">
+		<xs:union memberTypes="payGatewy:__BANK_ACCOUNT_TYPE__BASE__ BASE:PopulatedString"/>
+	</xs:simpleType>
+	<xs:complexType name="GetPaymentMethodDetailsRequest">
+		<xs:sequence>
+			<xs:element name="BAN" type="BASE:BAN"/>
+			<xs:element name="lastPayment" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="effectiveDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="paymentMethodType" type="payGatewy:_PAYMENT_METHOD_TYPE"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetPaymentMethodDetailsResponse">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element ref="payGatewy:PaymentCardDetails"/>
+				<xs:element ref="payGatewy:BankAccountDetails"/>
+			</xs:choice>
+			<xs:element ref="payGatewy:effectiveFromDate" minOccurs="0"/>
+			<xs:element ref="payGatewy:effectiveToDate" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element name="end10" type="BASE:VersionMarker"/>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PaymentCardDetails" type="cc:CreditCardDetails"/>
+	<xs:element name="BankAccountDetails" type="payGatewy:BankAccountDetails"/>
+	<xs:complexType name="BankAccountDetails">
+		<xs:sequence>
+			<xs:element ref="bnkDtls:bankDetails" maxOccurs="unbounded"/>
+			<xs:element name="bankAccountType" type="payGatewy:_BANK_ACCOUNT_TYPE"/>
+			<xs:element name="bacsCoreRefNumber" type="xs:integer" minOccurs="0"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetSubscriberCardListRequest">
+		<xs:sequence>
+			<xs:element name="BAN" type="BASE:BAN"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetSubscriberCardListResponse">
+		<xs:sequence>
+			<xs:element ref="payGatewy:PaymentCards"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaymentCards">
+		<xs:sequence>
+			<xs:element ref="payGatewy:PaymentCard" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PaymentCards" type="payGatewy:PaymentCards"/>
+	<xs:complexType name="PaymentCard">
+		<xs:sequence>
+			<xs:element name="cardID" type="xs:int"/>
+			<xs:element name="acquirerID" type="BASE:PopulatedString"/>
+			<xs:element ref="payGatewy:obscuredCardNumber"/>
+			<xs:element ref="payGatewy:PaymentCardDetails"/>
+			<xs:element name="postcodeNumber" type="BASE:POSITIVEINT" minOccurs="0"/>
+			<xs:element name="addressNumber" type="BASE:POSITIVEINT" minOccurs="0"/>
+			<xs:element name="paymentMethodType" type="BILL_TYP:_PAYMENT_TYPES"/>
+			<xs:element name="cardSynonym" type="BASE:PopulatedString"/>
+			<xs:element name="creationDateTime" type="xs:dateTime"/>
+			<xs:element name="defaultCard" type="xs:boolean"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PaymentCard" type="payGatewy:PaymentCard"/>
+	<xs:element name="GetPaymentMethodDetailsRequest" type="payGatewy:GetPaymentMethodDetailsRequest"/>
+	<xs:element name="GetPaymentMethodDetailsResponse" type="payGatewy:GetPaymentMethodDetailsResponse"/>
+	<xs:element name="GetSubscriberCardListRequest" type="payGatewy:GetSubscriberCardListRequest"/>
+	<xs:element name="GetSubscriberCardListResponse" type="payGatewy:GetSubscriberCardListResponse"/>
+	<xs:element name="effectiveFromDate" type="xs:string"/>
+	<xs:element name="effectiveToDate" type="xs:string"/>
+	<xs:element name="obscuredCardNumber" type="xs:string"/>
+</xs:schema>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sequence name="TREStringInstanceHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.StringInstanceHashElement</elementType>
+    </sequence>
+    <sequence name="TRELongInstanceHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.LongInstanceHashElement</elementType>
+    </sequence>
+    <sequence name="TREDateInstanceHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.DateInstanceHashElement</elementType>
+    </sequence>
+    <sequence name="TREDoubleInstanceHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.DoubleInstanceHashElement</elementType>
+    </sequence>
+    <sequence name="TREAnyInstanceHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.AnyInstanceHashElement</elementType>
+    </sequence>
+    <sequence name="TREStringInstanceArray">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.StringInstance</elementType>
+    </sequence>
+    <sequence name="TRELongInstanceArray">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.LongInstance</elementType>
+    </sequence>
+    <sequence name="TREAnyInstanceArray">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.AnyInstance</elementType>
+    </sequence>
+    <sequence name="TREDoubleInstanceArray">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.DoubleInstance</elementType>
+    </sequence>
+    <sequence name="TREDateInstanceArray">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.DateInstance</elementType>
+    </sequence>
+    <sequence name="TRELongHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.LongHashElement</elementType>
+    </sequence>
+    <sequence name="TREDateArray">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</elementType>
+    </sequence>
+    <sequence name="TREStringArray">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="TREDoubleArray">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.r8</elementType>
+    </sequence>
+    <sequence name="TREStringHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.StringHashElement</elementType>
+    </sequence>
+    <sequence name="TREAnyHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.AnyHashElement</elementType>
+    </sequence>
+    <sequence name="TREDoubleHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.DoubleHashElement</elementType>
+    </sequence>
+    <sequence name="TRELongArray">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.i4</elementType>
+    </sequence>
+    <sequence name="TREAnyArray">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.any</elementType>
+    </sequence>
+    <sequence name="TREDateHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.DateHashElement</elementType>
+    </sequence>
+    <sequence name="TREAnyHash_RPPH">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.AnyHashElement_RPPH</elementType>
+    </sequence>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

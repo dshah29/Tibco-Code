@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+    <name>OutputContext</name>
+    <resourceType>service.context.definition</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <xsdString>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element ref="pfx:MessageContext"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsdString>
+    </config>
+</BWSharedResource>

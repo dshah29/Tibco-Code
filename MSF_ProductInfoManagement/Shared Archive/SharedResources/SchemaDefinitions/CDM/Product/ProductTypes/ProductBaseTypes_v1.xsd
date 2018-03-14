@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 version="$Id: ProductBaseTypes_v1.xsd 5416 2015-11-03 12:15:15Z mgarg $"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!--Defines a list of lifecycle statuses for products-->
+	<xsd:simpleType name="__PRODUCT_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="AVAILABLE"/>
+			<xsd:enumeration value="UNAVAILABLE"/>
+			<xsd:enumeration value="CANCELLED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_PRODUCT_STATUS">
+		<xsd:union memberTypes="pductBASE:__PRODUCT_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="OfferID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="AllowanceID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ProductID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z_ ]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="__TARRIF_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Voice"/>
+			<xsd:enumeration value="MBB"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_TARRIF_TYPE">
+		<xsd:union memberTypes="pductBASE:__TARRIF_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="offerID" type="pductBASE:OfferID"/>
+	<xsd:element name="allowanceID" type="pductBASE:AllowanceID"/>
+	<xsd:element name="productID" type="pductBASE:ProductID"/>
+	<xsd:element name="tarrifType" type="pductBASE:_TARRIF_TYPE"/>
+</xsd:schema>

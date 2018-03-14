@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:pp="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1"
+	 xmlns:po="http://three.co.uk/xsd/cdm/product/productoffering/productofferingmanagement/productoffering/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:ps="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 xmlns:lcn="http://three.co.uk/xsd/cdm/asset/assetspecification/location/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:off="http://three.co.uk/xsd/cdm/offer/offeritemdefinition/offer/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/product/productoffering/productofferingmanagement/productoffering/v1"
+	 version="$Id: ProductOffering_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../../../Common/CommonEnumerations/Types_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" schemaLocation="../../ProductSpecification/ProductSpecificationManagement/ProductSpecification_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1" schemaLocation="../../ProductSpecification/ProductSpecificationManagement/ProductPriceSpecification_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/asset/assetspecification/location/v1" schemaLocation="../../../Asset/AssetSpecification/Location_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/offer/offeritemdefinition/offer/v1" schemaLocation="../../../Offer/OfferItemDefinition/Offer_v1.xsd"/>
+	<xsd:complexType name="ProductOfferingDetails">
+		<xsd:sequence>
+			<xsd:element name="offerID" type="pductBASE:OfferID"/>
+			<xsd:element name="offerName" type="BASE:PopulatedString"/>
+			<xsd:element name="offerType" type="off:_OFFER_TYPE"/>
+			<xsd:element name="offerDescription" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="offerStartDateTime" type="xsd:dateTime"/>
+			<xsd:element name="offerEndDateTime" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element name="lifeCycleStatus" type="pductBASE:_PRODUCT_STATUS"/>
+			<xsd:element ref="lcn:location" minOccurs="0"/>
+			<xsd:element ref="pp:productPriceSpecification"/>
+			<xsd:element ref="ps:productSpecification"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ProductOffering" type="po:ProductOfferingDetails"/>
+	<xsd:element name="productOffering" type="po:ProductOfferingDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element ProductOffering instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

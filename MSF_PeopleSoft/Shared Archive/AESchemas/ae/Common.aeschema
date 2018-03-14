@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="Status">
+        <attribute>
+            <name>STATUS_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ERROR_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ERROR_DESCRIPTION</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="RequestMessage">
+        <attribute>
+            <name>MESSAGE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+    </class>
+    <class name="ResponseMessage">
+        <attribute>
+            <name>MESSAGE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ResultStatus">
+        <attribute>
+            <name>STATUS_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>ERROR_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>ERROR_DESCRIPTION</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+    </class>
+    <class name="CSVtree">
+        <attribute>
+            <name>record</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/Common.aeschema#sequence.SequenceOfString</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SecurityToken">
+        <attribute>
+            <name>DUMMY</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <class name="UserToken"/>
+    <class name="ResultStatus_1">
+        <attribute>
+            <name>STATUS_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+        </attribute>
+        <attribute>
+            <name>ERROR_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+        </attribute>
+        <attribute>
+            <name>ERROR_DESCRIPTION</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+        </attribute>
+    </class>
+    <class name="UserToken_1"/>
+    <class name="SecurityToken_1">
+        <attribute>
+            <name>DUMMY</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

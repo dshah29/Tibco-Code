@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" xmlns:ref="http://www.tibco.com/tnt/utilitySchema" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/order/orderitemdefinition/orderitem/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd" xmlns:ns22="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:pfx2="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_ext_to_eai" xmlns:pfx="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" xmlns:ns7="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_ext_to_eai" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/crm_ext_to_eai.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/MC_SO_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Service/ServiceOrder/ServiceOrderManagement/PSFT_TSO_v1.xsd"/>
+    <pd:name>IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/Sub/RequestTransformation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:TSO_DATA"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>49</pd:startX>
+    <pd:startY>60</pd:startY>
+    <pd:returnBindings>
+        <xsl:copy-of select="$TSOToCDM/ns7:SubmitServiceOrderRequest"/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="ns7:SubmitServiceOrderRequest"/>
+    <pd:endX>364</pd:endX>
+    <pd:endY>59</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1443676198211</pd:targetNamespace>
+    <pd:activity name="AEToTSO">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>155</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <element ref="pfx5:TSO_DATA"/>
+        </config>
+        <pd:inputBindings>
+            <TSO_DATA>
+                <xsl:copy-of select="$Start/root/TSO_DATA/TSOHEADER"/>
+                <TSOATTRIBUTES>
+                    <ATTRIBUTE>
+                        <xsl:attribute name="NAME">
+                            <xsl:value-of select="'isBillingIDUsed'"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="VALUE">
+                            <xsl:value-of select="'true'"/>
+                        </xsl:attribute>
+                    </ATTRIBUTE>
+                    <ATTRIBUTE>
+                        <xsl:attribute name="NAME">
+                            <xsl:value-of select="'isStatusNotificationNeeded'"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="VALUE">
+                            <xsl:value-of select="'true'"/>
+                        </xsl:attribute>
+                    </ATTRIBUTE>
+                    <xsl:copy-of select="$Start/root/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE"/>
+                    <xsl:copy-of select="$Start/root/TSO_DATA/TSOATTRIBUTES/CONTRACT"/>
+                    <xsl:copy-of select="$Start/root/TSO_DATA/TSOATTRIBUTES/LISTATTRIBUTES"/>
+                </TSOATTRIBUTES>
+                <xsl:copy-of select="$Start/root/TSO_DATA/LISTOPTION"/>
+            </TSO_DATA>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TSOToCDM">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>261</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <element ref="ns7:SubmitServiceOrderRequest"/>
+        </config>
+        <pd:inputBindings>
+            <ns7:SubmitServiceOrderRequest>
+                <xsl:variable name="listAttribute" select="count($Start/root/TSO_DATA/TSOATTRIBUTES/LISTATTRIBUTES)+1"/>
+                <ns7:salesChannel>
+                    <xsl:value-of select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME=&quot;SALES_CHANNEL&quot;]/@VALUE"/>
+                </ns7:salesChannel>
+                <ns7:orgID>
+                    <xsl:value-of select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME=&quot;ORGID&quot;]/@VALUE"/>
+                </ns7:orgID>
+                <ns7:agentID>
+                    <xsl:value-of select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME=&quot;SALES_AGENT&quot;]/@VALUE"/>
+                </ns7:agentID>
+                <ns7:ServiceOrder>
+                    <ns2:orderID>
+                        <xsl:value-of select="$AEToTSO/TSO_DATA/TSOHEADER/@TSOID"/>
+                    </ns2:orderID>
+                    <ns2:orderStatus>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/OrderStatus"/>
+                    </ns2:orderStatus>
+                    <ns2:orderDate>
+                        <xsl:value-of select="current-date()"/>
+                    </ns2:orderDate>
+                    <ns2:totalOrderCost>
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/TotalOrderCost"/>
+                    </ns2:totalOrderCost>
+                    <ns2:customerID>
+                        <xsl:value-of select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME=&quot;VOICE_MSISDN&quot;]/@VALUE"/>
+                    </ns2:customerID>
+                    <ns2:customerAccountID>
+                        <xsl:value-of select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME=&quot;ACCOUNTID&quot;]/@VALUE"/>
+                    </ns2:customerAccountID>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE">
+                        <ns22:UDF>
+                            <ns22:name>
+                                <xsl:value-of select="@NAME"/>
+                            </ns22:name>
+                            <xsl:choose>
+                                <xsl:when test="string-length(@VALUE)>0">
+                                    <ns22:value>
+                                        <xsl:value-of select="@VALUE"/>
+                                    </ns22:value>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <ns22:value>
+                                        <xsl:value-of select="'_EMPTY_'"/>
+                                    </ns22:value>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </ns22:UDF>
+                    </xsl:for-each>
+                    <xsl:for-each select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/CONTRACT/ATTRIBUTE">
+                        <ns22:UDF>
+                            <ns22:name>
+                                <xsl:value-of select="@NAME"/>
+                            </ns22:name>
+                            <xsl:choose>
+                                <xsl:when test="string-length(@VALUE)>0">
+                                    <ns22:value>
+                                        <xsl:value-of select="@VALUE"/>
+                                    </ns22:value>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <ns22:value>
+                                        <xsl:value-of select="'_EMPTY_'"/>
+                                    </ns22:value>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </ns22:UDF>
+                    </xsl:for-each>
+                    <ns:orderItem>
+                        <ns:orderItemDetails>
+                            <ns:orderItemID>
+                                <xsl:value-of select="&quot;1&quot;"/>
+                            </ns:orderItemID>
+                            <ns:orderItemStatus>
+                                <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/OrderItemStatus"/>
+                            </ns:orderItemStatus>
+                        </ns:orderItemDetails>
+                        <ns:productDetails>
+                            <xsl:choose>
+                                <xsl:when test="exists($AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME='BILLINGTARIFFID']/@VALUE)&#xA;and string-length($AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME='BILLINGTARIFFID']/@VALUE)>0">
+                                    <ns:productID>
+                                        <xsl:value-of select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE[@NAME=&quot;BILLINGTARIFFID&quot;]/@VALUE"/>
+                                    </ns:productID>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <ns:productID>
+                                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder/ProductID"/>
+                                    </ns:productID>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            <ns:quantity>
+                                <xsl:value-of select="1"/>
+                            </ns:quantity>
+                        </ns:productDetails>
+                        <xsl:for-each select="$AEToTSO/TSO_DATA/LISTOPTION">
+                            <ns22:UDF>
+                                <ns22:name>
+                                    <xsl:value-of select="concat(&quot;LIST_OPTION&quot;,&quot;[&quot;,@NAME,&quot;]&quot;)"/>
+                                </ns22:name>
+                                <ns22:value>
+                                    <xsl:value-of select="@NAME"/>
+                                </ns22:value>
+                            </ns22:UDF>
+                            <ns22:UDF>
+                                <ns22:name>
+                                    <xsl:value-of select="&quot;LIST_OPTION&quot;"/>
+                                </ns22:name>
+                                <ns22:value>
+                                    <xsl:value-of select="'_EMPTY_'"/>
+                                </ns22:value>
+                            </ns22:UDF>
+                            <ns22:UDF>
+                                <ns22:name>
+                                    <xsl:value-of select="concat(&quot;networkProductid[&quot;,current()/@NAME,']')"/>
+                                </ns22:name>
+                                <xsl:choose>
+                                    <xsl:when test="string-length(@NETWORKPRODUCTID)>0">
+                                        <ns22:value>
+                                            <xsl:value-of select="@NETWORKPRODUCTID"/>
+                                        </ns22:value>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <ns22:value>
+                                            <xsl:value-of select="'_EMPTY_'"/>
+                                        </ns22:value>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ns22:UDF>
+                        </xsl:for-each>
+                        <ns22:UDF>
+                            <ns22:name>
+                                <xsl:value-of select="&quot;action&quot;"/>
+                            </ns22:name>
+                            <ns22:value>
+                                <xsl:value-of select="&quot;UPDATE&quot;"/>
+                            </ns22:value>
+                        </ns22:UDF>
+                        <ns22:UDF>
+                            <ns22:name>
+                                <xsl:value-of select="&quot;productType&quot;"/>
+                            </ns22:name>
+                            <ns22:value>
+                                <xsl:value-of select="&quot;BasePlan&quot;"/>
+                            </ns22:value>
+                        </ns22:UDF>
+                        <xsl:for-each select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/CONTRACT/ATTRIBUTE">
+                            <ns22:UDF>
+                                <ns22:name>
+                                    <xsl:value-of select="@NAME"/>
+                                </ns22:name>
+                                <xsl:choose>
+                                    <xsl:when test="string-length(@VALUE)>0">
+                                        <ns22:value>
+                                            <xsl:value-of select="@VALUE"/>
+                                        </ns22:value>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <ns22:value>
+                                            <xsl:value-of select="'_EMPTY_'"/>
+                                        </ns22:value>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ns22:UDF>
+                        </xsl:for-each>
+                        <xsl:for-each select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/ATTRIBUTE">
+                            <ns22:UDF>
+                                <ns22:name>
+                                    <xsl:value-of select="@NAME"/>
+                                </ns22:name>
+                                <xsl:choose>
+                                    <xsl:when test="string-length(@VALUE)>0">
+                                        <ns22:value>
+                                            <xsl:value-of select="@VALUE"/>
+                                        </ns22:value>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <ns22:value>
+                                            <xsl:value-of select="'_EMPTY_'"/>
+                                        </ns22:value>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ns22:UDF>
+                        </xsl:for-each>
+                        <xsl:for-each select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/LISTATTRIBUTES[@LISTNAME='SERVICE_HASH']/LISTELEMENT/ATTRIBUTE">
+                            <ns22:UDF>
+                                <ns22:name>
+                                    <xsl:value-of select="concat(../../@LISTNAME ,'-', ../@NAME,'-',@NAME)"/>
+                                </ns22:name>
+                                <xsl:choose>
+                                    <xsl:when test="string-length(@VALUE)>0">
+                                        <ns22:value>
+                                            <xsl:value-of select="@VALUE"/>
+                                        </ns22:value>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <ns22:value>
+                                            <xsl:value-of select="'_EMPTY_'"/>
+                                        </ns22:value>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </ns22:UDF>
+                        </xsl:for-each>
+                        <xsl:for-each select="$AEToTSO/TSO_DATA/TSOATTRIBUTES/LISTATTRIBUTES[@LISTNAME=&quot;PRODUCT_HASH&quot; or @LISTNAME=&quot;CAMPAIGN_HASH&quot; or @LISTNAME=&quot;REMOVE_PRODUCT_HASH&quot; or@LISTNAME=&quot;REMOVE_CAMPAIGN_HASH&quot;]/LISTELEMENT[@NAME=&quot;BILLINGPRODUCTID&quot; or @NAME=&quot;BILLINGCAMPAIGNID&quot;]">
+                            <xsl:variable name="BillingProductID" select="current()/ATTRIBUTE[@NAME=&quot;BILLINGPRODUCTID&quot; or @NAME=&quot;BILLINGCAMPAIGNID&quot;]/@VALUE"/>
+                            <xsl:for-each select="current()/ATTRIBUTE">
+                                <ns22:UDF>
+                                    <xsl:variable name="AddonAction" select="if(../../@LISTNAME=&quot;PRODUCT_HASH&quot; or ../../@LISTNAME=&quot;CAMPAIGN_HASH&quot; ) then &quot;ADD&quot;&#xA;else&#xA;&quot;REMOVE&quot;"/>
+                                    <ns22:name>
+                                        <xsl:value-of select="concat(../../@LISTNAME,'-',$AddonAction,'-',../@NAME,'-',@NAME,&quot;[&quot;,$BillingProductID,&quot;]&quot;)"/>
+                                    </ns22:name>
+                                    <xsl:choose>
+                                        <xsl:when test="string-length(@VALUE)>0">
+                                            <ns22:value>
+                                                <xsl:value-of select="@VALUE"/>
+                                            </ns22:value>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <ns22:value>
+                                                <xsl:value-of select="'_EMPTY_'"/>
+                                            </ns22:value>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </ns22:UDF>
+                            </xsl:for-each>
+                        </xsl:for-each>
+                    </ns:orderItem>
+                </ns7:ServiceOrder>
+            </ns7:SubmitServiceOrderRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>AEToTSO</pd:from>
+        <pd:to>TSOToCDM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TSOToCDM</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>AEToTSO</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

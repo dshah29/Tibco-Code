@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceResource xmlns:wsdl="http://xmlns.example.com/1441787653389">
+    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://xmlns.example.com/1441787653389" location="/SharedResources/WebServiceDefinitions/External/FOSOrchestration/WSDL.wsdl"/>
+    <config>
+        <class>com.tibco.bw.service.serviceAgent.ServiceServiceAgent</class>
+        <implType>bw</implType>
+        <groups>
+            <row isDefault="true" groupName="Default"/>
+        </groups>
+        <serviceChange>Wed May 25 11:06:11 IST 2016</serviceChange>
+        <name>FOSInterfaceService</name>
+        <resourceType>service.definition</resourceType>
+        <wsdl namespace="http://xmlns.example.com/1442300997641" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="true"/>
+        <interfaceImpl>
+            <tab>
+                <tabName>FOSInterfaceServicePortType</tabName>
+                <tabType>bw</tabType>
+                <config>
+                    <wsdlDetail location="/SharedResources/WebServiceDefinitions/External/FOSOrchestration/WSDL.wsdl" portType="FOSInterfaceServicePortType" ns="http://xmlns.example.com/1441787653389"/>
+                    <detail>
+                        <tab>
+                            <tabName>service.definition.impl.tab.label</tabName>
+                            <tabType>impl</tabType>
+                            <config>
+                                <operations>
+                                    <row opName="getPlanDetails" opImpl="/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/PortType/wsgetPlanDetails.process"/>
+                                    <row opName="getOrderDetails" opImpl="/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/PortType/wsgetOrderDetails.process"/>
+                                    <row opName="getPlanItems" opImpl="/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/PortType/wsgetPlanItems.process"/>
+                                    <row opName="setPlanItems" opImpl="/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/PortType/wssetPlanItems.process"/>
+                                    <row opName="planItemexecuteReply" opImpl="/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/PortType/wsplanItemexecuteReply.process"/>
+                                </operations>
+                            </config>
+                        </tab>
+                        <tab>
+                            <tabName>service.definition.ep.tab.label</tabName>
+                            <tabType>ep</tabType>
+                            <config>
+                                <epBindings>
+                                    <row epName="FOSInterfaceServicePortTypeEndpoint" epType="soap">
+                                        <config>
+                                            <epDetail>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.transport.tab.label</tabName>
+                                                    <tabType>transport</tabType>
+                                                    <config>
+                                                        <sharedChannel>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</sharedChannel>
+                                                        <transport>
+                                                            <config>
+                                                                <JMSTo>%%MSF/PREFIX%%.%%MSF/ENV%%.%%Destinations/Queues/OrderFallout/BPMtoOrchestrationService%%</JMSTo>
+                                                                <JMSDestinationType>queue</JMSDestinationType>
+                                                                <JMSMessageType>Bytes</JMSMessageType>
+                                                                <JMSAcknowledgementMode>1</JMSAcknowledgementMode>
+                                                                <ApplicationProperties/>
+                                                                <ApplicationPropertiesOutMessage/>
+                                                                <JMSMaxSessions/>
+                                                                <operations>
+                                                                    <operation name="getPlanDetails">
+                                                                        <general>
+                                                                            <config>
+                                                                                <JMSDurable>false</JMSDurable>
+                                                                                <JMSDurableName/>
+                                                                            </config>
+                                                                        </general>
+                                                                    </operation>
+                                                                    <operation name="getOrderDetails"/>
+                                                                    <operation name="getPlanItems"/>
+                                                                    <operation name="setPlanItems"/>
+                                                                    <operation name="planItemexecuteReply"/>
+                                                                </operations>
+                                                            </config>
+                                                        </transport>
+                                                    </config>
+                                                </tab>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.details.tab.label</tabName>
+                                                    <tabType>details</tabType>
+                                                    <config>
+                                                        <operationStyle>document</operationStyle>
+                                                        <soapVersion>SOAP 1.1</soapVersion>
+                                                        <soap>
+                                                            <operation name="getPlanDetails">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/FOSInterfaceService.serviceagent/FOSInterfaceServicePortTypeEndpoint1/getPlanDetails</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="getOrderDetails">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/FOSInterfaceService.serviceagent/FOSInterfaceServicePortTypeEndpoint1/getOrderDetails</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="getPlanItems">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/FOSInterfaceService.serviceagent/FOSInterfaceServicePortTypeEndpoint1/getPlanItems</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="setPlanItems">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/FOSInterfaceService.serviceagent/FOSInterfaceServicePortTypeEndpoint1/setPlanItems</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="planItemexecuteReply">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/FOSInterfaceService.serviceagent/FOSInterfaceServicePortTypeEndpoint1/planItemexecuteReply</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                        </soap>
+                                                    </config>
+                                                </tab>
+                                            </epDetail>
+                                        </config>
+                                    </row>
+                                </epBindings>
+                            </config>
+                        </tab>
+                    </detail>
+                </config>
+            </tab>
+        </interfaceImpl>
+    </config>
+</serviceResource>

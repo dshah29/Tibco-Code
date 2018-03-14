@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintAdapterLDAP" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx5="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintLDAPSecurityRole" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain" xmlns:pfx3="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/otherLDAPServer/tgs-3uk-centos64-1.localdomain" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintAdapterLDAP" schemaLocation="/AESchemas/ae/ADB/SprintAdapterLDAP.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema" schemaLocation="/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain/ReplySchema.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ADB/SprintLDAPSecurityRole" schemaLocation="/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/otherLDAPServer/tgs-3uk-centos64-1.localdomain" schemaLocation="/AESchemas/ae/adapter/ldap/otherLDAPServer/tgs-3uk-centos64-1.localdomain.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain" schemaLocation="/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain.aeschema"/>
+    <pd:name>Common/LDAP/LDAPClient.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx4:h3orgperson"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>72</pd:startX>
+    <pd:startY>76</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$InvokeLDAPService/aeRequestOutputType/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>752</pd:endX>
+    <pd:endY>76</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1424078960971</pd:targetNamespace>
+    <pd:activity name="Check Response Code">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>450</pd:x>
+        <pd:y>84</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateBusinessException">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>451</pd:x>
+        <pd:y>356</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/ExceptionCodes/MSF/Technology-Errors/Adapter-Operation-Error/Code"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/ExceptionCodes/MSF/Technology-Errors/Adapter-Operation-Error/Description"/>
+                </Description>
+                <xsl:if test="$InvokeLDAPService/aeRequestOutputType/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation/__caret_returnValue_caret_/errorString">
+                    <Comment>
+                        <xsl:value-of select="$InvokeLDAPService/aeRequestOutputType/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation/__caret_returnValue_caret_/errorString"/>
+                    </Comment>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException_AdapterOperationError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>308</pd:x>
+        <pd:y>221</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_AdapterOperationError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <adapterName>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/AdapterConfigurations/LDAP/AdapaterName"/>
+                </adapterName>
+                <xsl:copy-of select="$_error/ns2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>163</pd:x>
+        <pd:y>221</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_AdapterOperationError/root/pfx2:Exception"/>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Error-1">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>608</pd:x>
+        <pd:y>356</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateBusinessException/root/pfx2:Exception"/>
+                </data>
+            </ns:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InvokeLDAPService">
+        <pd:type>com.tibco.plugin.ae.AERPCRequestReplyActivity</pd:type>
+        <pd:resourceType>ae.aepalette.aeOpClientReqActivity</pd:resourceType>
+        <pd:x>306</pd:x>
+        <pd:y>77</pd:y>
+        <config>
+            <ae.aepalette.sharedProperties.transportChoice>jmsQueue</ae.aepalette.sharedProperties.transportChoice>
+            <ae.aepalette.sharedProperties.useRequestReply>false</ae.aepalette.sharedProperties.useRequestReply>
+            <ae.aepalette.sharedProperties.adapterService>/AdapterConfigurations/LDAP/LDAPAdapterConfiguration.adldap#adapterService.LDAPRequestResponseServiceRPCServer</ae.aepalette.sharedProperties.adapterService>
+            <tpPluginEndpointName>LDAPRequestResponseServiceRPCServerEndpoint</tpPluginEndpointName>
+            <ae.aepalette.sharedProperties.transportType>jmsQueue</ae.aepalette.sharedProperties.transportType>
+            <ae.aepalette.sharedProperties.jmsQueueSessionQueue>%%MSF/REGION%%.%%MSF/ENV%%.%%MSF/JMS/Type/Request%%.%%Destinations/Queues/LDAP/LDAPDestination%%</ae.aepalette.sharedProperties.jmsQueueSessionQueue>
+            <ae.aepalette.sharedProperties.deliveryMode>PERSISTENT</ae.aepalette.sharedProperties.deliveryMode>
+            <ae.aepalette.sharedProperties.timeToLive>0</ae.aepalette.sharedProperties.timeToLive>
+            <ae.aepalette.sharedProperties.jmsSessionJNDILookups>true</ae.aepalette.sharedProperties.jmsSessionJNDILookups>
+            <ae.aepalette.sharedProperties.jmsQueueSessionConnectionFactory>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/QueueConnectionFactory%%</ae.aepalette.sharedProperties.jmsQueueSessionConnectionFactory>
+            <ae.aepalette.sharedProperties.jmsSessionUsername>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIUserName%%</ae.aepalette.sharedProperties.jmsSessionUsername>
+            <ae.aepalette.sharedProperties.jmsSessionPassword>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIPassword%%</ae.aepalette.sharedProperties.jmsSessionPassword>
+            <ae.aepalette.sharedProperties.jmsSessionProviderURL>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIContextURL%%</ae.aepalette.sharedProperties.jmsSessionProviderURL>
+            <ae.aepalette.aeOpClientReqActivity.ops>h3orgpersonLDAPOperation</ae.aepalette.aeOpClientReqActivity.ops>
+            <ae.aepalette.sharedProperties.outputMeta>
+                <aeMeta>/AESchemas/ae/adapter/ldap/openLDAP/tgs-3uk-centos64-1.localdomain.aeschema#rpcClass.h3orgpersonLDAPRPCOperation</aeMeta>
+            </ae.aepalette.sharedProperties.outputMeta>
+            <ae.aepalette.sharedProperties.autoGenClientID>true</ae.aepalette.sharedProperties.autoGenClientID>
+        </config>
+        <pd:inputBindings>
+            <aeRequestInputType>
+                <pfx4:__caret_request_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation>
+                    <h3orgperson>
+                        <xsl:copy-of select="$Start/root/pfx4:h3orgperson/ancestor-or-self::*/namespace::node()"/>
+                        <xsl:copy-of select="$Start/root/pfx4:h3orgperson/@*"/>
+                        <xsl:copy-of select="$Start/root/pfx4:h3orgperson/node()"/>
+                    </h3orgperson>
+                </pfx4:__caret_request_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation>
+            </aeRequestInputType>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogResponse">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>452</pd:x>
+        <pd:y>221</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$InvokeLDAPService/aeRequestOutputType/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>602</pd:x>
+        <pd:y>75</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$InvokeLDAPService/aeRequestOutputType/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>167</pd:x>
+        <pd:y>76</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx4:h3orgperson"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InvokeLDAPService</pd:from>
+        <pd:to>Check Response Code</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InvokeLDAPService</pd:from>
+        <pd:to>CreateException_AdapterOperationError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_AdapterOperationError</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>InvokeLDAPService</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Check Response Code</pd:from>
+        <pd:to>LogResponse</pd:to>
+        <pd:xpathDescription>Response is not Success</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateBusinessException</pd:from>
+        <pd:to>Generate-Error-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Check Response Code</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:xpathDescription>Response = Success</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$InvokeLDAPService/aeRequestOutputType/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation/__caret_returnValue_caret_/errorString ="Success"
+or
+($Start/root/pfx4:h3orgperson/OpCode = 'LDAP_LOOKUP' and 
+$InvokeLDAPService/aeRequestOutputType/pfx4:__caret_reply_caret_h3orgpersonLDAPRPCOperation_caret_h3orgpersonLDAPOperation/__caret_returnValue_caret_/errorString ="No such object"
+)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogResponse</pd:from>
+        <pd:to>CreateBusinessException</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

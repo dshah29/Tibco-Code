@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns9="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns5="http://www.tibco.com/pe/EngineTypes" xmlns:ns6="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns7="http://www.tibco.com/schemas/Order Fallout Workspace/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd" xmlns:pfx="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" xmlns:ns8="http://www.tibco.com/schemas/OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns1="http://www.tibco.com/AFF/V4.0.0/classes/order" xmlns:ns4="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns3="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/custom/PIF_Request.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://xmlns.example.com/1444127067216" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx2="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/custom/PIF_Request.xsd" schemaLocation="/Shared Resource/Schema/custom/PIF_Request.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorProviderService.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1444127067216" location="/SharedResources/WebServiceDefinitions/External/BulkResolution/BulkResolution.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/BulkRelease_v1/Main/MainBulkReleaseProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx4:BulkResolutionRequest"/>
+    <pd:startX>44</pd:startX>
+    <pd:startY>140</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>907</pd:endX>
+    <pd:endY>149</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1416832042412</pd:targetNamespace>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>755</pd:x>
+        <pd:y>150</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns5:ProcessContext/ProcessId)"/>
+                </processName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>183</pd:x>
+        <pd:y>139</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns5:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx4:BulkResolutionRequest/BulkResolutionRequest/ns8:BulkResolutionRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>295</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>334</pd:width>
+        <pd:height>276</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>simpleGroup</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Create CSV File</pd:to>
+            <pd:xpathDescription>Create File</pd:xpathDescription>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$Start/pfx4:BulkResolutionRequest/BulkResolutionRequest/ns8:BulkResolutionRequest/ns8:CreateFileFlag = "true"</pd:xpath>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Complete Work Items</pd:to>
+            <pd:xpathDescription>Bulk Resolve</pd:xpathDescription>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Create CSV File</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Complete Work Items</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Create CSV File">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>452</pd:x>
+            <pd:y>79</pd:y>
+            <config>
+                <processName>/IntegrationServices/OrderFallout/BulkRelease_v1/Sub/CreateCSVFile.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <ErrorCode>
+                        <xsl:value-of select="$Start/pfx4:BulkResolutionRequest/BulkResolutionRequest/ns8:BulkResolutionRequest/ns8:ErrorCode"/>
+                    </ErrorCode>
+                    <xsl:if test="$Start/pfx4:BulkResolutionRequest/BulkResolutionRequest/ns8:BulkResolutionRequest/ns8:FilterString">
+                        <FilterString>
+                            <xsl:value-of select="$Start/pfx4:BulkResolutionRequest/BulkResolutionRequest/ns8:BulkResolutionRequest/ns8:FilterString"/>
+                        </FilterString>
+                    </xsl:if>
+                    <UserID>
+                        <xsl:value-of select="$Start/pfx4:BulkResolutionRequest/BulkResolutionRequest/ns8:BulkResolutionRequest/ns8:UserID"/>
+                    </UserID>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Complete Work Items">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>457</pd:x>
+            <pd:y>195</pd:y>
+            <config>
+                <processName>/IntegrationServices/OrderFallout/BulkRelease_v1/Sub/BulkResolveWorkItemsWithoutFile.process</processName>
+            </config>
+            <pd:inputBindings>
+                <xsl:copy-of select="$Start/pfx4:BulkResolutionRequest/BulkResolutionRequest/ns8:BulkResolutionRequest"/>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Create Business Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>459</pd:x>
+        <pd:y>377</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="&quot;MSF-Exception3&quot;"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns9:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="&quot;Bulk Release exception&quot;"/>
+                </Description>
+                <xsl:copy-of select="$_error/ns5:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Error-BusinessException">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>622</pd:x>
+        <pd:y>372</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns6:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$Create-Business-Exception/root/pfx3:Exception"/>
+                </data>
+            </ns6:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Group</pd:from>
+        <pd:to>Create Business Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-3407872</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Business Exception</pd:from>
+        <pd:to>Generate-Error-BusinessException</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

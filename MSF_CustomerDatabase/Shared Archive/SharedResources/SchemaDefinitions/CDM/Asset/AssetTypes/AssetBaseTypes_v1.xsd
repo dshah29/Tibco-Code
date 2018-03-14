@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:astBASE="http://three.co.uk/xsd/cdm/asset/assettypes/assetbasetypes/v1" targetNamespace="http://three.co.uk/xsd/cdm/asset/assettypes/assetbasetypes/v1" version="$Id: AssetBaseTypes_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:simpleType name="ReservationID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z-]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EmployeeID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="TeamID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="LocationID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="reservationID" type="astBASE:ReservationID"/>
+	<xsd:element name="employeeID" type="astBASE:EmployeeID"/>
+	<xsd:element name="teamID" type="astBASE:TeamID"/>
+	<xsd:element name="locationID" type="astBASE:LocationID"/>
+	<xsd:element name="LocationID" type="astBASE:LocationID">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element locationID instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

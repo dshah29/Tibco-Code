@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pfx6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/CreateContract/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:CreateContractRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>36</pd:startX>
+    <pd:startY>84</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$CreateResponse/pfx:CreateContractResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:CreateContractResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1142</pd:endX>
+    <pd:endY>82</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1441188291513</pd:targetNamespace>
+    <pd:activity name="CamelCase to UpperCase">
+        <pd:type>com.tibco.plugin.xml.XMLTransformActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLTransformActivity</pd:resourceType>
+        <pd:x>462</pd:x>
+        <pd:y>92</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <engine>Saxon</engine>
+            <stylesheet>/SharedResources/XSLT/Billing/BillingPayment/BillingPaymentManagement/CamelCase_2_UpperCase.xsl</stylesheet>
+        </config>
+        <pd:inputBindings>
+            <textInput>
+                <xmlString>
+                    <xsl:value-of select="tib:render-xml($Create-Request/pfx6:fHUK__CreateContract)"/>
+                </xmlString>
+            </textInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Request">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>349</pd:x>
+        <pd:y>85</pd:y>
+        <config>
+            <element ref="pfx6:fHUK__CreateContract"/>
+        </config>
+        <pd:inputBindings>
+            <pfx6:fHUK__CreateContract>
+                <AccountNumber>
+                    <xsl:value-of select="$Start/root/pfx:CreateContractRequest/pfx:accountNumber"/>
+                </AccountNumber>
+                <Contract>
+                    <xsl:for-each select="$Start/root/pfx:CreateContractRequest/pfx:Contract/*">
+                        <item>
+                            <name>
+                                <xsl:value-of select="if (local-name(.)=&quot;expectedExpiryDate&quot;) then 'expectedInitialTermEndDate' else local-name(.)"/>
+                            </name>
+                            <xsl:choose>
+                                <xsl:when test="local-name(.)=&quot;startDate&quot; or local-name(.)=&quot;expectedExpiryDate&quot;">
+                                    <value xsi:type="xsd:dateTime">
+                                        <xsl:value-of select="."/>
+                                    </value>
+                                </xsl:when>
+                                <xsl:when test="local-name(.)=&quot;contractNumber&quot;">
+                                    <value xsi:type="xsd:string">
+                                        <xsl:value-of select="."/>
+                                    </value>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <value xsi:type="xsd:int">
+                                        <xsl:value-of select="."/>
+                                    </value>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </item>
+                    </xsl:for-each>
+                </Contract>
+                <TransactionID>
+                    <xsl:value-of select="$GetContext/root/ns2:MessageContext/ns2:TransactionID"/>
+                </TransactionID>
+            </pfx6:fHUK__CreateContract>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateContract SV Adapter">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>818</pd:x>
+        <pd:y>90</pd:y>
+        <config>
+            <processName>/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/CreateContract/Sub/CreateContract SV Adapter.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Parse-XML/pfx6:fHUK__CreateContract"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>948</pd:x>
+        <pd:y>81</pd:y>
+        <config>
+            <element ref="pfx:CreateContractResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:CreateContractResponse>
+                <pfx:accountNumber>
+                    <xsl:value-of select="$Parse-XML/pfx6:fHUK__CreateContract/AccountNumber"/>
+                </pfx:accountNumber>
+                <pfx:transactionID>
+                    <xsl:value-of select="$Parse-XML/pfx6:fHUK__CreateContract/TransactionID"/>
+                </pfx:transactionID>
+            </pfx:CreateContractResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>697</pd:x>
+        <pd:y>84</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term ref="pfx6:fHUK__CreateContract"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$CamelCase-to-UpperCase/xmlString"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1053</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$CreateResponse/pfx:CreateContractResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>130</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx:CreateContractRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetContext">
+        <pd:type>com.tibco.ae.tools.palettes.servicepalette.GetContextActivity</pd:type>
+        <pd:resourceType>service.activity.getContext</pd:resourceType>
+        <pd:x>236</pd:x>
+        <pd:y>84</pd:y>
+        <config>
+            <variableConfig>/SharedResources/ContextResources/InputContext.contextResource</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateResponse</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateContract SV Adapter</pd:from>
+        <pd:to>CreateResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Request</pd:from>
+        <pd:to>CamelCase to UpperCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CamelCase to UpperCase</pd:from>
+        <pd:to>Parse XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse XML</pd:from>
+        <pd:to>CreateContract SV Adapter</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetContext</pd:from>
+        <pd:to>Create Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

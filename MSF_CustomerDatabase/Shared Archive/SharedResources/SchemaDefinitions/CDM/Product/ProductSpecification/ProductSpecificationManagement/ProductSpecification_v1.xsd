@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:ps="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 xmlns:pp="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:alw="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1"
+	 xmlns:usg="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1"
+	 xmlns:pductBASE="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 version="$Id: ProductSpecification_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../../../Common/CommonEnumerations/Types_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../../Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1" schemaLocation="ProductAllowance_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1" schemaLocation="../../ProductUsage/ProductUsageManagement/ProductUsage_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1" schemaLocation="ProductPriceSpecification_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/producttypes/productbasetypes/v1" schemaLocation="../../ProductTypes/ProductBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!-- Defines the different classifications of products that are going to be stored for MCE-->
+	<xsd:simpleType name="__PRODUCT_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="DEVICE"/>
+			<xsd:enumeration value="TARIFF"/>
+			<xsd:enumeration value="SERVICE"/>
+			<xsd:enumeration value="DISCOUNT"/>
+			<xsd:enumeration value="ACCESSORY"/>
+			<xsd:enumeration value="BUNDLE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_PRODUCT_TYPE">
+		<xsd:union memberTypes="ps:__PRODUCT_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="SubProductDetails">
+		<xsd:sequence>
+			<xsd:element ref="ps:productSpecification" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductCharacteristics">
+		<xsd:sequence>
+			<xsd:element ref="udf:UDF" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductSegments">
+		<xsd:sequence>
+			<xsd:element name="productCompatibleSegment" type="ps:ProductSegmentsNVPair" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductSegmentsNVPair">
+		<xsd:sequence>
+			<xsd:element name="name" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="type" type="BASE:PopulatedString" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="ProductSpecificationDetails">
+		<xsd:sequence>
+			<xsd:element name="productID" type="pductBASE:ProductID"/>
+			<xsd:element name="productName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="productDescription" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="classification" type="ps:_PRODUCT_TYPE"/>
+			<xsd:element name="lifecycleStatus" type="pductBASE:_PRODUCT_STATUS"/>
+			<xsd:element name="subProductDetails" type="ps:SubProductDetails" minOccurs="0"/>
+			<xsd:element name="startDateTime" type="xsd:dateTime"/>
+			<xsd:element name="endDateTime" type="xsd:dateTime" minOccurs="0"/>
+			<xsd:element ref="pp:productPriceSpecification" maxOccurs="unbounded"/>
+
+			<!--Used for more physical attributes - weight, height, depth and potentially add-to-bill functionality etc...-->
+			<xsd:element name="productCharacteristics" type="ps:ProductCharacteristics" minOccurs="0"/>
+
+			<!--Used to document the correct number of mins, texts, MBs etc...-->
+			<xsd:element ref="alw:productAllowance" minOccurs="0" maxOccurs="unbounded"/>
+
+			<!--Provide some means to document usage on a product if a customer asks, its not used for defining a product, for that use allowance-->
+			<xsd:element ref="usg:productUsage" minOccurs="0" maxOccurs="unbounded"/>
+
+			<!--Each product can have many segments it can be marketed too-->
+			<xsd:element name="productSegments" type="ps:ProductSegments" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ProductSpecification" type="ps:ProductSpecificationDetails"/>
+	<xsd:element name="productSpecification" type="ps:ProductSpecificationDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element ProductSpecification instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

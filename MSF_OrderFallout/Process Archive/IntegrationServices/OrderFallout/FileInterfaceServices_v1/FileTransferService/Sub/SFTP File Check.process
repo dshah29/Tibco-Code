@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns12="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns13="www.tibco.com/plugin/Sleep">
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP File Check.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>55</pd:startX>
+    <pd:startY>73</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:if test="exists($SFTP-Dir/Output/DirectoryItems) and $SFTP-Dir/Output/DirectoryItems[1]!=&quot;&quot;">
+                <xsl:for-each select="$SFTP-Dir/Output/DirectoryItems">
+                    <RemoteFileName>
+                        <xsl:value-of select="tib:substring-after-last(.,&quot; &quot;)"/>
+                    </RemoteFileName>
+                </xsl:for-each>
+            </xsl:if>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RemoteFileName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>256</pd:endX>
+    <pd:endY>74</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1457686495720/SFTP File Check</pd:targetNamespace>
+    <pd:activity name="SFTP Dir">
+        <pd:type>com.tibco.plugin.sp.SFTPDirActivity</pd:type>
+        <pd:resourceType>ae.activities.SFTPDirActivityUI</pd:resourceType>
+        <pd:x>150</pd:x>
+        <pd:y>73</pd:y>
+        <config>
+            <SharedUserData>/SharedResources/Connections/SFTP/SFTP Connection.sharedsftp</SharedUserData>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <Directory>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Remote/RemoteFileDirectoryRequest"/>
+                </Directory>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SFTP Dir</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Dir</pd:from>
+        <pd:to>End</pd:to>
+        <pd:xpathDescription/>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" xmlns:ns5="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" xmlns:ns2="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/AFF/V4.0.0/classes/order" xmlns:ns4="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns3="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/custom/PIF_Request.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx2="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd">
+    <xsd:import namespace="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/custom/PIF_Request.xsd" schemaLocation="/Shared Resource/Schema/custom/PIF_Request.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorProviderService.xsd"/>
+    <pd:name>IntegrationServices/OrderFallout/FOSExceptionHandler_v1/Main/Main.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="Exception">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="PlanItemFailedException" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="PreQualificationFailedException" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>41</pd:startX>
+    <pd:startY>208</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>822</pd:endX>
+    <pd:endY>208</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1416832042412/Main</pd:targetNamespace>
+    <pd:activity name="Classify Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>445</pd:x>
+        <pd:y>209</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FOSExceptionHandler_v1/Sub/Classify Exception.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/Exception/PlanItemFailedException) and $Start/Exception/PlanItemFailedException!=&quot;&quot;">
+                        <xsl:copy-of select="$Parse-PlanItem-Failed-Request/pfx:PlanItemFailedRequest/ns:message"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:copy-of select="$Parse-PreQualification-Failed-Request/pfx:PreQualificationFailedRequest/ns:message"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create PIF Exception XMLParse Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>484</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_XMLParseError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns5:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create PQF Exception XMLParse Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>483</pd:x>
+        <pd:y>373</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_XMLParseError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns5:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate PIF Error XML Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>644</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx4:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$Create-PIF-Exception-XMLParse-Error/root/pfx3:Exception"/>
+                </data>
+            </pfx4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate PQF Error XML Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>636</pd:x>
+        <pd:y>367</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx4:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$Create-PQF-Exception-XMLParse-Error/root/pfx3:Exception"/>
+                </data>
+            </pfx4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="IdentifyRequest">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>123</pd:x>
+        <pd:y>208</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Parse PlanItem Failed Request">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>300</pd:x>
+        <pd:y>141</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx:PlanItemFailedRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Start/Exception/PlanItemFailedException"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse PreQualification Failed Request">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>302</pd:x>
+        <pd:y>296</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx:PreQualificationFailedRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Start/Exception/PreQualificationFailedException"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SendException_BPM">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>737</pd:x>
+        <pd:y>128</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FOSExceptionHandler_v1/Sub/SendException_BPM.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Classify-Exception/root/pfx2:exceptionClassification"/>
+                <xsl:if test="$Parse-PlanItem-Failed-Request/pfx:PlanItemFailedRequest/pfx:orderRef!=&quot;&quot;">
+                    <xsl:copy-of select="$Parse-PlanItem-Failed-Request/pfx:PlanItemFailedRequest"/>
+                </xsl:if>
+                <xsl:if test="$Parse-PreQualification-Failed-Request/pfx:PreQualificationFailedRequest/ns1:orderRequest/ns1:orderRef!=&quot;&quot;">
+                    <xsl:copy-of select="$Parse-PreQualification-Failed-Request/pfx:PreQualificationFailedRequest"/>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SendException_CLE">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>734</pd:x>
+        <pd:y>297</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FOSExceptionHandler_v1/Sub/SendException_CLE.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Classify-Exception/root/pfx2:exceptionClassification"/>
+                <xsl:copy-of select="$Parse-PlanItem-Failed-Request/pfx:PlanItemFailedRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Classify Exception</pd:from>
+        <pd:to>SendException_CLE</pd:to>
+        <pd:xpathDescription>Technical or Undefined</pd:xpathDescription>
+        <pd:lineType>Curved</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SendException_CLE</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse PlanItem Failed Request</pd:from>
+        <pd:to>Classify Exception</pd:to>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Classify Exception</pd:from>
+        <pd:to>SendException_BPM</pd:to>
+        <pd:xpathDescription>Business</pd:xpathDescription>
+        <pd:lineType>Curved</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Classify-Exception/root/pfx2:exceptionClassification/pfx2:classification/pfx2:exceptionType="BusinessException"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SendException_BPM</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse PlanItem Failed Request</pd:from>
+        <pd:to>Create PIF Exception XMLParse Error</pd:to>
+        <pd:lineType>Curved</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create PIF Exception XMLParse Error</pd:from>
+        <pd:to>Generate PIF Error XML Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>IdentifyRequest</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>IdentifyRequest</pd:from>
+        <pd:to>Parse PlanItem Failed Request</pd:to>
+        <pd:xpathDescription>PIF</pd:xpathDescription>
+        <pd:lineType>Curved</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Start/Exception/PlanItemFailedException) and $Start/Exception/PlanItemFailedException!=""</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>IdentifyRequest</pd:from>
+        <pd:to>Parse PreQualification Failed Request</pd:to>
+        <pd:xpathDescription>PQF</pd:xpathDescription>
+        <pd:lineType>Curved</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Start/Exception/PreQualificationFailedException) and $Start/Exception/PreQualificationFailedException!=""</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse PreQualification Failed Request</pd:from>
+        <pd:to>Create PQF Exception XMLParse Error</pd:to>
+        <pd:lineType>Curved</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create PQF Exception XMLParse Error</pd:from>
+        <pd:to>Generate PQF Error XML Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-52429</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse PreQualification Failed Request</pd:from>
+        <pd:to>Classify Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

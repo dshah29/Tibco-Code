@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns0="http://www.three.co.uk/ccs/" xmlns:pfx5="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/ccs/"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/ProcessFile.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="textContent" type="xsd:string"/>
+                    <xsd:element name="SourceFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>44</pd:startX>
+    <pd:startY>142</pd:startY>
+    <pd:returnBindings>
+        <products>
+            <xsl:copy-of select="$accumulatedResults/AccumulatedOutput/product"/>
+        </products>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="products">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="product" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="productName" type="xsd:string"/>
+                                <xsd:element name="success" type="xsd:boolean"/>
+                                <xsd:element name="errorString" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1391</pd:endX>
+    <pd:endY>244</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="ParseCCSData">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>238</pd:x>
+        <pd:y>142</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/ParseCCSData.process</processName>
+        </config>
+        <pd:inputBindings>
+            <CCSRequest>
+                <xsl:value-of select="$Start/root/textContent"/>
+            </CCSRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1244</pd:x>
+        <pd:y>244</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$accumulatedResults/AccumulatedOutput"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>131</pd:x>
+        <pd:y>142</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Records">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>448</pd:x>
+        <pd:y>69</pd:y>
+        <pd:width>460</pd:width>
+        <pd:height>303</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$ParseCCSData/root/ns0:release/ns0:productDefinition</pd:over>
+            <pd:iterationElementSlot>prodDefIteration</pd:iterationElementSlot>
+            <pd:indexSlot>prodDefIndex</pd:indexSlot>
+            <pd:outSlot>accumulatedResults</pd:outSlot>
+            <pd:activityOutputName>Result</pd:activityOutputName>
+            <pd:accumulateOutput>true</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>ProcessRecord</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Result</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ProcessRecord</pd:from>
+            <pd:to>Log Exception Catch Exception</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-39322</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ProcessRecord</pd:from>
+            <pd:to>Result</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log Exception Catch Exception</pd:from>
+            <pd:to>Result</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="ProcessRecord">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>546</pd:x>
+            <pd:y>229</pd:y>
+            <config>
+                <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/ProcessRecord.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <ns0:release>
+                        <xsl:attribute name="name">
+                            <xsl:value-of select="$ParseCCSData/root/ns0:release/@name"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="targetApplication">
+                            <xsl:value-of select="$ParseCCSData/root/ns0:release/@targetApplication"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="orgID">
+                            <xsl:value-of select="$ParseCCSData/root/ns0:release/@orgID"/>
+                        </xsl:attribute>
+                        <xsl:copy-of select="$prodDefIteration/ns0:productDefinition"/>
+                    </ns0:release>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Log Exception Catch Exception">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>725</pd:x>
+            <pd:y>304</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:copy-of select="$_error_ProcessRecord/pfx2:Exception"/>
+                    <payload>
+                        <xsl:copy-of select="$prodDefIteration/ns0:productDefinition"/>
+                    </payload>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Result">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>723</pd:x>
+            <pd:y>153</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="product">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="productName" type="xsd:string"/>
+                                <xsd:element name="success" type="xsd:boolean"/>
+                                <xsd:element name="errorString" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <product>
+                    <productName>
+                        <xsl:value-of select="$prodDefIteration/ns0:productDefinition/@name"/>
+                    </productName>
+                    <xsl:choose>
+                        <xsl:when test="exists($_error_ProcessRecord)">
+                            <success>
+                                <xsl:value-of select="false()"/>
+                            </success>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <success>
+                                <xsl:value-of select="true()"/>
+                            </success>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <errorString>
+                        <xsl:value-of select="$_error/ns2:ErrorReport/Msg"/>
+                    </errorString>
+                </product>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Filter ProductIDs">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>359</pd:x>
+        <pd:y>142</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/GenerateProductIds.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$ParseCCSData/root/ns0:release"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GenerateReport">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1095</pd:x>
+        <pd:y>244</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/GenerateReport.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <SourceFileName>
+                    <xsl:value-of select="$Start/root/SourceFileName"/>
+                </SourceFileName>
+                <products>
+                    <xsl:copy-of select="$accumulatedResults/AccumulatedOutput/product"/>
+                </products>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>ParseCCSData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ParseCCSData</pd:from>
+        <pd:to>Filter ProductIDs</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Filter ProductIDs</pd:from>
+        <pd:to>Records</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Records</pd:from>
+        <pd:to>GenerateReport</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GenerateReport</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns12="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns13="www.tibco.com/plugin/Sleep">
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Get Files.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RemoteFileName" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>61</pd:startX>
+    <pd:startY>131</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <TextContent>
+                <xsl:value-of select="$Read-File/ns1:ReadActivityOutputTextClass/fileContent/textContent"/>
+            </TextContent>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>640</pd:endX>
+    <pd:endY>133</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1457686495720/SFTP Get Files</pd:targetNamespace>
+    <pd:group name="GetRemoteFiles">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>147</pd:x>
+        <pd:y>8</pd:y>
+        <pd:width>412</pd:width>
+        <pd:height>232</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Start/root/RemoteFileName</pd:over>
+            <pd:iterationElementSlot>CurrentFile</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>SFTP Get</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Sleep</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SFTP Get</pd:from>
+            <pd:to>Sleep</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="SFTP Get">
+            <pd:type>com.tibco.plugin.sp.SFTPGetActivity</pd:type>
+            <pd:resourceType>ae.activities.SFTPGetActivityUI</pd:resourceType>
+            <pd:x>233</pd:x>
+            <pd:y>132</pd:y>
+            <config>
+                <Timeout>120000</Timeout>
+                <isBinary>false</isBinary>
+                <Overwrite>true</Overwrite>
+                <useProcessData>false</useProcessData>
+                <persistTimestamp>false</persistTimestamp>
+                <SharedUserData>/SharedResources/Connections/SFTP/SFTP Connection.sharedsftp</SharedUserData>
+            </config>
+            <pd:inputBindings>
+                <SFTPGetInputDataFile>
+                    <RemoteFileName>
+                        <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Remote/RemoteFileDirectoryRequest,'/',$CurrentFile/RemoteFileName)"/>
+                    </RemoteFileName>
+                    <LocalFileName>
+                        <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Local/LocalFileDirectoryRequest,'/',$CurrentFile/RemoteFileName)"/>
+                    </LocalFileName>
+                </SFTPGetInputDataFile>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Sleep">
+            <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+            <pd:resourceType>ae.activities.sleep</pd:resourceType>
+            <pd:x>384</pd:x>
+            <pd:y>134</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns13:SleepInputSchema>
+                    <IntervalInMillisec>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Remote/RemoteFileDeleteSleepIntervalMilliSecond"/>
+                    </IntervalInMillisec>
+                </ns13:SleepInputSchema>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>GetRemoteFiles</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>GetRemoteFiles</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

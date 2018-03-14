@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:bnkDtls="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1"
+	 version="$Id: BankDetails_v1.xsd 5051 2015-10-10 11:25:28Z rarmitag $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" schemaLocation="../../../Common/CommonDefinitions/Individual_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:simpleType name="SORTCODE">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{6}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ACCNUM">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{8}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PARTIALACCNUM">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{1,7}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BANKCODE">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{1,20}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="BankDetails">
+		<xsd:sequence>
+			<xsd:element name="bankAccountName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element ref="addr:address" minOccurs="0"/>
+			<xsd:element name="sortCode" type="bnkDtls:SORTCODE" minOccurs="0"/>
+			<xsd:element name="accountNumber" type="bnkDtls:ACCNUM" minOccurs="0"/>
+			<xsd:element ref="ind:individual" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="BankDetails" type="bnkDtls:BankDetails"/>
+	<xsd:element name="bankDetails" type="bnkDtls:BankDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element BankDetails instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

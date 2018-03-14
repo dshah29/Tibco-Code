@@ -1,0 +1,1900 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="fHUK_RetrievePackagePriceHistory">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PriceHistory</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrieveProductPrices">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ExistingProductPrices</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TargetProductPrices</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_UpdateContract">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Effective_Date</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Contract</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_CreateContract">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Contract</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetCustAccountInfo">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AllFreeUnits</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>FreeUnits</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountBalance</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.r8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountType</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AddOns</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Campaigns</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PackageId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetAddOnRenewalDates">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AddOns</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetVoucherToPCMName">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>VoucherAdded_List</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_AllowPurchase">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TotalAddonPrice</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.r8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AvailableCashCredit</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.r8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrieveAccount_DCSH">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountInfo</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_SetExpiryAlerts">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_GetExpiryAlerts">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ExpiryAlertFlag</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AlertType</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_BusinessPlanUpgrade">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_ManageLowBalanceLimit">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Status</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrieveServicesByAccount">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ServiceStatus</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Services</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_Fetch_Acc_FU_Info">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Summary</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_ProductDuplicate">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_ChangeOwnership">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PackageInstId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_AddonTopup">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TopupDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_Activate_USIM">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountNumber</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PackageInstId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_CancelAccount">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BAN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_GetProducts">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ProductDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_GetProductGroups">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Products</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ProductGroup</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrieveAccountSummary">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountSummaryDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_AccountHistory">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountHistory</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountInfo</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrieveParentChildFUs">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>FreeUnits</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_BillingPing">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrieveBillPaymentsSummaryProfile">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BillPaymentDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_RetrieveUnbilledSpend">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TotalSpend</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_POSUpgrade_NoCPP">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_ChangePricePlan">
+        <attribute>
+            <name>returnValue</name>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+        </attribute>
+        <attribute>
+            <name>EffectiveDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NewPackInstID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_ValidateUpdatePackage">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_UpdatePaymentMethod">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BillPrefUpdated</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_UpdateService">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_SellCampaign">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fHUK_ITUReversal">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ReverseDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_VoucherTopUp">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TopUpDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_BalanceEnquiry">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountTypeId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Balances</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_TopUpAccounts">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>WarningMessage</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TopUpAccountsDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_TransferPackage">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TransPackageInstId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="ae_debitWithCCUnitReq">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="alias1">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveUsageCharges">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BilledCharges</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>UnbilledCharges</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveAccountByService">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ServiceAccountNumber</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ServiceAccountTypeName</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>InvoiceAccountNumber</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>InvoiceAccountTypeName</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ServiceID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PackageInstanceID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrievePackageInstance">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Package</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Services</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Products</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Features</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Options</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Charges</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Campaigns</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_DirectDebitTag">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_ReversePaymentBatch">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_TransferPayment">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PaymentReceiptNumber</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_OpenPaymentBatch">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PaymentGatewayBatchId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_PostPayment">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PaymentReceiptNumber</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_ClosePaymentBatch">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TotalAmounts</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_ReallocatePayment">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PaymentAllocation</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_ReversePayment">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdateAccountBudget">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>LastModDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetPackageInstances">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PackageInstanceList</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetAccountBudgets">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Budgets</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CancelAccountBudget">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CreateAccountBudget">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CreateAccountContract">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ContractId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveAccountBalanceHistory">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Balances</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveAdjustmentHistory">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Adjustments</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdateAccountContract">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveCharges">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BilledCharges</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>UnbilledCharges</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CancelAccountContract">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveAccountBalance">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountBalance</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveInvoiceHistory">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Invoices</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveAccountContract">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Contract</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetAccountContracts">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ContractList</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrievePaymentHistory">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Payments</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="eiGetDBName">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveOneOffChg">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>OneOffCharges</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdateOneOffChg">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CreateOneOffChg">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>OneOffChargeId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveFreeUnits">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>FreeUnits</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdateFreeUnits">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_AllocateFreeUnits">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_ReleaseReservation">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CommitReservation">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveReservations">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Reservations</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdateContact">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdatePackage">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_AddAccountContact">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ContactID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveAccountHierarchy">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Hierarchy</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="appnError">
+        <attribute>
+            <name>errno</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>errstring</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fH3G_RetrievePersona">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Persona</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Persona_Guiding</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_DeactivateAccount">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>LastModDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CreateAdjustment">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Adjustment</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetPersonae">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PersonaNames</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREStringArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="thpTuxError">
+        <attribute>
+            <name>errno</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>errstring</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fH3G_RetrieveAccount">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountDetails</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PrimaryContact</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>InvoiceFormats</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetInvoiceList">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>InvoiceList</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetCreditNoteList">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CreditNoteList</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdatePersona">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CreatePersona">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetAccountContacts">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Contacts</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_DeactivatePackage">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveUsageReport">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ReportXMLFile</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ReportStyleSheet</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveDebitNote">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NoteXMLFile</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NoteStyleSheet</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdateAccount">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_UpdateAccount_SH">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveContact">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Contact</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RetrieveInvoiceImage">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>InvoiceXMLFile</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>InvoiceStyleSheet</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_CreateAccount">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccountNumber</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ContactID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BillCycle</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RemovePersona">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="internalError">
+        <attribute>
+            <name>errstring</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fH3G_RetrieveCreditNote">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NoteXMLFile</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NoteStyleSheet</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_SellPackage">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PackageInstId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_RemoveAccountContact">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_AccountSearch">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Accounts</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyArray</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <class name="fH3G_GetDebitNoteList">
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>DebitNoteList</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <superclass isRef="true">#class.appnError</superclass>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

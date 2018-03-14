@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/InputMessageContent_v1.xsd"/>
+    <pd:name>UtilityProcesses/StartUp/InitialiseBoundary.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="InitialProcessName" type="xsd:string"/>
+                    <xsd:element name="TransactionID" type="xsd:string" minOccurs="0"/>
+                    <xsd:element ref="pfx:InputMessageContent" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>76</pd:startX>
+    <pd:startY>60</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>643</pd:endX>
+    <pd:endY>57</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1416919203062</pd:targetNamespace>
+    <pd:activity name="Initialise">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>435</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:variable name="transactionID" select="if (exists($Generate-Transaction-ID/UUID) ) then $Generate-Transaction-ID/UUID else $Start/root/TransactionID"/>
+                <InitialProcessName>
+                    <xsl:value-of select="$Start/root/InitialProcessName"/>
+                </InitialProcessName>
+                <ns:MessageContext>
+                    <xsl:attribute name="messageType">
+                        <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/MessageType/REQUEST"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="timestamp">
+                        <xsl:value-of select="current-dateTime()"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="messageID">
+                        <xsl:value-of select="$transactionID"/>
+                    </xsl:attribute>
+                    <ns:TransactionID>
+                        <xsl:value-of select="$transactionID"/>
+                    </ns:TransactionID>
+                    <ns:ApplicationID>
+                        <xsl:value-of select="$_processContext/ns2:ProcessContext/ProjectName"/>
+                    </ns:ApplicationID>
+                </ns:MessageContext>
+                <xsl:copy-of select="$Start/root/pfx:InputMessageContent"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Transaction ID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>243</pd:x>
+        <pd:y>170</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Initialise</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Generate Transaction ID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Initialise</pd:to>
+        <pd:xpathDescription>Have TransactionID</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Start/root/TransactionID) and ($Start/root/TransactionID !='')</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate Transaction ID</pd:from>
+        <pd:to>Initialise</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

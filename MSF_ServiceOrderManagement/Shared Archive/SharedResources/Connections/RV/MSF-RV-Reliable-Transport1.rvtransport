@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <config>
+        <workerWeight>1</workerWeight>
+        <workerTasks>10</workerTasks>
+        <workerCompleteTime>0</workerCompleteTime>
+        <schedulerWeight>1</schedulerWeight>
+        <scheduleHeartbeat>1.0</scheduleHeartbeat>
+        <scheduleActivation>3.5</scheduleActivation>
+        <showExpertSettings>reliable</showExpertSettings>
+        <useSsl>false</useSsl>
+        <ns0:ssl xmlns:ns0="http://www.tibco.com/xmlns/aemeta/services/2002"/>
+        <daemon>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Daemon%%</daemon>
+        <network>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Network%%</network>
+        <service>%%SharedResources/Connections/RV/MSF-RV-Reliable-Transport1/Service%%</service>
+    </config>
+</BWSharedResource>

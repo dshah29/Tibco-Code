@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <pd:name>UtilityProcesses/UUID/GenerateUUID.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>150</pd:startX>
+    <pd:startY>40</pd:startY>
+    <pd:returnBindings>
+        <UUID>
+            <xsl:value-of select="$Generate-UUID/javaCodeActivityOutput/uuidString"/>
+        </UUID>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="UUID" type="xsd:string"/>
+    </pd:endType>
+    <pd:endX>450</pd:endX>
+    <pd:endY>40</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349780469702</pd:targetNamespace>
+    <pd:activity name="Generate UUID">
+        <pd:type>com.tibco.plugin.java.JavaActivity</pd:type>
+        <pd:resourceType>ae.javapalette.javaActivity</pd:resourceType>
+        <pd:x>300</pd:x>
+        <pd:y>40</pd:y>
+        <config>
+            <fileName>GenerateUUIDGenerateUUID</fileName>
+            <packageName>UtilityProcesses.UUID.GenerateUUID</packageName>
+            <fullsource>package UtilityProcesses.UUID.GenerateUUID;
+import java.util.*;
+import java.io.*;
+public class GenerateUUIDGenerateUUID{
+/****** START SET/GET METHOD, DO NOT MODIFY *****/
+	protected String uuidString = "";
+	public String getuuidString() {
+		return uuidString;
+	}
+	public void setuuidString(String val) {
+		uuidString = val;
+	}
+/****** END SET/GET METHOD, DO NOT MODIFY *****/
+	public GenerateUUIDGenerateUUID() {
+	}
+	public void invoke() throws Exception {
+/* Available Variables: DO NOT MODIFY
+	Out : String uuidString
+* Available Variables: DO NOT MODIFY *****/
+
+UUID uuid = UUID.randomUUID();
+
+uuidString = uuid.toString();}
+}
+</fullsource>
+            <outputData>
+                <row>
+                    <fieldName>uuidString</fieldName>
+                    <fieldType>string</fieldType>
+                    <fieldRequired>optional</fieldRequired>
+                </row>
+            </outputData>
+            <byteCode>
+                <class>
+                    <name>GenerateUUIDGenerateUUID</name>
+                    <byteCode>yv66vgAAADIAJAkABgAXCgAHABgIABkKABoAGwoAGgAcBwAdBwAeAQAKdXVpZFN0cmluZwEAEkxqYXZhL2xhbmcvU3RyaW5nOwEADWdldHV1aWRTdHJpbmcBABQoKUxqYXZhL2xhbmcvU3RyaW5nOwEABENvZGUBAA9MaW5lTnVtYmVyVGFibGUBAA1zZXR1dWlkU3RyaW5nAQAVKExqYXZhL2xhbmcvU3RyaW5nOylWAQAGPGluaXQ+AQADKClWAQAGaW52b2tlAQAKRXhjZXB0aW9ucwcAHwEAClNvdXJjZUZpbGUBAB1HZW5lcmF0ZVVVSURHZW5lcmF0ZVVVSUQuamF2YQwACAAJDAAQABEBAAAHACAMACEAIgwAIwALAQA7VXRpbGl0eVByb2Nlc3Nlcy9VVUlEL0dlbmVyYXRlVVVJRC9HZW5lcmF0ZVVVSURHZW5lcmF0ZVVVSUQBABBqYXZhL2xhbmcvT2JqZWN0AQATamF2YS9sYW5nL0V4Y2VwdGlvbgEADmphdmEvdXRpbC9VVUlEAQAKcmFuZG9tVVVJRAEAEigpTGphdmEvdXRpbC9VVUlEOwEACHRvU3RyaW5nACEABgAHAAAAAQAEAAgACQAAAAQAAQAKAAsAAQAMAAAAHQABAAEAAAAFKrQAAbAAAAABAA0AAAAGAAEAAAAIAAEADgAPAAEADAAAACIAAgACAAAABiortQABsQAAAAEADQAAAAoAAgAAAAsABQAMAAEAEAARAAEADAAAACsAAgABAAAACyq3AAIqEgO1AAGxAAAAAQANAAAADgADAAAADgAEAAYACgAPAAEAEgARAAIADAAAACkAAgACAAAADbgABEwqK7YABbUAAbEAAAABAA0AAAAKAAIAAAAVAAQAFwATAAAABAABABQAAQAVAAAAAgAW</byteCode>
+                </class>
+            </byteCode>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Generate UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate UUID</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

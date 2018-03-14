@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:lcn="http://three.co.uk/xsd/cdm/asset/assetspecification/location/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:astBASE="http://three.co.uk/xsd/cdm/asset/assettypes/assetbasetypes/v1"
+	 xmlns:astTYP="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assettypes/v1"
+	 xmlns:astSTS="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assetstatus/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/asset/assetspecification/location/v1"
+	 version="$Id: Location_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/asset/assettypes/assetbasetypes/v1" schemaLocation="../AssetTypes/AssetBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assettypes/v1" schemaLocation="../AssetCommon/AssetEnumerations/AssetTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/asset/assetcommon/assetenumerations/assetstatus/v1" schemaLocation="../AssetCommon/AssetEnumerations/AssetStatus_v1.xsd"/>
+	<xsd:complexType name="LocationDetails">
+		<xsd:sequence>
+			<xsd:element name="locationID" type="astBASE:LocationID"/>
+			<xsd:element name="locationType" type="astTYP:_LOCATION_TYPES"/>
+			<xsd:element ref="addr:address" minOccurs="0"/>
+			<xsd:element name="locationStatus" type="astSTS:_LOCATION_STATUS"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="location" type="lcn:LocationDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Location instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="Location" type="lcn:LocationDetails"/>
+</xsd:schema>

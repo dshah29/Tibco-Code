@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 version="$Id: UDF_v1.xsd 5229 2015-10-21 10:25:34Z mgarg $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="UserDefinedField">
+		<xsd:sequence>
+			<xsd:element name="name" type="BASE:PopulatedString"/>
+			<xsd:element name="value" type="BASE:PopulatedString"/>
+			<xsd:element name="dateExpressed" type="xsd:date" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UDF" type="udf:UserDefinedField"/>
+</xsd:schema>

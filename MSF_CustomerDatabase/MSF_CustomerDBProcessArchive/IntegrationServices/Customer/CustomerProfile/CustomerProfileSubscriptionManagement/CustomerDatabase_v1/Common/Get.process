@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customer/v1" xmlns:pfx1="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pfx41="http://www.tibco.com/CommonLE/Client/Schema/ClientInterface.xsd" xmlns:ns5="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:pfx="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://schemas.tibco.com/bw/plugins/as/5.0/asExceptions" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx5="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/customerdetails/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/namespaces/tnt/plugins/as" xmlns:pfx3="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/querycustomerdetails/v1" xmlns:pfx2="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:pfx9="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1" xmlns:pfx8="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx7="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx6="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/customerdetails/v1"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/querycustomerdetails/v1"/>
+    <xsd:import namespace="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/querycustomerdetails/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/QueryCustomerDetails_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/MC_CustomerDatabase_v1.xsd"/>
+    <pd:name>IntegrationServices/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/CustomerDatabase_v1/Common/Get.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx9:QueryCustomerDetailsRequest"/>
+    <pd:startX>126</pd:startX>
+    <pd:startY>213</pd:startY>
+    <pd:returnBindings>
+        <xsl:copy-of select="$Map-Data/pfx9:QueryCustomerDetailsResponse"/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx9:QueryCustomerDetailsResponse"/>
+    <pd:endX>1141</pd:endX>
+    <pd:endY>213</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx8:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1417159691058</pd:targetNamespace>
+    <pd:activity name="CreateException_ASOperationError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>394</pd:x>
+        <pd:y>337</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ASOperationError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <metaspaceName>
+                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/SharedResources/Connections/MetaspaceConnection/CustomerDBConnection/MetaSpaceName"/>
+                </metaspaceName>
+                <xsl:copy-of select="$_error/ns1:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException_UnableToGetDataError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>397</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_UnableToGetDataError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <Context>
+                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/SharedResources/Connections/MetaspaceConnection/CustomerDBConnection/MetaSpaceName"/>
+                </Context>
+                <ShouldLogLocally>
+                    <xsl:value-of select="false()"/>
+                </ShouldLogLocally>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException_XMLParseError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>744</pd:x>
+        <pd:y>337</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_XMLParseError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns1:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>578</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx7:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_UnableToGetDataError/root/pfx8:Exception"/>
+                </data>
+            </pfx7:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error-Parse">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>747</pd:x>
+        <pd:y>453</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx7:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_XMLParseError/root/pfx8:Exception"/>
+                </data>
+            </pfx7:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Error-Get">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>394</pd:x>
+        <pd:y>445</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx7:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_ASOperationError/root/pfx8:Exception"/>
+                </data>
+            </pfx7:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetCustDetailsSnapshot">
+        <pd:type>com.tibco.plugin.as.SnapshotActivity</pd:type>
+        <pd:resourceType>ae.activities.SnapshotActivity</pd:resourceType>
+        <pd:x>393</pd:x>
+        <pd:y>213</pd:y>
+        <config>
+            <DistributionScope>ALL</DistributionScope>
+            <BrowserType>GET</BrowserType>
+            <Prefetch>1</Prefetch>
+            <spaceConnection>/SharedResources/Connections/Metaspace/MS_CustomerDatabase.sharedMetaSpacecon/CUSTOMER/CustomerSpaceConnection</spaceConnection>
+        </config>
+        <pd:inputBindings>
+            <xsl:variable name="MSISDN" select="exists($Start/pfx9:QueryCustomerDetailsRequest/pfx9:MSISDN)"/>
+            <xsl:variable name="accountID" select="exists($Start/pfx9:QueryCustomerDetailsRequest/pfx9:accountID)"/>
+            <xsl:variable name="CRMID" select="exists($Start/pfx9:QueryCustomerDetailsRequest/pfx9:CRMID)"/>
+            <xsl:variable name="varMSISDN" select="concat('MSISDN=&quot;',$Start/pfx9:QueryCustomerDetailsRequest/pfx9:MSISDN,'&quot;')"/>
+            <xsl:variable name="varAccountId" select="concat('accountID=&quot;',$Start/pfx9:QueryCustomerDetailsRequest/pfx9:accountID,'&quot;')"/>
+            <xsl:variable name="varCRMID" select="concat('CRMID=&quot;',$Start/pfx9:QueryCustomerDetailsRequest/pfx9:CRMID,'&quot;')"/>
+            <pfx4:ActivityInput>
+                <xsl:choose>
+                    <xsl:when test="$MSISDN and $accountID and $CRMID">
+                        <Filter>
+                            <xsl:value-of select="concat($varMSISDN,' AND ',$varAccountId,' AND ',$varCRMID)"/>
+                        </Filter>
+                    </xsl:when>
+                    <xsl:when test="$MSISDN and $accountID and not($CRMID)">
+                        <Filter>
+                            <xsl:value-of select="concat($varMSISDN,' AND ',$varAccountId)"/>
+                        </Filter>
+                    </xsl:when>
+                    <xsl:when test="$MSISDN and not($accountID) and $CRMID">
+                        <Filter>
+                            <xsl:value-of select="concat($varMSISDN,' AND ',$varCRMID)"/>
+                        </Filter>
+                    </xsl:when>
+                    <xsl:when test="not($MSISDN) and $accountID and $CRMID">
+                        <Filter>
+                            <xsl:value-of select="concat($varAccountId,' AND ',$varCRMID)"/>
+                        </Filter>
+                    </xsl:when>
+                    <xsl:when test="$MSISDN and not($accountID) and not($CRMID)">
+                        <Filter>
+                            <xsl:value-of select="$varMSISDN"/>
+                        </Filter>
+                    </xsl:when>
+                    <xsl:when test="not($MSISDN) and $accountID and not($CRMID)">
+                        <Filter>
+                            <xsl:value-of select="$varAccountId"/>
+                        </Filter>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Filter>
+                            <xsl:value-of select="$varCRMID"/>
+                        </Filter>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </pfx4:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogResponse">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>572</pd:x>
+        <pd:y>213</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$GetCustDetailsSnapshot/pfx4:ActivityOutput"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>878</pd:x>
+        <pd:y>213</pd:y>
+        <config>
+            <element ref="pfx9:QueryCustomerDetailsResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx9:QueryCustomerDetailsResponse>
+                <xsl:copy-of select="$MapCustomerData/pfx9:CustomerDetails"/>
+                <xsl:choose>
+                    <xsl:when test="exists($GetCustDetailsSnapshot/pfx4:ActivityOutput/Tuple[1]/lastUpdate) and tib:trim($GetCustDetailsSnapshot/pfx4:ActivityOutput/Tuple[1]/lastUpdate) !=&quot;&quot;">
+                        <pfx9:lastUpdate>
+                            <xsl:value-of select="$GetCustDetailsSnapshot/pfx4:ActivityOutput/Tuple[1]/lastUpdate"/>
+                        </pfx9:lastUpdate>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <pfx9:lastUpdate>
+                            <xsl:value-of select="current-dateTime()"/>
+                        </pfx9:lastUpdate>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </pfx9:QueryCustomerDetailsResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="MapCustomerData">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>740</pd:x>
+        <pd:y>213</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx9:CustomerDetails"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="tib:base64-to-string($GetCustDetailsSnapshot/pfx4:ActivityOutput/Tuple[1]/customerDetails)"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1019</pd:x>
+        <pd:y>213</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Map-Data/pfx9:QueryCustomerDetailsResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>213</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx9:QueryCustomerDetailsRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>MapCustomerData</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>MapCustomerData</pd:from>
+        <pd:to>CreateException_XMLParseError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_ASOperationError</pd:from>
+        <pd:to>Generate-Error-Get</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_XMLParseError</pd:from>
+        <pd:to>Generate Error-Parse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetCustDetailsSnapshot</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_UnableToGetDataError</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetCustDetailsSnapshot</pd:from>
+        <pd:to>CreateException_ASOperationError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-720845</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetCustDetailsSnapshot</pd:from>
+        <pd:to>CreateException_UnableToGetDataError</pd:to>
+        <pd:xpathDescription>CustomerNotFound</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>not(exists($GetCustDetailsSnapshot/pfx4:ActivityOutput/Tuple))</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetCustDetailsSnapshot</pd:from>
+        <pd:to>LogResponse</pd:to>
+        <pd:xpathDescription>CustomerFound</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogResponse</pd:from>
+        <pd:to>MapCustomerData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

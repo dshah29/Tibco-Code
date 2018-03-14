@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:prefix0="http://xmlns.tibco.com/2003/5/bw/plugins/tibrv"
+	 xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 targetNamespace="http://xmlns.tibco.com/2003/5/bw/plugins/tibrv"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:element name="msg">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="field" minOccurs="0" maxOccurs="unbounded">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="name" type="xsd:string"/>
+							<xsd:element name="id" type="xsd:unsignedShort" minOccurs="0"/>
+							<xsd:choice>
+								<xsd:element name="simple" type="xsd:anySimpleType"/>
+								<xsd:element ref="prefix0:msg"/>
+							</xsd:choice>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:simpleType name="ipPort">
+		<xsd:restriction base="xsd:unsignedShort"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="ipAddr">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="tibrvXml">
+		<xsd:restriction base="xsd:string"/>
+	</xsd:simpleType>
+</xsd:schema>

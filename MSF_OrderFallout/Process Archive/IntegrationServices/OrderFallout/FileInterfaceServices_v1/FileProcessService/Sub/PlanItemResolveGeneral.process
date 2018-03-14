@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:ns3="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:ns0="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/provider" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd">
+    <xsd:import namespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" schemaLocation="/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/OrderFalloutBusinessException.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/PlanItemResolveGeneral.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>30</pd:startX>
+    <pd:startY>111</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>955</pd:endX>
+    <pd:endY>123</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1444148669528/PlanItemResolve</pd:targetNamespace>
+    <pd:group name="PlanItem Resolve Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>168</pd:x>
+        <pd:y>7</pd:y>
+        <pd:width>584</pd:width>
+        <pd:height>222</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-PlanItem-Resolve-General-Request/Output/Rows/root</pd:over>
+            <pd:iterationElementSlot>Current_PI</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>GenerateUUID</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Write PlanItem Resolve General Response</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PlanItem Failed Response</pd:from>
+            <pd:to>Render PlanItem Resolve General Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render PlanItem Resolve General Response</pd:from>
+            <pd:to>Write PlanItem Resolve General Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GenerateUUID</pd:from>
+            <pd:to>Get OrderID and OrderRef</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Get OrderID and OrderRef</pd:from>
+            <pd:to>PlanItem Failed Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="GenerateUUID">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>258</pd:x>
+            <pd:y>127</pd:y>
+            <config>
+                <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="PlanItem Failed Response">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>464</pd:x>
+            <pd:y>131</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/planItemFailedResponse.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <ns0:PlanItemFailedReply>
+                        <ns3:resultStatus>
+                            <ns3:deployment>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns3:deployment>
+                            <ns3:service>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns3:service>
+                            <ns3:operation>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns3:operation>
+                            <ns3:component>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns3:component>
+                            <ns3:severity>
+                                <xsl:value-of select="&quot;S&quot;"/>
+                            </ns3:severity>
+                            <ns3:code>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns3:code>
+                            <ns3:message>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns3:message>
+                        </ns3:resultStatus>
+                        <ns0:orderID>
+                            <xsl:value-of select="$Get-OrderID-and-OrderRef/ns:GetPlanReply/ns:plan/ns:orderID"/>
+                        </ns0:orderID>
+                        <ns0:orderRef>
+                            <xsl:value-of select="$Get-OrderID-and-OrderRef/ns:GetPlanReply/ns:plan/ns:orderRef"/>
+                        </ns0:orderRef>
+                        <ns0:planID>
+                            <xsl:value-of select="tib:trim($Current_PI/root/PlanID)"/>
+                        </ns0:planID>
+                        <ns0:planItemID>
+                            <xsl:value-of select="tib:trim($Current_PI/root/PlanItemID)"/>
+                        </ns0:planItemID>
+                        <xsl:choose>
+                            <xsl:when test="tib:trim($Current_PI/root/Resolution)=&quot;Retry&quot;">
+                                <ns0:retry/>
+                            </xsl:when>
+                            <xsl:when test="tib:trim($Current_PI/root/Resolution)=&quot;Skip&quot;">
+                                <ns0:complete/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <ns0:complete/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </ns0:PlanItemFailedReply>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Write PlanItem Resolve General Response">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>678</pd:x>
+            <pd:y>139</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns1:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="$Start/root/ResponseFileName"/>
+                    </fileName>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$i=1">
+                            <textContent>
+                                <xsl:value-of select="concat('UserID,','ExceptionID,','PlanID,','PlanItemID,','Resolution,','Code,','Message,',&quot;&#xA;&quot;,$Render-PlanItem-Resolve-General-Response/Text)"/>
+                            </textContent>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <textContent>
+                                <xsl:value-of select="$Render-PlanItem-Resolve-General-Response/Text"/>
+                            </textContent>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <addLineSeparator>
+                        <xsl:value-of select="0"/>
+                    </addLineSeparator>
+                </ns1:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Render PlanItem Resolve General Response">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>574</pd:x>
+            <pd:y>137</pd:y>
+            <config>
+                <ParseSharedConfig>/SharedResources/DataFormats/PlanItemResolveTemplate/PlanItemResolveResponseFormat.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <root>
+                        <UserID>
+                            <xsl:value-of select="$Current_PI/root/UserID"/>
+                        </UserID>
+                        <Resolution>
+                            <xsl:value-of select="$Current_PI/root/Resolution"/>
+                        </Resolution>
+                        <Code>
+                            <xsl:value-of select="0"/>
+                        </Code>
+                        <Message>
+                            <xsl:value-of select="'Success'"/>
+                        </Message>
+                    </root>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Get OrderID and OrderRef">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>362</pd:x>
+            <pd:y>134</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/getPlan.process</processName>
+            </config>
+            <pd:inputBindings>
+                <ns:GetPlanRequest>
+                    <xsl:attribute name="businessTransactionID">
+                        <xsl:value-of select="$GenerateUUID/UUID"/>
+                    </xsl:attribute>
+                    <ns:planID>
+                        <xsl:value-of select="$Current_PI/root/PlanID"/>
+                    </ns:planID>
+                </ns:GetPlanRequest>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Parse PlanItem Resolve General Request">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>109</pd:x>
+        <pd:y>127</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/SharedResources/DataFormats/PlanItemResolveTemplate/PlanItemResolveGeneralFormat.sharedparse</ParseSharedConfig>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+            <SkipBlankLines>true</SkipBlankLines>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>841</pd:x>
+        <pd:y>122</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>PlanItem Resolve Group</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse PlanItem Resolve General Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse PlanItem Resolve General Request</pd:from>
+        <pd:to>PlanItem Resolve Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

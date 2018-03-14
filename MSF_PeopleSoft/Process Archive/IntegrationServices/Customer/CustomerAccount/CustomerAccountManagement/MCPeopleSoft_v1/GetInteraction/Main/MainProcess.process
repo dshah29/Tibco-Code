@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Response" xmlns:ns="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/PeopleSoft/Request" xmlns:ns3="http://www.tibco.com/pe/DeployedVarsType" xmlns:XMLUtil="java://com.tibco.tibcobw.customfunctions.XMLUtils" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/MCPeoplesoft_v1.xsd"/>
+    <pd:name>IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/GetInteraction/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:GetInteractionRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>27</pd:startX>
+    <pd:startY>123</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Get-Interaction-Response/root/pfx:GetInteractionResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:GetInteractionResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>839</pd:endX>
+    <pd:endY>123</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1424676234771</pd:targetNamespace>
+    <pd:activity name="Convert MSISDN Format">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>247</pd:x>
+        <pd:y>131</pd:y>
+        <config>
+            <processName>/Common/Convert MSISDN format.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <MSISDN>
+                    <xsl:value-of select="$Start/root/pfx:GetInteractionRequest/pfx:CustomerKey/pfx:MSISDN"/>
+                </MSISDN>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Get Interaction">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>489</pd:x>
+        <pd:y>123</pd:y>
+        <config>
+            <processName>/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/MCPeopleSoft_v1/GetInteraction/Sub/GetInteraction.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Get-Interaction-Request/root/ns:SPR__GetInteractionHistoryRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Get Interaction Request">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>367</pd:x>
+        <pd:y>131</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="ns:SPR__GetInteractionHistoryRequest"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ns:SPR__GetInteractionHistoryRequest>
+                    <SERVICE__NAME>
+                        <xsl:value-of select="$_globalVariables/ns3:GlobalVariables/IntegrationServices/Customer/CustomerAccount/CustomerAccountManagement/PPLSFTService/ExternalService/GetInteraction"/>
+                    </SERVICE__NAME>
+                    <CUSTOMER__KEY>
+                        <MSISDN>
+                            <xsl:choose>
+                                <xsl:when test="exists($Convert-MSISDN-Format/root/MSISDN)">
+                                    <xsl:value-of select="$Convert-MSISDN-Format/root/MSISDN"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </MSISDN>
+                        <ACCOUNT__ID>
+                            <xsl:choose>
+                                <xsl:when test="exists($Start/root/pfx:GetInteractionRequest/pfx:CustomerKey/pfx:BAN)">
+                                    <xsl:value-of select="$Start/root/pfx:GetInteractionRequest/pfx:CustomerKey/pfx:BAN"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </ACCOUNT__ID>
+                        <CRM__ID>
+                            <xsl:choose>
+                                <xsl:when test="exists($Start/root/pfx:GetInteractionRequest/pfx:CustomerKey/pfx:CRMID)">
+                                    <xsl:value-of select="$Start/root/pfx:GetInteractionRequest/pfx:CustomerKey/pfx:CRMID"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </CRM__ID>
+                    </CUSTOMER__KEY>
+                    <xsl:if test="exists($Start/root/pfx:GetInteractionRequest/pfx:contactMethod)">
+                        <CONTACT__METHOD>
+                            <xsl:choose>
+                                <xsl:when test="exists(XMLUtil:validate($_globalVariables/ns3:GlobalVariables/Enumerations/CDM/Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/INTERACTION_METHOD,$Start/root/pfx:GetInteractionRequest/pfx:contactMethod))">
+                                    <xsl:value-of select="XMLUtil:validate($_globalVariables/ns3:GlobalVariables/Enumerations/CDM/Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/INTERACTION_METHOD,$Start/root/pfx:GetInteractionRequest/pfx:contactMethod)"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </CONTACT__METHOD>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/pfx:GetInteractionRequest/pfx:contactReason) and $Start/root/pfx:GetInteractionRequest/pfx:contactReason!=&quot;&quot;">
+                        <CONTACT__REASON>
+                            <xsl:value-of select="XMLUtil:validate($_globalVariables/ns3:GlobalVariables/Enumerations/CDM/Customer/CustomerInteraction/CustomerInteractionManagement/CustomerInteractions/INTERACTION_CATEGORY,$Start/root/pfx:GetInteractionRequest/pfx:contactReason)"/>
+                        </CONTACT__REASON>
+                    </xsl:if>
+                </ns:SPR__GetInteractionHistoryRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Get Interaction Response">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>608</pd:x>
+        <pd:y>131</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element ref="pfx:GetInteractionResponse"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx:GetInteractionResponse>
+                    <pfx:Interactions>
+                        <xsl:for-each select="$Get-Interaction/root/ns1:SPR__GetInteractionHistoryResponse/INTERACTION__LIST/item">
+                            <pfx:Interaction>
+                                <pfx:startDateTime>
+                                    <xsl:value-of select="tib:parse-dateTime(&quot;dd/MM/yyyy HH:mm:ss&quot;,START__DATE__TIME)"/>
+                                </pfx:startDateTime>
+                                <xsl:if test="exists(END__DATE__TIME) and tib:trim(END__DATE__TIME) !=&quot;&quot;">
+                                    <pfx:endDateTime>
+                                        <xsl:value-of select="tib:parse-dateTime(&quot;dd/MM/yyyy HH:mm:ss&quot;,END__DATE__TIME)"/>
+                                    </pfx:endDateTime>
+                                </xsl:if>
+                                <xsl:if test="exists(CONTACT__METHOD) and (tib:trim(CONTACT__METHOD)!=&quot;&quot;)">
+                                    <pfx:contactMethodDesc>
+                                        <xsl:value-of select="tib:trim(CONTACT__METHOD)"/>
+                                    </pfx:contactMethodDesc>
+                                </xsl:if>
+                                <xsl:if test="exists(CONTACT__REASON) and (tib:trim(CONTACT__REASON)!=&quot;&quot;)">
+                                    <pfx:contactReasonDesc>
+                                        <xsl:value-of select="tib:trim(CONTACT__REASON)"/>
+                                    </pfx:contactReasonDesc>
+                                    <xsl:if test="exists(CONTACT__SUB__REASON) and tib:trim(CONTACT__SUB__REASON)!=&quot;&quot;">
+                                        <pfx:contactSubReasonDesc>
+                                            <xsl:value-of select="tib:trim(CONTACT__SUB__REASON)"/>
+                                        </pfx:contactSubReasonDesc>
+                                    </xsl:if>
+                                </xsl:if>
+                                <pfx:Notes>
+                                    <xsl:for-each select="NOTES__LIST/item">
+                                        <pfx:Note>
+                                            <xsl:if test="exists(NOTE__DESCRIPTION) and tib:trim(NOTE__DESCRIPTION)!=&quot;&quot;">
+                                                <pfx:noteDescription>
+                                                    <xsl:value-of select="tib:trim(NOTE__DESCRIPTION)"/>
+                                                </pfx:noteDescription>
+                                            </xsl:if>
+                                            <pfx:dateTime>
+                                                <xsl:value-of select="tib:parse-dateTime(&quot;dd/MM/yyyy HH:mm:ss&quot;,DATE__TIME)"/>
+                                            </pfx:dateTime>
+                                        </pfx:Note>
+                                    </xsl:for-each>
+                                </pfx:Notes>
+                                <xsl:if test="exists(CONTACT__NAME) and (tib:trim(CONTACT__NAME)!=&quot;&quot;)">
+                                    <pfx:contactName>
+                                        <xsl:value-of select="tib:trim(CONTACT__NAME)"/>
+                                    </pfx:contactName>
+                                </xsl:if>
+                                <xsl:if test="exists(CONTACT__OUTCOME) and tib:trim(CONTACT__OUTCOME) !=''">
+                                    <pfx:contactOutcomeDesc>
+                                        <xsl:value-of select="tib:trim(CONTACT__OUTCOME)"/>
+                                    </pfx:contactOutcomeDesc>
+                                </xsl:if>
+                                <pfx:agentID>
+                                    <xsl:value-of select="AGENT__ID"/>
+                                </pfx:agentID>
+                            </pfx:Interaction>
+                        </xsl:for-each>
+                    </pfx:Interactions>
+                </pfx:GetInteractionResponse>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>725</pd:x>
+        <pd:y>123</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Get-Interaction-Response/root"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>135</pd:x>
+        <pd:y>123</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx:GetInteractionRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Interaction</pd:from>
+        <pd:to>Get Interaction Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Interaction Request</pd:from>
+        <pd:to>Get Interaction</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Convert MSISDN Format</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Interaction Response</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Convert MSISDN Format</pd:from>
+        <pd:to>Get Interaction Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

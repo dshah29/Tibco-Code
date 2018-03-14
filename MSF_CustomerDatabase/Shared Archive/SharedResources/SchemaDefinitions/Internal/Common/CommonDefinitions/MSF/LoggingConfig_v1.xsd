@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://three.co.uk/xsd/internal/common/commondefinitions/msf/loggingconfig/v1"
+	 targetNamespace="http://three.co.uk/xsd/internal/common/commondefinitions/msf/loggingconfig/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:complexType name="LoggingSystemConfig">
+		<xs:sequence>
+			<xs:element ref="SystemConfigs"/>
+			<xs:element ref="ServiceConfigs"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SystemConfigs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LoggingConfig" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceConfigs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ServiceConfig" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceConfig">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="serviceName"/>
+				<xs:element ref="LoggingConfigs"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="serviceName" type="xs:string"/>
+	<xs:element name="LoggingConfig">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="context"/>
+				<xs:element ref="level"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="context" type="xs:string"/>
+	<xs:element name="level" type="xs:int"/>
+	<xs:element name="LoggingConfigs">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="LoggingConfig" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="LoggingSystemConfig" type="LoggingSystemConfig"/>
+</xs:schema>

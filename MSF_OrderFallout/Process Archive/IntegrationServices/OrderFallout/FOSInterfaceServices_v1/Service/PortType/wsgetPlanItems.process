@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns6="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd" xmlns:ns7="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:pfx="http://xmlns.example.com/1418045315253" xmlns:ns8="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" xmlns:pfx4="http://xmlns.example.com/1441787653389" xmlns:pfx3="http://xmlns.example.com/BEHResolution_v2" xmlns:pfx2="http://xmlns.example.com/BEHResolution_v1">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/BEHResolution_v1" location="/SharedResources/WebServiceDefinitions/External/BEH/BEHResolution_v1.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1441787653389" location="/SharedResources/WebServiceDefinitions/External/FOSOrchestration/WSDL.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/FOSInterfaceServices_v1/Service/PortType/wsgetPlanItems.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx4:getPlanItemsRequest"/>
+    <pd:startX>30</pd:startX>
+    <pd:startY>62</pd:startY>
+    <pd:returnBindings>
+        <pfx4:getPlanItemsReply>
+            <getPlanItemsReply>
+                <xsl:for-each select="$MainHandlegetPlanItemsRequest/ns7:GetPlanItemsReply">
+                    <ns3:GetPlanItemsReply>
+                        <xsl:if test="@businessTransactionID">
+                            <xsl:attribute name="businessTransactionID">
+                                <xsl:value-of select="@businessTransactionID"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <xsl:for-each select="ns7:planItem">
+                            <ns3:planItem>
+                                <ns3:planItemID>
+                                    <xsl:value-of select="ns7:planItemID"/>
+                                </ns3:planItemID>
+                                <xsl:if test="ns7:planItemName">
+                                    <ns3:planItemName>
+                                        <xsl:value-of select="ns7:planItemName"/>
+                                    </ns3:planItemName>
+                                </xsl:if>
+                                <xsl:for-each select="ns7:udf">
+                                    <ns3:udf>
+                                        <xsl:if test="ns7:type">
+                                            <ns3:type>
+                                                <xsl:value-of select="ns7:type"/>
+                                            </ns3:type>
+                                        </xsl:if>
+                                        <xsl:if test="ns7:flavor">
+                                            <ns3:flavor>
+                                                <xsl:value-of select="ns7:flavor"/>
+                                            </ns3:flavor>
+                                        </xsl:if>
+                                        <ns3:name>
+                                            <xsl:value-of select="ns7:name"/>
+                                        </ns3:name>
+                                        <xsl:if test="ns7:value">
+                                            <ns3:value>
+                                                <xsl:value-of select="ns7:value"/>
+                                            </ns3:value>
+                                        </xsl:if>
+                                        <xsl:if test="ns7:originalValue">
+                                            <ns3:originalValue>
+                                                <xsl:value-of select="ns7:originalValue"/>
+                                            </ns3:originalValue>
+                                        </xsl:if>
+                                        <xsl:if test="ns7:lastModified">
+                                            <ns3:lastModified>
+                                                <xsl:value-of select="ns7:lastModified"/>
+                                            </ns3:lastModified>
+                                        </xsl:if>
+                                    </ns3:udf>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns7:parentID">
+                                    <ns3:parentID>
+                                        <xsl:value-of select="."/>
+                                    </ns3:parentID>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns7:childID">
+                                    <ns3:childID>
+                                        <xsl:value-of select="."/>
+                                    </ns3:childID>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns7:siblingID">
+                                    <ns3:siblingID>
+                                        <xsl:value-of select="."/>
+                                    </ns3:siblingID>
+                                </xsl:for-each>
+                                <xsl:for-each select="ns7:dependentID">
+                                    <ns3:dependentID>
+                                        <xsl:value-of select="."/>
+                                    </ns3:dependentID>
+                                </xsl:for-each>
+                            </ns3:planItem>
+                        </xsl:for-each>
+                    </ns3:GetPlanItemsReply>
+                </xsl:for-each>
+            </getPlanItemsReply>
+        </pfx4:getPlanItemsReply>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx4:getPlanItemsReply"/>
+    <pd:endX>1078</pd:endX>
+    <pd:endY>62</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355136884829</pd:targetNamespace>
+    <pd:activity name="Audit Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>379</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx4:getPlanItemsRequest/ancestor-or-self::*/namespace::node()"/>
+                    <xsl:copy-of select="$Start/pfx4:getPlanItemsRequest/@*"/>
+                    <xsl:copy-of select="$Start/pfx4:getPlanItemsRequest/node()"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>110</pd:x>
+        <pd:y>305</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Catch Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>444</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+            <catchAll>false</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>313</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>184</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ReceiveError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Message Context REPLY">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>639</pd:x>
+        <pd:y>70</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/CreateMessageContext_REPLY.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Initialise">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>139</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Initialise Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>110</pd:x>
+        <pd:y>184</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/Initialise.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>390</pd:x>
+        <pd:y>313</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns1:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>390</pd:x>
+        <pd:y>452</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ns1:Exception/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>384</pd:x>
+        <pd:y>184</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Receive-Error/root/ns1:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="MainHandlegetPlanItemsRequest">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>503</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/FOSDataAccessInterfaces/getPlanItems.process</processName>
+        </config>
+        <pd:inputBindings>
+            <xsl:for-each select="$Start/pfx4:getPlanItemsRequest/getPlanItemsRequest/ns3:GetPlanItemsRequest">
+                <ns7:GetPlanItemsRequest>
+                    <xsl:if test="@businessTransactionID">
+                        <xsl:attribute name="businessTransactionID">
+                            <xsl:value-of select="@businessTransactionID"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <ns7:planID>
+                        <xsl:value-of select="ns3:planID"/>
+                    </ns7:planID>
+                    <xsl:if test="ns3:udfFlavor">
+                        <ns7:udfFlavor>
+                            <xsl:value-of select="ns3:udfFlavor"/>
+                        </ns7:udfFlavor>
+                    </xsl:if>
+                    <xsl:for-each select="ns3:planItem">
+                        <ns7:planItem>
+                            <ns7:planItemID>
+                                <xsl:value-of select="ns3:planItemID"/>
+                            </ns7:planItemID>
+                            <xsl:if test="ns3:planItemName">
+                                <ns7:planItemName>
+                                    <xsl:value-of select="ns3:planItemName"/>
+                                </ns7:planItemName>
+                            </xsl:if>
+                            <xsl:for-each select="ns3:udf">
+                                <ns7:udf>
+                                    <xsl:if test="ns3:type">
+                                        <ns7:type>
+                                            <xsl:value-of select="ns3:type"/>
+                                        </ns7:type>
+                                    </xsl:if>
+                                    <xsl:if test="ns3:flavor">
+                                        <ns7:flavor>
+                                            <xsl:value-of select="ns3:flavor"/>
+                                        </ns7:flavor>
+                                    </xsl:if>
+                                    <ns7:name>
+                                        <xsl:value-of select="ns3:name"/>
+                                    </ns7:name>
+                                    <xsl:if test="ns3:value">
+                                        <ns7:value>
+                                            <xsl:value-of select="ns3:value"/>
+                                        </ns7:value>
+                                    </xsl:if>
+                                    <xsl:if test="ns3:originalValue">
+                                        <ns7:originalValue>
+                                            <xsl:value-of select="ns3:originalValue"/>
+                                        </ns7:originalValue>
+                                    </xsl:if>
+                                    <xsl:if test="ns3:lastModified">
+                                        <ns7:lastModified>
+                                            <xsl:value-of select="ns3:lastModified"/>
+                                        </ns7:lastModified>
+                                    </xsl:if>
+                                </ns7:udf>
+                            </xsl:for-each>
+                            <xsl:for-each select="ns3:parentID">
+                                <ns7:parentID>
+                                    <xsl:value-of select="."/>
+                                </ns7:parentID>
+                            </xsl:for-each>
+                            <xsl:for-each select="ns3:childID">
+                                <ns7:childID>
+                                    <xsl:value-of select="."/>
+                                </ns7:childID>
+                            </xsl:for-each>
+                            <xsl:for-each select="ns3:siblingID">
+                                <ns7:siblingID>
+                                    <xsl:value-of select="."/>
+                                </ns7:siblingID>
+                            </xsl:for-each>
+                            <xsl:for-each select="ns3:dependentID">
+                                <ns7:dependentID>
+                                    <xsl:value-of select="."/>
+                                </ns7:dependentID>
+                            </xsl:for-each>
+                        </ns7:planItem>
+                    </xsl:for-each>
+                </ns7:GetPlanItemsRequest>
+            </xsl:for-each>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Ouput Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>851</pd:x>
+        <pd:y>63</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ContextResources/SetOutputContext.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Message-Context-REPLY/root/ns2:MessageContext"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>966</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>251</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx4:getPlanItemsRequest/ancestor-or-self::*/namespace::node()"/>
+                    <xsl:copy-of select="$Start/pfx4:getPlanItemsRequest/@*"/>
+                    <xsl:copy-of select="$Start/pfx4:getPlanItemsRequest/node()"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Audit End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>746</pd:x>
+        <pd:y>64</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <response>
+                    <xsl:copy-of select="$MainHandlegetPlanItemsRequest/ns7:GetPlanItemsReply"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Initialise</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit Start</pd:from>
+        <pd:to>MainHandlegetPlanItemsRequest</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Ouput Context</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Initialise Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise Receive Error</pd:from>
+        <pd:to>Create Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Receive Error</pd:from>
+        <pd:to>Log Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch Exception</pd:from>
+        <pd:to>Log Exception Catch Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>Audit Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>MainHandlegetPlanItemsRequest</pd:from>
+        <pd:to>Create Message Context REPLY</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Receive Error</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch Exception</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Message Context REPLY</pd:from>
+        <pd:to>Audit End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit End</pd:from>
+        <pd:to>Set Ouput Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1"
+	 xmlns:ord="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1"
+	 xmlns:CHNL="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1"
+	 xmlns:so="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1"
+	 targetNamespace="http://three.co.uk/xsd/Interface/service/serviceorder/serviceordermanagement/mcso/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Organisation_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" schemaLocation="../../../../CDM/Order/OrderItemDefinition/Order_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1" schemaLocation="../../../../CDM/Common/CommonEnumerations/Channel_v1.xsd"/>
+	<xs:element name="SubmitServiceOrderRequest" type="so:SubmitServiceOrderRequest"/>
+	<xs:element name="SubmitServiceOrderResponse" type="so:SubmitServiceOrderResponse"/>
+	<xs:complexType name="SubmitServiceOrderRequest">
+		<xs:sequence>
+			<xs:element name="salesChannel" type="CHNL:SALES_CHANNEL" minOccurs="0"/>
+			<xs:element name="orgID" type="TYP:ORGANISATION_LIST"/>
+			<xs:element name="agentID" type="xs:string"/>
+			<xs:element name="ServiceOrder" type="ord:OrderDetails"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SubmitServiceOrderResponse">
+		<xs:sequence>
+			<xs:element name="orderID" type="xs:string"/>
+			<xs:element name="orderStatus" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

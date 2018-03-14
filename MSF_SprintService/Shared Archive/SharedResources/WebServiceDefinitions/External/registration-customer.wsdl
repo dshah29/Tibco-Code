@@ -1,0 +1,1833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns2="http://v2.connect.engage.three.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="urn:RegisterCustomerV2" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:intf="urn:RegisterCustomerV2" targetNamespace="urn:RegisterCustomerV2">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:RegisterCustomerV2">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="../../SchemaDefinitions/Standard/SOAP11/soap-encoding11.xsd"/>
+            <!--schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>-->
+            <import namespace="http://v2.connect.engage.three.com"/>
+            <complexType name="ArrayOf_xsd_string">
+                <annotation>
+                    <documentation>This is an array of catalogue item ids. It is being used in message register</documentation>
+                </annotation>
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="ArrayOf_tns2_Address">
+                <annotation>
+                    <documentation>This is an array of complex type Address(es). It is being used in message matchAddress</documentation>
+                </annotation>
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:UKAddress[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="ArrayOf_tns2_ReasonText">
+                <annotation>
+                    <documentation>This is an array of complex type Reason text(s). It is being used in message credit check</documentation>
+                </annotation>
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="xsd:string[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="ArrayOf_tns2_flag">
+                <annotation>
+                    <documentation>This is an array of complex type flags. It is being used in message Insurance and advocate</documentation>
+                </annotation>
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:flag[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="ArrayOf_tns2_addon">
+                <annotation>
+                    <documentation>This is an array of complex type addon</documentation>
+                </annotation>
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:addon[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="ArrayOf_tns2_AdditionalCharge">
+                <annotation>
+                    <documentation>This is an array of complex type additional charge</documentation>
+                </annotation>
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:AdditionalCharge[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+        </schema>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://v2.connect.engage.three.com">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="../../SchemaDefinitions/Standard/SOAP11/soap-encoding11.xsd"/>
+            <!--schemaLocation="http://schemas.xmlsoap.org/soap/encoding/"/>-->
+            <import namespace="urn:RegisterCustomerV2"/>
+            <complexType name="Order">
+                <annotation>
+                    <documentation>Order holds the catalogue item ids for creating the portfolio held by customer.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="catalogue" type="xsd:string">
+                        <annotation>
+                            <documentation>Catalogue name.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="proposition" type="xsd:string">
+                        <annotation>
+                            <documentation>Unique id for package name or an offer such as 'Video Talk' price plans.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="tariff" type="xsd:string">
+                        <annotation>
+                            <documentation>Unique id for tariff plan such as 'Video Talk 500' price plans.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="device" type="xsd:string">
+                        <annotation>
+                            <documentation>Unique id for handset such as 'NEC e616'.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="overridePrice" type="xsd:double">
+                        <annotation>
+                            <documentation>Price to override the Sprint Catalogue Price.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="overrideDeviceChargeCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Overridden Charge Code against the Sprint One to One mapping (Tariff to Handset) </documentation>
+                        </annotation>
+                    </element>
+                    <element name="additions" nillable="true" type="impl:ArrayOf_xsd_string">
+                        <annotation>
+                            <documentation>Array of unique id(s) for catologue items such as add ons.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="expectedDeliveryDate" type="xsd:string">
+                        <annotation>
+                            <documentation>Shipping Date for preorder sale.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <simpleType name="SaleType">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the sale type. i.e., prepay or postpay.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="PayMonthly"/>
+                    <enumeration value="ThreePay"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="CancellationReasonCode">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the Cancellation Reson Code.(Credit Decline,Customer no longer requires handset,Duplicate Order, Incorrect details entered,3rd party retailer/ other decision</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="DECLD"/>
+                    <enumeration value="NOTRQ"/>
+                    <enumeration value="DUPL"/>
+                    <enumeration value="INCRT"/>
+                    <enumeration value="THIRD"/>
+                </restriction>
+            </simpleType>
+            <complexType name="AddressMatch">
+                <annotation>
+                    <documentation>It holds the attributes required for matching the customer address. At least, one other attribute apart from postal code and surname is mandatory.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="postcode" type="xsd:string">
+                        <annotation>
+                            <documentation>Postal code for the address to be matched.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="houseName" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>House name for the address to be matched.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="flatNumber" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Flat number for the address to be matched.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="houseNumber" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>House number for the address to be matched.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="streetName" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Street Name for the address to be matched.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="town" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>City for the address to be matched.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="locality" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Locality for the address to be matched.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="UKAddress">
+                <annotation>
+                    <documentation>UK ADDRESS.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:BillableAddress">
+                        <sequence>
+                            <element name="streetName" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Street name of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="houseName" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>House name of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="postcode" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Postal code of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="county" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>County of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="houseNumber" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>House number of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="flatNumber" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Flat number of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="town" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Town of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="locality" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Locality of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="Communal" nillable="true" type="xsd:boolean">
+                                <annotation>
+                                    <documentation>Communal Flag of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="AddressId" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Address ID for the returned address from match address.</documentation>
+                                </annotation>
+                            </element>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="BFPOAddress">
+                <annotation>
+                    <documentation>BFPO ADDRESS.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:BillableAddress">
+                        <sequence>
+                            <element name="serialNumberRankName" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Serial Number Rank Name of the address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="companyName" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Company bame of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="battalion" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Batallion name of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="regiment" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>Regiment name of address.</documentation>
+                                </annotation>
+                            </element>
+                            <element name="bfpoId" nillable="true" type="xsd:string">
+                                <annotation>
+                                    <documentation>BFPO ID of address.</documentation>
+                                </annotation>
+                            </element>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="AddressHistory">
+                <annotation>
+                    <documentation>AddressHistory contains the information about address(es). It is being used in message createCustomer</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="currentAddress" type="tns2:BillableAddress">
+                        <annotation>
+                            <documentation>Current Address.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="previousAddress" type="tns2:AbstractAddress">
+                        <annotation>
+                            <documentation>Previous Address.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="previousPreviousAddress" type="tns2:AbstractAddress">
+                        <annotation>
+                            <documentation>Previous-Previous Address.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="OverseasAddress">
+                <annotation>
+                    <documentation>Overseas ADDRESS.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:AbstractAddress"/>
+                </complexContent>
+            </complexType>
+            <simpleType name="EmploymentType">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the employment type of customer.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Not-Specified"/>
+                    <enumeration value="Management"/>
+                    <enumeration value="Professional"/>
+                    <enumeration value="Supervisor"/>
+                    <enumeration value="Skilled"/>
+                    <enumeration value="SemiSkilled"/>
+                    <enumeration value="Unskilled"/>
+                    <enumeration value="Junior"/>
+                    <enumeration value="Other"/>
+                    <enumeration value="Not-Asked"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="ResidentialStatus">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the residential status of customer. eg. owning, renting etc.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Not-Specified"/>
+                    <enumeration value="Owner"/>
+                    <enumeration value="Council"/>
+                    <enumeration value="Unfurnished"/>
+                    <enumeration value="Parents"/>
+                    <enumeration value="Furnished"/>
+                    <enumeration value="OtherTenant"/>
+                    <enumeration value="JointOwner"/>
+                    <enumeration value="Other"/>
+                    <enumeration value="Not-Asked"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Title">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the title of customer.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Baroness"/>
+                    <enumeration value="Baronet"/>
+                    <enumeration value="Captain"/>
+                    <enumeration value="Colonel"/>
+                    <enumeration value="Commander"/>
+                    <enumeration value="Count"/>
+                    <enumeration value="Countess"/>
+                    <enumeration value="Dr"/>
+                    <enumeration value="Duke"/>
+                    <enumeration value="Earl"/>
+                    <enumeration value="Inspector"/>
+                    <enumeration value="Lady"/>
+                    <enumeration value="Lieutenant"/>
+                    <enumeration value="Lord"/>
+                    <enumeration value="Lt-Colonel"/>
+                    <enumeration value="Major"/>
+                    <enumeration value="Marquess"/>
+                    <enumeration value="Mr"/>
+                    <enumeration value="Mrs"/>
+                    <enumeration value="Ms"/>
+                    <enumeration value="Miss"/>
+                    <enumeration value="Prince"/>
+                    <enumeration value="Princess"/>
+                    <enumeration value="Professor"/>
+                    <enumeration value="Reverend"/>
+                    <enumeration value="Reverend-d"/>
+                    <enumeration value="Rt-Hon"/>
+                    <enumeration value="Rt-Hon-Sir"/>
+                    <enumeration value="Sheik"/>
+                    <enumeration value="Sir"/>
+                    <enumeration value="Viscount"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="Gender">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the gender of customer.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Male"/>
+                    <enumeration value="Female"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="NetworkType">
+                <annotation>
+                    <documentation>It is an enumeration containing network type.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Vodafone"/>
+                    <enumeration value="O2"/>
+                    <enumeration value="Orange"/>
+                    <enumeration value="T-Mobile"/>
+                    <enumeration value="Virgin"/>
+                    <enumeration value="Other"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="AddressType">
+                <annotation>
+                    <documentation>It is an enumeration containing address type of address.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Home"/>
+                    <enumeration value="Work"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="TariffType">
+                <annotation>
+                    <documentation>It is an enumeration containing tariff type.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="contract"/>
+                    <enumeration value="payAsYouGo"/>
+                </restriction>
+            </simpleType>
+            <complexType name="EmailAddress">
+                <annotation>
+                    <documentation>It holds the email address of the customer.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="address" type="xsd:string">
+                        <annotation>
+                            <documentation>address for the email address.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="addressType" type="tns2:AddressType">
+                        <annotation>
+                            <documentation>address type of email address defined by enumeration.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="Telephone">
+                <annotation>
+                    <documentation>Telephone holds the telephone details.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="areaCode" type="xsd:string">
+                        <annotation>
+                            <documentation>area code of the telphone number.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="number" type="xsd:string">
+                        <annotation>
+                            <documentation>telephone number excluding area code.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="MobileContactNumber">
+                <annotation>
+                    <documentation>MobileContactNumber holds customer's existing contact number details.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="msisdn" type="xsd:string">
+                        <annotation>
+                            <documentation>customer's existing contact number</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <simpleType name="PaymentType">
+                <annotation>
+                    <documentation>It is an enumeration containing payment type by customer.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="DirectDebit"/>
+                    <enumeration value="BillMe"/>
+                </restriction>
+            </simpleType>
+            <complexType name="BankDetails">
+                <annotation>
+                    <documentation>BankDetails the bank details of the customer.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="accountHolder" type="xsd:string">
+                        <annotation>
+                            <documentation>name of the account holder.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="accountNumber" type="xsd:string">
+                        <annotation>
+                            <documentation>bank account number of customer.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="sortCode" type="xsd:string">
+                        <annotation>
+                            <documentation>bank account sort code of customer.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="Handset">
+                <annotation>
+                    <documentation>Handset holds the handset details given to the customer, you need to provide one of the icccid or msisdn.</documentation>
+                </annotation>
+                <sequence>
+                    <element name="iccid" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>iccid of the handset.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="imei" type="xsd:string">
+                        <annotation>
+                            <documentation>imei number of sim card.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="msisdn" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>phone number with sim card.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <simpleType name="CardType">
+                <annotation>
+                    <documentation>It is an enumeration containing card type of Credit/Debit card given by customer for payment.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Visa"/>
+                    <enumeration value="Switch"/>
+                    <enumeration value="Amex"/>
+                    <enumeration value="JCB"/>
+                    <enumeration value="Mastercard"/>
+                    <enumeration value="Visa Delta"/>
+                </restriction>
+            </simpleType>
+            <complexType name="DealerDeposit">
+                <annotation>
+                    <documentation>It holds the attributes required for the Dealer Deposit.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="amount" type="xsd:double">
+                        <annotation>
+                            <documentation>Amount required for deposit.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="reference" type="xsd:string">
+                        <annotation>
+                            <documentation>Reference number for dealer deposit.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="ScoreDetails">
+                <annotation>
+                    <documentation>It holds the attributes for the Score Details.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="roamingAuthorised" type="xsd:boolean">
+                        <annotation>
+                            <documentation>Roaming Authorised.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="monthlyCreditLimit" type="xsd:double">
+                        <annotation>
+                            <documentation>Monthly credit Limit.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="maxHandsets" type="xsd:int">
+                        <annotation>
+                            <documentation>Maximum Number of Handsets.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="reasonText" type="impl:ArrayOf_tns2_ReasonText">
+                        <annotation>
+                            <documentation>Reason Text.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="DepositResponse">
+                <annotation>
+                    <documentation>Deposit credit check response.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:CreditCheckResponse">
+                        <sequence>
+                            <element name="dealerDeposit" nillable="true" type="tns2:DealerDeposit">
+                                <annotation>
+                                    <documentation>Credit check result for decision deposit.</documentation>
+                                </annotation>
+                            </element>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="AcceptResponse">
+                <annotation>
+                    <documentation>Accept credit check response.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:CreditCheckResponse">
+                        <sequence>
+                            <element name="scoreDetails" nillable="true" type="tns2:ScoreDetails">
+                                <annotation>
+                                    <documentation>Credit check result for decision deposit.</documentation>
+                                </annotation>
+                            </element>
+                        </sequence>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="DeclineResponse">
+                <annotation>
+                    <documentation>Decline credit check response.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:CreditCheckResponse"/>
+                </complexContent>
+            </complexType>
+            <complexType name="ReferResponse">
+                <annotation>
+                    <documentation>Refer credit check response.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:CreditCheckResponse"/>
+                </complexContent>
+            </complexType>
+            <complexType name="ErrorResponse">
+                <annotation>
+                    <documentation>Error credit check response.</documentation>
+                </annotation>
+                <complexContent>
+                    <extension base="tns2:CreditCheckResponse"/>
+                </complexContent>
+            </complexType>
+            <complexType abstract="true" name="CreditCheckResponse">
+                <annotation>
+                    <documentation>It contains credit decision  identifying the result from credit score service and dealer deposit info</documentation>
+                </annotation>
+            </complexType>
+            <complexType name="DateHolder">
+                <annotation>
+                    <documentation>Holder to allow nil dates to be passed from date value types</documentation>
+                </annotation>
+                <sequence>
+                    <element name="value" type="xsd:date"/>
+                </sequence>
+            </complexType>
+            <complexType name="IntentionToPort">
+                <annotation>
+                    <documentation>Allowing customer for putting intention to port their old number.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="msisdn" type="xsd:string">
+                        <annotation>
+                            <documentation>Old network mobile number</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="network" type="tns2:NetworkType">
+                        <annotation>
+                            <documentation>Old network name</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="tariffType" type="tns2:TariffType">
+                        <annotation>
+                            <documentation>Old network tariff type</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <simpleType name="MaritalStatus">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the marital status of customer.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Not-Specified"/>
+                    <enumeration value="Divorced"/>
+                    <enumeration value="Married"/>
+                    <enumeration value="Partnered"/>
+                    <enumeration value="Separated"/>
+                    <enumeration value="Single"/>
+                    <enumeration value="Widowed"/>
+                    <enumeration value="Other"/>
+                    <enumeration value="Not-Asked"/>
+                </restriction>
+            </simpleType>
+            <simpleType name="EmploymentStatus">
+                <annotation>
+                    <documentation>It is an enumeration for identifying the employment status of customer.</documentation>
+                </annotation>
+                <restriction base="xsd:string">
+                    <enumeration value="Not-Specified"/>
+                    <enumeration value="FullTime"/>
+                    <enumeration value="LongTerm"/>
+                    <enumeration value="SelfEmpl"/>
+                    <enumeration value="Student"/>
+                    <enumeration value="HousePrsn"/>
+                    <enumeration value="Retired"/>
+                    <enumeration value="PartTime"/>
+                    <enumeration value="ShortTerm"/>
+                    <enumeration value="Unemployed"/>
+                    <enumeration value="Other"/>
+                    <enumeration value="Not-Asked"/>
+                </restriction>
+            </simpleType>
+            <complexType name="Duration">
+                <annotation>
+                    <documentation>It holds the duration at particular place.</documentation>
+                </annotation>
+                <sequence>
+                    <element name="years" type="xsd:int"/>
+                    <element name="months" type="xsd:int"/>
+                </sequence>
+            </complexType>
+            <complexType name="Customer">
+                <annotation>
+                    <documentation>It holds the customer details.</documentation>
+                </annotation>
+                <sequence>
+                    <element name="maidenName" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Maiden name of the customer.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="maritalStatus" type="tns2:MaritalStatus">
+                        <annotation>
+                            <documentation>Marital status of the customer defined by enumeration.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="employmentStatus" type="tns2:EmploymentStatus">
+                        <annotation>
+                            <documentation>Employment status of the customer defined by enumeration.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="residentialStatus" type="tns2:ResidentialStatus">
+                        <annotation>
+                            <documentation>Residential status of the customer defined by enumeration.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="initial" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Initials of the customer's name.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="title" type="tns2:Title">
+                        <annotation>
+                            <documentation>Title of the customer defined by enumeration.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="gender" type="tns2:Gender">
+                        <annotation>
+                            <documentation>Gender of the customer defined by enumeration.</documentation>
+                        </annotation>
+                    </element>
+                    <element name="dob" nillable="true" type="tns2:DateHolder">
+                        <annotation>
+                            <documentation>Date of birth of the customer.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="firstName" type="xsd:string">
+                        <annotation>
+                            <documentation>First name of customer.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="surname" type="xsd:string">
+                        <annotation>
+                            <documentation>Surname of customer.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="employmentType" type="tns2:EmploymentType">
+                        <annotation>
+                            <documentation>Employment type of the customer defined by enumeration.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="timeWithEmployer" type="tns2:Duration">
+                        <annotation>
+                            <documentation>Time of customer with current employer.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="timeWithBank" type="tns2:Duration">
+                        <annotation>
+                            <documentation>Customer time with the bank.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType abstract="true" name="AbstractAddress">
+                <annotation>
+                    <documentation>It holds the attributes required for the customer address.</documentation>
+                </annotation>
+                <sequence>
+                    <element name="duration" nillable="true" type="tns2:Duration"/>
+                </sequence>
+            </complexType>
+            <complexType abstract="true" name="BillableAddress">
+                <complexContent>
+                    <extension base="tns2:AbstractAddress">
+                        <annotation>
+                            <documentation>Billing address.</documentation>
+                        </annotation>
+                    </extension>
+                </complexContent>
+            </complexType>
+            <complexType name="RetailerDetails">
+                <annotation>
+                    <documentation>Holds the information about the sale person/agent.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="sellerId" type="xsd:string">
+                        <annotation>
+                            <documentation>3Seller User ID.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="name" type="xsd:string">
+                        <annotation>
+                            <documentation>First name and Last name of the sale agent.</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="storePostCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Store postcode.</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="verifyConsumerDetails">
+                <annotation>
+                    <documentation>verifyConsumerRequest holds the MSISDN/BAN or MSISDN/HOUSE, DOB, POSTCODE details.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="msisdn" type="xsd:string">
+                        <annotation>
+                            <documentation>MSISDN - Phone number</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="ban" type="xsd:string">
+                        <annotation>
+                            <documentation>Account number</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="houseName" type="xsd:string">
+                        <annotation>
+                            <documentation>House name</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="houseNumber" type="xsd:string">
+                        <annotation>
+                            <documentation>House number</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="postcode" type="xsd:string">
+                        <annotation>
+                            <documentation>Post code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="dob" type="tns2:DateHolder">
+                        <annotation>
+                            <documentation>Date of birth</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="verifyConsumerReturn">
+                <annotation>
+                    <documentation>verifyConsumerReponse holds the KeyString result of the customer verification.</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="keyString" type="xsd:string">
+                        <annotation>
+                            <documentation>Combination of MSISDN, BAN, CRM_ID and TRACKING_ID separted with colon(:)</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Response code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseDescription" type="xsd:string">
+                        <annotation>
+                            <documentation>Response decription</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="flag">
+                <annotation>
+                    <documentation>Flag:Name/Value pairs that are sent in upgrade eligibility response</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="name" type="xsd:string">
+                        <annotation>
+                            <documentation>Name of the flag</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="value" type="xsd:string">
+                        <annotation>
+                            <documentation>Value of the flag</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="customerName">
+                <annotation>
+                    <documentation>Hold the tile, forename and Surname of the customer</documentation>
+                </annotation>
+                <sequence>
+                    <element name="title" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Title of the customer</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="foreName" type="xsd:string">
+                        <annotation>
+                            <documentation>Forename of the customer</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="surName" type="xsd:string">
+                        <annotation>
+                            <documentation>Surname of the customer</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="addressDetails">
+                <annotation>
+                    <documentation>Hold the Address details</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="addressLine1" type="xsd:string">
+                        <annotation>
+                            <documentation>addressLine1</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="addressLine2" type="xsd:string">
+                        <annotation>
+                            <documentation>addressLine2</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="addressLine3" type="xsd:string">
+                        <annotation>
+                            <documentation>addressLine3</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="addressLine4" type="xsd:string">
+                        <annotation>
+                            <documentation>addressLine4</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="postCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Post Code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="country" type="xsd:string">
+                        <annotation>
+                            <documentation>Country</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="upgradeEligibilityReturn">
+                <annotation>
+                    <documentation>It holds the upgrade eligibility response details</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="keyString" type="xsd:string">
+                        <annotation>
+                            <documentation>KeyString value sent in the input</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Response code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseDescription" type="xsd:string">
+                        <annotation>
+                            <documentation>Response decription</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="eligibleDate" type="xsd:string">
+                        <annotation>
+                            <documentation>Holds the date when the customer became/will become eligibile for upgrade</documentation>
+                        </annotation>
+                    </element>
+                    <element name="flags" nillable="true" type="impl:ArrayOf_tns2_flag">
+                        <annotation>
+                            <documentation>Array of flags sent in eligibility response</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="currentPricePlan" type="tns2:itemDetails">
+                        <annotation>
+                            <documentation>Current priceplan of the customer</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="currentTerm" type="xsd:string">
+                        <annotation>
+                            <documentation>Current term of the customer</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="customerValue" type="xsd:string">
+                        <annotation>
+                            <documentation>Customer value</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="customerName" type="tns2:customerName">
+                        <annotation>
+                            <documentation>Customer name</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="billingAddress" type="tns2:addressDetails">
+                        <annotation>
+                            <documentation>Billing address of the customer</documentation>
+                        </annotation>
+                    </element>
+                    <element name="currentAddons" nillable="true" type="impl:ArrayOf_tns2_addon">
+                        <annotation>
+                            <documentation>Array of addon details</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="currentContractType" type="xsd:string">
+                        <annotation>
+                            <documentation>Current Contract Type</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="updateIMEIDetails">
+                <annotation>
+                    <documentation>updateIMEI Request details</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="handsetProductCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Handset product code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="newIMEI" type="xsd:string">
+                        <annotation>
+                            <documentation>IMEI of the new handset</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="retailAgentID" type="xsd:string">
+                        <annotation>
+                            <documentation>Retail agent ID sent by the retailer</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="reasonCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Reason Code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="orderValue" type="xsd:string">
+                        <annotation>
+                            <documentation>Order value</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="deliveryAddress" type="tns2:addressDetails">
+                        <annotation>
+                            <documentation>Delivery address</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="deliveryDate" type="xsd:string">
+                        <annotation>
+                            <documentation>Delivery date</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="updateIMEIReturn">
+                <annotation>
+                    <documentation>updateIMEIReturn holds the response returned from IMEI update</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="keyString" type="xsd:string">
+                        <annotation>
+                            <documentation>Combination of MSISDN, BAN, CRM_ID and TRACKING_ID separted with colon(:)</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Response code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseDescription" type="xsd:string">
+                        <annotation>
+                            <documentation>Response decription</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="itemDetails">
+                <annotation>
+                    <documentation>Holds the product code and description of catalogue item</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="code" type="xsd:string">
+                        <annotation>
+                            <documentation>Product code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="description" type="xsd:string">
+                        <annotation>
+                            <documentation>Description</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="addon">
+                <annotation>
+                    <documentation>Holds the product code and description of addon</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="code" type="xsd:string">
+                        <annotation>
+                            <documentation>Product code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="description" type="xsd:string">
+                        <annotation>
+                            <documentation>Description</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="upgradeCustomerDetails">
+                <annotation>
+                    <documentation>upgradeCustomer Request details</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="newHandset" type="tns2:itemDetails">
+                        <annotation>
+                            <documentation>New handset sent for the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="pricePlan" type="tns2:itemDetails">
+                        <annotation>
+                            <documentation>New priceplan sent for the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="newIMEI" type="xsd:string">
+                        <annotation>
+                            <documentation>IMEI of the new handset sent for the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="newTerm" type="xsd:string">
+                        <annotation>
+                            <documentation>Addons sent for the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="newContractType" type="xsd:string">
+                        <annotation>
+                            <documentation>Contract Type sent for the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="offerLevel" type="xsd:string">
+                        <annotation>
+                            <documentation>Offer level for the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element name="addons" nillable="true" type="impl:ArrayOf_xsd_string">
+                        <annotation>
+                            <documentation>Addons sent for the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="orderValue" type="xsd:string">
+                        <annotation>
+                            <documentation>Order value of the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="deliveryAddress" type="tns2:addressDetails">
+                        <annotation>
+                            <documentation>Delivery address of the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="deliveryDate" type="xsd:string">
+                        <annotation>
+                            <documentation>Delivery date of the upgrade request</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="upgradeCustomerReturn">
+                <annotation>
+                    <documentation>upgradeCustomerReturn holds the response returned from upgrade order</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="keyString" type="xsd:string">
+                        <annotation>
+                            <documentation>Combination of MSISDN, BAN, CRM_ID and TRACKING_ID separted with colon(:)</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Response code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseDescription" type="xsd:string">
+                        <annotation>
+                            <documentation>Response decription</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="responseDetails">
+                <annotation>
+                    <documentation>holds the response code and description</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="responseCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Response code</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseDescription" type="xsd:string">
+                        <annotation>
+                            <documentation>Response decription</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="RegisterMSISDNReturn">
+                <annotation>
+                    <documentation>registerMSISDNRequest holds the request for register a RAF msisdn</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="ban" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>number of attempts the MSISDN has been tried</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="numberOfAttempts" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>number of attempts the MSISDN has been tried</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseDetails" nillable="true" type="tns2:responseDetails">
+                        <annotation>
+                            <documentation>status of the response</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="ValidateMSISDNReturn">
+                <annotation>
+                    <documentation>registerMSISDNRequest holds the request for register a RAF msisdn</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="0" name="ban" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>number of attempts the MSISDN has been tried</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="responseDetails" nillable="true" type="tns2:responseDetails">
+                        <annotation>
+                            <documentation>status of the response</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="AdditionalCharge">
+                <annotation>
+                    <documentation>Holds details of additional charge</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="additionalchargeAmount" type="xsd:double">
+                        <annotation>
+                            <documentation>Additional charge amount</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="additionalchargeCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Billing OOC code for additonal charge</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="additionalchargeproductCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Code to identify delivery method</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="additionalchargeType" type="xsd:string">
+                        <annotation>
+                            <documentation>Additional charge type</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="PaymentReceiptDetails">
+                <annotation>
+                    <documentation>PaymentReceipt Request details</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="saleId" type="xsd:string">
+                        <annotation>
+                            <documentation>Pre-existing sale id for the request</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="1" name="transactionID" type="xsd:string">
+                        <annotation>
+                            <documentation>Hybris transaction reference</documentation>
+                        </annotation>
+                    </element>
+                    <element name="Additionalcharges" nillable="true" type="impl:ArrayOf_tns2_AdditionalCharge">
+                        <annotation>
+                            <documentation>Array of additional charges</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="tokenisedPAN" type="xsd:string">
+                        <annotation>
+                            <documentation>A token that represents the card number used for this sale</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="cardtypeCode" type="xsd:string">
+                        <annotation>
+                            <documentation>A string representing card type</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="cardholderName" type="xsd:string">
+                        <annotation>
+                            <documentation>Card holder name</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="expiryDate" type="xsd:string">
+                        <annotation>
+                            <documentation>Card expiry date</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="paymentAmount" type="xsd:double">
+                        <annotation>
+                            <documentation>Card payment amount</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="paymentamountlineItems" type="xsd:string">
+                        <annotation>
+                            <documentation>Comma separated list of line item amounts</documentation>
+                        </annotation>
+                    </element>
+                    <element maxOccurs="1" minOccurs="0" name="authCode" type="xsd:string">
+                        <annotation>
+                            <documentation>HSBC auth code</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+            <complexType name="loginAuthenticateReturnType">
+                <annotation>
+                    <documentation>holds the response of the LoginAuthenticate operation errorcode password_expiry_date description roles list</documentation>
+                </annotation>
+                <sequence>
+                    <element maxOccurs="1" minOccurs="1" name="responseCode" type="xsd:string">
+                        <annotation>
+                            <documentation>Response code</documentation>
+                        </annotation>
+                    </element>
+                    <element name="errorCode" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Error code</documentation>
+                        </annotation>
+                    </element>
+                    <element name="errorDescription" nillable="true" type="xsd:string">
+                        <annotation>
+                            <documentation>Response error decription</documentation>
+                        </annotation>
+                    </element>
+                    <element name="passwordExpiryDate" nillable="true" type="xsd:date">
+                        <annotation>
+                            <documentation>Password expiry date</documentation>
+                        </annotation>
+                    </element>
+                    <element name="invalidAttempts" nillable="true" type="xsd:int">
+                        <annotation>
+                            <documentation>Number of Invalid Attempts</documentation>
+                        </annotation>
+                    </element>
+                    <element name="totalAttemptsAvailable" nillable="true" type="xsd:int">
+                        <annotation>
+                            <documentation>Total attempts available</documentation>
+                        </annotation>
+                    </element>
+                </sequence>
+            </complexType>
+        </schema>
+    </types>
+    <message name="registerRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="order" type="tns2:Order"/>
+    </message>
+    <message name="creditCheckRequest">
+        <part name="saleId" type="xsd:string"/>
+    </message>
+    <message name="creditStatusCheckRequest">
+        <part name="saleId" type="xsd:string"/>
+    </message>
+    <message name="createPaymentDetailsResponse"/>
+    <message name="createSaleRequest">
+        <part name="saleType" type="tns2:SaleType"/>
+        <part name="dealerCode" type="xsd:string"/>
+        <part name="integratorId" type="xsd:string"/>
+    </message>
+    <message name="createPaymentDetailsRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="paymentType" type="tns2:PaymentType"/>
+        <part name="bankDetails" type="tns2:BankDetails"/>
+    </message>
+    <message name="cancelSaleRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="cancellationReasonCode" type="tns2:CancellationReasonCode"/>
+        <part name="notes" type="xsd:string"/>
+    </message>
+    <message name="campaignCodeRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="offerCode" type="xsd:string"/>
+        <part name="reference" type="xsd:string"/>
+    </message>
+    <message name="verifyConsumerRequest">
+        <part name="verifyConsumerDetails" type="tns2:verifyConsumerDetails"/>
+    </message>
+    <message name="checkUpgradeEligibilityRequest">
+        <part name="keyString" type="xsd:string"/>
+    </message>
+    <message name="updateIMEIRequest">
+        <part name="keyString" type="xsd:string"/>
+        <part name="updateIMEIDetails" type="tns2:updateIMEIDetails"/>
+    </message>
+    <message name="upgradeCustomerRequest">
+        <part name="keyString" type="xsd:string"/>
+        <part name="upgradeCustomerDetails" type="tns2:upgradeCustomerDetails"/>
+    </message>
+    <message name="dealerDepositRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="dealerDeposit" type="tns2:DealerDeposit"/>
+    </message>
+    <message name="addIntentionToPortRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="intentionToPort" type="tns2:IntentionToPort"/>
+    </message>
+    <message name="retailerDetailsRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="retailerDetails" type="tns2:RetailerDetails"/>
+    </message>
+    <message name="retailerDetailsResponse"/>
+    <message name="cancelSaleResponse"/>
+    <message name="creditCheckResponse">
+        <part name="creditCheckReturn" type="tns2:CreditCheckResponse"/>
+    </message>
+    <message name="creditStatusCheckResponse">
+        <part name="creditStatusCheckReturn" type="tns2:CreditCheckResponse"/>
+    </message>
+    <message name="addIntentionToPortResponse"/>
+    <message name="dealerDepositResponse"/>
+    <message name="registerResponse"/>
+    <message name="provisionResponse"/>
+    <message name="provisionRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="handset" type="tns2:Handset"/>
+    </message>
+    <message name="createCustomerResponse"/>
+    <message name="matchAddressResponse">
+        <part name="matchAddressReturn" type="impl:ArrayOf_tns2_Address"/>
+    </message>
+    <message name="createCustomerRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="customer" type="tns2:Customer"/>
+        <part name="addressHistory" type="tns2:AddressHistory"/>
+        <part name="emailAddress" type="tns2:EmailAddress"/>
+        <part name="contactTelephone" type="tns2:Telephone"/>
+        <part name="mobileContactNumber" type="tns2:MobileContactNumber"/>
+    </message>
+    <message name="createSaleResponse">
+        <part name="createSaleReturn" type="xsd:string"/>
+    </message>
+    <message name="matchAddressRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="addressMatch" type="tns2:AddressMatch"/>
+    </message>
+    <message name="changeHandsetTypeRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="device" type="xsd:string"/>
+    </message>
+    <message name="changeHandsetTypeResponse"/>
+    <message name="campaignCodeResponse"/>
+    <message name="verifyConsumerResponse">
+        <part name="verifyConsumerReturn" type="tns2:verifyConsumerReturn"/>
+    </message>
+    <message name="checkUpgradeEligibilityResponse">
+        <part name="upgradeEligibilityReturn" type="tns2:upgradeEligibilityReturn"/>
+    </message>
+    <message name="updateIMEIResponse">
+        <part name="updateIMEIReturn" type="tns2:updateIMEIReturn"/>
+    </message>
+    <message name="upgradeCustomerResponse">
+        <part name="upgradeCustomerReturn" type="tns2:upgradeCustomerReturn"/>
+    </message>
+    <message name="registerBillMediumRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="billMedium" type="xsd:string"/>
+    </message>
+    <message name="registerBillMediumResponse">
+        <part name="responseDetails" type="tns2:responseDetails"/>
+    </message>
+    <message name="registerMSISDNRequest">
+        <part name="saleId" type="xsd:string"/>
+        <part name="msisdn" type="xsd:string"/>
+    </message>
+    <message name="registerMSISDNResponse">
+        <part name="registerMSISDNReturn" type="tns2:RegisterMSISDNReturn"/>
+    </message>
+    <message name="validateMSISDNRequest">
+        <part name="msisdn" type="xsd:string"/>
+    </message>
+    <message name="validateMSISDNResponse">
+        <part name="validateMSISDNReturn" type="tns2:ValidateMSISDNReturn"/>
+    </message>
+    <message name="PaymentReceiptResponse"/>
+    <message name="PaymentReceiptRequest">
+        <part name="PaymentReceiptDetails" type="tns2:PaymentReceiptDetails"/>
+    </message>
+    <message name="loginAuthenticateRequest">
+        <part name="agentid" type="xsd:string"/>
+        <part name="password" type="xsd:string"/>
+    </message>
+    <message name="loginAuthenticateResponse">
+        <part name="loginAuthenticateReturnType" type="tns2:loginAuthenticateReturnType"/>
+    </message>
+    <portType name="RegistrationCustomer">
+        <operation name="register" parameterOrder="saleId order">
+            <input message="impl:registerRequest" name="registerRequest"/>
+            <output message="impl:registerResponse" name="registerResponse"/>
+        </operation>
+        <operation name="createSale" parameterOrder="saleType dealerCode integratorId">
+            <input message="impl:createSaleRequest" name="createSaleRequest"/>
+            <output message="impl:createSaleResponse" name="createSaleResponse"/>
+        </operation>
+        <operation name="matchAddress" parameterOrder="saleId addressMatch">
+            <input message="impl:matchAddressRequest" name="matchAddressRequest"/>
+            <output message="impl:matchAddressResponse" name="matchAddressResponse"/>
+        </operation>
+        <operation name="addIntentionToPort" parameterOrder="saleId intentionToPort">
+            <input message="impl:addIntentionToPortRequest" name="addIntentionToPortRequest"/>
+            <output message="impl:addIntentionToPortResponse" name="addIntentionToPortResponse"/>
+        </operation>
+        <operation name="createCustomer" parameterOrder="saleId customer addressHistory emailAddress contactTelephone mobileContactNumber">
+            <input message="impl:createCustomerRequest" name="createCustomerRequest"/>
+            <output message="impl:createCustomerResponse" name="createCustomerResponse"/>
+        </operation>
+        <operation name="createPaymentDetails" parameterOrder="saleId paymentType bankDetails">
+            <input message="impl:createPaymentDetailsRequest" name="createPaymentDetailsRequest"/>
+            <output message="impl:createPaymentDetailsResponse" name="createPaymentDetailsResponse"/>
+        </operation>
+        <operation name="creditCheck" parameterOrder="saleId">
+            <documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">CreditCheck message</documentation>
+            <input message="impl:creditCheckRequest" name="creditCheckRequest"/>
+            <output message="impl:creditCheckResponse" name="creditCheckResponse"/>
+        </operation>
+        <operation name="creditStatusCheck" parameterOrder="saleId">
+            <input message="impl:creditStatusCheckRequest" name="creditStatusCheckRequest"/>
+            <output message="impl:creditStatusCheckResponse" name="creditStatusCheckResponse"/>
+        </operation>
+        <operation name="depositTaken" parameterOrder="saleId dealerDeposit">
+            <input message="impl:dealerDepositRequest" name="dealerDepositRequest"/>
+            <output message="impl:dealerDepositResponse" name="dealerDepositResponse"/>
+        </operation>
+        <operation name="provision" parameterOrder="saleId handset">
+            <input message="impl:provisionRequest" name="provisionRequest"/>
+            <output message="impl:provisionResponse" name="provisionResponse"/>
+        </operation>
+        <operation name="cancelSale" parameterOrder="saleId cancellationReasonCode notes">
+            <input message="impl:cancelSaleRequest" name="cancelSaleRequest"/>
+            <output message="impl:cancelSaleResponse" name="cancelSaleResponse"/>
+        </operation>
+        <operation name="retailerDetails" parameterOrder="saleId retailerDetails">
+            <input message="impl:retailerDetailsRequest" name="retailerDetailsRequest"/>
+            <output message="impl:retailerDetailsResponse" name="retailerDetailsResponse"/>
+        </operation>
+        <operation name="changeHandsetType" parameterOrder="saleId device">
+            <input message="impl:changeHandsetTypeRequest" name="changeHandsetTypeRequest"/>
+            <output message="impl:changeHandsetTypeResponse" name="changeHandsetTypeResponse"/>
+        </operation>
+        <operation name="campaignCode" parameterOrder="saleId offerCode reference">
+            <input message="impl:campaignCodeRequest" name="campaignCodeRequest"/>
+            <output message="impl:campaignCodeResponse" name="campaignCodeResponse"/>
+        </operation>
+        <operation name="verifyConsumer" parameterOrder="verifyConsumerDetails">
+            <input message="impl:verifyConsumerRequest" name="verifyConsumerRequest"/>
+            <output message="impl:verifyConsumerResponse" name="verifyConsumerResponse"/>
+        </operation>
+        <operation name="checkUpgradeEligibility" parameterOrder="keyString">
+            <input message="impl:checkUpgradeEligibilityRequest" name="checkUpgradeEligibilityRequest"/>
+            <output message="impl:checkUpgradeEligibilityResponse" name="checkUpgradeEligibilityResponse"/>
+        </operation>
+        <operation name="updateIMEI" parameterOrder="keyString updateIMEIDetails">
+            <input message="impl:updateIMEIRequest" name="updateIMEIRequest"/>
+            <output message="impl:updateIMEIResponse" name="updateIMEIResponse"/>
+        </operation>
+        <operation name="upgradeCustomer" parameterOrder="keyString upgradeCustomerDetails">
+            <input message="impl:upgradeCustomerRequest" name="upgradeCustomerRequest"/>
+            <output message="impl:upgradeCustomerResponse" name="upgradeCustomerResponse"/>
+        </operation>
+        <operation name="registerBillMedium" parameterOrder="saleId billMedium">
+            <input message="impl:registerBillMediumRequest" name="registerBillMediumRequest"/>
+            <output message="impl:registerBillMediumResponse" name="registerBillMediumResponse"/>
+        </operation>
+        <operation name="registerMSISDNforRAFSale" parameterOrder="saleId msisdn">
+            <input message="impl:registerMSISDNRequest" name="registerMSISDNRequest"/>
+            <output message="impl:registerMSISDNResponse" name="registerMSISDNResponse"/>
+        </operation>
+        <operation name="validateMSISDN" parameterOrder="msisdn">
+            <input message="impl:validateMSISDNRequest" name="validateMSISDNRequest"/>
+            <output message="impl:validateMSISDNResponse" name="validateMSISDNResponse"/>
+        </operation>
+        <operation name="PaymentReceipt" parameterOrder="PaymentReceiptDetails">
+            <input message="impl:PaymentReceiptRequest" name="PaymentReceiptRequest"/>
+            <output message="impl:PaymentReceiptResponse" name="PaymentReceiptResponse"/>
+        </operation>
+        <operation name="authenticate" parameterOrder="agentid password">
+            <input message="impl:loginAuthenticateRequest" name="loginAuthenticateRequest"/>
+            <output message="impl:loginAuthenticateResponse" name="loginAuthenticateResponse"/>
+        </operation>
+    </portType>
+    <binding name="RegisterCustomerSoapBinding" type="impl:RegistrationCustomer">
+        <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="register">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="registerRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="registerResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="createSale">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="createSaleRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="createSaleResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="matchAddress">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="matchAddressRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="matchAddressResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="createCustomer">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="createCustomerRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="createCustomerResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="addIntentionToPort">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="addIntentionToPortRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="addIntentionToPortResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="createPaymentDetails">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="createPaymentDetailsRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="createPaymentDetailsResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="creditCheck">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="creditCheckRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="creditCheckResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="creditStatusCheck">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="creditStatusCheckRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="creditStatusCheckResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="depositTaken">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="dealerDepositRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="dealerDepositResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="provision">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="provisionRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="provisionResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="cancelSale">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="cancelSaleRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="cancelSaleResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="retailerDetails">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="retailerDetailsRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="retailerDetailsResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="changeHandsetType">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="changeHandsetTypeRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="changeHandsetTypeResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="campaignCode">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="campaignCodeRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="campaignCodeResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="verifyConsumer">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="verifyConsumerRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="verifyConsumerResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="checkUpgradeEligibility">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="checkUpgradeEligibilityRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="checkUpgradeEligibilityResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="updateIMEI">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="updateIMEIRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="updateIMEIResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="upgradeCustomer">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="upgradeCustomerRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="upgradeCustomerResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="registerBillMedium">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="registerBillMediumRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="registerBillMediumResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="registerMSISDNforRAFSale">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="registerMSISDNRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="registerMSISDNResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="validateMSISDN">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="validateMSISDNRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="validateMSISDNResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="PaymentReceipt">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="PaymentReceiptRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="PaymentReceiptResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+        <operation name="authenticate">
+            <wsdlsoap:operation soapAction=""/>
+            <input name="loginAuthenticateRequest">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </input>
+            <output name="loginAuthenticateResponse">
+                <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:RegisterCustomerV2" use="encoded"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="RegistrationCustomerService">
+        <port binding="impl:RegisterCustomerSoapBinding" name="RegisterCustomer">
+            <wsdlsoap:address location="http://localhost:30720/3connectV2/services/RegisterCustomerV2"/>
+        </port>
+    </service>
+</definitions>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns9="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns6="http://three.co.uk/xsd/interface/customer/custinteraction/custintrmanagement/journeymanager/datapersistence/v1" xmlns:ns10="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:ns7="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:pfx="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns11="www.tibco.com/plugin/Timer" xmlns:ns8="http://xmlns.example.com/1444127067216" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://three.co.uk/wsdl/interface/customer/custinteraction/custintrmanagement/journeymanager/datapersistence/v1">
+    <wsdl:import namespace="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" location="/SharedResources/WebServiceDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.wsdl"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/interface/customer/custinteraction/custintrmanagement/journeymanager/datapersistence/v1" location="/SharedResources/WebServiceDefinitions/Interface/Customer/CustInteraction/CustIntrManagement/JourneyManager/DataPersistence_v1.wsdl"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Main/GetMain.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>39</pd:startX>
+    <pd:startY>132</pd:startY>
+    <pd:returnBindings>
+        <pfx2:AddOfferingSetResponse>
+            <part1>
+                <xsl:for-each select="$Main/ns6:AddOfferingSetResponse">
+                    <ns6:AddOfferingSetResponse/>
+                </xsl:for-each>
+            </part1>
+        </pfx2:AddOfferingSetResponse>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>383</pd:endX>
+    <pd:endY>132</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355136884829/GetMain</pd:targetNamespace>
+    <pd:activity name="File Not Present">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>135</pd:x>
+        <pd:y>36</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="SFTP File Check">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>133</pd:x>
+        <pd:y>132</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP File Check.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="SFTP Get Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>266</pd:x>
+        <pd:y>131</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Get Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each select="$SFTP-File-Check/root/RemoteFileName">
+                    <RemoteFileName>
+                        <xsl:value-of select="."/>
+                    </RemoteFileName>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SFTP File Check</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP File Check</pd:from>
+        <pd:to>File Not Present</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP File Check</pd:from>
+        <pd:to>SFTP Get Files</pd:to>
+        <pd:xpathDescription>Present</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($SFTP-File-Check/root/RemoteFileName) and $SFTP-File-Check/root/RemoteFileName[1]!=""</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Get Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>File Not Present</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

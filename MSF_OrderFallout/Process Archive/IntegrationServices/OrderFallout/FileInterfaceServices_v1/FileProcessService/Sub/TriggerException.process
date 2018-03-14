@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns4="http://www.tibco.com/AFF/V4.0.0/applications/orchestrator/message" xmlns:ns="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:ns3="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:ns0="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd">
+    <xsd:import namespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" schemaLocation="/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/OrderFalloutBusinessException.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/TriggerException.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>77</pd:startX>
+    <pd:startY>35</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>895</pd:endX>
+    <pd:endY>157</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1444148669528/PlanItemResolve</pd:targetNamespace>
+    <pd:group name="PlanItem Resolve Group">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>147</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>618</pd:width>
+        <pd:height>297</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-Trigger-Exception-Request/Output/Rows/root</pd:over>
+            <pd:iterationElementSlot>Current_PI</pd:iterationElementSlot>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>GenerateUUID</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Write Render Trigger Exception  Response</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GenerateUUID</pd:from>
+            <pd:to>GetPlan</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GetPlan</pd:from>
+            <pd:to>PlanItem Execute Reply</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>PlanItem Execute Reply</pd:from>
+            <pd:to>Render Trigger Exception Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Render Trigger Exception Response</pd:from>
+            <pd:to>Write Render Trigger Exception  Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>GetPlan</pd:from>
+            <pd:to>Null</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Null</pd:from>
+            <pd:to>Render Trigger Exception Response</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="GenerateUUID">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>249</pd:x>
+            <pd:y>71</pd:y>
+            <config>
+                <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+            </config>
+            <pd:inputBindings/>
+        </pd:activity>
+        <pd:activity name="PlanItem Execute Reply">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>459</pd:x>
+            <pd:y>78</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/planItemExecuteReply.process</processName>
+            </config>
+            <pd:inputBindings>
+                <ns0:PlanItemExecuteReply>
+                    <xsl:attribute name="businessTransactionID">
+                        <xsl:value-of select="$GenerateUUID/UUID"/>
+                    </xsl:attribute>
+                    <xsl:attribute name="correlationID">
+                        <xsl:value-of select="$GenerateUUID/UUID"/>
+                    </xsl:attribute>
+                    <ns3:resultStatus>
+                        <ns3:deployment>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </ns3:deployment>
+                        <ns3:service>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </ns3:service>
+                        <ns3:operation>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </ns3:operation>
+                        <ns3:component>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </ns3:component>
+                        <ns3:severity>
+                            <xsl:value-of select="&quot;E&quot;"/>
+                        </ns3:severity>
+                        <ns3:code>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </ns3:code>
+                        <ns3:message>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </ns3:message>
+                    </ns3:resultStatus>
+                    <ns0:orderID>
+                        <xsl:value-of select="$GetPlan/ns:GetPlanReply/ns:plan/ns:orderID"/>
+                    </ns0:orderID>
+                    <ns0:orderRef>
+                        <xsl:value-of select="$GetPlan/ns:GetPlanReply/ns:plan/ns:orderRef"/>
+                    </ns0:orderRef>
+                    <ns0:planID>
+                        <xsl:value-of select="$GetPlan/ns:GetPlanReply/ns:plan/ns:planID"/>
+                    </ns0:planID>
+                    <ns0:planItemID>
+                        <xsl:value-of select="$Current_PI/root/PlanItemID"/>
+                    </ns0:planItemID>
+                    <ns0:completed>
+                        <xsl:value-of select="true()"/>
+                    </ns0:completed>
+                    <ns0:success>
+                        <xsl:value-of select="false()"/>
+                    </ns0:success>
+                    <ns0:cancelled>
+                        <xsl:value-of select="false()"/>
+                    </ns0:cancelled>
+                    <ns4:message>
+                        <ns4:type>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </ns4:type>
+                        <ns4:code>
+                            <xsl:value-of select="$Current_PI/root/ErrorCode"/>
+                        </ns4:code>
+                        <ns4:description>
+                            <xsl:value-of select="&quot;Triggered Exception&quot;"/>
+                        </ns4:description>
+                        <ns4:udf>
+                            <ns4:name>
+                                <xsl:value-of select="'ErrorCode'"/>
+                            </ns4:name>
+                            <ns4:value>
+                                <xsl:value-of select="$Current_PI/root/ErrorCode"/>
+                            </ns4:value>
+                        </ns4:udf>
+                        <ns4:udf>
+                            <ns4:name>
+                                <xsl:value-of select="'ErrorDescription'"/>
+                            </ns4:name>
+                            <ns4:value>
+                                <xsl:value-of select="&quot;Triggered Exception&quot;"/>
+                            </ns4:value>
+                        </ns4:udf>
+                    </ns4:message>
+                </ns0:PlanItemExecuteReply>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="GetPlan">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>348</pd:x>
+            <pd:y>70</pd:y>
+            <config>
+                <processName>/UtilityProcesses/FOSDataAccessInterfaces/getPlan.process</processName>
+            </config>
+            <pd:inputBindings>
+                <ns:GetPlanRequest>
+                    <xsl:attribute name="businessTransactionID">
+                        <xsl:value-of select="$GenerateUUID/UUID"/>
+                    </xsl:attribute>
+                    <ns:planID>
+                        <xsl:value-of select="tib:trim($Current_PI/root/PlanID)"/>
+                    </ns:planID>
+                    <ns:includeItems/>
+                </ns:GetPlanRequest>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Render Trigger Exception Response">
+            <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+            <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+            <pd:x>584</pd:x>
+            <pd:y>78</pd:y>
+            <config>
+                <ParseSharedConfig>/SharedResources/DataFormats/BusinessExceptionQueryTemplates/TriggerExceptionResponseFormat.sharedparse</ParseSharedConfig>
+            </config>
+            <pd:inputBindings>
+                <Rows>
+                    <root>
+                        <UserID>
+                            <xsl:value-of select="$Current_PI/root/UserID"/>
+                        </UserID>
+                        <PlanID>
+                            <xsl:value-of select="$Current_PI/root/PlanID"/>
+                        </PlanID>
+                        <PlanItemID>
+                            <xsl:value-of select="$Current_PI/root/PlanItemID"/>
+                        </PlanItemID>
+                        <Status>
+                            <xsl:value-of select="$GetPlan/ns:GetPlanReply/ns:plan/ns:status"/>
+                        </Status>
+                        <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                            <xsl:when test="exists($_error_GetPlan)">
+                                <Message>
+                                    <xsl:value-of select="&quot;Plan Not Found&quot;"/>
+                                </Message>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <Message>
+                                    <xsl:value-of select="&quot;Success&quot;"/>
+                                </Message>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </root>
+                </Rows>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Write Render Trigger Exception  Response">
+            <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+            <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+            <pd:x>590</pd:x>
+            <pd:y>205</pd:y>
+            <config>
+                <encoding>text</encoding>
+                <compressFile>None</compressFile>
+                <append>true</append>
+                <createMissingDirectories>true</createMissingDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns1:WriteActivityInputTextClass>
+                    <fileName>
+                        <xsl:value-of select="$Start/root/ResponseFileName"/>
+                    </fileName>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$i=1">
+                            <textContent>
+                                <xsl:value-of select="concat('UserID,','PlanID,','PlanItemID,','Plan Status,','Message,',&quot;&#xA;&quot;,$Render-Trigger-Exception-Response/Text)"/>
+                            </textContent>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <textContent>
+                                <xsl:value-of select="$Render-Trigger-Exception-Response/Text"/>
+                            </textContent>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <addLineSeparator>
+                        <xsl:value-of select="0"/>
+                    </addLineSeparator>
+                </ns1:WriteActivityInputTextClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Null">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>349</pd:x>
+            <pd:y>219</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Parse Trigger Exception Request">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>80</pd:x>
+        <pd:y>167</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/SharedResources/DataFormats/BusinessExceptionQueryTemplates/TriggerExceptionRequestFormat.sharedparse</ParseSharedConfig>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+            <SkipBlankLines>true</SkipBlankLines>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>815</pd:x>
+        <pd:y>155</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>PlanItem Resolve Group</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Trigger Exception Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Trigger Exception Request</pd:from>
+        <pd:to>PlanItem Resolve Group</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

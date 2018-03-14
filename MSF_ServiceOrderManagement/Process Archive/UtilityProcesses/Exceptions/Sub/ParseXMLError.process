@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://schemas.tibco.com/bw/plugins/xml/5.0/xmlExceptions" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/pe/EngineTypes" schemaLocation="/SharedResources/SchemaDefinitions/External/BW/EngineTypes.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/Sub/ParseXMLError.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx2:ErrorReport"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>38</pd:startX>
+    <pd:startY>120</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:choose>
+                <xsl:when test="contains($Start/root/pfx2:ErrorReport/StackTrace, &quot;MSF101:&quot;)">
+                    <Description>
+                        <xsl:value-of select="concat(&quot;xs:string('&quot;,&#xA;substring-after(substring-before(substring-after($Start/root/pfx2:ErrorReport/StackTrace, 'MSF101:'), '&#xA;'), &quot; - &quot;),&#xA;&quot;')  is not a permitted value&quot;)"/>
+                    </Description>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:if test="$SetDescription/root/Description">
+                        <Description>
+                            <xsl:value-of select="$SetDescription/root/Description"/>
+                        </Description>
+                    </xsl:if>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:if test="$SetDescription/root/field">
+                <Field>
+                    <xsl:value-of select="$SetDescription/root/field"/>
+                </Field>
+            </xsl:if>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Field" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>311</pd:endX>
+    <pd:endY>120</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349780757021</pd:targetNamespace>
+    <pd:activity name="Avoid text parse errors">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>239</pd:x>
+        <pd:y>266</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="SetDescription">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>172</pd:x>
+        <pd:y>120</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+                            <xsd:element name="field" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:variable name="varStack" select="$Start/root/pfx2:ErrorReport/StackTrace"/>
+                <xsl:choose>
+                    <xsl:when test="contains($varStack, 'no value for this alias')">
+                        <Description>
+                            <xsl:value-of select="translate(concat('Lookup failure for field/value - ',substring-before(substring-after($varStack, 'alias/key;'), 'java.lang')),'&#xA;', '')"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'DECIMAL_DIGITS')">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'DECIMAL_DIGITS'), 'DECIMAL_DIGITS')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'), '&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="translate(concat(tib:substring-after-last($varData,'data '), ' decimal digits'), '&quot;', '')"/>
+                        <Description>
+                            <xsl:value-of select="$varErr"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'TOTAL_DIGITS')">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'TOTAL_DIGITSs'), 'TOTAL_DIGITSs')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'), '&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="translate(concat(tib:substring-after-last($varData,'data '), ' digits'), '&quot;', '')"/>
+                        <Description>
+                            <xsl:value-of select="$varErr"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'must be less than or equal to')">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'must be less than or equal to'), 'must be less than or equal to')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'), '&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="translate(concat('must be less than or equal to ',tib:trim(substring-before($varData, '({com'))),'&quot;', '')"/>
+                        <Description>
+                            <xsl:value-of select="$varErr"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'length must be at least')">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'length must be at least'), 'length must be at least')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'), '&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="concat('length must be at least ',tib:trim(substring-before($varData, '({com')))"/>
+                        <Description>
+                            <xsl:value-of select="$varErr"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'length must be at most')">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'length must be at most'), 'length must be at most')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'), '&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="concat('length must be at most ',tib:trim(substring-before($varData, '({com')))"/>
+                        <Description>
+                            <xsl:value-of select="$varErr"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'length must be')">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'length must be'), 'length must be')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'), '&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="concat('length must be ',tib:trim(substring-before($varData, '({com')))"/>
+                        <Description>
+                            <xsl:value-of select="$varErr"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'is not a valid decimal')">
+                        <xsl:variable name="varField" select="substring-before(substring-after($varStack, 'SIMPLE_E_INVALID_VALUE_FOR_TYPE) at '), 'com.tibco.xml')"/>
+                        <Description>
+                            <xsl:value-of select="concat('Value ',&#xA;tib:trim(substring-before(substring-after($varStack, 'validation error: data '), 'A valid example')))"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'is not a valid integer')">
+                        <xsl:variable name="varField" select="substring-before(substring-after($varStack, 'SIMPLE_E_INVALID_VALUE_FOR_TYPE) at '), 'com.tibco.xml')"/>
+                        <Description>
+                            <xsl:value-of select="concat(' Value ',&#xA;tib:trim(substring-before(substring-after($varStack, 'validation error: data '), 'A valid example')))"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'is not a valid int')">
+                        <xsl:variable name="varField" select="translate(substring-before(substring-after($varStack, 'SIMPLE_E_INVALID_VALUE_FOR_TYPE) at '), 'com.tibco.xml'), '&amp;#xA;', '')"/>
+                        <Description>
+                            <xsl:value-of select="concat(' Value ',&#xA;tib:trim(substring-before(substring-after($varStack, 'validation error: data '), 'A valid example')))"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'is not a valid date')">
+                        <xsl:variable name="varField" select="substring-before(substring-after($varStack, 'SIMPLE_E_INVALID_VALUE_FOR_TYPE) at '), 'com.tibco.xml')"/>
+                        <Description>
+                            <xsl:value-of select="concat('Value ',&#xA;tib:trim(substring-before(substring-after($varStack, 'validation error: data '), 'A valid example')))"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'is not nillable' )">
+                        <xsl:variable name="varField" select="tib:trim(translate(substring-before(substring-after($varStack, ' at '), 'com.tibco'), '&#xA;', ''))"/>
+                        <Description>
+                            <xsl:value-of select="'Field may not be nil or missing'"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'does not match enumeration facet' )">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'does not match enumeration facet' ), 'does not match enumeration facet')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'),'&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="translate(tib:substring-after-last($varData, 'data '), '&quot;', '')"/>
+                        <Description>
+                            <xsl:value-of select="concat($varErr,' is not a permitted value')"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'does not match regular expression' )">
+                        <xsl:variable name="varData" select="substring-before(substring-after($varStack, 'does not match regular expression' ), 'does not match regular expression')"/>
+                        <xsl:variable name="varField" select="translate(translate(tib:substring-after-last(substring-before($varData, 'com.tibco.xml.validation.exception'), '/'),'&#xA;', ''), '}', '/')"/>
+                        <xsl:variable name="varErr" select="tib:trim(tib:substring-after-last($varData, 'data '))"/>
+                        <Description>
+                            <xsl:value-of select="concat('Value ',$varErr,' is of the wrong format or is not a permitted value')"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'validation error: unexpected content' )">
+                        <xsl:variable name="varField" select="substring-before(substring-after($varStack, ' expected &quot;'), '&quot;')"/>
+                        <Description>
+                            <xsl:value-of select="'Field may not be NULL or missing'"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'validation error: unexpected end of content' )">
+                        <xsl:variable name="varField" select="tib:trim(translate(substring-before(substring-after($varStack, ' expected '), '({'), '&#xA;', ''))"/>
+                        <Description>
+                            <xsl:value-of select="'Field may not be NULL or missing'"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="contains($varStack, 'validation error: unexpected end of content' )">
+                        <xsl:variable name="varField" select="tib:trim(translate(substring-before(substring-after($varStack, ' expected '), '({'), '&#xA;', ''))"/>
+                        <Description>
+                            <xsl:value-of select="'Field may not be NULL or missing'"/>
+                        </Description>
+                        <field>
+                            <xsl:value-of select="$varField"/>
+                        </field>
+                    </xsl:when>
+                    <xsl:when test="exists($Start/root/pfx2:ErrorReport/Data/ns1:XMLParseException)">
+                        <Description>
+                            <xsl:value-of select="$Start/root/pfx2:ErrorReport/Data/ns1:XMLParseException/msg"/>
+                        </Description>
+                    </xsl:when>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SetDescription</pd:to>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetDescription</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetDescription</pd:from>
+        <pd:to>Avoid text parse errors</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Avoid text parse errors</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:label>
+        <pd:name>Label (1)</pd:name>
+        <pd:description>Parse the stack trace to  obtain
+the field name and error text to
+compose a description</pd:description>
+        <pd:x>191</pd:x>
+        <pd:y>44</pd:y>
+        <pd:width>187</pd:width>
+        <pd:height>62</pd:height>
+        <pd:fontColor>-16777216</pd:fontColor>
+        <pd:color>-256</pd:color>
+        <pd:type>solid</pd:type>
+        <pd:thickness>1</pd:thickness>
+        <pd:fade>true</pd:fade>
+    </pd:label>
+</pd:ProcessDefinition>

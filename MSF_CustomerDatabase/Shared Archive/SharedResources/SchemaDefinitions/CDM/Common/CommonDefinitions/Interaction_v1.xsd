@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:intr="http://three.co.uk/xsd/cdm/common/commondefinitions/interaction/v1"
+	 xmlns:chnl="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:ntes="http://three.co.uk/xsd/cdm/common/commondefinitions/notes/v1"
+	 xmlns:appt="http://three.co.uk/xsd/cdm/common/commondefinitions/appointments/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/interaction/v1"
+	 version="$Id: Interaction_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1" schemaLocation="../CommonEnumerations/Channel_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/notes/v1" schemaLocation="Notes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/appointments/v1" schemaLocation="Appointments_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!--Defines a list of Interaction statuses for Order-->
+	<xsd:simpleType name="__INTERACTION_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PENDING"/>
+			<xsd:enumeration value="CLOSED"/>
+			<xsd:enumeration value="OPEN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_INTERACTION_STATUS">
+		<xsd:union memberTypes="intr:__INTERACTION_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Interaction">
+		<xsd:sequence>
+			<xsd:element name="interactionID" type="BASE:PopulatedString"/>
+			<xsd:element name="journeyID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="customerID" type="BASE:PopulatedString"/>
+
+			<!-- if provided we can associate an interaction with a customer AND their account, otherwise we just need the customerID-->
+			<xsd:element name="customerAccountID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="interactionDate" type="xsd:date"/>
+			<xsd:element name="locationID" type="BASE:PopulatedString"/>
+			<xsd:element name="agentID" type="BASE:PopulatedString"/>
+
+			<!-- zero (0) means the customer contacted 3,one (1) means three contacted the customer-->
+			<xsd:element name="direction" type="xsd:integer"/>
+			<xsd:element name="interactionResolution" type="BASE:PopulatedString"/>
+			<xsd:element name="salesChannel" type="chnl:SALES_CHANNEL"/>
+			<xsd:element name="notes" type="ntes:Notes" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="appointment" type="appt:Appointments" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="status" type="intr:_INTERACTION_STATUS"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Interaction" type="intr:Interaction"/>
+	<xsd:element name="interaction" type="intr:Interaction">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Interaction instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

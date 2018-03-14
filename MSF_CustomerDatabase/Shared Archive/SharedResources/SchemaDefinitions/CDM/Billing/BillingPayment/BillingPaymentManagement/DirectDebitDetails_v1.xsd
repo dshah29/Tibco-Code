@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:dd="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/directdebitdetails/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:BILL_STS="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingstatus/v1"
+	 xmlns:bnkDtls="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/directdebitdetails/v1"
+	 version="$Id: DirectDebitDetails_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingcommon/billingenumerations/billingstatus/v1" schemaLocation="../../BillingCommon/BillingEnumerations/BillingStatus_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/bankdetails/v1" schemaLocation="BankDetails_v1.xsd"/>
+	<xsd:complexType name="DirectDebitDetails">
+		<xsd:sequence>
+			<xsd:element name="transactionID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="bankCode" type="bnkDtls:BANKCODE" minOccurs="0"/>
+			<xsd:element name="bankSortNumber" type="bnkDtls:SORTCODE" minOccurs="0"/>
+			<xsd:element name="bankAccountNumber" type="bnkDtls:ACCNUM" minOccurs="0"/>
+			<xsd:element name="accountOwner" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="mandateStatus" type="BILL_STS:_DIRECT_DEBIT_MANDATE_STATUS" minOccurs="0"/>
+			<xsd:element name="mandateStatusDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="mandateNumber" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="amount" type="BASE:PRICE"/>
+			<xsd:element name="day" type="xsd:short" minOccurs="0"/>
+			<xsd:element name="lastUpdateDate" type="xsd:date" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DirectDebitDetails" type="dd:DirectDebitDetails"/>
+	<xsd:element name="directDebitDetails" type="dd:DirectDebitDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element DirectDebitDetails instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

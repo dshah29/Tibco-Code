@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://three.co.uk/xsd/internal/common/commondefinitions/msf/exceptiondefinition/v1"
+	 targetNamespace="http://three.co.uk/xsd/internal/common/commondefinitions/msf/exceptiondefinition/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:complexType name="ExceptionDefinition">
+		<xs:sequence>
+			<xs:element ref="exceptionCode"/>
+			<xs:element ref="description"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="exceptionCode" type="xs:string"/>
+	<xs:element name="description" type="xs:string"/>
+	<xs:complexType name="ExceptionDefinitionList">
+		<xs:sequence>
+			<xs:element ref="ExceptionDefinition" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ExceptionDefinition" type="ExceptionDefinition"/>
+	<xs:element name="ExceptionDefinitionList" type="ExceptionDefinitionList"/>
+</xs:schema>

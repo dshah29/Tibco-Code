@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sequence name="seqEPT">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/TertioAdapter_1/Common.aeschema#class.EPT</elementType>
+    </sequence>
+    <sequence name="seqChildServiceElement">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/TertioAdapter_1/Common.aeschema#class.childServiceElement</elementType>
+    </sequence>
+    <sequence name="seqServiceOrderResp">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/TertioAdapter_1/Common.aeschema#class.serviceOrderResp</elementType>
+    </sequence>
+    <sequence name="sequenceKey">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/TertioAdapter_1/Common.aeschema#class.key</elementType>
+    </sequence>
+    <sequence name="seqServiceElement">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/TertioAdapter_1/Common.aeschema#class.serviceElement</elementType>
+    </sequence>
+    <sequence name="seqServiceOrderReq">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/TertioAdapter_1/Common.aeschema#class.serviceOrderReq</elementType>
+    </sequence>
+    <sequence name="seqElementAttribute">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/TertioAdapter_1/Common.aeschema#class.elementAttribute</elementType>
+    </sequence>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

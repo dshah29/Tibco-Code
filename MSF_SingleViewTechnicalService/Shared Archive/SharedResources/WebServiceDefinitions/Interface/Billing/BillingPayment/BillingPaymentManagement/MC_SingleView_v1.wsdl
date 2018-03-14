@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="MCSingleViewWSDL" targetNamespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1">
+    <wsdl:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" location="../../../../../SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.xsd"/>
+    <wsdl:message name="ChangePricePlanRequest">
+        <wsdl:part element="ns:ChangePricePlanRequest" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="ChangePricePlanResponse">
+        <wsdl:part element="ns:ChangePricePlanResponse" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="CreateOneOffChgRequest">
+        <wsdl:part element="ns:CreateOneOffChgRequest" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="CreateOneOffChgResponse">
+        <wsdl:part element="ns:CreateOneOffChgResponse" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="RetrieveAccountRequest">
+        <wsdl:part name="body" element="ns:RetrieveAccountRequest"/>
+    </wsdl:message>
+    <wsdl:message name="RetrieveAccountResponse">
+        <wsdl:part name="body" element="ns:RetrieveAccountResponse"/>
+    </wsdl:message>
+    <wsdl:message name="PostPaymentRequest">
+        <wsdl:part element="ns:PostPaymentRequest" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="PostPaymentResponse">
+        <wsdl:part element="ns:PostPaymentResponse" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns3:MessageContext" name="header"/>
+    </wsdl:message>
+    <wsdl:message name="OpenPaymentBatchRequest">
+        <wsdl:part element="ns:OpenPaymentBatchRequest" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="OpenPaymentBatchResponse">
+        <wsdl:part element="ns:OpenPaymentBatchResponse" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="ClosePaymentBatchRequest">
+        <wsdl:part element="ns:ClosePaymentBatchRequest" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="ClosePaymentBatchResponse">
+        <wsdl:part element="ns:ClosePaymentBatchResponse" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="POSUpgradeNoCPPRequest">
+        <wsdl:part name="body" element="ns:POSUpgradeNoCPPRequest"/>
+    </wsdl:message>
+    <wsdl:message name="POSUpgradeNoCPPResponse">
+        <wsdl:part name="body" element="ns:POSUpgradeNoCPPResponse"/>
+    </wsdl:message>
+    <wsdl:message name="CreateContractRequest">
+        <wsdl:part name="body" element="ns:CreateContractRequest"/>
+    </wsdl:message>
+    <wsdl:message name="CreateContractResponse">
+        <wsdl:part name="body" element="ns:CreateContractResponse"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateContractRequest">
+        <wsdl:part name="body" element="ns:UpdateContractRequest"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateContractResponse">
+        <wsdl:part name="body" element="ns:UpdateContractResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetrieveProductPricesRequest">
+        <wsdl:part name="body" element="ns:RetrieveProductPricesRequest"/>
+    </wsdl:message>
+    <wsdl:message name="RetrieveProductPricesResponse">
+        <wsdl:part name="body" element="ns:RetrieveProductPricesResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RetrievePackagePriceHistoryRequest">
+        <wsdl:part name="body" element="ns:RetrievePackagePriceHistoryRequest"/>
+    </wsdl:message>
+    <wsdl:message name="RetrievePackagePriceHistoryResponse">
+        <wsdl:part name="body" element="ns:RetrievePackagePriceHistoryResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="SingleView">
+        <wsdl:operation name="ChangePricePlan">
+            <wsdl:input message="tns:ChangePricePlanRequest"/>
+            <wsdl:output message="tns:ChangePricePlanResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="CreateOneOffChg">
+            <wsdl:input message="tns:CreateOneOffChgRequest"/>
+            <wsdl:output message="tns:CreateOneOffChgResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="PostPayment">
+            <wsdl:input message="tns:PostPaymentRequest"/>
+            <wsdl:output message="tns:PostPaymentResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="OpenPaymentBatch">
+            <wsdl:input message="tns:OpenPaymentBatchRequest"/>
+            <wsdl:output message="tns:OpenPaymentBatchResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+        <wsdl:operation name="ClosePaymentBatch">
+            <wsdl:input message="tns:ClosePaymentBatchRequest"/>
+            <wsdl:output message="tns:ClosePaymentBatchResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetrieveAccount">
+            <wsdl:input message="tns:RetrieveAccountRequest"/>
+            <wsdl:output message="tns:RetrieveAccountResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+        <wsdl:operation name="POSUpgradeNoCPP">
+            <wsdl:input message="tns:POSUpgradeNoCPPRequest"/>
+            <wsdl:output message="tns:POSUpgradeNoCPPResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+        <wsdl:operation name="CreateContract">
+            <wsdl:input message="tns:CreateContractRequest"/>
+            <wsdl:output message="tns:CreateContractResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateContract">
+            <wsdl:input message="tns:UpdateContractRequest"/>
+            <wsdl:output message="tns:UpdateContractResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetrieveProductPrices">
+            <wsdl:input message="tns:RetrieveProductPricesRequest"/>
+            <wsdl:output message="tns:RetrieveProductPricesResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+        <wsdl:operation name="RetrievePackagePriceHistory">
+            <wsdl:input message="tns:RetrievePackagePriceHistoryRequest"/>
+            <wsdl:output message="tns:RetrievePackagePriceHistoryResponse"/>
+            <wsdl:fault name="fault1" message="tns:ExceptionInfo"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

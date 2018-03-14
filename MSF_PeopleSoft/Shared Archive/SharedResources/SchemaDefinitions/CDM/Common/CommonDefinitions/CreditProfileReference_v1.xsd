@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:cdtProf="http://three.co.uk/xsd/cdm/common/commondefinitions/creditprofilereference/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/creditprofilereference/v1"
+	 version="$Id: CreditProfileReference_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../CommonEnumerations/Types_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:simpleType name="__CREDIT_REF_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CREDIT"/>
+			<xsd:enumeration value="SAVINGS"/>
+			<xsd:enumeration value="STOCK"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_CREDIT_REF_TYPE">
+		<xsd:union memberTypes="cdtProf:__CREDIT_REF_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="CreditProfileReferenceDetails">
+		<xsd:sequence>
+			<xsd:element name="finanicalInstitutionID" type="BASE:PopulatedString"/>
+			<xsd:element name="finanicalInstitutionName" type="BASE:PopulatedString"/>
+			<xsd:element name="finanicalAccountType" type="cdtProf:_CREDIT_REF_TYPE" minOccurs="0"/>
+			<xsd:element ref="addr:address" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CreditProfileReference">
+		<xsd:sequence>
+			<xsd:element name="creditProfileReferenceDetails" type="cdtProf:CreditProfileReferenceDetails"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CreditProfileReference" type="cdtProf:CreditProfileReference"/>
+	<xsd:element name="creditProfileReference" type="cdtProf:CreditProfileReference">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CreditProfileReference instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

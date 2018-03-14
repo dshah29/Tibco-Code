@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="fHUK_POSUpgrade_NoCPP">
+        <superclass isRef="true">#class.appnError</superclass>
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fHUK_ChangePricePlan">
+        <superclass isRef="true">#class.appnError</superclass>
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>EffectiveDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NewPackInstID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fH3G_SellPackage">
+        <superclass isRef="true">#class.appnError</superclass>
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PackageInstId</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fH3G_DeactivatePackage">
+        <superclass isRef="true">/AESchemas/ae/TREErrors.aeschema#class.AppnError</superclass>
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.dateTime</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fH3G_RetrievePackageInstance">
+        <superclass isRef="true">#class.appnError</superclass>
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Package</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Services</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Products</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Features</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Options</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Charges</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Campaigns</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae.aeschema#sequence.TREAnyHash</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="appnError">
+        <attribute>
+            <name>errno</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>errstring</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="fH3G_UpdatePackage">
+        <superclass isRef="true">#class.appnError</superclass>
+        <attribute>
+            <name>returnValue</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

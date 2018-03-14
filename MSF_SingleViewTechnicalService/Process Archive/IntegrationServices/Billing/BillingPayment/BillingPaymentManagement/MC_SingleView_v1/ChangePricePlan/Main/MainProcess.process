@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Request" xmlns:ns9="http://www.tibco.com/xmlns/ae2xsd/2002/05/sequence/ae" xmlns:ns5="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:ns6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TRETypes" xmlns:ns7="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:ns8="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns3="http://www.tibco.com/pe/SignalInActivitySchema" xmlns:pfx5="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pfx6="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TRETypes" schemaLocation="/AESchemas/ae/TRETypes.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Request.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/sequence/ae" schemaLocation="/AESchemas/sequence/ae.aeschema"/>
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ChangePricePlan/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:ChangePricePlanRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>41</pd:startX>
+    <pd:startY>35</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$CreateResponse/pfx5:ChangePricePlanResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:ChangePricePlanResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>1005</pd:endX>
+    <pd:endY>35</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="CamelCase to UpperCase">
+        <pd:type>com.tibco.plugin.xml.XMLTransformActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLTransformActivity</pd:resourceType>
+        <pd:x>458</pd:x>
+        <pd:y>43</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <engine>Saxon</engine>
+            <stylesheet>/SharedResources/XSLT/Billing/BillingPayment/BillingPaymentManagement/CamelCase_2_UpperCase.xsl</stylesheet>
+        </config>
+        <pd:inputBindings>
+            <textInput>
+                <xmlString>
+                    <xsl:value-of select="tib:render-xml($Create-Request/pfx6:fHUK__ChangePricePlan)"/>
+                </xmlString>
+            </textInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ChangePricePlan SV Adapter">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>711</pd:x>
+        <pd:y>43</pd:y>
+        <config>
+            <processName>/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ChangePricePlan/Sub/ChangePricePlan SV Adapter.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Parse-XML/pfx6:fHUK__ChangePricePlan"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>827</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <element ref="pfx5:ChangePricePlanResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx5:ChangePricePlanResponse>
+                <pfx5:effectiveDate>
+                    <xsl:value-of select="$ChangePricePlan-SV-Adapter/root/ns5:fHUK__ChangePricePlan/EffectiveDate"/>
+                </pfx5:effectiveDate>
+                <pfx5:newPackInstID>
+                    <xsl:value-of select="$ChangePricePlan-SV-Adapter/root/ns5:fHUK__ChangePricePlan/NewPackInstID"/>
+                </pfx5:newPackInstID>
+            </pfx5:ChangePricePlanResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetContext">
+        <pd:type>com.tibco.ae.tools.palettes.servicepalette.GetContextActivity</pd:type>
+        <pd:resourceType>service.activity.getContext</pd:resourceType>
+        <pd:x>239</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <variableConfig>/SharedResources/ContextResources/InputContext.contextResource</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Parse XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>579</pd:x>
+        <pd:y>36</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term ref="pfx6:fHUK__ChangePricePlan"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$CamelCase-to-UpperCase/xmlString"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>920</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$CreateResponse/pfx5:ChangePricePlanResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>132</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx5:ChangePricePlanRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Request">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>346</pd:x>
+        <pd:y>35</pd:y>
+        <config>
+            <element ref="pfx6:fHUK__ChangePricePlan"/>
+        </config>
+        <pd:inputBindings>
+            <pfx6:fHUK__ChangePricePlan>
+                <CurrentPackageInstanceId>
+                    <xsl:value-of select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:currentPackageInstanceID"/>
+                </CurrentPackageInstanceId>
+                <AccountNumber>
+                    <xsl:value-of select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:accountNumber"/>
+                </AccountNumber>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="$Start/root/pfx5:ChangePricePlanRequest/pfx5:newPackageID!=&quot;_EMPTY_&quot;">
+                    <NewPackageId>
+                        <xsl:value-of select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:newPackageID"/>
+                    </NewPackageId>
+                </xsl:if>
+                <Package>
+                    <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Package/*">
+                        <xsl:choose>
+                            <xsl:when test="local-name(.)=&quot;Preferences&quot; and ./ns4:value!=&quot;_EMPTY_&quot;">
+                                <item>
+                                    <name>
+                                        <xsl:choose>
+                                            <xsl:when test="exists(ns4:name)">
+                                                <xsl:value-of select="ns4:name"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </name>
+                                    <value xsi:type="xsd:string">
+                                        <xsl:choose>
+                                            <xsl:when test="exists(ns4:value)">
+                                                <xsl:value-of select="ns4:value"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </value>
+                                </item>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:if test=".!=&quot;_EMPTY_&quot;">
+                                    <item>
+                                        <name>
+                                            <xsl:value-of select="local-name(.)"/>
+                                        </name>
+                                        <xsl:choose>
+                                            <xsl:when test="local-name(.) =&quot;effectiveStartDate&quot; or local-name(.) =&quot;effectiveEndDate&quot;">
+                                                <value xsi:type="xsd:dateTime">
+                                                    <xsl:value-of select="."/>
+                                                </value>
+                                            </xsl:when>
+                                            <xsl:when test="local-name(.) =&quot;activationPersonaName&quot;">
+                                                <value xsi:type="xsd:string">
+                                                    <xsl:value-of select="."/>
+                                                </value>
+                                            </xsl:when>
+                                            <xsl:when test="local-name(.) =&quot;packageInstanceCode&quot; or local-name(.) =&quot;FCNDiscountFlag&quot;&#xA;or local-name(.) =&quot;originalPackageInstanceID&quot; or local-name(.)=&quot;packageID&quot;">
+                                                <value xsi:type="xsd:int">
+                                                    <xsl:value-of select="."/>
+                                                </value>
+                                            </xsl:when>
+                                            <xsl:when test="local-name(.) =&quot;activationCharge&quot; or local-name(.) =&quot;recurringCharge&quot;">
+                                                <value xsi:type="xsd:double">
+                                                    <xsl:value-of select="."/>
+                                                </value>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <value xsi:type="xsd:string">
+                                                    <xsl:value-of select="."/>
+                                                </value>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </item>
+                                </xsl:if>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:for-each>
+                </Package>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Start/root/pfx5:ChangePricePlanRequest/pfx5:Service)">
+                    <Services>
+                        <xsl:for-each select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Service">
+                            <item>
+                                <name>
+                                    <xsl:value-of select="concat(&quot;voiceService&quot;,position())"/>
+                                </name>
+                                <value xsi:type="ns9:TREAnyHash">
+                                    <xsl:for-each select="current()/*">
+                                        <xsl:if test=".!=&quot;_EMPTY_&quot;">
+                                            <xsl:choose>
+                                                <xsl:when test="local-name(.) = 'AAdress'|'BAdress'">
+                                                    <xsl:for-each select="../pfx5:AAdress/*[local-name(.)!='postCode']">
+                                                        <xsl:if test="position()&lt;=6">
+                                                            <item>
+                                                                <name>
+                                                                    <xsl:value-of select="concat('LINE',position())"/>
+                                                                </name>
+                                                                <value>
+                                                                    <xsl:value-of select="."/>
+                                                                </value>
+                                                            </item>
+                                                        </xsl:if>
+                                                    </xsl:for-each>
+                                                    <xsl:if test="ns7:postCode">
+                                                        <item>
+                                                            <name>
+                                                                <xsl:value-of select="'LINE7'"/>
+                                                            </name>
+                                                            <value>
+                                                                <xsl:value-of select="."/>
+                                                            </value>
+                                                        </item>
+                                                    </xsl:if>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <item>
+                                                        <name>
+                                                            <xsl:value-of select="local-name(.)"/>
+                                                        </name>
+                                                        <xsl:choose>
+                                                            <xsl:when test="local-name(.) =&quot;requiredByDate&quot; or local-name(.) =&quot;provisionedDate&quot; or local-name(.) =&quot;USIMExpiry&quot;">
+                                                                <value xsi:type="xsd:dateTime">
+                                                                    <xsl:value-of select="."/>
+                                                                </value>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <xsl:choose>
+                                                                    <xsl:when test="local-name(.)=&quot;serviceName&quot;">
+                                                                        <xsl:choose>
+                                                                            <xsl:when test="substring(.,1,2)=&quot;44&quot;">
+                                                                                <value>
+                                                                                    <xsl:value-of select="concat(0,substring-after(.,'44'))"/>
+                                                                                </value>
+                                                                            </xsl:when>
+                                                                            <xsl:when test="substring(.,1,3)=&quot;353&quot;">
+                                                                                <value>
+                                                                                    <xsl:value-of select="concat(0,substring-after(.,'353'))"/>
+                                                                                </value>
+                                                                            </xsl:when>
+                                                                            <xsl:otherwise>
+                                                                                <value>
+                                                                                    <xsl:value-of select="."/>
+                                                                                </value>
+                                                                            </xsl:otherwise>
+                                                                        </xsl:choose>
+                                                                    </xsl:when>
+                                                                    <xsl:otherwise>
+                                                                        <xsl:choose>
+                                                                            <xsl:when test="local-name(.)=&quot;serviceTypeID&quot; or local-name(.)=&quot;contactID&quot; or local-name(.)=&quot;contractID&quot; or local-name(.)=&quot;billingPriority&quot; or  local-name(.)=&quot;numberType&quot;">
+                                                                                <value xsi:type="xsd:int">
+                                                                                    <xsl:value-of select="."/>
+                                                                                </value>
+                                                                            </xsl:when>
+                                                                            <xsl:otherwise>
+                                                                                <value>
+                                                                                    <xsl:value-of select="."/>
+                                                                                </value>
+                                                                            </xsl:otherwise>
+                                                                        </xsl:choose>
+                                                                    </xsl:otherwise>
+                                                                </xsl:choose>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
+                                                    </item>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </value>
+                            </item>
+                        </xsl:for-each>
+                    </Services>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Start/root/pfx5:ChangePricePlanRequest/pfx5:Product)">
+                    <Products>
+                        <xsl:for-each select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Product">
+                            <item>
+                                <name>
+                                    <xsl:value-of select="concat(&quot;value&quot;,position())"/>
+                                </name>
+                                <value xsi:type="ns9:TREAnyHash">
+                                    <xsl:for-each select="current()/*">
+                                        <xsl:if test=".!=&quot;_EMPTY_&quot;">
+                                            <xsl:choose>
+                                                <xsl:when test="local-name(.)=&quot;Preferences&quot;">
+                                                    <item>
+                                                        <name>
+                                                            <xsl:choose>
+                                                                <xsl:when test="exists(ns4:value)">
+                                                                    <xsl:value-of select="ns4:value"/>
+                                                                </xsl:when>
+                                                                <xsl:otherwise>
+                                                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                                                </xsl:otherwise>
+                                                            </xsl:choose>
+                                                        </name>
+                                                        <value>
+                                                            <xsl:choose>
+                                                                <xsl:when test="exists(ns4:value)">
+                                                                    <xsl:value-of select="ns4:value"/>
+                                                                </xsl:when>
+                                                                <xsl:otherwise>
+                                                                    <xsl:attribute name="xsi:nil">true</xsl:attribute>
+                                                                </xsl:otherwise>
+                                                            </xsl:choose>
+                                                        </value>
+                                                    </item>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <item>
+                                                        <name>
+                                                            <xsl:value-of select="local-name(.)"/>
+                                                        </name>
+                                                        <xsl:choose>
+                                                            <xsl:when test="local-name(.) =&quot;effectiveStartDate&quot; or local-name(.) =&quot;effectiveEndDate&quot;">
+                                                                <value xsi:type="xsd:dateTime">
+                                                                    <xsl:value-of select="."/>
+                                                                </value>
+                                                            </xsl:when>
+                                                            <xsl:when test="local-name(.) =&quot;packageInstanceCode&quot; or local-name(.) =&quot;FCNDiscountFlag&quot;&#xA;or local-name(.) =&quot;reasonCode&quot;">
+                                                                <value xsi:type="xsd:int">
+                                                                    <xsl:value-of select="."/>
+                                                                </value>
+                                                            </xsl:when>
+                                                            <xsl:when test="local-name(.) =&quot;activationCharge&quot; or local-name(.) =&quot;recurringCharge&quot;">
+                                                                <value xsi:type="xsd:double">
+                                                                    <xsl:value-of select="."/>
+                                                                </value>
+                                                            </xsl:when>
+                                                            <xsl:otherwise>
+                                                                <value xsi:type="xsd:string">
+                                                                    <xsl:value-of select="."/>
+                                                                </value>
+                                                            </xsl:otherwise>
+                                                        </xsl:choose>
+                                                    </item>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </value>
+                            </item>
+                        </xsl:for-each>
+                    </Products>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Start/root/pfx5:ChangePricePlanRequest/pfx5:Feature)">
+                    <Features>
+                        <xsl:for-each select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Feature">
+                            <item>
+                                <name>
+                                    <xsl:value-of select="concat(&quot;value&quot;,position())"/>
+                                </name>
+                                <value xsi:type="ns9:TREAnyHash">
+                                    <xsl:for-each select="current()/*">
+                                        <xsl:if test=".!=&quot;_EMPTY_&quot;">
+                                            <item>
+                                                <name>
+                                                    <xsl:value-of select="local-name(.)"/>
+                                                </name>
+                                                <xsl:choose>
+                                                    <xsl:when test="local-name(.) =&quot;effectiveStartDate&quot; or local-name(.) =&quot;effectiveEndDate&quot;">
+                                                        <value xsi:type="xsd:dateTime">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;productInstanceID&quot;">
+                                                        <value xsi:type="xsd:int">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;activationCharge&quot; or local-name(.) =&quot;recurringCharge&quot;">
+                                                        <value xsi:type="xsd:double">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <value xsi:type="xsd:string">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </item>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </value>
+                            </item>
+                        </xsl:for-each>
+                    </Features>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Start/root/pfx5:ChangePricePlanRequest/pfx5:Option)">
+                    <Options>
+                        <xsl:for-each select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Option">
+                            <item>
+                                <name>
+                                    <xsl:value-of select="concat(&quot;value&quot;,position())"/>
+                                </name>
+                                <value xsi:type="ns9:TREAnyHash">
+                                    <xsl:for-each select="current()/*">
+                                        <xsl:if test=".!=&quot;_EMPTY_&quot;">
+                                            <item>
+                                                <name>
+                                                    <xsl:value-of select="local-name(.)"/>
+                                                </name>
+                                                <xsl:choose>
+                                                    <xsl:when test="local-name(.) =&quot;effectiveStartDate&quot; or local-name(.) =&quot;effectiveEndDate&quot;">
+                                                        <value xsi:type="xsd:dateTime">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;productInstanceID&quot;">
+                                                        <value xsi:type="xsd:int">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;activationCharge&quot; or local-name(.) =&quot;recurringCharge&quot;">
+                                                        <value xsi:type="xsd:double">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <value xsi:type="xsd:string">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </item>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </value>
+                            </item>
+                        </xsl:for-each>
+                    </Options>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Start/root/pfx5:ChangePricePlanRequest/pfx5:Charge)">
+                    <Charges>
+                        <xsl:for-each select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Charge">
+                            <item>
+                                <name>
+                                    <xsl:value-of select="concat(&quot;value&quot;,position())"/>
+                                </name>
+                                <value xsi:type="ns9:TREAnyHash">
+                                    <xsl:for-each select="current()/*">
+                                        <xsl:if test=".!=&quot;_EMPTY_&quot;">
+                                            <item>
+                                                <name>
+                                                    <xsl:value-of select="local-name(.)"/>
+                                                </name>
+                                                <xsl:choose>
+                                                    <xsl:when test="local-name(.) =&quot;effectiveStartDate&quot; or local-name(.) =&quot;effectiveEndDate&quot;">
+                                                        <value xsi:type="xsd:dateTime">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;productInstanceID&quot;">
+                                                        <value xsi:type="xsd:int">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;activationCharge&quot; or local-name(.) =&quot;recurringCharge&quot;">
+                                                        <value xsi:type="xsd:double">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <value xsi:type="xsd:string">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </item>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </value>
+                            </item>
+                        </xsl:for-each>
+                    </Charges>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Start/root/pfx5:ChangePricePlanRequest/pfx5:Campaign)">
+                    <Campaigns>
+                        <xsl:for-each select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Campaign">
+                            <item>
+                                <name>
+                                    <xsl:value-of select="concat(&quot;value&quot;,position())"/>
+                                </name>
+                                <value xsi:type="ns9:TREAnyHash">
+                                    <xsl:for-each select="current()/*">
+                                        <xsl:if test=".!=&quot;_EMPTY_&quot;">
+                                            <item>
+                                                <name>
+                                                    <xsl:value-of select="local-name(.)"/>
+                                                </name>
+                                                <xsl:choose>
+                                                    <xsl:when test="local-name(.) =&quot;effectiveStartDate&quot; or local-name(.) =&quot;effectiveEndDate&quot;">
+                                                        <value xsi:type="xsd:dateTime">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;productInstanceID&quot;">
+                                                        <value xsi:type="xsd:int">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:when test="local-name(.) =&quot;activationCharge&quot; or local-name(.) =&quot;recurringCharge&quot;">
+                                                        <value xsi:type="xsd:double">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:when>
+                                                    <xsl:otherwise>
+                                                        <value xsi:type="xsd:string">
+                                                            <xsl:value-of select="."/>
+                                                        </value>
+                                                    </xsl:otherwise>
+                                                </xsl:choose>
+                                            </item>
+                                        </xsl:if>
+                                    </xsl:for-each>
+                                </value>
+                            </item>
+                        </xsl:for-each>
+                    </Campaigns>
+                </xsl:if>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Contract">
+                    <Contract>
+                        <xsl:for-each select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:Contract/*">
+                            <item>
+                                <name>
+                                    <xsl:value-of select="if (local-name(.)=&quot;expectedExpiryDate&quot;) then 'expectedInitialTermEndDate' else local-name(.)"/>
+                                </name>
+                                <xsl:choose>
+                                    <xsl:when test="local-name(.) =&quot;startDate&quot; or local-name(.) =&quot;expectedExpiryDate&quot; or local-name(.) =&quot;actualExpiryDate&quot;">
+                                        <value xsi:type="xsd:dateTime">
+                                            <xsl:value-of select="."/>
+                                        </value>
+                                    </xsl:when>
+                                    <xsl:when test="local-name(.) =&quot;contractStatusCode&quot; or local-name(.) =&quot;contractInitialDuration&quot; or local-name(.) =&quot;termsConditionsID&quot;">
+                                        <value xsi:type="xsd:int">
+                                            <xsl:value-of select="."/>
+                                        </value>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <value xsi:type="xsd:string">
+                                            <xsl:value-of select="."/>
+                                        </value>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </item>
+                        </xsl:for-each>
+                    </Contract>
+                </xsl:if>
+                <BSO>
+                    <xsl:value-of select="$Start/root/pfx5:ChangePricePlanRequest/pfx5:BSOName"/>
+                </BSO>
+                <TransactionId>
+                    <xsl:value-of select="$GetContext/root/ns8:MessageContext/ns8:TransactionID"/>
+                </TransactionId>
+            </pfx6:fHUK__ChangePricePlan>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateResponse</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ChangePricePlan SV Adapter</pd:from>
+        <pd:to>CreateResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CamelCase to UpperCase</pd:from>
+        <pd:to>Parse XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse XML</pd:from>
+        <pd:to>ChangePricePlan SV Adapter</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetContext</pd:from>
+        <pd:to>Create Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Request</pd:from>
+        <pd:to>CamelCase to UpperCase</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

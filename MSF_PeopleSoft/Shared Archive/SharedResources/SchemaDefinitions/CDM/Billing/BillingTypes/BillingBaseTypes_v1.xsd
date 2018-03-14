@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:billBASE="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1" targetNamespace="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1" version="$Id: BillingBaseTypes_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="unqualified" attributeFormDefault="unqualified">
+	<xsd:simpleType name="ContactID">
+		<xsd:restriction base="xsd:integer">
+			<xsd:pattern value=""/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="contactID" type="billBASE:ContactID"/>
+	<xsd:simpleType name="PAYMENTCARD_NUM">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{16}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PAYMENTCARD_OBSCUREDNUM">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value=".{16}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PAYMENTCARD_PARTIALNUM">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{1,15}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PAYMENTCARD_CVV2">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{3,4}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PAYMENTCARD_ISSUENUM">
+		<xsd:restriction base="xsd:integer"/>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ctctDt="http://three.co.uk/xsd/cdm/common/commondefinitions/contactdetails/v1" xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/contactdetails/v1" version="$Id: ContactDetails_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" schemaLocation="Individual_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="Address_v1.xsd"/>
+
+	<!--Some basic means of contact,-->
+	<xsd:complexType name="ContactMethodDetails">
+		<xsd:sequence>
+			<xsd:element name="homePhone" type="BASE:PHONENUMBER" minOccurs="0"/>
+			<xsd:element name="workPhone" type="BASE:PHONENUMBER" minOccurs="0"/>
+			<xsd:element name="workPhoneExt" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="faxNumber" type="BASE:PHONENUMBER" minOccurs="0"/>
+			<xsd:element name="personalMobile" type="BASE:CTN" minOccurs="0"/>
+			<xsd:element name="businessMobile" type="BASE:CTN" minOccurs="0"/>
+			<xsd:element name="personalEmail" type="BASE:EMAILADDRESS" minOccurs="0"/>
+			<xsd:element name="workEmail" type="BASE:EMAILADDRESS" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--This idea here is to document the contacts preferred means of being contacted and what times.-->
+	<xsd:complexType name="ContactPreferences">
+		<xsd:sequence>
+			<xsd:element name="preferredContactMethod" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="preferredContactTime" type="BASE:PopulatedString" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Set of necxt of Kin Details to be documented, we can multiple next of Kin Details here.-->
+	<xsd:complexType name="NextOfKinDetails">
+		<xsd:sequence>
+			<xsd:element name="relationship" type="BASE:PopulatedString"/>
+			<xsd:element ref="addr:address" minOccurs="0"/>
+			<xsd:element ref="ind:individual"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="ContactDetails">
+		<xsd:sequence>
+			<xsd:element name="contactMethodDetails" type="ctctDt:ContactMethodDetails"/>
+			<xsd:element name="contactPreferences" type="ctctDt:ContactPreferences" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="nextOfKin" type="ctctDt:NextOfKinDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ContactDetails" type="ctctDt:ContactDetails"/>
+	<xsd:element name="contactDetails" type="ctctDt:ContactDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element ContactDetails instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

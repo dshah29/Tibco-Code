@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns1="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/concrete/customercontract/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap1="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/concrete/customercontract/v1">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="CustomerContract_v1">
+        <wsdl:port binding="tns:SOAPHTTPBinding" name="SOAPHTTP">
+            <soap:address location="http://localhost:6060/IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Service/MC_CustomerContract_v1-service.serviceagent/SOAPHTTP"/>
+        </wsdl:port>
+        <wsdl:port binding="tns:SOAPJMSBinding" name="SOAPJMS">
+            <soap:address location=""/>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">UK.DEV.REQ.SRVORD.SRVORDMGT.SRVORD.CONTRACT.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="CustomerContract">
+        <wsdl:operation name="CreateContract">
+            <wsdl:input message="tns:CreateContractRequest"/>
+            <wsdl:output message="tns:CreateContractResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateContract">
+            <wsdl:input message="tns:UpdateContractRequest"/>
+            <wsdl:output message="tns:UpdateContractResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SOAPHTTPBinding" type="tns:CustomerContract">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CreateContract">
+            <soap:operation soapAction="CustomerContractEndpoint/CreateContract" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateContract">
+            <soap:operation soapAction="CustomerContractEndpoint/UpdateContract" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:binding name="SOAPJMSBinding" type="tns:CustomerContract">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="CreateContract">
+            <soap:operation soapAction="SOAPJMS/CreateContract" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateContract">
+            <soap:operation soapAction="SOAPJMS/UpdateContract" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="tns:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="header"/>
+    </wsdl:message>
+    <wsdl:message name="CreateContractRequest">
+        <wsdl:part element="ns1:CreateContractRequest" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="CreateContractResponse">
+        <wsdl:part element="ns1:CreateContractResponse" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="fault"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateContractRequest">
+        <wsdl:part element="ns1:UpdateContractRequest" name="body"/>
+    </wsdl:message>
+    <wsdl:message name="UpdateContractResponse">
+        <wsdl:part element="ns1:UpdateContractResponse" name="body"/>
+    </wsdl:message>
+</wsdl:definitions>

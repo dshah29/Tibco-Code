@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="TSO_DATA" type="TSODataRequest"/>
+	<xs:element name="AckResponse" type="TSODataAckResponse"/>
+	<xs:complexType name="TSOHEADERDefn">
+		<xs:attribute name="TSOID" type="xs:string" use="required"/>
+		<xs:attribute name="TSOLABEL" type="xs:string" use="required"/>
+		<xs:attribute name="NUMBEROFATTRIBUTES" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="LISTOPTIONDefn">
+		<xs:attribute name="NAME" type="xs:string" use="required"/>
+		<xs:attribute name="NETWORKPRODUCTID" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="ATTRIBUTEDefn">
+		<xs:attribute name="NAME" type="xs:string" use="required"/>
+		<xs:attribute name="VALUE" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="LISTELEMENTDefn">
+		<xs:sequence>
+			<xs:element name="ATTRIBUTE" type="ATTRIBUTEDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="NAME" type="xs:string"/>
+		<xs:attribute name="NUMBEROFATTRIBUTES" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="LISTATTRIBUTESDefn">
+		<xs:sequence>
+			<xs:element name="LISTELEMENT" type="LISTELEMENTDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="LISTNAME" type="xs:string" use="required"/>
+		<xs:attribute name="NUMBEROFELEMENTS" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="TSOATTRIBUTESDefn">
+		<xs:sequence>
+			<xs:element name="ATTRIBUTE" type="ATTRIBUTEDefn" maxOccurs="unbounded"/>
+			<xs:element name="CONTRACT" type="CONTRACTDefn" minOccurs="0"/>
+			<xs:element name="LISTATTRIBUTES" type="LISTATTRIBUTESDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CONTRACTDefn">
+		<xs:sequence>
+			<xs:element name="ATTRIBUTE" type="ATTRIBUTEDefn" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TSODataRequest">
+		<xs:sequence>
+			<xs:element name="TSOHEADER" type="TSOHEADERDefn"/>
+			<xs:element name="TSOATTRIBUTES" type="TSOATTRIBUTESDefn"/>
+			<xs:element name="LISTOPTION" type="LISTOPTIONDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResultStatusDefn">
+		<xs:all>
+			<xs:element name="STATUS_CODE" type="xs:int"/>
+			<xs:element name="ERROR_CODE" type="xs:string" minOccurs="0"/>
+			<xs:element name="ERROR_DESCRIPTION" type="xs:string" minOccurs="0"/>
+		</xs:all>
+	</xs:complexType>
+	<xs:complexType name="TSODataAckResponse">
+		<xs:sequence>
+			<xs:element name="ResultStatus" type="ResultStatusDefn"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1" xmlns:ns6="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1" xmlns:ns7="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1" xmlns:pfx="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns0="http://www.three.co.uk/ccs/" xmlns:pfx5="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx8="http://schemas.tibco.com/bw/plugins/http/5.0/httpExceptions" xmlns:pfx7="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn" xmlns:pfx6="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/ccs/"/>
+    <xsd:import namespace="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FC/MasterCatalogRecord_Action.xsd"/>
+    <wsdl:import namespace="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" location="/SharedResources/SchemaDefinitions/Resource/FC/Cim_Services.wsdl"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Main/LoadProductMainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>39</pd:startX>
+    <pd:startY>85</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <pfx4:GetProductsResponse/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>831</pd:endX>
+    <pd:endY>85</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="StartCount" type="xsd:int"/>
+                        <xsd:element name="MaxCount" type="xsd:int"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="Catch Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>179</pd:x>
+        <pd:y>217</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateBusinessException">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>314</pd:x>
+        <pd:y>216</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="&quot;MSF-E-EXPECTED1&quot;"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="&quot;This was an expected business defined exception&quot;"/>
+                </Description>
+                <xsl:copy-of select="$_error/ns2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Business-Exception">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>456</pd:x>
+        <pd:y>218</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateBusinessException/root/pfx2:Exception"/>
+                </data>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetProducts Accessory">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>426</pd:x>
+        <pd:y>93</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/GetProducts.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx4:GetProductsRequest>
+                    <pfx4:ProductFilter>
+                        <pfx4:subClass>
+                            <xsl:value-of select="&quot;Accessory&quot;"/>
+                        </pfx4:subClass>
+                        <pfx4:repository>
+                            <xsl:value-of select="&quot;PRODUCT&quot;"/>
+                        </pfx4:repository>
+                    </pfx4:ProductFilter>
+                    <pfx4:View>
+                        <pfx4:Return>
+                            <pfx4:allCharacteristics>
+                                <xsl:value-of select="true()"/>
+                            </pfx4:allCharacteristics>
+                        </pfx4:Return>
+                    </pfx4:View>
+                </pfx4:GetProductsRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetProducts Device">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>286</pd:x>
+        <pd:y>86</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/GetProducts.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx4:GetProductsRequest>
+                    <pfx4:ProductFilter>
+                        <pfx4:subClass>
+                            <xsl:value-of select="&quot;Device&quot;"/>
+                        </pfx4:subClass>
+                        <pfx4:repository>
+                            <xsl:value-of select="&quot;PRODUCT&quot;"/>
+                        </pfx4:repository>
+                    </pfx4:ProductFilter>
+                    <pfx4:View>
+                        <pfx4:Return>
+                            <pfx4:allCharacteristics>
+                                <xsl:value-of select="true()"/>
+                            </pfx4:allCharacteristics>
+                        </pfx4:Return>
+                    </pfx4:View>
+                </pfx4:GetProductsRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GetProducts USIM">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>558</pd:x>
+        <pd:y>85</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/LoadProductModel/Sub/GetProducts.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx4:GetProductsRequest>
+                    <pfx4:ProductFilter>
+                        <pfx4:subClass>
+                            <xsl:value-of select="&quot;USIM&quot;"/>
+                        </pfx4:subClass>
+                        <pfx4:repository>
+                            <xsl:value-of select="&quot;PRODUCT&quot;"/>
+                        </pfx4:repository>
+                    </pfx4:ProductFilter>
+                    <pfx4:View>
+                        <pfx4:Return>
+                            <pfx4:allCharacteristics>
+                                <xsl:value-of select="true()"/>
+                            </pfx4:allCharacteristics>
+                        </pfx4:Return>
+                    </pfx4:View>
+                </pfx4:GetProductsRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>690</pd:x>
+        <pd:y>85</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>156</pd:x>
+        <pd:y>85</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Catch Exception</pd:from>
+        <pd:to>CreateBusinessException</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateBusinessException</pd:from>
+        <pd:to>Generate-Business-Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetProducts Device</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts Device</pd:from>
+        <pd:to>GetProducts Accessory</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts Accessory</pd:from>
+        <pd:to>GetProducts USIM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts USIM</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

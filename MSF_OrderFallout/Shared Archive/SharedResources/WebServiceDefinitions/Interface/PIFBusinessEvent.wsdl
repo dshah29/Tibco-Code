@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns1="http://www.tibco.com/bs3.0/_SzyRMHt4EeSo3_y7hOrSaQ" xmlns:tns="http://www.tibco.com/bs3.0/_SzyRMHt4EeSo3_y7hOrSaQ/PIFExceptionHandlingProcess_v10312" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns0="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="PIFExceptionHandlingProcess_v10312" targetNamespace="http://www.tibco.com/bs3.0/_SzyRMHt4EeSo3_y7hOrSaQ/PIFExceptionHandlingProcess_v10312">
+    <wsdl:types>
+        <xs:schema targetNamespace="http://www.tibco.com/bs3.0/_SzyRMHt4EeSo3_y7hOrSaQ" elementFormDefault="qualified" attributeFormDefault="unqualified"/>
+        <xs:schema targetNamespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+            <xs:import namespace="http://www.tibco.com/bs3.0/_SzyRMHt4EeSo3_y7hOrSaQ"/>
+            <xs:annotation>
+                <xs:documentation>
+                    <ns0:DocumentationElement BOMORIGIN="/BusinessExceptionHandling_v1.0.3/Generated Business Objects/com.tibco.xsd.orderfallout.businessexceptionmanagement.orderfalloutbusinessexception.bom"/>
+                </xs:documentation>
+            </xs:annotation>
+            <xs:complexType name="PIFBusinessException">
+                <xs:sequence>
+                    <xs:element name="businessTransactionID" type="xs:string"/>
+                    <xs:element name="correlationID" type="xs:string"/>
+                    <xs:element name="planItemID" type="xs:string"/>
+                    <xs:element name="planID" type="xs:string"/>
+                    <xs:element name="orderID" type="xs:string"/>
+                    <xs:element name="orderRef" type="xs:string"/>
+                    <xs:element name="processComponentID" type="xs:string"/>
+                    <xs:element name="processComponentName" type="xs:string"/>
+                    <xs:element name="productID" type="xs:string"/>
+                    <xs:element name="action" type="xs:string"/>
+                    <xs:element name="actionMode" type="xs:string" minOccurs="0"/>
+                    <xs:element name="status" type="xs:string"/>
+                    <xs:element name="payload" type="xs:string" minOccurs="0"/>
+                    <xs:element name="resolution" type="xs:string" minOccurs="0"/>
+                    <xs:element name="resolutionDescription" type="xs:string" minOccurs="0"/>
+                    <xs:element name="errorCode" type="xs:string"/>
+                    <xs:element name="errorMessage" type="xs:string"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PQFBusinessException">
+                <xs:sequence>
+                    <xs:element name="businessTransactionID" type="xs:string"/>
+                    <xs:element name="correlationID" type="xs:string"/>
+                    <xs:element name="orderID" type="xs:string"/>
+                    <xs:element name="orderRef" type="xs:string"/>
+                    <xs:element name="payload" type="xs:string" minOccurs="0"/>
+                    <xs:element name="resolution" type="xs:string" minOccurs="0"/>
+                    <xs:element name="resolutionDescription" type="xs:string" minOccurs="0"/>
+                    <xs:choice>
+                        <xs:element name="feasibilityFailed">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="completed" type="xs:boolean"/>
+                                    <xs:element name="passed" type="xs:boolean"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="opdFailed">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="completed" type="xs:boolean"/>
+                                    <xs:element name="success" type="xs:boolean"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:element name="errorCode" type="xs:string"/>
+                    <xs:element name="errorMessage" type="xs:string"/>
+                    <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax" namespace="##any"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="orderGetType">
+                <xs:sequence>
+                    <xs:element name="orderID" type="xs:string"/>
+                    <xs:element name="orderRef" type="xs:string"/>
+                    <xs:element name="planID" type="xs:string" minOccurs="0"/>
+                    <xs:element name="status" type="xs:string"/>
+                    <xs:element name="serializedOrder" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="planGetType">
+                <xs:sequence>
+                    <xs:element name="planID" type="xs:string"/>
+                    <xs:element name="orderID" type="xs:string"/>
+                    <xs:element name="orderRef" type="xs:string"/>
+                    <xs:element name="udf" type="ns0:udfGetType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="planItem" type="ns0:planItemGetType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="status" type="xs:string"/>
+                    <xs:element name="planDescription" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="planItemGetType">
+                <xs:sequence>
+                    <xs:element name="planItemID" type="xs:string"/>
+                    <xs:element name="planItemName" type="xs:string" minOccurs="0"/>
+                    <xs:element name="udf" type="ns0:udfGetType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="parentID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="childID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="siblingID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="dependentID" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="planItemSetType">
+                <xs:sequence>
+                    <xs:element name="planItemID" type="xs:string"/>
+                    <xs:element name="planItemName" type="xs:string" minOccurs="0"/>
+                    <xs:element name="udf" type="ns0:udfSetType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="planSetType">
+                <xs:sequence>
+                    <xs:element name="planID" type="xs:string"/>
+                    <xs:element name="orderID" type="xs:string"/>
+                    <xs:element name="orderRef" type="xs:string"/>
+                    <xs:element name="udf" type="ns0:udfSetType" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="planItem" type="ns0:planItemSetType" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="udfGetType">
+                <xs:sequence>
+                    <xs:element name="type" type="xs:string" minOccurs="0"/>
+                    <xs:element name="flavor" type="xs:string" minOccurs="0"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="value" type="xs:string" minOccurs="0"/>
+                    <xs:element name="originalValue" type="xs:string" minOccurs="0"/>
+                    <xs:element name="lastModified" type="xs:dateTime" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="udfMatchType">
+                <xs:attribute name="flavor" default="*" type="xs:anySimpleType"/>
+                <xs:attribute name="name" default="*" type="xs:anySimpleType"/>
+            </xs:complexType>
+            <xs:complexType name="udfSetType">
+                <xs:sequence>
+                    <xs:element name="evaluationPriority" type="xs:string" minOccurs="0"/>
+                    <xs:element name="type" type="xs:string" minOccurs="0"/>
+                    <xs:element name="flavor" type="xs:string" minOccurs="0"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="GetOrderReply">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="order" type="ns0:orderGetType" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderID" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetPlanItemsReply">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="planItem" type="ns0:planItemGetType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetPlanItemsRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="planID" type="xs:string"/>
+                        <xs:element name="udfFlavor" type="xs:string" minOccurs="0"/>
+                        <xs:element name="planItem" type="ns0:planItemGetType" minOccurs="0" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetPlanReply">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="plan" type="ns0:planGetType" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetPlanRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="planID" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PIF_BusinessExceptionRequest" type="ns0:PIFBusinessException"/>
+            <xs:element name="PIF_BusinessExceptionResponse" type="ns0:PIFBusinessException"/>
+            <xs:element name="PQF_BusinessExceptionRequest" type="ns0:PQFBusinessException"/>
+            <xs:element name="PQF_BusinessExceptionResponse" type="ns0:PQFBusinessException"/>
+            <xs:element name="SetPlanItemReply">
+                <xs:complexType>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetPlanItemRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="planID" type="xs:string"/>
+                        <xs:element name="planItem" type="ns0:planItemSetType"/>
+                        <xs:element name="replace" type="xs:anyType" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetPlanReply">
+                <xs:complexType>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SetPlanRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="plan" type="ns0:planSetType"/>
+                        <xs:element name="replace" type="xs:anyType" minOccurs="0"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="PIFExceptionHandlingProcess_v10312_CreatePIFEvent_INPUT">
+        <wsdl:part name="PIFBusinessRequest" type="ns0:PIFBusinessException"/>
+    </wsdl:message>
+    <wsdl:message name="PIFExceptionHandlingProcess_v10312_CreatePIFEvent_OUTPUT">
+        <wsdl:part name="ProcessId" type="xs:string"/>
+    </wsdl:message>
+    <wsdl:portType xmlns:ns2="http://www.tibco.com/bs3.2/extensions" name="PIFExceptionHandlingProcess_v10312" ns2:FlowContainer="_lZF4o4qQEeSg8JojTaJPtw">
+        <wsdl:operation name="CreatePIFEvent">
+            <wsdl:input message="tns:PIFExceptionHandlingProcess_v10312_CreatePIFEvent_INPUT" ns2:Event="_4WFJkGKFEeWiCL78Jo5_Aw"/>
+            <wsdl:output message="tns:PIFExceptionHandlingProcess_v10312_CreatePIFEvent_OUTPUT" ns2:Event="_4WFJkGKFEeWiCL78Jo5_Aw"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PIFExceptionHandlingProcess_v10312_EP" type="tns:PIFExceptionHandlingProcess_v10312">
+        <soap:binding style="rpc" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="text"/>
+        <wsdl:operation name="CreatePIFEvent">
+            <wsdl:documentation/>
+            <soap:operation style="rpc" soapAction="CreatePIFEvent"/>
+            <wsdl:input>
+                <soap:body use="literal" parts="PIFBusinessRequest"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" parts="ProcessId"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="PIFExceptionHandlingProcess_v10312">
+        <wsdl:port name="PIFExceptionHandlingProcess_v10312_EP" binding="tns:PIFExceptionHandlingProcess_v10312_EP">
+            <soap:address location=""/>
+            <jndi:context>
+                <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://10.97.119.24:7242</jndi:property>
+            </jndi:context>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <!-- The element targetAddress value (MCE.DEV.REQ.EXCEPTION.RESOLUTION.BUS.EXCEPTIONPIFREQUEST.SOAP11.V1) is the jndi name of the destination. Please replace this with physical destination name at the service consumption point.
+  -->
+            <jms:targetAddress destination="queue">MCE.DEV.REQ.EXCEPTION.RESOLUTION.BUS.EXCEPTIONPIFREQUEST.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

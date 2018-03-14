@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:disct="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1"
+	 version="$Id: Discount_v1.xsd 4933 2015-10-05 13:46:20Z mgarg $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../CommonEnumerations/Types_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:simpleType name="__DISCOUNT_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+
+			<!--a discount due to some kind of promotion-->
+			<xsd:enumeration value="PROMOTION"/>
+
+			<!--a discount due an agreement with a Corporate-->
+			<xsd:enumeration value="BUSINESS"/>
+
+			<!--Store management discretion-->
+			<xsd:enumeration value="MANAGEMENT DISCRETION"/>
+
+			<!--A generic Add off as per CCS concepts-->
+			<xsd:enumeration value="ADD OFF"/>
+
+			<!--Because the product is ex display or damaged.-->
+			<xsd:enumeration value="DISPLAY / DAMAGED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_DISCOUNT_TYPE">
+		<xsd:union memberTypes="disct:__DISCOUNT_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+
+	<!--The potential different types of discount calculations available-->
+	<xsd:simpleType name="__DISCOUNT_CALCULATION_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="MONETARY"/>
+			<xsd:enumeration value="PERCENTAGE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_DISCOUNT_CALCULATION_TYPE">
+		<xsd:union memberTypes="disct:__DISCOUNT_CALCULATION_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Discount">
+		<xsd:sequence>
+
+			<!--The discount type can document management discretion, promotion etc///-->
+			<xsd:element name="discountType" type="disct:_DISCOUNT_TYPE"/>
+
+			<!--The amount to be discounted, this can 10 (pounds or percent)-->
+			<xsd:element name="discountValue" type="xsd:float"/>
+
+			<!--When the discount is going to start and potentially finish.-->
+			<xsd:element name="discountStart" type="xsd:dateTime"/>
+			<xsd:element name="discountEnd" type="xsd:dateTime" minOccurs="0"/>
+
+			<!--can be MONETARY or PERCENTAGE-->
+			<xsd:element name="calculationType" type="disct:_DISCOUNT_CALCULATION_TYPE"/>
+			<xsd:element name="discountReason" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Discount" type="disct:Discount"/>
+	<xsd:element name="discount" type="disct:Discount">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Discount instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

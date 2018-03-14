@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inboundcontext/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inboundcontext/v1"/>
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/InputMessageContent_v1.xsd"/>
+    <name>InputMessageContent</name>
+    <resourceType>ae.shared.jobSharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <initialValue>none</initialValue>
+        <xsdString ref="pfx2:InputMessageContent"/>
+    </config>
+</BWSharedResource>

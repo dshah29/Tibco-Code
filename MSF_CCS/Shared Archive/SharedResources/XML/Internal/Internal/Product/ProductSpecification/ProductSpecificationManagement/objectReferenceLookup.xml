@@ -1,0 +1,174 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<objectLookupReference xmlns = "http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/objectReferenceLookup/v1" xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation = "http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/objectReferenceLookup/v1 ../../../../../../SchemaDefinitions/Internal/Product/ProductSpecification/ProductSpecificationManagement/ObjectReferenceLookup.xsd">
+	<catalogs>
+		<catalog ccsProductType = "Accessory">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Accessory</subClass>
+		</catalog>
+		<catalog ccsProductType = "Addon-FPC">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Addon-FPC</subClass>
+		</catalog>
+		<catalog ccsProductType = "Addon-FRD">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Addon-FRD</subClass>
+		</catalog>
+		<catalog ccsProductType = "Addon-PPC">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Addon-PPC</subClass>
+		</catalog>
+		<catalog ccsProductType = "Addon-PRD">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Addon-PRD</subClass>
+		</catalog>
+		<catalog ccsProductType = "Addon-SAO">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Addon-SAO</subClass>
+		</catalog>
+		<catalog ccsProductType = "Addon-SVC">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Addon-SVC</subClass>
+		</catalog>
+		<catalog ccsProductType = "Allowance">
+			<masterCatalogName>ALLOWANCE</masterCatalogName>
+			<class>ALLOWANCE</class>
+			<subClass>Allowance</subClass>
+		</catalog>
+		<catalog ccsProductType = "Base Plan">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Base Plan</subClass>
+		</catalog>
+		<catalog ccsProductType = "Charge-AC">
+			<masterCatalogName>PRICE</masterCatalogName>
+			<class>CHARGE-AC</class>
+			<subClass>Charge-AC</subClass>
+		</catalog>
+		<catalog ccsProductType = "Charge-FD">
+			<masterCatalogName>PRICE</masterCatalogName>
+			<class>CHARGE-FD</class>
+			<subClass>Charge-FD</subClass>
+		</catalog>
+		<catalog ccsProductType = "Charge-MRC-AO">
+			<masterCatalogName>PRICE</masterCatalogName>
+			<class>CHARGE-MRC-AO</class>
+			<subClass>Charge-MRC-AO</subClass>
+		</catalog>
+		<catalog ccsProductType = "Charge-MRC-PL">
+			<masterCatalogName>PRICE</masterCatalogName>
+			<class>CHARGE-MRC-PL</class>
+			<subClass>Charge-MRC-PL</subClass>
+		</catalog>
+		<catalog ccsProductType = "Charge-PD">
+			<masterCatalogName>PRICE</masterCatalogName>
+			<class>CHARGE-PD</class>
+			<subClass>Charge-PD</subClass>
+		</catalog>
+		<catalog ccsProductType = "Device">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Device</subClass>
+		</catalog>
+		<catalog ccsProductType = "Service">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>RFS</class>
+			<subClass>Service</subClass>
+		</catalog>
+		<catalog ccsProductType = "Tariff">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Tariff</subClass>
+		</catalog>
+		<catalog ccsProductType = "USIM">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>USIM</subClass>
+		</catalog>
+		<catalog ccsProductType = "Addon-PPA">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>CFS</class>
+			<subClass>Addon-PPA</subClass>
+		</catalog>
+		<catalog ccsProductType = "Allowance-PL">
+			<masterCatalogName>ALLOWANCE</masterCatalogName>
+			<class>ALLOWANCE</class>
+			<subClass>Allowance-PL</subClass>
+		</catalog>
+		<catalog ccsProductType = "Allowance-AO">
+			<masterCatalogName>ALLOWANCE</masterCatalogName>
+			<class>ALLOWANCE</class>
+			<subClass>Allowance-AO</subClass>
+		</catalog>
+		<catalog ccsProductType = "Action">
+			<masterCatalogName>PRODUCT</masterCatalogName>
+			<class>TECHNICALCOMPONENT</class>
+			<subClass>Action</subClass>
+		</catalog>
+	</catalogs>
+	<relationships>
+		<relationship fcChildCatalog = "PRODUCT" fcParentCatalog = "PRODUCT">ProductComprisedOf</relationship>
+		<relationship fcChildCatalog = "PRICE" fcParentCatalog = "PRODUCT">ProductPricedBy</relationship>
+		<relationship fcChildCatalog = "ALLOWANCE" fcParentCatalog = "PRODUCT">ProductRequiredForAllowance</relationship>
+		<relationship fcChildCatalog = "ALLOWANCE" fcParentCatalog = "PRICE">PriceAlteredByAllowance</relationship>
+	</relationships>
+	<characteristics>
+		<characteristic ccsAttributeName = "Barcode">Barcode</characteristic>
+		<characteristic ccsAttributeName = "Description">Description</characteristic>
+		<characteristic ccsAttributeName = "InitialDisplayPrice">InitialDisplayPrice</characteristic>
+		<characteristic ccsAttributeName = "InvoiceName">InvoiceName</characteristic>
+		<characteristic ccsAttributeName = "Manufacturer">Manufacturer</characteristic>
+		<characteristic ccsAttributeName = "Model">Model</characteristic>
+		<characteristic ccsAttributeName = "OrganizationID">OrganizationID</characteristic>
+		<characteristic ccsAttributeName = "ProductType">ProductType</characteristic>
+		<characteristic ccsAttributeName = "ShortCode">ShortCode</characteristic>
+		<characteristic ccsAttributeName = "SprintID">SprintID</characteristic>
+		<characteristic ccsAttributeName = "BillingID">BillingID</characteristic>
+		<characteristic ccsAttributeName = "CampaignDuration">CampaignDuration</characteristic>
+		<characteristic ccsAttributeName = "DurationUnit">DurationUnit</characteristic>
+		<characteristic ccsAttributeName = "PeopleSoftID">PeopleSoftID</characteristic>
+		<characteristic ccsAttributeName = "ProductFamily">ProductFamily</characteristic>
+		<characteristic ccsAttributeName = "Purpose">Purpose</characteristic>
+		<characteristic ccsAttributeName = "VisibleAddon">VisibleAddon</characteristic>
+		<characteristic ccsAttributeName = "ContractLength">ContractLength</characteristic>
+		<characteristic ccsAttributeName = "CostToSave">CostToSave</characteristic>
+		<characteristic ccsAttributeName = "CombinationId">CombinationId</characteristic>
+		<characteristic ccsAttributeName = "VoucherCode">VoucherCode</characteristic>
+		<characteristic ccsAttributeName = "Quantity">Quantity</characteristic>
+		<characteristic ccsAttributeName = "UnitOfMeasure">UnitOfMeasure</characteristic>
+		<characteristic ccsAttributeName = "UnlimitedFU">UnlimitedFU</characteristic>
+		<characteristic ccsAttributeName = "PersonalHotspot">PersonalHotspot</characteristic>
+		<characteristic ccsAttributeName = "FUAllocationGrp">FUAllocationGrp</characteristic>
+		<characteristic ccsAttributeName = "CampaignId">CampaignId</characteristic>
+		<characteristic ccsAttributeName = "NumberOfHandsets">NumberOfHandsets</characteristic>
+		<characteristic ccsAttributeName = "On12Month">On12Month</characteristic>
+		<characteristic ccsAttributeName = "On18Month">On18Month</characteristic>
+		<characteristic ccsAttributeName = "On1Month">On1Month</characteristic>
+		<characteristic ccsAttributeName = "On24Month">On24Month</characteristic>
+		<characteristic ccsAttributeName = "On36Month">On36Month</characteristic>
+		<characteristic ccsAttributeName = "On6Month">On6Month</characteristic>
+		<characteristic ccsAttributeName = "DisplayAmount">DisplayAmount</characteristic>
+		<characteristic ccsAttributeName = "Name">Name</characteristic>
+		<characteristic ccsAttributeName = "Amount">Amount</characteristic>
+		<characteristic ccsAttributeName = "PlanInvoiceTag">PlanInvoiceTag</characteristic>
+		<characteristic ccsAttributeName = "Percentage">Percentage</characteristic>
+		<characteristic ccsAttributeName = "Refurbished">Refurbished</characteristic>
+		<characteristic ccsAttributeName = "USIMForm">USIMForm</characteristic>
+		<characteristic ccsAttributeName = "ActionType">ActionType</characteristic>
+		<characteristic ccsAttributeName = "Payment_Method">Payment_Method</characteristic>
+		<characteristic ccsAttributeName = "String" ccsProductDefinationType = "String">String</characteristic>
+		<characteristic ccsAttributeName = "AddtoBill">AddtoBill</characteristic>
+		<characteristic ccsAttributeName = "ExpectedLiveDate">ExpectedLiveDate</characteristic>
+		<characteristic ccsAttributeName = "Form">Form</characteristic>
+		<characteristic ccsAttributeName = "HandsetColour">HandsetColour</characteristic>
+		<characteristic ccsAttributeName = "HexColourCode">HexColourCode</characteristic>
+		<characteristic ccsAttributeName = "InternalStorageMemory">InternalStorageMemory</characteristic>
+		<characteristic ccsAttributeName = "OperatingSystem">OperatingSystem</characteristic>
+	</characteristics>
+</objectLookupReference>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:tertio="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1"
+	 targetNamespace="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../../../CDM/Common/CommonDefinitions/UDF_v1.xsd"/>
+	<xs:complexType name="ProvidentRequest">
+		<xs:sequence>
+			<xs:element name="ProvisioningAction" type="xs:string"/>
+			<xs:element name="OrderPriority" type="xs:string" minOccurs="0"/>
+			<xs:element name="RequestAttributes" type="udf:UserDefinedField" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProvidentResponse">
+		<xs:sequence>
+			<xs:element name="ProvisioningAction" type="xs:string"/>
+			<xs:element name="ResponseAttributes" type="udf:UserDefinedField" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ProvidentRequest" type="tertio:ProvidentRequest"/>
+	<xs:element name="ProvidentResponse" type="tertio:ProvidentResponse"/>
+</xs:schema>

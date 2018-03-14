@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002">
+    <identity>
+        <objectType>url</objectType>
+        <name>MSF-HTTPS-Identity1</name>
+        <designer>
+            <lockedProperties/>
+            <fixedChildren/>
+            <resourceDescriptions/>
+        </designer>
+        <fileType>PKCS12</fileType>
+        <url>%%SharedResources/Identities/HTTP/MSF-HTTPS-Identity1/KeyFileURL%%</url>
+        <passPhrase>%%SharedResources/Identities/HTTP/MSF-HTTPS-Identity1/KeyFilePassword%%</passPhrase>
+    </identity>
+</Repository:repository>

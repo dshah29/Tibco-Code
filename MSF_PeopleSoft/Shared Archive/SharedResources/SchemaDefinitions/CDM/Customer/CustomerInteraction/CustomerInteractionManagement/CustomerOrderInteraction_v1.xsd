@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custOrdInt="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerorderinteraction/v1"
+	 xmlns:intr="http://three.co.uk/xsd/cdm/common/commondefinitions/interaction/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerorderinteraction/v1"
+	 version="$Id: CustomerOrderInteraction_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/interaction/v1" schemaLocation="../../../Common/CommonDefinitions/Interaction_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="CustomerOrderInteractionDetails">
+		<xsd:sequence>
+			<xsd:element name="orderID" type="BASE:PopulatedString"/>
+
+			<!--The location from interaction is the where the interaction took place, order location allows a level of override ( for instance if a call centre is doing an order on behalf of a local store-->
+			<xsd:element name="orderLocationID" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CustomerOrderInteraction">
+		<xsd:sequence>
+			<xsd:element ref="intr:interaction"/>
+			<xsd:element name="orderInteraction" type="custOrdInt:CustomerOrderInteractionDetails"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomerOrderInteraction" type="custOrdInt:CustomerOrderInteraction"/>
+	<xsd:element name="customerOrderInteraction" type="custOrdInt:CustomerOrderInteraction">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CustomerOrderInteraction instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

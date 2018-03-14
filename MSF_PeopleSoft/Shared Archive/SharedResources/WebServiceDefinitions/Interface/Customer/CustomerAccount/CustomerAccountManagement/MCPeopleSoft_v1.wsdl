@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns4="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:ns="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns5="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1" targetNamespace="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1">
+    <import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"/>
+    <import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <import location="../../../../../SchemaDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/MCPeoplesoft_v1.xsd" namespace="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/mcpeoplesoft/v1"/>
+    <message name="SearchCustomerRequest">
+        <part element="ns5:SearchCustomerRequest" name="part1"/>
+    </message>
+    <message name="SearchCustomerResponse">
+        <part element="ns5:SearchCustomerResponse" name="part1"/>
+    </message>
+    <message name="CreateInteractionRequest">
+        <part element="ns5:CreateInteractionRequest" name="part1"/>
+    </message>
+    <message name="CreateInteractionResponse">
+        <part element="ns5:CreateInteractionResponse" name="part1"/>
+    </message>
+    <message name="GetInteractionRequest">
+        <part element="ns5:GetInteractionRequest" name="part1"/>
+    </message>
+    <message name="GetInteractionResponse">
+        <part element="ns5:GetInteractionResponse" name="part1"/>
+    </message>
+    <message name="AuthenticateRequest">
+        <part element="ns5:AuthenticateRequest" name="part1"/>
+    </message>
+    <message name="AuthenticateResponse">
+        <part element="ns5:AuthenticateResponse" name="part1"/>
+    </message>
+    <message name="ExceptionInfo">
+        <part element="ns2:ExceptionInfo" name="part1"/>
+    </message>
+    <message name="MessageContext">
+        <part element="ns3:MessageContext" name="part1"/>
+    </message>
+    <message name="GetConsumerProfileRequest">
+        <part element="ns5:GetConsumerProfileRequest" name="part1"/>
+    </message>
+    <message name="GetConsumerProfileResponse">
+        <part element="ns5:GetConsumerProfileResponse" name="part1"/>
+    </message>
+    <!--	WP5 : START	-->
+    <!--	WP5 : END	-->
+    <portType name="PortType">
+        <operation name="SearchCustomer">
+            <input message="ns4:SearchCustomerRequest"/>
+            <output message="ns4:SearchCustomerResponse"/>
+            <fault message="ns4:ExceptionInfo" name="fault1"/>
+        </operation>
+        <operation name="CreateInteraction">
+            <input message="ns4:CreateInteractionRequest"/>
+            <output message="ns4:CreateInteractionResponse"/>
+            <fault message="ns4:ExceptionInfo" name="fault1"/>
+        </operation>
+        <operation name="GetInteraction">
+            <input message="ns4:GetInteractionRequest"/>
+            <output message="ns4:GetInteractionResponse"/>
+            <fault message="ns4:ExceptionInfo" name="fault1"/>
+        </operation>
+        <operation name="Authenticate">
+            <input message="ns4:AuthenticateRequest"/>
+            <output message="ns4:AuthenticateResponse"/>
+            <fault message="ns4:ExceptionInfo" name="fault1"/>
+        </operation>
+        <operation name="GetConsumerProfile">
+            <input message="ns4:GetConsumerProfileRequest"/>
+            <output message="ns4:GetConsumerProfileResponse"/>
+            <fault message="ns4:ExceptionInfo" name="fault1"/>
+        </operation>
+        <!-- WP-5 operations : START	-->
+        <!-- WP-5 operations : END -->
+    </portType>
+</definitions>

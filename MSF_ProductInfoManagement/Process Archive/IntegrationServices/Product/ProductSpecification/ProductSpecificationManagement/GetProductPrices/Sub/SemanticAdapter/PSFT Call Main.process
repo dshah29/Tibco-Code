@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx5="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" xmlns:pfx31="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:pfx4="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx9="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" xmlns:pfx8="http://three.co.uk/xsd/peoplesoft/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:pfx7="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:pfx6="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns14="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1" xmlns:ns9="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1" xmlns:ns12="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns6="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns13="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:ns10="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1" xmlns:pfx="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns7="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" xmlns:ns8="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1" xmlns:ns11="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:ns3="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorExecutionService.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" schemaLocation="/SharedResources/SchemaDefinitions/CDM/Order/OrderItemDefinition/Order_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetProductPrices/Sub/SemanticAdapter/PSFT Call Main.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx6:GetProductPricesRequest" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>41</pd:startX>
+    <pd:startY>55</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <GetProductPricesResponse>
+                <xsl:for-each select="$MainProcess/root/pfx6:GetProductPricesResponse/pfx6:ExistingProducts">
+                    <ExistingProducts>
+                        <productID>
+                            <xsl:value-of select="ns7:productID"/>
+                        </productID>
+                        <xsl:if test="ns7:productName">
+                            <productName>
+                                <xsl:value-of select="ns7:productName"/>
+                            </productName>
+                        </xsl:if>
+                        <xsl:if test="ns7:productDescription">
+                            <productDescription>
+                                <xsl:value-of select="ns7:productDescription"/>
+                            </productDescription>
+                        </xsl:if>
+                        <classification>
+                            <xsl:value-of select="ns7:classification"/>
+                        </classification>
+                        <lifecycleStatus>
+                            <xsl:value-of select="ns7:lifecycleStatus"/>
+                        </lifecycleStatus>
+                        <xsl:for-each select="ns7:subProductDetails/ns7:productSpecification">
+                            <subProductDetails>
+                                <productID>
+                                    <xsl:value-of select="ns7:productID"/>
+                                </productID>
+                                <xsl:if test="ns7:productName">
+                                    <productName>
+                                        <xsl:value-of select="ns7:productName"/>
+                                    </productName>
+                                </xsl:if>
+                                <xsl:if test="ns7:productDescription">
+                                    <productDescription>
+                                        <xsl:value-of select="ns7:productDescription"/>
+                                    </productDescription>
+                                </xsl:if>
+                                <classification>
+                                    <xsl:value-of select="ns7:classification"/>
+                                </classification>
+                                <lifecycleStatus>
+                                    <xsl:value-of select="ns7:lifecycleStatus"/>
+                                </lifecycleStatus>
+                                <startDateTime>
+                                    <xsl:value-of select="ns7:startDateTime"/>
+                                </startDateTime>
+                                <xsl:if test="ns7:endDateTime">
+                                    <endDateTime>
+                                        <xsl:value-of select="ns7:endDateTime"/>
+                                    </endDateTime>
+                                </xsl:if>
+                                <xsl:for-each select="ns8:productPriceSpecification">
+                                    <productPriceSpecification>
+                                        <price>
+                                            <xsl:value-of select="ns8:price"/>
+                                        </price>
+                                        <xsl:if test="ns8:priceDuration">
+                                            <priceDuration>
+                                                <xsl:value-of select="ns8:priceDuration"/>
+                                            </priceDuration>
+                                        </xsl:if>
+                                        <xsl:if test="ns8:currency">
+                                            <currency>
+                                                <xsl:value-of select="ns8:currency"/>
+                                            </currency>
+                                        </xsl:if>
+                                        <xsl:if test="ns8:recurringChargeFrequency">
+                                            <recurringChargeFrequency>
+                                                <xsl:value-of select="ns8:recurringChargeFrequency"/>
+                                            </recurringChargeFrequency>
+                                        </xsl:if>
+                                        <xsl:for-each select="ns11:discount">
+                                            <discount>
+                                                <discountType>
+                                                    <xsl:value-of select="ns11:discountType"/>
+                                                </discountType>
+                                                <discountValue>
+                                                    <xsl:value-of select="ns11:discountValue"/>
+                                                </discountValue>
+                                                <discountStart>
+                                                    <xsl:value-of select="ns11:discountStart"/>
+                                                </discountStart>
+                                                <xsl:if test="ns11:discountEnd">
+                                                    <discountEnd>
+                                                        <xsl:value-of select="ns11:discountEnd"/>
+                                                    </discountEnd>
+                                                </xsl:if>
+                                                <calculationType>
+                                                    <xsl:value-of select="ns11:calculationType"/>
+                                                </calculationType>
+                                                <discountReason>
+                                                    <xsl:value-of select="ns11:discountReason"/>
+                                                </discountReason>
+                                            </discount>
+                                        </xsl:for-each>
+                                    </productPriceSpecification>
+                                </xsl:for-each>
+                            </subProductDetails>
+                        </xsl:for-each>
+                        <startDateTime>
+                            <xsl:value-of select="ns7:startDateTime"/>
+                        </startDateTime>
+                        <xsl:if test="ns7:endDateTime">
+                            <endDateTime>
+                                <xsl:value-of select="ns7:endDateTime"/>
+                            </endDateTime>
+                        </xsl:if>
+                        <xsl:for-each select="ns8:productPriceSpecification">
+                            <productPriceSpecification>
+                                <price>
+                                    <xsl:value-of select="ns8:price"/>
+                                </price>
+                                <xsl:if test="ns8:priceDuration">
+                                    <priceDuration>
+                                        <xsl:value-of select="ns8:priceDuration"/>
+                                    </priceDuration>
+                                </xsl:if>
+                                <xsl:if test="ns8:currency">
+                                    <currency>
+                                        <xsl:value-of select="ns8:currency"/>
+                                    </currency>
+                                </xsl:if>
+                                <xsl:if test="ns8:recurringChargeFrequency">
+                                    <recurringChargeFrequency>
+                                        <xsl:value-of select="ns8:recurringChargeFrequency"/>
+                                    </recurringChargeFrequency>
+                                </xsl:if>
+                                <xsl:for-each select="ns11:discount">
+                                    <discount>
+                                        <discountType>
+                                            <xsl:value-of select="ns11:discountType"/>
+                                        </discountType>
+                                        <discountValue>
+                                            <xsl:value-of select="ns11:discountValue"/>
+                                        </discountValue>
+                                        <discountStart>
+                                            <xsl:value-of select="ns11:discountStart"/>
+                                        </discountStart>
+                                        <xsl:if test="ns11:discountEnd">
+                                            <discountEnd>
+                                                <xsl:value-of select="ns11:discountEnd"/>
+                                            </discountEnd>
+                                        </xsl:if>
+                                        <calculationType>
+                                            <xsl:value-of select="ns11:calculationType"/>
+                                        </calculationType>
+                                        <discountReason>
+                                            <xsl:value-of select="ns11:discountReason"/>
+                                        </discountReason>
+                                    </discount>
+                                </xsl:for-each>
+                            </productPriceSpecification>
+                        </xsl:for-each>
+                    </ExistingProducts>
+                </xsl:for-each>
+                <xsl:for-each select="$MainProcess/root/pfx6:GetProductPricesResponse/pfx6:TargetProducts">
+                    <TargetProducts>
+                        <productID>
+                            <xsl:value-of select="ns7:productID"/>
+                        </productID>
+                        <xsl:if test="ns7:productName">
+                            <productName>
+                                <xsl:value-of select="ns7:productName"/>
+                            </productName>
+                        </xsl:if>
+                        <xsl:if test="ns7:productDescription">
+                            <productDescription>
+                                <xsl:value-of select="ns7:productDescription"/>
+                            </productDescription>
+                        </xsl:if>
+                        <classification>
+                            <xsl:value-of select="ns7:classification"/>
+                        </classification>
+                        <lifecycleStatus>
+                            <xsl:value-of select="ns7:lifecycleStatus"/>
+                        </lifecycleStatus>
+                        <xsl:for-each select="ns7:subProductDetails/ns7:productSpecification">
+                            <subProductDetails>
+                                <productID>
+                                    <xsl:value-of select="ns7:productID"/>
+                                </productID>
+                                <xsl:if test="ns7:productName">
+                                    <productName>
+                                        <xsl:value-of select="ns7:productName"/>
+                                    </productName>
+                                </xsl:if>
+                                <xsl:if test="ns7:productDescription">
+                                    <productDescription>
+                                        <xsl:value-of select="ns7:productDescription"/>
+                                    </productDescription>
+                                </xsl:if>
+                                <classification>
+                                    <xsl:value-of select="ns7:classification"/>
+                                </classification>
+                                <lifecycleStatus>
+                                    <xsl:value-of select="ns7:lifecycleStatus"/>
+                                </lifecycleStatus>
+                                <startDateTime>
+                                    <xsl:value-of select="ns7:startDateTime"/>
+                                </startDateTime>
+                                <xsl:if test="ns7:endDateTime">
+                                    <endDateTime>
+                                        <xsl:value-of select="ns7:endDateTime"/>
+                                    </endDateTime>
+                                </xsl:if>
+                                <xsl:for-each select="ns8:productPriceSpecification">
+                                    <productPriceSpecification>
+                                        <price>
+                                            <xsl:value-of select="ns8:price"/>
+                                        </price>
+                                        <xsl:if test="ns8:priceDuration">
+                                            <priceDuration>
+                                                <xsl:value-of select="ns8:priceDuration"/>
+                                            </priceDuration>
+                                        </xsl:if>
+                                        <xsl:if test="ns8:currency">
+                                            <currency>
+                                                <xsl:value-of select="ns8:currency"/>
+                                            </currency>
+                                        </xsl:if>
+                                        <xsl:if test="ns8:recurringChargeFrequency">
+                                            <recurringChargeFrequency>
+                                                <xsl:value-of select="ns8:recurringChargeFrequency"/>
+                                            </recurringChargeFrequency>
+                                        </xsl:if>
+                                        <xsl:for-each select="ns11:discount">
+                                            <discount>
+                                                <discountType>
+                                                    <xsl:value-of select="ns11:discountType"/>
+                                                </discountType>
+                                                <discountValue>
+                                                    <xsl:value-of select="ns11:discountValue"/>
+                                                </discountValue>
+                                                <discountStart>
+                                                    <xsl:value-of select="ns11:discountStart"/>
+                                                </discountStart>
+                                                <xsl:if test="ns11:discountEnd">
+                                                    <discountEnd>
+                                                        <xsl:value-of select="ns11:discountEnd"/>
+                                                    </discountEnd>
+                                                </xsl:if>
+                                                <calculationType>
+                                                    <xsl:value-of select="ns11:calculationType"/>
+                                                </calculationType>
+                                                <discountReason>
+                                                    <xsl:value-of select="ns11:discountReason"/>
+                                                </discountReason>
+                                            </discount>
+                                        </xsl:for-each>
+                                    </productPriceSpecification>
+                                </xsl:for-each>
+                            </subProductDetails>
+                        </xsl:for-each>
+                        <startDateTime>
+                            <xsl:value-of select="ns7:startDateTime"/>
+                        </startDateTime>
+                        <xsl:if test="ns7:endDateTime">
+                            <endDateTime>
+                                <xsl:value-of select="ns7:endDateTime"/>
+                            </endDateTime>
+                        </xsl:if>
+                        <xsl:for-each select="ns8:productPriceSpecification">
+                            <productPriceSpecification>
+                                <price>
+                                    <xsl:value-of select="ns8:price"/>
+                                </price>
+                                <xsl:if test="ns8:priceDuration">
+                                    <priceDuration>
+                                        <xsl:value-of select="ns8:priceDuration"/>
+                                    </priceDuration>
+                                </xsl:if>
+                                <xsl:if test="ns8:currency">
+                                    <currency>
+                                        <xsl:value-of select="ns8:currency"/>
+                                    </currency>
+                                </xsl:if>
+                                <xsl:if test="ns8:recurringChargeFrequency">
+                                    <recurringChargeFrequency>
+                                        <xsl:value-of select="ns8:recurringChargeFrequency"/>
+                                    </recurringChargeFrequency>
+                                </xsl:if>
+                                <xsl:for-each select="ns11:discount">
+                                    <discount>
+                                        <discountType>
+                                            <xsl:value-of select="ns11:discountType"/>
+                                        </discountType>
+                                        <discountValue>
+                                            <xsl:value-of select="ns11:discountValue"/>
+                                        </discountValue>
+                                        <discountStart>
+                                            <xsl:value-of select="ns11:discountStart"/>
+                                        </discountStart>
+                                        <xsl:if test="ns11:discountEnd">
+                                            <discountEnd>
+                                                <xsl:value-of select="ns11:discountEnd"/>
+                                            </discountEnd>
+                                        </xsl:if>
+                                        <calculationType>
+                                            <xsl:value-of select="ns11:calculationType"/>
+                                        </calculationType>
+                                        <discountReason>
+                                            <xsl:value-of select="ns11:discountReason"/>
+                                        </discountReason>
+                                    </discount>
+                                </xsl:for-each>
+                            </productPriceSpecification>
+                        </xsl:for-each>
+                    </TargetProducts>
+                </xsl:for-each>
+                <Status>
+                    <StatusCode>
+                        <xsl:value-of select="0"/>
+                    </StatusCode>
+                </Status>
+            </GetProductPricesResponse>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx9:GetProductPricesResponse" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>255</pd:endX>
+    <pd:endY>55</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213/PSFT Call Main</pd:targetNamespace>
+    <pd:activity name="Catch">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>104</pd:x>
+        <pd:y>328</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateUserException">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>224</pd:x>
+        <pd:y>330</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateUserException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                    <xsl:when test="contains(upper-case($Catch/pfx2:Exception/ns5:ExceptionInfo/@context2[1]), &quot;EFFECTIVEDATE&quot;)">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPI_ProductInfoExceptions/InvalidEffectiveDate/Code"/>
+                        </ExceptionCode>
+                    </xsl:when>
+                    <xsl:when test="contains(upper-case($Catch/pfx2:Exception/ns5:ExceptionInfo/@context2[1]), &quot;PRODUCITID&quot;)">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPI_ProductInfoExceptions/InvalidProductID/Code"/>
+                        </ExceptionCode>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <ExceptionCode>
+                            <xsl:value-of select="$Catch/pfx2:Exception/ns5:ExceptionInfo/@exceptionCode[1]"/>
+                        </ExceptionCode>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <Context>
+                    <xsl:value-of select="$Catch/pfx2:Exception/ns5:ExceptionInfo/@context[1]"/>
+                </Context>
+                <Context2>
+                    <xsl:value-of select="$Catch/pfx2:Exception/ns5:ExceptionInfo/@context2[1]"/>
+                </Context2>
+                <Severity>
+                    <xsl:value-of select="$Catch/pfx2:Exception/ns5:ExceptionInfo/@severity[1]"/>
+                </Severity>
+                <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                    <xsl:when test="contains(upper-case($Catch/pfx2:Exception/ns5:ExceptionInfo/@context2[1]), &quot;EFFECTIVEDATE&quot;)">
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPI_ProductInfoExceptions/InvalidMSISDNBAN/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="contains(upper-case($Catch/pfx2:Exception/ns5:ExceptionInfo/@context2[1]), &quot;PRODUCITID&quot;)">
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPI_ProductInfoExceptions/InvalidMSISDNBAN/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Description>
+                            <xsl:value-of select="$Catch/pfx2:Exception/ns5:ExceptionInfo/@description[1]"/>
+                        </Description>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>344</pd:x>
+        <pd:y>330</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateUserException/root/pfx2:Exception"/>
+                </data>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="MainProcess">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>146</pd:x>
+        <pd:y>55</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetProductPrices/Main/MainProcess.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Start/root/pfx6:GetProductPricesRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Rethrow">
+        <pd:type>com.tibco.pe.core.RethrowActivity</pd:type>
+        <pd:resourceType>ae.activities.rethrow</pd:resourceType>
+        <pd:x>103</pd:x>
+        <pd:y>436</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>MainProcess</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>CreateUserException</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Catch/pfx2:Exception/ns5:ExceptionInfo/@exceptionCode[1]="ERR-BILL- SINGVW-0020" and (contains(upper-case($Catch/pfx2:Exception/ns5:ExceptionInfo/@context2[1]), "EFFECTIVEDATE") or contains(upper-case($Catch/pfx2:Exception/ns5:ExceptionInfo/@context2[1]), "PRODUCITID"))</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateUserException</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch</pd:from>
+        <pd:to>Rethrow</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>MainProcess</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

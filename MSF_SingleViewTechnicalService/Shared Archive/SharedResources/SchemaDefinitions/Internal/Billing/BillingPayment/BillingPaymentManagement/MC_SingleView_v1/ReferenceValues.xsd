@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.tibco.com/schemas/SingleViewTechnicalService/SharedResources/SchemaDefinitions/Internal/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ReferenceValues.xsd" targetNamespace="http://www.tibco.com/schemas/SingleViewTechnicalService/SharedResources/SchemaDefinitions/Internal/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ReferenceValues.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="referenceValues">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="type" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="type">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="value" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="value">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:anySimpleType">
+					<xs:attribute name="mceValue" type="xs:anySimpleType"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0">
+    <wsdl:import namespace="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" location="/SharedResources/WebServiceDefinitions/External/Cim_Services.wsdl"/>
+    <pd:name>IntegrationServices/Product/ServiceClient/PublishModel.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>44</pd:startX>
+    <pd:startY>66</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>433</pd:endX>
+    <pd:endY>67</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1308316649904</pd:targetNamespace>
+    <pd:activity name="PlanFragment Catalog Request">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>154</pd:x>
+        <pd:y>73</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <service>pfx:CIMServices</service>
+            <servicePort>CIMHttpPort</servicePort>
+            <operation>MasterCatalogRecordAction</operation>
+            <soapAction>MasterCatalogRecordAction</soapAction>
+            <endpointURL>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/EndPointURL%%</endpointURL>
+            <timeoutType>Seconds</timeoutType>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns1:DataService>
+                    <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="version">
+                        <xsl:value-of select="2.0"/>
+                    </xsl:attribute>
+                    <ns1:Identity>
+                        <ns1:DirectoryPath>
+                            <ns1:Directory>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                    <xsl:value-of select="&quot;Enterprise&quot;"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Enterprise"/>
+                            </ns1:Directory>
+                            <ns1:Directory>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                    <xsl:value-of select="&quot;User&quot;"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/User"/>
+                            </ns1:Directory>
+                        </ns1:DirectoryPath>
+                        <ns1:Authentication>
+                            <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                <xsl:value-of select="&quot;password&quot;"/>
+                            </xsl:attribute>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Password"/>
+                        </ns1:Authentication>
+                    </ns1:Identity>
+                    <ns1:Transaction>
+                        <ns1:Command>
+                            <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                <xsl:value-of select="&quot;InitiateWorkflow&quot;"/>
+                            </xsl:attribute>
+                            <ns1:MasterCatalogRecord>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="commandqualifier">
+                                    <xsl:value-of select="'ACBulkModelDocSub'"/>
+                                </xsl:attribute>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="etype">
+                                    <xsl:value-of select="&quot;Entity&quot;"/>
+                                </xsl:attribute>
+                                <ns1:ExternalKeys>
+                                    <ns1:Key>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="name">
+                                            <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                            <xsl:value-of select="&quot;string&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="&quot;PLANFRAGMENT&quot;"/>
+                                    </ns1:Key>
+                                    <ns1:Key>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="name">
+                                            <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                            <xsl:value-of select="&quot;string&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="&quot;NON_EXECUTING&quot;"/>
+                                    </ns1:Key>
+                                </ns1:ExternalKeys>
+                            </ns1:MasterCatalogRecord>
+                        </ns1:Command>
+                    </ns1:Transaction>
+                </ns1:DataService>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Product Catalog Request">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>291</pd:x>
+        <pd:y>74</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <service>pfx:CIMServices</service>
+            <servicePort>CIMHttpPort</servicePort>
+            <operation>MasterCatalogRecordAction</operation>
+            <soapAction>MasterCatalogRecordAction</soapAction>
+            <endpointURL>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/EndPointURL%%</endpointURL>
+            <timeoutType>Seconds</timeoutType>
+            <authScheme>NONE</authScheme>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns1:DataService>
+                    <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="version">
+                        <xsl:value-of select="2.0"/>
+                    </xsl:attribute>
+                    <ns1:Identity>
+                        <ns1:DirectoryPath>
+                            <ns1:Directory>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                    <xsl:value-of select="&quot;Enterprise&quot;"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Enterprise"/>
+                            </ns1:Directory>
+                            <ns1:Directory>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                    <xsl:value-of select="&quot;User&quot;"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/User"/>
+                            </ns1:Directory>
+                        </ns1:DirectoryPath>
+                        <ns1:Authentication>
+                            <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                <xsl:value-of select="&quot;password&quot;"/>
+                            </xsl:attribute>
+                            <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ServiceClient/Password"/>
+                        </ns1:Authentication>
+                    </ns1:Identity>
+                    <ns1:Transaction>
+                        <ns1:Command>
+                            <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                <xsl:value-of select="&quot;InitiateWorkflow&quot;"/>
+                            </xsl:attribute>
+                            <ns1:MasterCatalogRecord>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="commandqualifier">
+                                    <xsl:value-of select="'ACBulkModelDocSub'"/>
+                                </xsl:attribute>
+                                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="etype">
+                                    <xsl:value-of select="&quot;Entity&quot;"/>
+                                </xsl:attribute>
+                                <ns1:ExternalKeys>
+                                    <ns1:Key>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="name">
+                                            <xsl:value-of select="&quot;MASTERCATALOGNAME&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                            <xsl:value-of select="&quot;string&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="&quot;PRODUCT&quot;"/>
+                                    </ns1:Key>
+                                    <ns1:Key>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="name">
+                                            <xsl:value-of select="&quot;PRODUCTID&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="type">
+                                            <xsl:value-of select="&quot;string&quot;"/>
+                                        </xsl:attribute>
+                                        <xsl:value-of select="&quot;DefaultBasePlan&quot;"/>
+                                    </ns1:Key>
+                                </ns1:ExternalKeys>
+                            </ns1:MasterCatalogRecord>
+                        </ns1:Command>
+                    </ns1:Transaction>
+                </ns1:DataService>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>PlanFragment Catalog Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>PlanFragment Catalog Request</pd:from>
+        <pd:to>Product Catalog Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Product Catalog Request</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custSub="http://three.co.uk/xsd/cdm/customer/customerprofile/customerprofilesubscriptionmanagement/customersubscription/v1"
+	 xmlns:ps="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerprofilesubscriptionmanagement/customersubscription/v1"
+	 version="$Id: CustomerSubscription_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" schemaLocation="../../../Product/ProductSpecification/ProductSpecificationManagement/ProductSpecification_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+
+	<!-- collection of possible subscription statuses-->
+	<xsd:simpleType name="__SUBSCRIPTION_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="RESERVED"/>
+			<xsd:enumeration value="SUSPENDED"/>
+			<xsd:enumeration value="ACTIVE"/>
+			<xsd:enumeration value="CANCELLED"/>
+			<xsd:enumeration value="CONNECTED"/>
+			<xsd:enumeration value="DISCONNECTED"/>
+			<xsd:enumeration value="MOVE TO POSTPAY"/>
+			<xsd:enumeration value="MOVE TO PREPAY"/>
+			<xsd:enumeration value="PORTING OUT"/>
+			<xsd:enumeration value="PORTING IN"/>
+			<xsd:enumeration value="PORTIN PENDING"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_SUBSCRIPTION_STATUS">
+		<xsd:union memberTypes="custSub:__SUBSCRIPTION_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="InstalledProductBase">
+		<xsd:sequence>
+			<xsd:element ref="ps:productSpecification" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="customerSubscriptionDetails">
+		<xsd:sequence>
+			<xsd:element name="customerSubscriptionID" type="custBASE:CustomerSubscriptionID"/>
+			<xsd:element name="customerSubscriptionValue" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="subscriptionStatus" type="custSub:_SUBSCRIPTION_STATUS" minOccurs="0"/>
+			<xsd:element name="subscriptionCreationDate" type="xsd:date" minOccurs="0"/>
+
+			<!--Because a customer account can have multiple subscriptions we will tie subscriptions and Billing account Number together here-->
+			<xsd:element name="billingAccountNumber" type="BASE:BAN" minOccurs="0"/>
+			<xsd:element name="installedProductBase" type="custSub:InstalledProductBase" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--The expectation is that this will change, however we will place here some the things that three might relate a subscription back too.-->
+	<xsd:complexType name="customerSubscriptionResources">
+		<xsd:sequence>
+			<xsd:element name="UID" type="BASE:UUID" minOccurs="0"/>
+			<xsd:element name="IMSI" type="BASE:IMSI" minOccurs="0"/>
+			<xsd:element name="IMEI" type="BASE:IMEI" minOccurs="0"/>
+			<xsd:element name="SIM" type="BASE:SIM" minOccurs="0"/>
+			<xsd:element name="ICCID" type="BASE:ICCID" minOccurs="0"/>
+			<xsd:element name="MSISDN" type="BASE:CTN" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CustomerSubscription">
+		<xsd:sequence>
+			<xsd:element name="customerSubscriptionDetails" type="custSub:customerSubscriptionDetails"/>
+			<xsd:element name="customerSubscriptionResources" type="custSub:customerSubscriptionResources" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SubscriptionResources" type="custSub:customerSubscriptionResources"/>
+	<xsd:element name="subscriptionResources" type="custSub:customerSubscriptionResources">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element SubscriptionResources instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+	<xsd:element name="CustomerSubscription" type="custSub:CustomerSubscription"/>
+	<xsd:element name="customerSubscription" type="custSub:CustomerSubscription">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CustomerSubscription instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:payDtls="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymentdetails/v1" xmlns:payType="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1" xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" targetNamespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymentdetails/v1" version="$Id: PaymentDetails_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/paymenttype/v1" schemaLocation="PaymentType_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="PaymentDetails">
+		<xsd:sequence>
+			<xsd:element name="lastPaymentDate" type="xsd:date"/>
+			<xsd:element name="billingCost" type="BASE:PRICE"/>
+			<xsd:element ref="payType:paymentType"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PaymentDetails" type="payDtls:PaymentDetails"/>
+	<xsd:element name="paymentDetails" type="payDtls:PaymentDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element PaymentDetails instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

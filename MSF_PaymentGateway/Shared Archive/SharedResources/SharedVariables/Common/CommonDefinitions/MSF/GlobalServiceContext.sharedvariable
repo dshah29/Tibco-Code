@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/serviceinstancecontext/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/serviceinstancecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/ServiceInstanceContext_v1.xsd"/>
+    <name>GlobalServiceContext</name>
+    <resourceType>ae.shared.sharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <persistent>false</persistent>
+        <multi-engine>false</multi-engine>
+        <initialValue>none</initialValue>
+        <xsdString ref="pfx:ServiceInstanceContext"/>
+    </config>
+</BWSharedResource>

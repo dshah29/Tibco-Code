@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" targetNamespace="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" version="$Id: Organisation_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<!-- defines asset specific location types, typically for stock and customer service agents-->
+	<xsd:simpleType name="ORGANISATION_LIST">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="COM01"/>
+			<xsd:enumeration value="COM05"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

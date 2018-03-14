@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:exc="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1"
+	 xmlns:tns="http://www.tibco.com/pe/EngineTypes"
+	 xmlns:exi="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"
+	 xmlns:lxi="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1"
+	 version="$Id: Exception_v1.xsd 4015 2015-06-16 17:18:54Z rarmitag $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.tibco.com/pe/EngineTypes"/>
+	<xs:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"/>
+	<xs:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1" schemaLocation="LocalExceptionInfo_v1.xsd"/>
+	<xs:element name="Exception" type="exc:Exception"/>
+	<xs:complexType name="Exception">
+		<xs:sequence>
+			<xs:element ref="exi:ExceptionInfo" minOccurs="0"/>
+			<xs:element ref="tns:ErrorReport" minOccurs="0"/>
+			<xs:element ref="lxi:LocalExceptionInfo" minOccurs="0"/>
+			<xs:element ref="tns:ProcessContext" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:appt="http://three.co.uk/xsd/cdm/common/commondefinitions/appointments/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/appointments/v1"
+	 version="$Id: Appointments_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../CommonEnumerations/Types_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!--Collection of possible appointment statuses-->
+	<xsd:simpleType name="__APPOINTMENT_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="PENDING"/>
+			<xsd:enumeration value="ATTENDED"/>
+			<xsd:enumeration value="NOT ATTENDED"/>
+			<xsd:enumeration value="CANCELLED"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_APPOINTMENT_STATUS">
+		<xsd:union memberTypes="appt:__APPOINTMENT_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+
+	<!-- defines asset specific address types-->
+	<xsd:simpleType name="__APPOINTMENT_TYPES__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="COLLECTION"/>
+			<xsd:enumeration value="INQUIRY"/>
+			<xsd:enumeration value="PROBLEM"/>
+			<xsd:enumeration value="DEMONSTRATION"/>
+			<xsd:enumeration value="DROPOFF"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_APPOINTMENT_TYPES">
+		<xsd:union memberTypes="appt:__APPOINTMENT_TYPES__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Appointments">
+		<xsd:sequence>
+			<xsd:element name="appointmentID" type="BASE:PopulatedString"/>
+			<xsd:element name="locationID" type="BASE:PopulatedString"/>
+			<xsd:element name="customerID" type="BASE:PopulatedString"/>
+			<xsd:element name="dateTime" type="xsd:dateTime"/>
+			<xsd:element name="associatedInteractionID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="associatedJourneyID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="appointmentType" type="appt:_APPOINTMENT_TYPES"/>
+			<xsd:element name="appointmentStatus" type="appt:_APPOINTMENT_STATUS"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Appointments" type="appt:Appointments"/>
+	<xsd:element name="appointments" type="appt:Appointments">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Appointments instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

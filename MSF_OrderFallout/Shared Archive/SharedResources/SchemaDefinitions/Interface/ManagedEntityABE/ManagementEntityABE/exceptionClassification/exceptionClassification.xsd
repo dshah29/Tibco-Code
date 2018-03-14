@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="exceptionClassifications">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="exceptionClassification" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="exceptionClassification">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="exceptionCode" type="xs:string"/>
+				<xs:element ref="classification"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="classification">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="exceptionType" type="xs:string"/>
+				<xs:element name="exceptionMessage" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

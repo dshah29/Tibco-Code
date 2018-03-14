@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:eat="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfotransform/v1"
+	 xmlns:exi="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfotransform/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="../../../../Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+	<xs:complexType name="ExceptionInfoTransform">
+		<xs:sequence>
+			<xs:element ref="exi:ExceptionInfo"/>
+			<xs:element ref="eat:attributes"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="attributes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ExceptionInfoTransform" type="eat:ExceptionInfoTransform"/>
+</xs:schema>

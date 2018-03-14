@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns0="http://www.three.co.uk/ccs/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:pfx4="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <xsd:import namespace="http://www.three.co.uk/ccs/"/>
+    <xsd:import namespace="http://www.three.co.uk/ccs/" schemaLocation="/SharedResources/SchemaDefinitions/External/CCS/CentralCatalogueServices.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/ProcessRecord.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="ns0:release"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>42</pd:startX>
+    <pd:startY>67</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <pfx4:GetProductsResponse/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>894</pd:endX>
+    <pd:endY>70</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="AddRecord_Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>427</pd:x>
+        <pd:y>68</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ServiceClient/AddRecord_Request.process</processName>
+        </config>
+        <pd:inputBindings>
+            <group>
+                <xsl:copy-of select="$Create-FC-Request/group/add/pfx5:DataService"/>
+            </group>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create FC Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>146</pd:x>
+        <pd:y>67</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/Sub/Create FC Request.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Start/root/ns0:release"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateBusinessException">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>432</pd:x>
+        <pd:y>337</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ExceptionCodes/RecordExists/Code"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="concat($_globalVariables/ns1:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/ExceptionCodes/RecordExists/Description, &quot;; Not able to add Record &quot;,$Start/root/ns0:release/ns0:productDefinition[1]/@name)"/>
+                </Description>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Failed">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>430</pd:x>
+        <pd:y>199</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate-Error-RecordError">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>662</pd:x>
+        <pd:y>339</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <xsl:choose>
+                <xsl:when test="exists($ModifyRecord_Request)">
+                    <pfx3:ActivityInput>
+                        <message>
+                            <xsl:value-of select="tib:concat-sequence-format($ModifyRecord_Request/root/pfx5:DataService/pfx5:Transaction/pfx5:Response/pfx5:ResultList/pfx5:Result/pfx5:Description, &quot;&#xA;&quot;, true())"/>
+                        </message>
+                        <data>
+                            <xsl:copy-of select="$CreateBusinessException/root/pfx2:Exception"/>
+                        </data>
+                    </pfx3:ActivityInput>
+                </xsl:when>
+                <xsl:otherwise>
+                    <pfx3:ActivityInput>
+                        <message>
+                            <xsl:value-of select="tib:concat-sequence-format($AddRecord_Request/root/pfx5:DataService/pfx5:Transaction/pfx5:Response/pfx5:ResultList/pfx5:Result/pfx5:Description, &quot;&#xA;&quot;, true())"/>
+                        </message>
+                        <data>
+                            <xsl:copy-of select="$CreateBusinessException/root/pfx2:Exception"/>
+                        </data>
+                    </pfx3:ActivityInput>
+                </xsl:otherwise>
+            </xsl:choose>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ModifyRecord_Request">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>582</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ServiceClient/ModifyRecord_Request.process</processName>
+        </config>
+        <pd:inputBindings>
+            <group>
+                <xsl:copy-of select="$Create-FC-Request/group/modify/pfx5:DataService"/>
+            </group>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>764</pd:x>
+        <pd:y>68</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <body>
+                    <xsl:value-of select="if($AddRecord_Request/root/SucessCount>=0)&#xA;then &#xA;tib:render-xml($AddRecord_Request/root/pfx5:DataService)&#xA;else&#xA;tib:render-xml($ModifyRecord_Request/root/pfx5:DataService)"/>
+                </body>
+                <response>
+                    <xsl:copy-of select="$AddRecord_Request/root"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>AddRecord_Request</pd:from>
+        <pd:to>Failed</pd:to>
+        <pd:xpathDescription>Add Record Failed.</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$AddRecord_Request/root/pfx5:DataService/pfx5:Transaction/pfx5:TransactionResult/pfx5:SuccessCount=0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ModifyRecord_Request</pd:from>
+        <pd:to>CreateBusinessException</pd:to>
+        <pd:xpathDescription>Modify Record Failed.</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$ModifyRecord_Request/root/pfx5:DataService/pfx5:Transaction/pfx5:TransactionResult/pfx5:SuccessCount=0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateBusinessException</pd:from>
+        <pd:to>Generate-Error-RecordError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create FC Request</pd:from>
+        <pd:to>AddRecord_Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Create FC Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ModifyRecord_Request</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AddRecord_Request</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Failed</pd:from>
+        <pd:to>ModifyRecord_Request</pd:to>
+        <pd:xpathDescription>Modify</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/ns1:GlobalVariables/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/AddProduct/EnableModifyProduct="true"
+and
+count($AddRecord_Request/root/pfx5:DataService/pfx5:Result/@code="CAT-1363")&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Failed</pd:from>
+        <pd:to>CreateBusinessException</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

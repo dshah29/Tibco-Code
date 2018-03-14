@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 sp1 (http://www.altova.com) by End User (free.org) -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/objectReferenceLookup/v1" targetNamespace="http://three.co.uk/xsd/internal/product/productspecification/productspecificationmanagement/objectReferenceLookup/v1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:element name="catalogs">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="catalog" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="catalog">
+		<xsd:annotation>
+			<xsd:documentation>Catalog name in FC, e.g. PRODUCT, PRICE etc.</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="catalog_t">
+					<xsd:attribute name="ccsProductType"/>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:complexType name="catalog_t">
+		<xsd:sequence>
+			<xsd:element name="masterCatalogName" type="xs:string"/>
+			<xsd:element name="class" type="xs:string"/>
+			<xsd:element name="subClass" type="xs:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="relationships">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="relationship" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Relationship name in FC</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="relationship" type="fcRelationship_t"/>
+	<xsd:complexType name="fcRelationship_t">
+		<xsd:simpleContent>
+			<xsd:extension base="xs:string">
+				<xsd:attribute name="fcParentCatalog" type="xs:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Parent catalog Name</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="fcChildCatalog" type="xs:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Child catalog Name</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="characteristics">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="characteristic" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation>Name of Characteristics in FC</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	<xsd:element name="characteristic" type="fcCharacteristic_t"/>
+	<xsd:complexType name="fcCharacteristic_t">
+		<xsd:simpleContent>
+			<xsd:extension base="xs:string">
+				<xsd:attribute name="ccsAttributeName" type="xs:string" use="required">
+					<xsd:annotation>
+						<xsd:documentation>Attribute Name in CCS file (case agnostic search please)</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="ccsProductDefinationType" type="xs:string">
+					<xsd:annotation>
+						<xsd:documentation>Product Type in CCS File</xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+			</xsd:extension>
+		</xsd:simpleContent>
+	</xsd:complexType>
+	<xsd:element name="objectLookupReference">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="catalogs"/>
+				<xsd:element ref="relationships"/>
+				<xsd:element ref="characteristics"/>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+    <name>OutputMessageContext</name>
+    <resourceType>ae.shared.jobSharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <initialValue>none</initialValue>
+        <xsdString ref="pfx:MessageContext"/>
+    </config>
+</BWSharedResource>

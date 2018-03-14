@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:logging="java://com.tibco.tibcobw.customfunctions.Logging" xmlns:ns12="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:pfx="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelRequest.xsd" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/CommonLE2011/namespace/Public/CLEExtension/LogLevelReply.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/pe/EngineTypes" xmlns:pfx3="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelReply.xsd" xmlns:pfx2="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:pfx7="http://three.co.uk/xsd/resource/common/commondefinitions/msf/loggingcontrol/v1" xmlns:pfx6="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelControl.xsd">
+    <xsd:import namespace="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelReply.xsd" schemaLocation="/SharedResources/Schemas/CLEExtension/LogLevelReply.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/CommonLE2011/namespace/Public/CLEExtension/LogLevelReply.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelControl.xsd" schemaLocation="/LogLevelControl/Schemas/LogLevelControl.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/loggingcontrol/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/LoggingControl_v1.xsd"/>
+    <pd:name>UtilityProcesses/ProcessStarters/LoggingControl.process</pd:name>
+    <pd:startName>Log Getter-Setter Receiver</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings/>
+    <pd:starter name="Log Getter-Setter Receiver">
+        <pd:type>com.tibco.plugin.jms.JMSTopicEventSource</pd:type>
+        <pd:resourceType>ae.activities.JMSTopicEventSource</pd:resourceType>
+        <pd:x>98</pd:x>
+        <pd:y>82</pd:y>
+        <config>
+            <PermittedMessageType>XML Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>%%MSF/REGION%%.%%MSF/ENV%%.%%MSF/JMS/Type/Publish%%.%%Destinations/Topics/MSF/LogLevelRequest%%</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+            <OutDataxsdString ref="pfx7:LogLevelRequest"/>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>840</pd:endX>
+    <pd:endY>77</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1279743745182</pd:targetNamespace>
+    <pd:activity name="Get LogLevel Control">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>197</pd:x>
+        <pd:y>267</pd:y>
+        <config>
+            <variableConfig>/LogLevelControl/SharedVariable/LogLevelControl.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>451</pd:x>
+        <pd:y>340</pd:y>
+        <config>
+            <element ref="pfx7:LogLevelResponse"/>
+        </config>
+        <pd:inputBindings>
+            <xsl:variable name="system" select="logging:getLogLevels(true())"/>
+            <xsl:variable name="service" select="logging:getLogLevels(false())"/>
+            <pfx7:LogLevelResponse>
+                <pfx7:EngineName>
+                    <xsl:value-of select="$_processContext/pfx4:ProcessContext/EngineName"/>
+                </pfx7:EngineName>
+                <pfx7:ServiceName>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Component/Domain"/>
+                </pfx7:ServiceName>
+                <pfx7:ProjectName>
+                    <xsl:value-of select="$_processContext/pfx4:ProcessContext/ProjectName"/>
+                </pfx7:ProjectName>
+                <pfx7:LogLevel>
+                    <xsl:value-of select="$Get-LogLevel-Control/pfx6:LogLevelState/LogLevel"/>
+                </pfx7:LogLevel>
+                <xsl:if test="($system !=&quot;&quot;) or ($service !=&quot;&quot;)">
+                    <pfx7:LogLevelFilters>
+                        <xsl:if test="$system !=&quot;&quot;">
+                            <xsl:for-each select="tib:tokenize($system, &quot;,&quot;)">
+                                <pfx7:LogLevelFilter>
+                                    <pfx7:SystemFilter>
+                                        <xsl:value-of select="tib:tokenize(current(), &quot;|&quot;)[1]"/>
+                                    </pfx7:SystemFilter>
+                                    <pfx7:LogLevel>
+                                        <xsl:value-of select="tib:tokenize(current(), &quot;|&quot;)[2]"/>
+                                    </pfx7:LogLevel>
+                                </pfx7:LogLevelFilter>
+                            </xsl:for-each>
+                        </xsl:if>
+                        <xsl:if test="$service !=&quot;&quot;">
+                            <xsl:for-each select="tib:tokenize($service, &quot;,&quot;)">
+                                <pfx7:LogLevelFilter>
+                                    <pfx7:ServiceFilter>
+                                        <xsl:value-of select="tib:tokenize(current(), &quot;|&quot;)[1]"/>
+                                    </pfx7:ServiceFilter>
+                                    <pfx7:LogLevel>
+                                        <xsl:value-of select="tib:tokenize(current(), &quot;|&quot;)[2]"/>
+                                    </pfx7:LogLevel>
+                                </pfx7:LogLevelFilter>
+                            </xsl:for-each>
+                        </xsl:if>
+                    </pfx7:LogLevelFilters>
+                </xsl:if>
+            </pfx7:LogLevelResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>341</pd:x>
+        <pd:y>259</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Send Response">
+        <pd:type>com.tibco.plugin.jms.JMSQueueSendActivity</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueSendActivity</pd:resourceType>
+        <pd:x>589</pd:x>
+        <pd:y>340</pd:y>
+        <config>
+            <PermittedMessageType>XML Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>%%MSF/REGION%%.%%MSF/ENV%%.%%MSF/JMS/Type/Reply%%.%%Destinations/Queues/MSF/LogLevelReply%%</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>NON_PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+            <InDataxsdString ref="pfx7:LogLevelResponse"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:ActivityInput>
+                <xsl:if test="$Log-Getter-Setter-Receiver/pfx2:ActivityOutput/JMSHeaders/pfx2:JMSMessageID">
+                    <JMSCorrelationID>
+                        <xsl:value-of select="$Log-Getter-Setter-Receiver/pfx2:ActivityOutput/JMSHeaders/pfx2:JMSMessageID"/>
+                    </JMSCorrelationID>
+                </xsl:if>
+                <Body>
+                    <xsl:copy-of select="$Map-Data/pfx7:LogLevelResponse"/>
+                </Body>
+            </pfx2:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SendLog">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>728</pd:x>
+        <pd:y>198</pd:y>
+        <config>
+            <processName>/Interface/JMS/SendLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/Environment/CommonLE/ApplicationID"/>
+                    </ns2:ApplicationID>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="$_processContext/pfx4:ProcessContext/ProjectName"/>
+                    </ns2:ComponentName>
+                    <ns2:Hostname>
+                        <xsl:value-of select="BW:getHostName()"/>
+                    </ns2:Hostname>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:TransactionDomain>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Component/Domain"/>
+                    </ns2:TransactionDomain>
+                    <ns2:Message>
+                        <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/MSF/Service/LogLevelUpdate/Description1,&#xA;    $Get-LogLevel-Control/pfx6:LogLevelState/LogLevel,&#xA;    $_globalVariables/ns:GlobalVariables/MSF/Service/LogLevelUpdate/Description2,&#xA;    $Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:NewLogLevel)"/>
+                    </ns2:Message>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Service/CLECategory"/>
+                </Category>
+                <Status>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Service/LogLevelUpdate/Code"/>
+                </Status>
+                <Audit>
+                    <xsl:value-of select="false()"/>
+                </Audit>
+            </ns12:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SendLog-1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>728</pd:x>
+        <pd:y>340</pd:y>
+        <config>
+            <processName>/Interface/JMS/SendLog.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns12:LogRequest>
+                <ns2:Header>
+                    <ns2:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/Environment/CommonLE/ApplicationID"/>
+                    </ns2:ApplicationID>
+                    <ns2:ComponentName>
+                        <xsl:value-of select="$_processContext/pfx4:ProcessContext/ProjectName"/>
+                    </ns2:ComponentName>
+                    <ns2:Hostname>
+                        <xsl:value-of select="BW:getHostName()"/>
+                    </ns2:Hostname>
+                    <ns2:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </ns2:Timestamp>
+                    <ns2:TransactionDomain>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Component/Domain"/>
+                    </ns2:TransactionDomain>
+                    <ns2:Message>
+                        <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/MSF/Service/LogLevelRead/Description, $Get-LogLevel-Control/pfx6:LogLevelState/LogLevel)"/>
+                    </ns2:Message>
+                </ns2:Header>
+                <Category>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Service/CLECategory"/>
+                </Category>
+                <Status>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Service/LogLevelRead/Code"/>
+                </Status>
+                <Audit>
+                    <xsl:value-of select="false()"/>
+                </Audit>
+            </ns12:LogRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set LogLevel Control">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>589</pd:x>
+        <pd:y>206</pd:y>
+        <config>
+            <showResult>false</showResult>
+            <variableConfig>/LogLevelControl/SharedVariable/LogLevelControl.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings>
+            <pfx6:LogLevelState>
+                <LogLevel>
+                    <xsl:value-of select="$Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:NewLogLevel"/>
+                </LogLevel>
+                <Message>
+                    <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/MSF/Service/LogLevelUpdate/Description1,&#xA;    $Get-LogLevel-Control/pfx6:LogLevelState/LogLevel,&#xA;    $_globalVariables/ns:GlobalVariables/MSF/Service/LogLevelUpdate/Description2,&#xA;    $Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:NewLogLevel)"/>
+                </Message>
+                <LastUpdateTime>
+                    <xsl:value-of select="current-dateTime()"/>
+                </LastUpdateTime>
+            </pfx6:LogLevelState>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Get LogLevel Control</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Send Response</pd:from>
+        <pd:to>SendLog-1</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set LogLevel Control</pd:from>
+        <pd:to>SendLog</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Getter-Setter Receiver</pd:from>
+        <pd:to>End</pd:to>
+        <pd:xpathDescription>Not For Us</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>(exists($Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:EngineName)
+    and ($Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:EngineName !=$_processContext/pfx4:ProcessContext/EngineName))
+or
+(exists($Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:ServiceName)
+    and ($Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:ServiceName !=$_globalVariables/ns:GlobalVariables/MSF/Component/Domain))
+or
+(exists($Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:ProjectName)
+    and ($Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:ProjectName !=$_processContext/pfx4:ProcessContext/ProjectName))</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Getter-Setter Receiver</pd:from>
+        <pd:to>Get LogLevel Control</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>Set LogLevel Control</pd:to>
+        <pd:xpathDescription>New Value</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Log-Getter-Setter-Receiver/pfx2:ActivityOutput/Body/pfx7:LogLevelRequest/pfx7:NewLogLevel</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SendLog</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SendLog-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>Send Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

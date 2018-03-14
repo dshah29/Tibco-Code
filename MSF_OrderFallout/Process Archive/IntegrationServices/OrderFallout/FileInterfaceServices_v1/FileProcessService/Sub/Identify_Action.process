@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx="http://www.tibco.com/pe/DeployedVarsType">
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/Identify_Action.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="LocalFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>35</pd:startX>
+    <pd:startY>127</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>637</pd:endX>
+    <pd:endY>126</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1460637184117/Identify_Action</pd:targetNamespace>
+    <pd:group name="File Identifier &amp; Execute">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>94</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>491</pd:width>
+        <pd:height>235</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>simpleGroup</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>SubProcess Call</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Dynamic Sub Process</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Straight</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SubProcess Call</pd:from>
+            <pd:to>Create Response File</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Create Response File</pd:from>
+            <pd:to>Dynamic Sub Process</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="Dynamic Sub Process">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>461</pd:x>
+            <pd:y>136</pd:y>
+            <config>
+                <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/DefaultProcess.process</processName>
+                <processNameXPath>$SubProcess-Call/root/ProcessName</processNameXPath>
+                <spawn>false</spawn>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <RequestFileName>
+                        <xsl:value-of select="$Start/root/LocalFileName"/>
+                    </RequestFileName>
+                    <ResponseFileName>
+                        <xsl:value-of select="$Create-Response-File/ns1:CreateActivityOutputClass/fileInfo/fullName"/>
+                    </ResponseFileName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="SubProcess Call">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>187</pd:x>
+            <pd:y>127</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="root">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="ProcessName" type="xsd:string"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <ProcessName>
+                        <xsl:value-of select="if(substring-before(tib:substring-after-last($Start/root/LocalFileName,'\'),'_')!=&quot;&quot;) &#xA;then &#xA;concat('/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/',substring-before(tib:substring-after-last($Start/root/LocalFileName,'\'),'_'),'.process')&#xA;else&#xA;concat('/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/',substring-before(tib:substring-after-last($Start/root/LocalFileName,'/'),'_'),'.process')"/>
+                    </ProcessName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Create Response File">
+            <pd:type>com.tibco.plugin.file.FileCreateActivity</pd:type>
+            <pd:resourceType>ae.activities.FileCreateActivity</pd:resourceType>
+            <pd:x>322</pd:x>
+            <pd:y>135</pd:y>
+            <config>
+                <overwrite>true</overwrite>
+                <createDirectory>false</createDirectory>
+                <createMissingDirectories>true</createMissingDirectories>
+            </config>
+            <pd:inputBindings>
+                <ns1:CreateActivityInputClass>
+                    <xsl:variable name="FirstPartOfFileName" select="if(substring-before(tib:substring-after-last($Start/root/LocalFileName,'\'),'_')!=&quot;&quot;) &#xA;then &#xA;substring-before(tib:substring-after-last($Start/root/LocalFileName,'\'),'_')&#xA;else&#xA;substring-before(tib:substring-after-last($Start/root/LocalFileName,'/'),'_')"/>
+                    <xsl:variable name="SecondPartOfFileName" select="tib:substring-after-last(substring-before($Start/root/LocalFileName,'.csv'),'_')"/>
+                    <xsl:variable name="FileName" select="concat($FirstPartOfFileName,'_',$SecondPartOfFileName,'.csv')"/>
+                    <fileName>
+                        <xsl:value-of select="concat($_globalVariables/pfx:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Local/LocalFileDirectoryResponse,$FileName)"/>
+                    </fileName>
+                </ns1:CreateActivityInputClass>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>File Identifier &amp; Execute</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>File Identifier &amp; Execute</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

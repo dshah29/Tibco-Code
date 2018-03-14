@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:inLine="http://xmlns.example.com/1442394403276" xmlns:pfx="http://xmlns.example.com/1301395797508">
+    <name>SecurityPolicyAssociation_WithdrawOrder</name>
+    <resourceType>ws.security.policy.association.resource</resourceType>
+    <config>
+        <applyTo>/UtilityProcesses/FOSDataAccessInterfaces/withdrawOrder.process/WithdrawOrder</applyTo>
+        <systemSecuritySubject>/UtilityProcesses/FOSDataAccessInterfaces/withdrawOrder.process/OrderServiceEndpoint/WithdrawOrder</systemSecuritySubject>
+        <inbound>
+            <selectSignatureParts/>
+            <selectEncryptionParts/>
+        </inbound>
+        <outbound>
+            <selectSignatureParts/>
+            <selectEncryptionParts/>
+        </outbound>
+        <outboundMessagePolicy>/SharedResources/Policies/FOM/Security Policy.securityPolicy</outboundMessagePolicy>
+    </config>
+</BWSharedResource>

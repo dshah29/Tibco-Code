@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <designer>
+        <lockedProperties>
+            <locked>
+                <properties>name</properties>
+            </locked>
+        </lockedProperties>
+        <fixedChildren>
+            <fixed>
+                <resource>/Classes</resource>
+                <children>h3orgperson</children>
+            </fixed>
+            <fixed>
+                <resource>/Classes/h3orgperson</resource>
+                <children>bpmUid,mcUid,sn,cn,objectClass,roleName,audio,businessCategory,carLicense,departmentNumber,displayName,employeeNumber,employeeType,givenName,homePhone,homePostalAddress,initials,jpegPhoto,labeledURI,mail,manager,mobile,o,pager,photo,roomNumber,secretary,uid,userCertificate,x500UniqueIdentifier,preferredLanguage,userSMIMECertificate,userPKCS12,title,x121Address,registeredAddress,destinationIndicator,preferredDeliveryMethod,telexNumber,teletexTerminalIdentifier,telephoneNumber,internationaliSDNNumber,facsimileTelephoneNumber,street,postOfficeBox,postalCode,postalAddress,physicalDeliveryOfficeName,ou,st,l,userPassword,seeAlso,description</children>
+            </fixed>
+        </fixedChildren>
+        <resourceDescriptions/>
+    </designer>
+    <class name="h3orgperson">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>bpmUid</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>mcUid</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>sn</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>cn</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>objectClass</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>roleName</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>audio</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>businessCategory</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>carLicense</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>departmentNumber</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>displayName</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>employeeNumber</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>employeeType</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>givenName</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>homePhone</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>homePostalAddress</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>initials</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>jpegPhoto</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>labeledURI</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>mail</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>manager</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>mobile</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>o</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>pager</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>photo</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>roomNumber</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>secretary</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>uid</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>userCertificate</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>x500UniqueIdentifier</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>preferredLanguage</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>userSMIMECertificate</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>userPKCS12</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>title</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>x121Address</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>registeredAddress</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>destinationIndicator</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>preferredDeliveryMethod</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>telexNumber</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>teletexTerminalIdentifier</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>telephoneNumber</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>internationaliSDNNumber</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>facsimileTelephoneNumber</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>street</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>postOfficeBox</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>postalCode</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>postalAddress</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>physicalDeliveryOfficeName</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ou</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>st</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>l</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>userPassword</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>seeAlso</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>description</name>
+            <attributeType isRef="true">/AESchemas/ae/scalar/ae.aeschema#sequence.sequence[string]</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+    </class>
+</Repository:repository>

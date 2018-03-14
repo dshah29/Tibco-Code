@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ntes="http://three.co.uk/xsd/cdm/common/commondefinitions/notes/v1" xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/notes/v1" version="$Id: Notes_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:complexType name="Notes">
+		<xsd:sequence>
+			<xsd:element name="employeeID" type="BASE:PopulatedString"/>
+			<xsd:element name="dateNoted" type="xsd:date"/>
+			<xsd:element name="noteDetail" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Notes" type="ntes:Notes"/>
+	<xsd:element name="notes" type="ntes:Notes">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Notes instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

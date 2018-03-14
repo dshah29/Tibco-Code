@@ -1,0 +1,550 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:ns21="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns2="com/tibco/pe/commands" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:ns4="http://www.tibco.com/CommonLE2/namespace/Public/Exception/ExceptionRequest.xsd" xmlns:ns3="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx5="http://www.tibco.com/CommonLE2/namespace/Public/Common/RequestHeader.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/CommonLE/Client/Schema/ClientInterface.xsd" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/DeployedVarsType">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/LogException.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:Exception"/>
+                    <xsd:element name="payload" minOccurs="0">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:any minOccurs="0" processContents="skip"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>35</pd:startX>
+    <pd:startY>35</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1041</pd:endX>
+    <pd:endY>35</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349784963601</pd:targetNamespace>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>61</pd:x>
+        <pd:y>625</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Continue">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>317</pd:x>
+        <pd:y>750</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Exception Logging Policy">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>212</pd:x>
+        <pd:y>43</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="enabled" type="xsd:boolean"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:variable name="exceptionType" select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@exceptionType[1]"/>
+                <xsl:choose>
+                    <xsl:when test="$exceptionType=$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Unhandled">
+                        <enabled>
+                            <xsl:value-of select="true()"/>
+                        </enabled>
+                    </xsl:when>
+                    <xsl:when test="$exceptionType=$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business &#xA;and $_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionLogging/LogBusiness=&quot;true&quot;">
+                        <enabled>
+                            <xsl:value-of select="true()"/>
+                        </enabled>
+                    </xsl:when>
+                    <xsl:when test="$exceptionType=$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Technical &#xA;and $_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionLogging/LogTechnical=&quot;true&quot;">
+                        <enabled>
+                            <xsl:value-of select="true()"/>
+                        </enabled>
+                    </xsl:when>
+                    <xsl:when test="$exceptionType=$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionTypes/User &#xA;and $_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionLogging/LogUser=&quot;true&quot;">
+                        <enabled>
+                            <xsl:value-of select="true()"/>
+                        </enabled>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <enabled>
+                            <xsl:value-of select="false()"/>
+                        </enabled>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="FilterStackTrace">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>664</pd:x>
+        <pd:y>320</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/UnitTests/FilterStackTrace.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Start/root/pfx:Exception/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Get Input Message Content">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>406</pd:x>
+        <pd:y>216</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContent.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get-Input-Message-Content-1">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>412</pd:x>
+        <pd:y>320</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContent.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetInputMessageContext">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>266</pd:x>
+        <pd:y>320</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Log">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>785</pd:x>
+        <pd:y>320</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/Log.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <level>
+                    <xsl:value-of select="$_globalVariables/pfx2:GlobalVariables/MSF/Logging/Levels/ERROR"/>
+                </level>
+                <message>
+                    <xsl:value-of select="$_globalVariables/pfx2:GlobalVariables/MSF/Logging/LogError/Description"/>
+                </message>
+                <errorCode>
+                    <xsl:value-of select="$_globalVariables/pfx2:GlobalVariables/MSF/Logging/LogError/Code"/>
+                </errorCode>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <pfx:Exception>
+                        <xsl:copy-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo"/>
+                        <xsl:copy-of select="$FilterStackTrace/root/ns:ErrorReport"/>
+                        <xsl:copy-of select="$Start/root/pfx:Exception/ns5:LocalExceptionInfo"/>
+                        <xsl:copy-of select="$Start/root/pfx:Exception/ns:ProcessContext"/>
+                    </pfx:Exception>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log To Engine">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>213</pd:x>
+        <pd:y>208</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/Sub/LogError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <message>
+                    <xsl:value-of select="tib:render-xml($Start/root/pfx:Exception, false(), true())"/>
+                </message>
+                <xsl:if test="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@exceptionCode[1]">
+                    <errorCode>
+                        <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@exceptionCode[1]"/>
+                    </errorCode>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log To Topic">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>547</pd:x>
+        <pd:y>207</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/Sub/LogToTopic.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Start/root/pfx:Exception"/>
+                <xsl:if test="$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionLogging/LogPayload = &quot;true&quot;">
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/payload)">
+                            <Payload>
+                                <xsl:value-of select="tib:render-xml($Start/root/payload/*, true(), false())"/>
+                            </Payload>
+                        </xsl:when>
+                        <xsl:when test="exists($Get-Input-Message-Content/ns1:InputMessageContent/*)">
+                            <Payload>
+                                <xsl:value-of select="tib:render-xml($Get-Input-Message-Content/ns1:InputMessageContent/*, true(), false())"/>
+                            </Payload>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogAuditEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>899</pd:x>
+        <pd:y>320</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <response>
+                    <xsl:copy-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SendException">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>556</pd:x>
+        <pd:y>435</pd:y>
+        <config>
+            <processName>/Interface/JMS/SendException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <ns4:ExceptionRequest>
+                <pfx5:Header>
+                    <pfx5:ApplicationID>
+                        <xsl:value-of select="$_globalVariables/pfx2:GlobalVariables/Environment/CommonLE/ApplicationID"/>
+                    </pfx5:ApplicationID>
+                    <pfx5:ComponentName>
+                        <xsl:value-of select="$_processContext/ns:ProcessContext/ProjectName"/>
+                    </pfx5:ComponentName>
+                    <pfx5:Hostname>
+                        <xsl:value-of select="BW:getHostName()"/>
+                    </pfx5:Hostname>
+                    <pfx5:Timestamp>
+                        <xsl:value-of select="current-dateTime()"/>
+                    </pfx5:Timestamp>
+                    <pfx5:TransactionDomain>
+                        <xsl:value-of select="$_globalVariables/pfx2:GlobalVariables/MSF/Component/Domain"/>
+                    </pfx5:TransactionDomain>
+                    <pfx5:TransactionType>
+                        <xsl:value-of select="$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/CLEType"/>
+                    </pfx5:TransactionType>
+                    <pfx5:TransactionID>
+                        <xsl:value-of select="$GetInputMessageContext/root/ns21:MessageContext/ns21:TransactionID"/>
+                    </pfx5:TransactionID>
+                    <pfx5:CorrelationID>
+                        <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@exceptionID[1]"/>
+                    </pfx5:CorrelationID>
+                    <xsl:if test="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@description[1]">
+                        <pfx5:Message>
+                            <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@description[1]"/>
+                        </pfx5:Message>
+                    </xsl:if>
+                    <xsl:if test="exists($Get-Input-Message-Content-1/ns1:InputMessageContent/*)">
+                        <pfx5:Transaction>
+                            <xsl:value-of select="tib:render-xml($Get-Input-Message-Content-1/ns1:InputMessageContent/*, true(), false())"/>
+                        </pfx5:Transaction>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/pfx:Exception/ns5:LocalExceptionInfo/ns5:InitialProcessShortName)">
+                        <pfx5:AltKey>
+                            <pfx5:AltKeyName>
+                                <xsl:value-of select="'OPERATION'"/>
+                            </pfx5:AltKeyName>
+                            <xsl:if test="$Start/root/pfx:Exception/ns5:LocalExceptionInfo/ns5:InitialProcessShortName">
+                                <pfx5:AltKeyValue>
+                                    <xsl:value-of select="$Start/root/pfx:Exception/ns5:LocalExceptionInfo/ns5:InitialProcessShortName"/>
+                                </pfx5:AltKeyValue>
+                            </xsl:if>
+                        </pfx5:AltKey>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/pfx:Exception/pfx3:ExceptionInfo/@context[1])">
+                        <pfx5:AltKey>
+                            <pfx5:AltKeyName>
+                                <xsl:value-of select="'CONTEXT'"/>
+                            </pfx5:AltKeyName>
+                            <pfx5:AltKeyValue>
+                                <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@context[1]"/>
+                            </pfx5:AltKeyValue>
+                        </pfx5:AltKey>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/pfx:Exception/pfx3:ExceptionInfo/@context2[1])">
+                        <pfx5:AltKey>
+                            <pfx5:AltKeyName>
+                                <xsl:value-of select="'CONTEXT2'"/>
+                            </pfx5:AltKeyName>
+                            <pfx5:AltKeyValue>
+                                <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@context2[1]"/>
+                            </pfx5:AltKeyValue>
+                        </pfx5:AltKey>
+                    </xsl:if>
+                    <pfx5:AltKey>
+                        <pfx5:AltKeyName>
+                            <xsl:value-of select="'SEVERITY'"/>
+                        </pfx5:AltKeyName>
+                        <pfx5:AltKeyValue>
+                            <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@severity[1]"/>
+                        </pfx5:AltKeyValue>
+                    </pfx5:AltKey>
+                    <pfx5:AltKey>
+                        <pfx5:AltKeyName>
+                            <xsl:value-of select="'TYPE'"/>
+                        </pfx5:AltKeyName>
+                        <pfx5:AltKeyValue>
+                            <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@exceptionType[1]"/>
+                        </pfx5:AltKeyValue>
+                    </pfx5:AltKey>
+                </pfx5:Header>
+                <ExceptionCode>
+                    <xsl:value-of select="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@exceptionCode[1]"/>
+                </ExceptionCode>
+                <StackTrace>
+                    <xsl:value-of select="tib:render-xml($Start/root/pfx:Exception, true(), true())"/>
+                </StackTrace>
+                <xsl:if test="$Start/root/pfx:Exception/pfx3:ExceptionInfo/@faultCode[1]">
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/pfx:Exception/pfx3:ExceptionInfo/@faultCode[1])">
+                            <Custom>
+                                <xsl:value-of select="concat($Start/root/pfx:Exception/ns5:LocalExceptionInfo/ns5:ExceptionSourceType, &quot;/&quot;, $Start/root/pfx:Exception/pfx3:ExceptionInfo/@faultCode[1])"/>
+                            </Custom>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <Custom>
+                                <xsl:value-of select="$Start/root/pfx:Exception/ns5:LocalExceptionInfo/ns5:ExceptionSourceType"/>
+                            </Custom>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:if>
+                <xsl:if test="$GetInputMessageContext/root/ns21:MessageContext/@CLEReplyDestination[1]">
+                    <ReplyDestination>
+                        <xsl:value-of select="$GetInputMessageContext/root/ns21:MessageContext/@CLEReplyDestination[1]"/>
+                    </ReplyDestination>
+                </xsl:if>
+            </ns4:ExceptionRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Shutdown Engine">
+        <pd:type>com.tibco.pe.core.EngineCommandActivity</pd:type>
+        <pd:resourceType>ae.activities.enginecommand</pd:resourceType>
+        <pd:x>325</pd:x>
+        <pd:y>524</pd:y>
+        <config>
+            <command>Shutdown</command>
+        </config>
+        <pd:inputBindings>
+            <ns2:input/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Suspend Process Instance">
+        <pd:type>com.tibco.pe.core.EngineCommandActivity</pd:type>
+        <pd:resourceType>ae.activities.enginecommand</pd:resourceType>
+        <pd:x>320</pd:x>
+        <pd:y>633</pd:y>
+        <config>
+            <command>SuspendProcessInstance</command>
+        </config>
+        <pd:inputBindings>
+            <ns2:input>
+                <ProcessId>
+                    <xsl:value-of select="$_processContext/ns:ProcessContext/ProcessId"/>
+                </ProcessId>
+            </ns2:input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Log To Engine</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Exception Logging Policy</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Exception Logging Policy</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Exception Logging Policy</pd:from>
+        <pd:to>Log To Engine</pd:to>
+        <pd:xpathDescription>log enabled</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Exception-Logging-Policy/root/enabled="true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log To Engine</pd:from>
+        <pd:to>Get Input Message Content</pd:to>
+        <pd:xpathDescription>topic enabled</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionLogging/LogToTopic/Enabled="true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log To Topic</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Shutdown Engine</pd:to>
+        <pd:xpathDescription>SHUTDOWN</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionLogging/ActionOnFailure="SHUTDOWN"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Shutdown Engine</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Suspend Process Instance</pd:to>
+        <pd:xpathDescription>SUSPEND</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx2:GlobalVariables/MSF/Exceptions/ExceptionLogging/ActionOnFailure="SUSPEND"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Continue</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Suspend Process Instance</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Continue</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Message Content</pd:from>
+        <pd:to>Log To Topic</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log To Engine</pd:from>
+        <pd:to>GetInputMessageContext</pd:to>
+        <pd:xpathDescription>CLE</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/pfx2:GlobalVariables/MSF/CLE/Enabled = "true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetInputMessageContext</pd:from>
+        <pd:to>Get-Input-Message-Content-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SendException</pd:from>
+        <pd:to>FilterStackTrace</pd:to>
+        <pd:lineType>Straight</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get-Input-Message-Content-1</pd:from>
+        <pd:to>SendException</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log</pd:from>
+        <pd:to>LogAuditEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAuditEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get-Input-Message-Content-1</pd:from>
+        <pd:to>FilterStackTrace</pd:to>
+        <pd:xpathDescription>Don't Log</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/pfx:Exception/ns5:LocalExceptionInfo/ns5:LogExceptionLocally = "false"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>FilterStackTrace</pd:from>
+        <pd:to>Log</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

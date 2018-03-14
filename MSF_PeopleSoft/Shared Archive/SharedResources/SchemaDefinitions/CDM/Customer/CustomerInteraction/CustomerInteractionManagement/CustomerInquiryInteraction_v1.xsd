@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custInqInt="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinquiryinteraction/v1"
+	 xmlns:intr="http://three.co.uk/xsd/cdm/common/commondefinitions/interaction/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinquiryinteraction/v1"
+	 version="$Id: CustomerInquiryInteraction_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/interaction/v1" schemaLocation="../../../Common/CommonDefinitions/Interaction_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!-- different types of inquiry are possible, here are a few-->
+	<!-- a customer checking a bill / invoice -->
+	<xsd:complexType name="BillingInvoiceInquiry">
+		<xsd:sequence>
+			<xsd:element name="invoiceID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="billingAccountID" type="BASE:PopulatedString" minOccurs="0"/>
+
+			<!-- type defines the inquiry action, so for billing this could be enquiring current bill state, challenging a bill, Paying a bill etc....-->
+			<xsd:element name="billingInquiryReason" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- a customer checking the status of product stock  levels or when new services are being available or questions about services-->
+	<xsd:complexType name="ProductInquiry">
+		<xsd:sequence>
+			<xsd:element name="productID" type="BASE:PopulatedString"/>
+
+			<!-- type defines the inquiry action, so for product this could be enquiring stock levels, when a product is available, questions about a price plan ...-->
+			<xsd:element name="productInquiryReason" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- service could be the coverage in a certain area etc...-->
+	<xsd:complexType name="ServiceInquiry">
+		<xsd:sequence>
+
+			<!--service could be the coverage in a certain area etc..-->
+			<xsd:element name="serviceInquiryReason" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- service could be the coverage in a certain area etc...-->
+	<xsd:complexType name="UsageInquiry">
+		<xsd:sequence>
+
+			<!--This type in inquiry is basically allowing one to check how many texts they have used on a certain product etc....-->
+			<xsd:element name="subscriptionID" type="BASE:PopulatedString"/>
+			<xsd:element name="accountID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="productID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="usageInquiryReason" type="BASE:PopulatedString"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CustomerInquiryInteractionDetails">
+		<xsd:sequence>
+			<xsd:element name="billingInquiry" type="custInqInt:BillingInvoiceInquiry" minOccurs="0"/>
+			<xsd:element name="productInquiry" type="custInqInt:ProductInquiry" minOccurs="0"/>
+			<xsd:element name="serviceInquiry" type="custInqInt:ServiceInquiry" minOccurs="0"/>
+			<xsd:element name="usageInquiry" type="custInqInt:UsageInquiry" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CustomerInquiryInteraction">
+		<xsd:sequence>
+			<xsd:element ref="intr:interaction"/>
+			<xsd:element name="inquiryInteraction" type="custInqInt:CustomerInquiryInteractionDetails"/>
+			<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomerInquiryInteraction" type="custInqInt:CustomerInquiryInteraction"/>
+	<xsd:element name="customerInquiryInteraction" type="custInqInt:CustomerInquiryInteraction">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CustomerInquiryInteraction instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

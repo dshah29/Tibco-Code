@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custChar="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customercharacteristics/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerpersonalinformationmanagement/customercharacteristics/v1"
+	 version="$Id: CustomerCharacteristics_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="../../../Common/CommonDefinitions/UDF_v1.xsd"/>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CustomerCharacteristics">
+		<xsd:sequence>
+			<xsd:element ref="udf:UDF" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomerCharacteristics" type="custChar:CustomerCharacteristics"/>
+	<xsd:element name="customerCharacteristics" type="custChar:CustomerCharacteristics">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CustomerCharacteristics instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

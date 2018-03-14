@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="ValidateBankDetails">
+        <attribute>
+            <name>BANK_ACCOUNT</name>
+            <attributeType isRef="true">/AESchemas/ae/EigerAdapter_1/Common.aeschema#class.BankAccount</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SubscriberDetailsResponse">
+        <attribute>
+            <name>CARD_DETAILS</name>
+            <attributeType isRef="true">/AESchemas/ae/PGAJ2eeAdapter_1/Common.aeschema#class.CardDetails</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AUTH_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ACCOUNT_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="MaintainSubscriberCardDetailsResponse">
+        <attribute>
+            <name>ACCOUNT_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SubscriberCardListResponse">
+        <attribute>
+            <name>ACCOUNT_NUMBER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CARD_DETAILS_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PGAJ2eeAdapter_1.aeschema#sequence.CardDetailsSequence</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

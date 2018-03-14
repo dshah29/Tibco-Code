@@ -1,0 +1,1508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <class name="AuthenticationResponse">
+        <attribute>
+            <name>PASSWORD_EXPIRY_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CONFIGURED_VALID_ATTEMPTS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AGENT_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="CustomerSearchResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TOTAL_NUMBER_OF_RECORDS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.CUSTOMER</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="LBO_SubscriptionResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ARP_PreProvisioningResponse">
+        <attribute>
+            <name>SENDER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>RECEIVER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>REQUEST_ARRIVAL_TIMESTAMP</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>INTERFACE_PROVIDER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>SUBSCRIPTION_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NOTIFICATION_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>NOTIFICATION_DESCRIPTION</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ARP_SIGNALLING_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TRANSACTION_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BILATERAL_INFORMATION</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>USER_IDENTIFIER</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.USER_IDENTIFIER</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ARP_SuspendRoamingResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ARP_UnsuspendRoamingResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ARP_RoamingUnSuspendedCompleteResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ARP_RoamingSuspendedCompleteResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ARP_ProvisioningResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="ARP_DeProvisioningResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="VToW_ActivationResponse">
+        <attribute>
+            <name>H1UK_MSISDN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.Status</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="FMS_SuspensionResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_GetEarlyFeeChangeResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>EarlyChangeFee</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>EffectiveDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AddonTotal</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PlanTotal</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>DiscountTotal</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TotalRental</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>InitialContractStartDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ContractStartDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ContractEndDate</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ContractDiscount</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BillCycleID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>Product</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.ProductCharge</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_InitiateUSIMSwapResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="CompleteUSIMSwapResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="MXT_PolicyBreachResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TDS_IMEICaptureResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_MESSAGE_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_ServiceCheckStockResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>HANDSET_ALLOCATION</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.HandsetAllocation</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>AccessoryList</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.Accessory</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_ServiceUpgradeCustomerResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_ServiceSwapHandsetResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_ServiceProfileResponse">
+        <attribute>
+            <name>SERVICE_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqService_1</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_ConsumerProfileResponse">
+        <attribute>
+            <name>CUSTOMER_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_VALUE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>FIRST_CONTRACT_START_DT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CURRENT_TERM</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TERM_ELAPSED</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_SUB_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PARENT_PRICE_PLAN_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PARENT_PRICE_PLAN_DESCR</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_KEY</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CustomerKey</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ADDRESS</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Address_1</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CONTACT_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqContact</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>SERVICE_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqService</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CustomerName</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CHURNPROPENSITY</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>OPENCASE</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.OPENCASEID</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_VerifyConsumerResponse">
+        <attribute>
+            <name>CUSTOMER_KEY</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CustomerKey</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_RemoveServicesResponse">
+        <attribute>
+            <name>ACCOUNT_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetInstalledServicesResponse">
+        <attribute>
+            <name>TARIFF_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>SERVICE_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>TARIFF_EFFECTIVE_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>PACKAGE_INSTANCE_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <default/>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>INSTALLED_SERVICES</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqProductServices</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ErrorResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetDetailsResponse">
+        <attribute>
+            <name>BO_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ROLE_TYPE_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TITLE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>FORENAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>MIDDLE_NAMES</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>SURNAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>GENDER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BIRTH_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.date</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ChangeCredentialsResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetCredentialsResponse">
+        <attribute>
+            <name>MEMORABLE_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>MEMORABLE_PLACE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_RegisterCustomerResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ChangeNameResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_PurchaseAddOnsContactMethodResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_PurchaseAddOnsResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetProfileResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>HOME_TEL_NO</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.TelNos</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>WORK_TEL_NO</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.TelNos</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>MOBILE_TEL_NO</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.TelNos</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>THREE_MAIL</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.EmailAddress</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PRIMARY_EMAIL</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.EmailAddress</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_UpdateServiceResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetPermissionsResponse">
+        <attribute>
+            <name>PERMISSIONS</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Permissions</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetNameResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TITLE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>FORENAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>SURNAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BO_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ROLE_TYPE_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>MIDDLE_NAMES</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetInstalledAddOnsServiceStatusResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TARIFF_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>INSTALLED_ADD_ONS</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqProduct</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>SERVICE_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetInstalledAddOnsResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TARIFF_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>INSTALLED_ADD_ONS</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqProduct</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_GetAddressesResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BILLING_ADDRESS</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Address</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ALTERNATIVE_ADDRESS</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Address</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ChangeTelNosResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ChangePermissionsResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ChangeEmailAddressesResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ChangeAddressResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_POSUpgradeResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_ResultStatus">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_USIMSuspensionResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_USIMReactivationResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_ActivateFaxResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_TerminateFaxResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_ChangeTariffResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_COODeactivationResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_COOActivationResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_PostToPreResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="TL_ChangeNumberResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="CCF_AgentConsumerSummaryResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ADDRESS</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Address_1</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CONSUMER_AGENT_SUMMARY_PROFILE</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.ConsumerAgentSummaryProfile</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_GetServiceChangeHistoryResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>SERVICE_CHANGE_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqServiceChange</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_UpdateHistoryResponse">
+        <attribute>
+            <name>INTERACTION_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SPR_GetInteractionHistoryResponse">
+        <attribute>
+            <name>INTERACTION_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqInteraction</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="PSFT_GetUpgradeEligibilityResponse">
+        <attribute>
+            <name>H1UK_ELIGIBILITY_DECISION</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_SALES_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_CURRENT_TARIFF</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_TARIFF_DESC</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_TERM_ELAPSED</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_TERM</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_ELIGIBILITY_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_CONTRACT_END_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_ADD_ONS</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.ADD_ONS</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_BILL_ACCOUNT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>RESULT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SC_ChangeBillingAddressResponse">
+        <attribute>
+            <name>BAN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>BO_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ROLE_TYPE_CODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="CCS_SubmitUpgradeResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus_1</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TARIFF_EFFECTIVE_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="CCS_ServiceProfileResponse">
+        <attribute>
+            <name>SERVICE_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqService_1</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="CCS_ConsumerProfileResponse">
+        <attribute>
+            <name>CUSTOMER_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_VALUE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>FIRST_CONTRACT_START_DT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CURRENT_TERM</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>TERM_ELAPSED</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i8</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_SUB_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PARENT_PRICE_PLAN_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>PARENT_PRICE_PLAN_DESCR</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_KEY</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CustomerKey</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ADDRESS</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Address_1</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CONTACT_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqContact</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>SERVICE_LIST</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqService</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CUSTOMER_NAME</name>
+            <attributeType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CustomerName</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CHURNPROPENSITY</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>OPENCASE</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.OPENCASEID</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ACCOUNT_TYPE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>ACCOUNT_LEVEL</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>INTERNAL_CLASS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>CE_ATTRIBUTES</name>
+            <attributeType isRef="true">/AESchemas/sequence/ae/PeopleSoft.aeschema#sequence.SeqCE_ATTRIBUTES</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>DEPOSIT_AMOUNT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.r8</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>DEPOSIT_STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>DEPOSIT_RETURN_DATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>EMAIL_ADDRESS</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="IVR_ManageAddOnsResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SCW_SetEmailResponse">
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <class name="SCW_GetEmailResponse">
+        <attribute>
+            <name>EMAIL_ADDRESS </name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>EMAIL_VALIDATION_FLAG</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>H1UK_3_OPT_IN</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+        <attribute>
+            <name>STATUS</name>
+            <attributeType isRef="true">/AESchemas/ae/Common.aeschema#class.ResultStatus</attributeType>
+            <isKey>false</isKey>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+        </attribute>
+    </class>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

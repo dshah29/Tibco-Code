@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns2="http://www.tibco.com/CommonLE2/namespace/Public/CLEExtension/LogLevelControl.xsd" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://three.co.uk/xsd/resource/common/commondefinitions/msf/serviceinstancecontext/v1" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/processstats/v1" xmlns:ns3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:XMLUtil="java://com.tibco.tibcobw.customfunctions.XMLUtils" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ServiceContext_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/InputMessageContent_v1.xsd"/>
+    <pd:name>UtilityProcesses/StartUp/Initialise.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="InitialProcessName" type="xsd:string"/>
+                    <xsd:element ref="pfx2:MessageContext" minOccurs="0"/>
+                    <xsd:element ref="pfx4:InputMessageContent" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>59</pd:startX>
+    <pd:startY>83</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>2015</pd:endX>
+    <pd:endY>83</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349775012738</pd:targetNamespace>
+    <pd:activity name="Generate Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>181</pd:x>
+        <pd:y>239</pd:y>
+        <config>
+            <faultName/>
+        </config>
+        <pd:inputBindings>
+            <ns3:ActivityInput>
+                <message>
+                    <xsl:value-of select="'MSF Framework: Initialise should not be invoked more than once!'"/>
+                </message>
+            </ns3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate UUID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>766</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Engine Context">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>462</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Common/CommonDefinitions/MSF/GlobalServiceContext.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Enumeration Count">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1690</pd:x>
+        <pd:y>91</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="count" type="xsd:int"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <count>
+                    <xsl:value-of select="XMLUtil:validationListCount()"/>
+                </count>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Get Enumerations">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>1790</pd:x>
+        <pd:y>239</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Common/CommonDefinitions/MSF/StandardEnumerations.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Input Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1230</pd:x>
+        <pd:y>239</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ContextResources/GetInputContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get ServiceContext">
+        <pd:type>com.tibco.pe.core.GetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.getSharedVariable</pd:resourceType>
+        <pd:x>181</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <variableConfig>/SharedResources/JobSharedVariables/InitialServiceContext.jobsharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Load Enumerations">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>1949</pd:x>
+        <pd:y>239</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="list" minOccurs="0" maxOccurs="unbounded">
+                                <xsd:complexType>
+                                    <xsd:sequence>
+                                        <xsd:element name="item" minOccurs="0" maxOccurs="unbounded">
+                                            <xsd:complexType>
+                                                <xsd:sequence/>
+                                                <xsd:attribute name="value" type="xsd:string" use="required"/>
+                                                <xsd:attribute name="response" type="xsd:string" use="required"/>
+                                            </xsd:complexType>
+                                        </xsd:element>
+                                    </xsd:sequence>
+                                    <xsd:attribute name="name" type="xsd:string" use="required"/>
+                                    <xsd:attribute name="caseSensitive" type="xsd:boolean" use="required"/>
+                                    <xsd:attribute name="normalised" type="xsd:boolean" use="required"/>
+                                    <xsd:attribute name="useSpaces" type="xsd:boolean" use="required"/>
+                                    <xsd:attribute name="response" type="xsd:string" use="required"/>
+                                </xsd:complexType>
+                            </xsd:element>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$Get-Enumerations/ns5:EnumerationSets/ns5:EnumerationSet">
+                    <list>
+                        <xsl:variable name="listName" select="current()/@name"/>
+                        <xsl:variable name="normalised" select="current()/@normalised"/>
+                        <xsl:variable name="useSpaces" select="true()"/>
+                        <xsl:variable name="caseSensitive" select="current()/@caseSensitive"/>
+                        <xsl:attribute name="name">
+                            <xsl:value-of select="$listName"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="caseSensitive">
+                            <xsl:value-of select="$caseSensitive"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="normalised">
+                            <xsl:value-of select="$normalised"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="response">
+                            <xsl:value-of select="XMLUtil:defineValidationList($listName,  $caseSensitive = &quot;true&quot;, $useSpaces = &quot;true&quot;, $normalised = &quot;true&quot;)"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="useSpaces">
+                            <xsl:value-of select="$useSpaces"/>
+                        </xsl:attribute>
+                        <xsl:for-each select="ns5:enumeration">
+                            <item>
+                                <xsl:attribute name="value">
+                                    <xsl:value-of select="current()/@value"/>
+                                </xsl:attribute>
+                                <xsl:attribute name="response">
+                                    <xsl:value-of select="XMLUtil:addValidationValue($listName, current()/@value)"/>
+                                </xsl:attribute>
+                            </item>
+                        </xsl:for-each>
+                    </list>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Make Short Proc Name">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>921</pd:x>
+        <pd:y>91</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="shortProcessName" type="xsd:string" minOccurs="0"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:variable name="extensionEnd" select="tib:index-of($Start/root/InitialProcessName, &quot;.process&quot;)"/>
+                <xsl:variable name="pathEnd" select="tib:last-index-of($Start/root/InitialProcessName, &quot;/&quot;)"/>
+                <xsl:if test="($extensionEnd > 0) and ($pathEnd > 0) and ($extensionEnd > $pathEnd)">
+                    <shortProcessName>
+                        <xsl:value-of select="substring-before(tib:substring-after-last($Start/root/InitialProcessName, &quot;/&quot;), &quot;.process&quot;)"/>
+                    </shortProcessName>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Null">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>1015</pd:x>
+        <pd:y>239</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Null-1">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>1486</pd:x>
+        <pd:y>83</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Null-2">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>547</pd:x>
+        <pd:y>269</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Set Input Message Content">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>618</pd:x>
+        <pd:y>91</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/SetInputMessageContent.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Start/root/pfx4:InputMessageContent"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Input Message Context from Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1398</pd:x>
+        <pd:y>254</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/SetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Get-Input-Context/root/pfx2:MessageContext"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Input Message Context from Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1313</pd:x>
+        <pd:y>91</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/SetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Start/root/pfx2:MessageContext"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Service Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1108</pd:x>
+        <pd:y>91</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ServiceContext/SetServiceContext.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx:ServiceContext>
+                    <pfx:ServiceInstanceID>
+                        <xsl:value-of select="$Generate-UUID/UUID"/>
+                    </pfx:ServiceInstanceID>
+                    <xsl:if test="exists($Get-Engine-Context/ns1:ServiceInstanceContext/ns1:ServiceInstanceID)">
+                        <xsl:if test="$Get-Engine-Context/ns1:ServiceInstanceContext/ns1:ServiceInstanceID">
+                            <pfx:ServiceEngineID>
+                                <xsl:value-of select="$Get-Engine-Context/ns1:ServiceInstanceContext/ns1:ServiceInstanceID"/>
+                            </pfx:ServiceEngineID>
+                        </xsl:if>
+                    </xsl:if>
+                    <xsl:choose>
+                        <xsl:when test="exists($Get-Engine-Context/ns1:ServiceInstanceContext/ns1:Hostname)">
+                            <pfx:Hostname>
+                                <xsl:value-of select="$Get-Engine-Context/ns1:ServiceInstanceContext/ns1:Hostname"/>
+                            </pfx:Hostname>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx:Hostname>
+                                <xsl:value-of select="BW:getHostName()"/>
+                            </pfx:Hostname>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx:InitialProcessName>
+                        <xsl:value-of select="$Start/root/InitialProcessName"/>
+                    </pfx:InitialProcessName>
+                    <xsl:choose>
+                        <xsl:when test="exists($Make-Short-Proc-Name/root/shortProcessName)">
+                            <xsl:if test="$Make-Short-Proc-Name/root/shortProcessName">
+                                <pfx:InitialProcessShortName>
+                                    <xsl:value-of select="$Make-Short-Proc-Name/root/shortProcessName"/>
+                                </pfx:InitialProcessShortName>
+                            </xsl:if>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx:InitialProcessShortName>
+                                <xsl:value-of select="$Start/root/InitialProcessName"/>
+                            </pfx:InitialProcessShortName>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </pfx:ServiceContext>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Start Time">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>335</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <variableConfig>/SharedResources/JobSharedVariables/ProcessStatistics.jobsharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings>
+            <ns4:ProcessStatsList>
+                <ns4:startTimestamp>
+                    <xsl:value-of select="tib:timestamp()"/>
+                </ns4:startTimestamp>
+            </ns4:ProcessStatsList>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SetVariable">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>1595</pd:x>
+        <pd:y>239</pd:y>
+        <config>
+            <variableConfig>/LogLevelControl/SharedVariable/LogLevelControl.sharedvariable</variableConfig>
+            <showResult>true</showResult>
+        </config>
+        <pd:inputBindings>
+            <ns2:LogLevelState>
+                <LogLevel>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/CLE/TestLogLevel"/>
+                </LogLevel>
+            </ns2:LogLevelState>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Get ServiceContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate UUID</pd:from>
+        <pd:to>Make Short Proc Name</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Service Context</pd:from>
+        <pd:to>Set Input Message Context from Start</pd:to>
+        <pd:xpathDescription>exists</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Start/root/pfx2:MessageContext)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Input Message Context from Start</pd:from>
+        <pd:to>Null-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Service Context</pd:from>
+        <pd:to>Get Input Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Context</pd:from>
+        <pd:to>Set Input Message Context from Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Input Message Context from Context</pd:from>
+        <pd:to>Null-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Input Message Content</pd:from>
+        <pd:to>Generate UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Make Short Proc Name</pd:from>
+        <pd:to>Set Service Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Make Short Proc Name</pd:from>
+        <pd:to>Null</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null</pd:from>
+        <pd:to>Set Service Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null-1</pd:from>
+        <pd:to>SetVariable</pd:to>
+        <pd:xpathDescription>CLE</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$_globalVariables/ns:GlobalVariables/MSF/CLE/Enabled ="true"</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetVariable</pd:from>
+        <pd:to>Get Enumeration Count</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null-1</pd:from>
+        <pd:to>Get Enumeration Count</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get ServiceContext</pd:from>
+        <pd:to>Set Start Time</pd:to>
+        <pd:xpathDescription>Not Initialised</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get ServiceContext</pd:from>
+        <pd:to>Generate Error</pd:to>
+        <pd:xpathDescription>Is Initialised</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Start Time</pd:from>
+        <pd:to>Get Engine Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Engine Context</pd:from>
+        <pd:to>Set Input Message Content</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Engine Context</pd:from>
+        <pd:to>Null-2</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Null-2</pd:from>
+        <pd:to>Set Input Message Content</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Enumeration Count</pd:from>
+        <pd:to>End</pd:to>
+        <pd:xpathDescription>Have Enumerations</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Get-Enumeration-Count/root/count &gt; 0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Enumeration Count</pd:from>
+        <pd:to>Get Enumerations</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Enumerations</pd:from>
+        <pd:to>Load Enumerations</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Load Enumerations</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

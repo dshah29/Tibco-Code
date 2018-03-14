@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:offBASE="http://three.co.uk/xsd/cdm/offer/offertypes/offerbasetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/offer/offertypes/offerbasetypes/v1"
+	 version="$Id: OfferBaseTypes_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xsd:simpleType name="OfferID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OfferItemID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([0-9A-Za-z]+)"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="offerID" type="offBASE:OfferID"/>
+	<xsd:element name="offerItemID" type="offBASE:OfferItemID"/>
+</xsd:schema>

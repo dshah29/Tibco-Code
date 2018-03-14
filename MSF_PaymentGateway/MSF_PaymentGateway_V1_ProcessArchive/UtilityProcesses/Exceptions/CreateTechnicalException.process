@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/pe/EngineTypes" schemaLocation="/SharedResources/SchemaDefinitions/External/BW/EngineTypes.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/CreateTechnicalException.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="ExceptionCode" type="xsd:string"/>
+                    <xsd:element name="Context" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Context2" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Severity" type="xsd:string"/>
+                    <xsd:element name="Description" type="xsd:string"/>
+                    <xsd:element name="Comment" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ShouldLogLocally" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="attributes" minOccurs="0">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element ref="pfx2:ErrorReport"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>27</pd:startX>
+    <pd:startY>41</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Create-Exception/root/pfx:Exception"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:Exception"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>450</pd:endX>
+    <pd:endY>41</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349780757020</pd:targetNamespace>
+    <pd:activity name="Create Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>155</pd:x>
+        <pd:y>40</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/Sub/CreateException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionType>
+                    <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExceptionTypes/Technical"/>
+                </ExceptionType>
+                <ExceptionCode>
+                    <xsl:value-of select="$Start/root/ExceptionCode"/>
+                </ExceptionCode>
+                <xsl:if test="$Start/root/Context">
+                    <Context>
+                        <xsl:value-of select="$Start/root/Context"/>
+                    </Context>
+                </xsl:if>
+                <xsl:if test="$Start/root/Context2">
+                    <Context2>
+                        <xsl:value-of select="$Start/root/Context2"/>
+                    </Context2>
+                </xsl:if>
+                <Severity>
+                    <xsl:value-of select="$Start/root/Severity"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$Start/root/Description"/>
+                </Description>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/Comment)">
+                        <xsl:if test="$Start/root/Comment">
+                            <Comment>
+                                <xsl:value-of select="$Start/root/Comment"/>
+                            </Comment>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:if test="$Start/root/Comment">
+                            <Comment>
+                                <xsl:value-of select="$Start/root/Comment"/>
+                            </Comment>
+                        </xsl:if>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:if test="$Start/root/ShouldLogLocally">
+                    <ShouldLogLocally>
+                        <xsl:value-of select="$Start/root/ShouldLogLocally"/>
+                    </ShouldLogLocally>
+                </xsl:if>
+                <xsl:copy-of select="$Start/root/attributes"/>
+                <xsl:copy-of select="$Start/root/pfx2:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Create Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns3="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="MCPaymentGatewayWSDL" targetNamespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1">
+    <wsdl:import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <wsdl:import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"/>
+    <wsdl:import location="../../../../../SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1.xsd" namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1"/>
+    <wsdl:message name="GetPaymentMethodDetailsRequest">
+        <wsdl:part name="part1" element="ns3:GetPaymentMethodDetailsRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetPaymentMethodDetailsResponse">
+        <wsdl:part name="part1" element="ns3:GetPaymentMethodDetailsResponse"/>
+    </wsdl:message>
+    <wsdl:message name="GetSubscriberCardListRequest">
+        <wsdl:part name="part1" element="ns3:GetSubscriberCardListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="GetSubscriberCardListResponse">
+        <wsdl:part name="part1" element="ns3:GetSubscriberCardListResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="PaymentGateway">
+        <wsdl:operation name="GetPaymentMethodDetails">
+            <wsdl:input message="tns:GetPaymentMethodDetailsRequest"/>
+            <wsdl:output message="tns:GetPaymentMethodDetailsResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetSubscriberCardList">
+            <wsdl:input message="tns:GetSubscriberCardListRequest"/>
+            <wsdl:output message="tns:GetSubscriberCardListResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="part1"/>
+    </wsdl:message>
+</wsdl:definitions>

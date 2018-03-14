@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns="http://www.tibco.com/AFF/V4.0.0/services/transientDataStore" xmlns:ns4="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://api.brm.n2.tibco.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd">
+    <xsd:import namespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" schemaLocation="/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/OrderFalloutBusinessException.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileProcessService/Sub/ExceptionQueryBusiness.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="RequestFileName" type="xsd:string"/>
+                    <xsd:element name="ResponseFileName" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>32</pd:startX>
+    <pd:startY>53</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1076</pd:endX>
+    <pd:endY>173</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx4:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <DateTimeVariable>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="CurrentDateTime" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </DateTimeVariable>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1444148669528/ExceptionQueryBusiness</pd:targetNamespace>
+    <pd:activity name="Parse Exception Query Request">
+        <pd:type>com.tibco.plugin.parse.ParseActivity</pd:type>
+        <pd:resourceType>ae.activities.ParseActivity</pd:resourceType>
+        <pd:x>122</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <InputType>File</InputType>
+            <Encoding>ASCII</Encoding>
+            <ParseSharedConfig>/SharedResources/DataFormats/BusinessExceptionQueryTemplates/ExceptionQueryRequestFormat.sharedparse</ParseSharedConfig>
+            <SpecifyStartRecord>true</SpecifyStartRecord>
+            <SkipBlankLines>true</SkipBlankLines>
+        </config>
+        <pd:inputBindings>
+            <Input>
+                <fileName>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </fileName>
+                <startRecord>
+                    <xsl:value-of select="2"/>
+                </startRecord>
+                <noOfRecords>
+                    <xsl:value-of select="-1"/>
+                </noOfRecords>
+            </Input>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:group name="Iterate Over Rows">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>206</pd:x>
+        <pd:y>1</pd:y>
+        <pd:width>682</pd:width>
+        <pd:height>340</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>inputLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:over>$Parse-Exception-Query-Request/Output/Rows/root</pd:over>
+            <pd:iterationElementSlot>Current_Row</pd:iterationElementSlot>
+            <pd:indexSlot>j</pd:indexSlot>
+            <pd:activityOutputName/>
+            <pd:accumulateOutput>false</pd:accumulateOutput>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>Validate Fields</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>ProcessData</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Get WorkList Items</pd:from>
+            <pd:to>Assign</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Assign</pd:from>
+            <pd:to>ProcessData</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Validate Fields</pd:from>
+            <pd:to>Transform To BPM Search String</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Transform To BPM Search String</pd:from>
+            <pd:to>Get WorkList Items</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:group name="ProcessData">
+            <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+            <pd:resourceType>ae.process.group</pd:resourceType>
+            <pd:x>472</pd:x>
+            <pd:y>132</pd:y>
+            <pd:width>372</pd:width>
+            <pd:height>170</pd:height>
+            <pd:collapsedWidth>57</pd:collapsedWidth>
+            <pd:collapsedHeight>70</pd:collapsedHeight>
+            <pd:groupVariables/>
+            <pd:joinToggle>inherit</pd:joinToggle>
+            <config>
+                <pd:groupType>inputLoop</pd:groupType>
+                <pd:serializable>false</pd:serializable>
+                <pd:over>$Get-WorkList-Items/ns3:getWorkListItemsResponse/workItems</pd:over>
+                <pd:iterationElementSlot>Current_WKItem</pd:iterationElementSlot>
+                <pd:indexSlot>i</pd:indexSlot>
+                <pd:activityOutputName/>
+                <pd:accumulateOutput>false</pd:accumulateOutput>
+            </config>
+            <pd:inputBindings/>
+            <pd:expanded>true</pd:expanded>
+            <pd:transition>
+                <pd:from>start</pd:from>
+                <pd:to>Render Exception Query Response</pd:to>
+                <pd:lineType>Multiple Bends</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Write Exception Query Response</pd:from>
+                <pd:to>end</pd:to>
+                <pd:lineType>Multiple Bends</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:transition>
+                <pd:from>Render Exception Query Response</pd:from>
+                <pd:to>Write Exception Query Response</pd:to>
+                <pd:lineType>Default</pd:lineType>
+                <pd:lineColor>-16777216</pd:lineColor>
+                <pd:conditionType>always</pd:conditionType>
+            </pd:transition>
+            <pd:activity name="Render Exception Query Response">
+                <pd:type>com.tibco.plugin.parse.RenderActivity</pd:type>
+                <pd:resourceType>ae.activities.RenderActivity</pd:resourceType>
+                <pd:x>618</pd:x>
+                <pd:y>207</pd:y>
+                <config>
+                    <ParseSharedConfig>/SharedResources/DataFormats/BusinessExceptionQueryTemplates/ExceptionQueryResponseFormat.sharedparse</ParseSharedConfig>
+                </config>
+                <pd:inputBindings>
+                    <Rows>
+                        <root>
+                            <WorkItemID>
+                                <xsl:value-of select="$Current_WKItem/workItems/id/@id"/>
+                            </WorkItemID>
+                            <OrderRef>
+                                <xsl:value-of select="$Current_WKItem/workItems/attributes/@attribute28"/>
+                            </OrderRef>
+                            <OrderID>
+                                <xsl:value-of select="$Current_WKItem/workItems/attributes/@attribute27"/>
+                            </OrderID>
+                            <DateCreated>
+                                <xsl:value-of select="tib:add-to-dateTime($Current_WKItem/workItems/header/@startDate,0, 0,0,0,$Current_WKItem/workItems/attributes/@attribute15,0)"/>
+                            </DateCreated>
+                            <ErrorCode>
+                                <xsl:value-of select="$Current_WKItem/workItems/attributes/@attribute32"/>
+                            </ErrorCode>
+                            <ErrorDescription>
+                                <xsl:value-of select="$Current_WKItem/workItems/attributes/@attribute22"/>
+                            </ErrorDescription>
+                            <State>
+                                <xsl:value-of select="$Current_WKItem/workItems/attributes/@attribute21"/>
+                            </State>
+                            <PlanID>
+                                <xsl:value-of select="$Current_WKItem/workItems/attributes/@attribute4"/>
+                            </PlanID>
+                            <PlanItemID>
+                                <xsl:value-of select="$Current_WKItem/workItems/attributes/@attribute3"/>
+                            </PlanItemID>
+                        </root>
+                    </Rows>
+                </pd:inputBindings>
+            </pd:activity>
+            <pd:activity name="Write Exception Query Response">
+                <pd:type>com.tibco.plugin.file.FileWriteActivity</pd:type>
+                <pd:resourceType>ae.activities.FileWriteActivity</pd:resourceType>
+                <pd:x>734</pd:x>
+                <pd:y>209</pd:y>
+                <config>
+                    <encoding>text</encoding>
+                    <compressFile>None</compressFile>
+                    <append>true</append>
+                </config>
+                <pd:inputBindings>
+                    <ns1:WriteActivityInputTextClass>
+                        <fileName>
+                            <xsl:value-of select="$Start/root/ResponseFileName"/>
+                        </fileName>
+                        <xsl:choose>
+                            <xsl:when test="$i=1and $j=1">
+                                <textContent>
+                                    <xsl:value-of select="concat('WorkItemID,','OrderRef,','OrderID,','DateCreated,','ErrorCode,','ErrorDescription,','State,','PlanID,','PlanItemID,',&quot;&#xD;&#xA;&quot;,$Render-Exception-Query-Response/Text)"/>
+                                </textContent>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <textContent>
+                                    <xsl:value-of select="$Render-Exception-Query-Response/Text"/>
+                                </textContent>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        <addLineSeparator>
+                            <xsl:value-of select="0"/>
+                        </addLineSeparator>
+                    </ns1:WriteActivityInputTextClass>
+                </pd:inputBindings>
+            </pd:activity>
+        </pd:group>
+        <pd:activity name="Assign">
+            <pd:type>com.tibco.pe.core.AssignActivity</pd:type>
+            <pd:resourceType>ae.activities.assignActivity</pd:resourceType>
+            <pd:x>651</pd:x>
+            <pd:y>69</pd:y>
+            <config>
+                <variableName>DateTimeVariable</variableName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <CurrentDateTime>
+                        <xsl:value-of select="concat(substring-before(current-dateTime(),&quot;:&quot;), substring(current-dateTime(), 15, 2))"/>
+                    </CurrentDateTime>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Get WorkList Items">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>547</pd:x>
+            <pd:y>67</pd:y>
+            <config>
+                <processName>/IntegrationServices/OrderFallout/BulkRelease_v1/Sub/GetWorkListItems.process</processName>
+            </config>
+            <pd:inputBindings>
+                <getWorkListItemsRequest>
+                    <Records>
+                        <xsl:value-of select="$Current_Row/root/Records"/>
+                    </Records>
+                    <SearchString>
+                        <xsl:value-of select="$Transform-To-BPM-Search-String/root/SearchString"/>
+                    </SearchString>
+                </getWorkListItemsRequest>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Transform To BPM Search String">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>421</pd:x>
+            <pd:y>76</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="root">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="SearchString" type="xsd:string"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <SearchString>
+                        <xsl:value-of select="concat(&quot;(state = OFFERED or state = OPENED)&quot;,if (exists($Validate-Fields/root/OrderRef)) then concat(&quot; and &quot;,$Validate-Fields/root/OrderRef ) else &quot;&quot;,&quot;&quot;,if (exists($Validate-Fields/root/OrderID)) then concat(&quot; and &quot;,$Validate-Fields/root/OrderID) else &quot;&quot;, if ($Validate-Fields/root/WorkItemID) then concat(&quot; and &quot;,$Validate-Fields/root/WorkItemID) else &quot;&quot;, if ($Validate-Fields/root/FromDate) then concat(&quot; and &quot;,$Validate-Fields/root/FromDate) else &quot;&quot;,if ($Validate-Fields/root/ToDate) then concat(&quot; and &quot;,$Validate-Fields/root/ToDate) else &quot;&quot;)"/>
+                    </SearchString>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Validate Fields">
+            <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+            <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+            <pd:x>314</pd:x>
+            <pd:y>70</pd:y>
+            <config>
+                <element>
+                    <xsd:element name="root">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="OrderRef" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="OrderID" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="WorkItemID" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="FromDate" type="xsd:string" minOccurs="0"/>
+                                <xsd:element name="ToDate" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </element>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Current_Row/root/OrderRef)">
+                        <OrderRef>
+                            <xsl:value-of select="concat(&quot;attribute28&quot;,&quot;='&quot;,$Current_Row/root/OrderRef,&quot;'&quot;)"/>
+                        </OrderRef>
+                    </xsl:if>
+                    <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Current_Row/root/OrderID)">
+                        <OrderID>
+                            <xsl:value-of select="concat(&quot;attribute27&quot;,&quot;='&quot;,$Current_Row/root/OrderID,&quot;'&quot;)"/>
+                        </OrderID>
+                    </xsl:if>
+                    <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="exists($Current_Row/root/WorkItemID)">
+                        <WorkItemID>
+                            <xsl:value-of select="concat(&quot;id=&quot;,$Current_Row/root/WorkItemID)"/>
+                        </WorkItemID>
+                    </xsl:if>
+                    <xsl:if test="exists($Current_Row/root/From_Date)">
+                        <FromDate>
+                            <xsl:value-of select="concat(&quot;startDate>=&quot;,$Current_Row/root/From_Date)"/>
+                        </FromDate>
+                    </xsl:if>
+                    <xsl:if test="exists($Current_Row/root/To_Date)">
+                        <ToDate>
+                            <xsl:value-of select="concat(&quot;startDate&lt;=&quot;,$Current_Row/root/To_Date)"/>
+                        </ToDate>
+                    </xsl:if>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="SFTP Put Files">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>956</pd:x>
+        <pd:y>172</pd:y>
+        <config>
+            <processName>/IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <LocalResponseFile>
+                    <xsl:value-of select="$Start/root/ResponseFileName"/>
+                </LocalResponseFile>
+                <LocalRequestFile>
+                    <xsl:value-of select="$Start/root/RequestFileName"/>
+                </LocalRequestFile>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse Exception Query Request</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Exception Query Request</pd:from>
+        <pd:to>Iterate Over Rows</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Iterate Over Rows</pd:from>
+        <pd:to>SFTP Put Files</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SFTP Put Files</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

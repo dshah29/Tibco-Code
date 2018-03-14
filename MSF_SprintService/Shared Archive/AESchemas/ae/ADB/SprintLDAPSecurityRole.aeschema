@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <designer>
+        <lockedProperties>
+            <locked>
+                <resource>/Associations/P_SECPRINSECROLE^SECURITYROLE/Right Assocation</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Associations/P_SECPRINSECROLE^SECURITYROLE/Left Association</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Associations/P_SECPRINSECROLE^SECURITYPRINCIPAL/Right Assocation</resource>
+                <properties>name</properties>
+            </locked>
+            <locked>
+                <resource>/Associations/P_SECPRINSECROLE^SECURITYPRINCIPAL/Left Association</resource>
+                <properties>name</properties>
+            </locked>
+        </lockedProperties>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+    <class name="P_SECPRINSECROLE">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SECURITYPRINCIPALID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>true</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SECURITYROLEID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>true</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_SEQUENCE_SECURITYROLE</name>
+            <attributeType isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#sequence.sequence[SECURITYROLE]</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_SEQUENCE_SECURITYPRINCIPAL</name>
+            <attributeType isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#sequence.sequence[SECURITYPRINCIPAL]</attributeType>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_SUBJECT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_SEQUENCE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_SET_SEQUENCE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_TIMESTAMP</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_OPCODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_UPDATE_ALL</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_REF_OBJECT</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_AGENT_ID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_TRACKINGID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+    </class>
+    <class name="SECURITYROLE">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SECURITYROLEID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>true</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DESCRIPTION</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ROLENAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_OPCODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_TRACKINGID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+    </class>
+    <sequence name="sequence[SECURITYROLE]">
+        <elementType isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#class.SECURITYROLE</elementType>
+    </sequence>
+    <class name="SECURITYPRINCIPAL">
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>EMPLOYEEID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>true</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SECURITYPRINCIPALID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>HASH</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SECURITYPRINCIPALNAME</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>SECURITYWORD</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>DISABLED</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>PASSWORDCHANGEDDATE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>MAXTIER</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_OPCODE</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.i4</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+        <attribute>
+            <isReadable>true</isReadable>
+            <isWriteable>true</isWriteable>
+            <name>ADB_TRACKINGID</name>
+            <attributeType isRef="true">/AESchemas/ae.aeschema#scalar.string</attributeType>
+            <isKey>false</isKey>
+        </attribute>
+    </class>
+    <sequence name="sequence[SECURITYPRINCIPAL]">
+        <elementType isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#class.SECURITYPRINCIPAL</elementType>
+    </sequence>
+    <association name="P_SECPRINSECROLE^SECURITYPRINCIPAL">
+        <endpoint>
+            <roleName>roleP_SECPRINSECROLE</roleName>
+            <maxMultiplicity>1</maxMultiplicity>
+            <minMultiplicity>1</minMultiplicity>
+            <isNavigable>true</isNavigable>
+            <endpointType>REFERENCE</endpointType>
+            <endpointClass isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#class.P_SECPRINSECROLE</endpointClass>
+            <keyField>SECURITYPRINCIPALID</keyField>
+        </endpoint>
+        <endpoint>
+            <roleName>roleSECURITYPRINCIPAL</roleName>
+            <maxMultiplicity>-1</maxMultiplicity>
+            <minMultiplicity>1</minMultiplicity>
+            <isNavigable>true</isNavigable>
+            <endpointType>REFERENCE</endpointType>
+            <endpointClass isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#class.SECURITYPRINCIPAL</endpointClass>
+            <keyField>SECURITYPRINCIPALID</keyField>
+        </endpoint>
+        <name>P_SECPRINSECROLE^SECURITYPRINCIPAL</name>
+    </association>
+    <association name="P_SECPRINSECROLE^SECURITYROLE">
+        <endpoint>
+            <roleName>roleP_SECPRINSECROLE</roleName>
+            <maxMultiplicity>1</maxMultiplicity>
+            <minMultiplicity>1</minMultiplicity>
+            <isNavigable>true</isNavigable>
+            <endpointType>REFERENCE</endpointType>
+            <endpointClass isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#class.P_SECPRINSECROLE</endpointClass>
+            <keyField>SECURITYROLEID</keyField>
+        </endpoint>
+        <endpoint>
+            <roleName>roleSECURITYROLE</roleName>
+            <maxMultiplicity>-1</maxMultiplicity>
+            <minMultiplicity>1</minMultiplicity>
+            <isNavigable>true</isNavigable>
+            <endpointType>REFERENCE</endpointType>
+            <endpointClass isRef="true">/AESchemas/ae/ADB/SprintLDAPSecurityRole.aeschema#class.SECURITYROLE</endpointClass>
+            <keyField>SECURITYROLEID</keyField>
+        </endpoint>
+        <name>P_SECPRINSECROLE^SECURITYROLE</name>
+    </association>
+</Repository:repository>

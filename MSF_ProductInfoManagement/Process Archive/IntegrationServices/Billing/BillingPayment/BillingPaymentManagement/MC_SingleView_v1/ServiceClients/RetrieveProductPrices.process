@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://schemas.tibco.com/bw/plugins/jms/5.0/jmsExceptions" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://xmlns.tibco.com/encodings/mime" xmlns:ns12="http://tibco.com/namespaces/tnt/plugins/soap" xmlns:ns6="http://schemas.tibco.com/bw/pe/plugin/5.0/exceptions" xmlns:pfx="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/concrete/mcsingleview/v1" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx7="http://xmlns.example.com/1429509590402" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" location="/SharedResources/WebServiceDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/Concrete/MC_SinvleView_v1.wsdl"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/concrete/mcsingleview/v1" location="/SharedResources/WebServiceDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/Concrete/MC_SingleView_v1.wsdl"/>
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ServiceClients/RetrieveProductPrices.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:RetrieveProductPricesRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>43</pd:startX>
+    <pd:startY>52</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$SOAPRequestReply/outputMessage/pfx5:RetrieveProductPricesResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:RetrieveProductPricesResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>712</pd:endX>
+    <pd:endY>51</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355151032213</pd:targetNamespace>
+    <pd:activity name="Create Exception Send Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>439</pd:x>
+        <pd:y>202</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_JMSSendError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:variable name="var_QueueName" select="concat(&#xA;$_globalVariables/ns1:GlobalVariables/MSF/REGION,&quot;.&quot;,&#xA;$_globalVariables/ns1:GlobalVariables/MSF/ENV,&quot;.&quot;,&#xA;$_globalVariables/ns1:GlobalVariables/Destinations/Queues/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ServiceRequest)"/>
+                <destinationName>
+                    <xsl:value-of select="substring($var_QueueName, 1, 50)"/>
+                </destinationName>
+                <jmsQueueOrTopicName>
+                    <xsl:value-of select="$var_QueueName"/>
+                </jmsQueueOrTopicName>
+                <xsl:copy-of select="$_error_SOAPRequestReply/ActivityErrors/ExceptionInfo/detail/ns4:ExceptionInfo"/>
+                <xsl:copy-of select="$_error/ns3:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Message Context REQUEST">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>286</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/CreateMessageContext_REQUEST.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate Exception">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>580</pd:x>
+        <pd:y>194</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$Create-Exception-Send-Error/root/pfx2:Exception"/>
+                </data>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>441</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <timeout>%%IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ServiceClient/TimeoutSec%%</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx4:MC_SingleView_v1</service>
+            <servicePort>SOAPJMS</servicePort>
+            <operation>RetrieveProductPrices</operation>
+            <soapAction>SOAPJMS/RetrieveProductPrices</soapAction>
+            <sharedChannels>
+                <jmsChannel>
+                    <NamingURL>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIContextURL%%</NamingURL>
+                    <NamingInitialContextFactory>com.tibco.tibjms.naming.TibjmsInitialContextFactory</NamingInitialContextFactory>
+                    <NamingPrincipal>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIUserName%%</NamingPrincipal>
+                    <NamingCredential>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIPassword%%</NamingCredential>
+                    <ConnectionFactory>QueueConnectionFactory</ConnectionFactory>
+                    <JMSTo>%%MSF/REGION%%.%%MSF/ENV%%.%%Destinations/Queues/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ServiceRequest%%</JMSTo>
+                    <JMSMessageType>Text</JMSMessageType>
+                    <JMSDeliveryMode>NON_PERSISTENT</JMSDeliveryMode>
+                    <JMSPriority>4</JMSPriority>
+                    <JMSTimeToLive>%%IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ServiceClient/JMSExpirationSec%%</JMSTimeToLive>
+                    <JMSUserName>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/UserName%%</JMSUserName>
+                    <JMSPassword>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/Password%%</JMSPassword>
+                    <shareJms>true</shareJms>
+                    <ApplicationPropertiesInMessage>/SharedResources/Connections/JMS/Properties/MSF-JMS-SOAP-Properties.sharedjmsapp</ApplicationPropertiesInMessage>
+                    <ApplicationPropertiesOutMessage>/SharedResources/Connections/JMS/Properties/MSF-JMS-SOAP-Properties.sharedjmsapp</ApplicationPropertiesOutMessage>
+                    <NamingProperties/>
+                </jmsChannel>
+            </sharedChannels>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+            <useSsl>false</useSsl>
+            <ns0:ssl xmlns:ns0="http://www.tibco.com/xmlns/aemeta/services/2002">
+                <ns0:trace>true</ns0:trace>
+                <ns0:debugTrace>true</ns0:debugTrace>
+                <ns0:verifyHostName>true</ns0:verifyHostName>
+                <ns0:strongCipherSuitesOnly>true</ns0:strongCipherSuitesOnly>
+            </ns0:ssl>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <ns12:_applicationProperties>
+                    <JMS_TIBCO_COMPRESS>
+                        <xsl:value-of select="true()"/>
+                    </JMS_TIBCO_COMPRESS>
+                    <JMS_TIBCO_PRESERVE_UNDELIVERED>
+                        <xsl:value-of select="false()"/>
+                    </JMS_TIBCO_PRESERVE_UNDELIVERED>
+                </ns12:_applicationProperties>
+                <headers>
+                    <Header.header>
+                        <xsl:copy-of select="$Create-Message-Context-REQUEST/root/ns2:MessageContext"/>
+                    </Header.header>
+                </headers>
+                <xsl:copy-of select="$Start/root/pfx5:RetrieveProductPricesRequest"/>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>580</pd:x>
+        <pd:y>51</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns3:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$SOAPRequestReply/outputMessage"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>156</pd:x>
+        <pd:y>51</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName(($_processContext/ns3:ProcessContext/ProcessId))"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Message Context REQUEST</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Send Error</pd:from>
+        <pd:to>Generate Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>Create Exception Send Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>Create Message Context REQUEST</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

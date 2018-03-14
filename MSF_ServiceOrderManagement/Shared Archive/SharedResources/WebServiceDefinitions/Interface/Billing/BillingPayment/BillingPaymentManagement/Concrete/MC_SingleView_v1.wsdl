@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/concrete/mcsingleview/v1" xmlns:ns0="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/concrete/mcsingleview/v1">
+    <wsdl:import location="../../../../../../../SharedResources/WebServiceDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.wsdl" namespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1"/>
+    <wsdl:service name="MC_SingleView_v1">
+        <wsdl:port binding="tns:SOAPJMSBinding" name="SOAPJMS">
+            <soap:address location=""/>
+            <jndi:context>
+                <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://172.26.253.207:7242</jndi:property>
+            </jndi:context>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">MCE.DEV.REQ.BILL.BILLPAY.BILLPAYMGT.MCSINGLEVIEW.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:binding name="SOAPJMSBinding" type="ns0:SingleView">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="RetrievePackagePriceHistory">
+            <soap:operation soapAction="SOAPJMS/RetrievePackagePriceHistory" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="POSUpgradeNoCPP">
+            <soap:operation soapAction="SOAPJMS/POSUpgradeNoCPP" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="CreateContract">
+            <soap:operation soapAction="SOAPJMS/CreateContract" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="OpenPaymentBatch">
+            <soap:operation soapAction="SOAPJMS/OpenPaymentBatch" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ClosePaymentBatch">
+            <soap:operation soapAction="SOAPJMS/ClosePaymentBatch" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="UpdateContract">
+            <soap:operation soapAction="SOAPJMS/UpdateContract" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="RetrieveProductPrices">
+            <soap:operation soapAction="SOAPJMS/RetrieveProductPrices" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="RetrieveAccount">
+            <soap:operation soapAction="SOAPJMS/RetrieveAccount" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ChangePricePlan">
+            <soap:operation soapAction="SOAPJMS/ChangePricePlan" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="PostPayment">
+            <soap:operation soapAction="SOAPJMS/PostPayment" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="CreateOneOffChg">
+            <soap:operation soapAction="SOAPJMS/CreateOneOffChg" style="document"/>
+            <wsdl:input>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="body" use="literal"/>
+                <soap:header message="ns0:MessageContext" part="header" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

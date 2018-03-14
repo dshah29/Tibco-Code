@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custAcc="http://three.co.uk/xsd/cdm/customer/customeraccount/customeraccountmanagement/customeraccount/v1"
+	 xmlns:custSub="http://three.co.uk/xsd/cdm/customer/customerprofile/customerprofilesubscriptionmanagement/customersubscription/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customeraccount/customeraccountmanagement/customeraccount/v1"
+	 version="$Id: CustomerAccount_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customerprofilesubscriptionmanagement/customersubscription/v1" schemaLocation="../../CustomerProfile/CustomerProfileSubscriptionManagement/CustomerSubscription_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+
+	<!--Some basic means of contact,-->
+	<xsd:complexType name="CustomerAccountDetails">
+		<xsd:sequence>
+
+			<!--going to set customerAccountID as mandatory here so that when we import it for linked customers-->
+			<xsd:element name="customerAccountID" type="custBASE:CustomerAccountID"/>
+			<xsd:element name="customerAccountValue" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="status" type="custAcc:_ACCOUNT_STATUS" minOccurs="0"/>
+			<xsd:element name="creationDate" type="xsd:date"/>
+			<xsd:element name="closeDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="billingAccountNumber" type="BASE:BAN" minOccurs="0"/>
+			<xsd:element name="approvedNumberOfSubscriptions" type="xsd:integer" minOccurs="0"/>
+
+			<!--segment as in Business, Personal, MVNO etc....-->
+			<xsd:element name="accountSegment" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LinkedCustomerAccounts">
+		<xsd:sequence>
+			<xsd:element name="customerAccountRelationship" type="xsd:string" minOccurs="0"/>
+			<xsd:element name="linkedAccount" type="custAcc:CustomerAccountDetails" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where will document the customer subscriptions-->
+	<xsd:complexType name="CustomerSubscriptions">
+		<xsd:sequence>
+			<xsd:element name="customerSubscriptions" type="custSub:CustomerSubscription" minOccurs="0"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CustomerAccount">
+		<xsd:sequence>
+			<xsd:element name="customerAccount" type="custAcc:CustomerAccountDetails"/>
+			<xsd:element name="linkedAccounts" type="custAcc:LinkedCustomerAccounts" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="custSub:customerSubscription" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomerAccount" type="custAcc:CustomerAccount"/>
+	<xsd:element name="customerAccount" type="custAcc:CustomerAccount">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CustomerAccount instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<!-- Customer Account type - defined by PeopleSoft -->
+	<xsd:simpleType name="__ACCOUNT_TYPE__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="CONTRACT"/>
+			<xsd:enumeration value="PAYG"/>
+			<xsd:enumeration value="HYBRID"/>
+			<xsd:enumeration value="SHARER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_ACCOUNT_TYPE">
+		<xsd:union memberTypes="custAcc:__ACCOUNT_TYPE__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="accountType" type="custAcc:_ACCOUNT_TYPE"/>
+
+	<!-- Customer Account level - defined by PeopleSoft -->
+	<xsd:simpleType name="__ACCOUNT_LEVEL__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Parent"/>
+			<xsd:enumeration value="Child"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_ACCOUNT_LEVEL">
+		<xsd:union memberTypes="custAcc:__ACCOUNT_LEVEL__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="accountLevel" type="custAcc:_ACCOUNT_LEVEL"/>
+
+	<!-- Customer Account authrorised access levels - defined by PeopleSoft -->
+	<xsd:simpleType name="AUTHORISED_ACCESS_TYPE">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Partial"/>
+			<xsd:enumeration value="Full"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="authorisedAccessType" type="custAcc:AUTHORISED_ACCESS_TYPE"/>
+
+	<!-- Customer Account status - defined by PeopleSoft -->
+	<xsd:simpleType name="__ACCOUNT_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Active"/>
+			<xsd:enumeration value="Suspended"/>
+			<xsd:enumeration value="Closed"/>
+			<xsd:enumeration value="Pending Activation"/>
+			<xsd:enumeration value="Activation"/>
+			<xsd:enumeration value="Pending Suspension"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_ACCOUNT_STATUS">
+		<xsd:union memberTypes="custAcc:__ACCOUNT_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="accountStatus" type="custAcc:_ACCOUNT_STATUS"/>
+
+	<!-- Service status for ROI - defined by PeopleSoft - this doesn't really feel as though it should be associated with the CustomerAccount but the CDM doesn't have a concept of "service" -->
+	<xsd:simpleType name="__SERVICE_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="INS"/>
+			<xsd:enumeration value="DIS"/>
+			<xsd:enumeration value="SUS-COLL"/>
+			<xsd:enumeration value="SUS-CUST"/>
+			<xsd:enumeration value="SUS-F&amp;S"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_SERVICE_STATUS">
+		<xsd:union memberTypes="custAcc:__SERVICE_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="serviceStatus" type="custAcc:_SERVICE_STATUS"/>
+</xsd:schema>

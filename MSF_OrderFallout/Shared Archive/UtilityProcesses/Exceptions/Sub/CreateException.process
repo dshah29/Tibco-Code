@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptionifnotransform/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/internal/common/commondefinitions/msf/exceptiondefinition/v1" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfotransform/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/pe/EngineTypes" schemaLocation="/SharedResources/SchemaDefinitions/External/BW/EngineTypes.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/internal/common/commondefinitions/msf/exceptiondefinition/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/ExceptionDefinition_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfotransform/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/ExceptionInfoTransform_v1.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/Sub/CreateException.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="ExceptionType" type="xsd:string"/>
+                    <xsd:element name="ExceptionCode" type="xsd:string"/>
+                    <xsd:element name="Context" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Context2" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Severity" type="xsd:string"/>
+                    <xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Comment" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="ShouldLogLocally" type="xsd:boolean" minOccurs="0"/>
+                    <xsd:element name="attributes" minOccurs="0">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element ref="pfx2:ErrorReport" minOccurs="0"/>
+                    <xsd:element name="exRVSubjectName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exResponseCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exResponseMessage" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exJMSQueueOrTopicName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exHTTPURL" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exFilePath" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>76</pd:startX>
+    <pd:startY>71</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Map-Exception/pfx:Exception"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:Exception"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>797</pd:endX>
+    <pd:endY>71</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349780757020</pd:targetNamespace>
+    <pd:activity name="CreateExceptionInfo">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>506</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/Sub/CreateExceptionInfo.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <exceptionID>
+                    <xsl:value-of select="$Generate-UUID/UUID"/>
+                </exceptionID>
+                <ExceptionType>
+                    <xsl:value-of select="$Start/root/ExceptionType"/>
+                </ExceptionType>
+                <timestamp>
+                    <xsl:value-of select="current-dateTime()"/>
+                </timestamp>
+                <ExceptionCode>
+                    <xsl:value-of select="$Start/root/ExceptionCode"/>
+                </ExceptionCode>
+                <xsl:if test="$Start/root/Context">
+                    <Context>
+                        <xsl:value-of select="$Start/root/Context"/>
+                    </Context>
+                </xsl:if>
+                <xsl:if test="$Start/root/Context2">
+                    <Context2>
+                        <xsl:value-of select="$Start/root/Context2"/>
+                    </Context2>
+                </xsl:if>
+                <Severity>
+                    <xsl:value-of select="$Start/root/Severity"/>
+                </Severity>
+                <xsl:if test="$Start/root/Description">
+                    <Description>
+                        <xsl:value-of select="$Start/root/Description"/>
+                    </Description>
+                </xsl:if>
+                <xsl:if test="$Start/root/Comment">
+                    <Comment>
+                        <xsl:value-of select="$Start/root/Comment"/>
+                    </Comment>
+                </xsl:if>
+                <xsl:copy-of select="$Start/root/attributes"/>
+                <xsl:copy-of select="$Start/root/pfx2:ErrorReport"/>
+                <xsl:if test="$Start/root/exResponseCode">
+                    <exResponseCode>
+                        <xsl:value-of select="$Start/root/exResponseCode"/>
+                    </exResponseCode>
+                </xsl:if>
+                <xsl:if test="$Start/root/exResponseMessage">
+                    <exResponseMessage>
+                        <xsl:value-of select="$Start/root/exResponseMessage"/>
+                    </exResponseMessage>
+                </xsl:if>
+                <xsl:if test="$Start/root/exRVSubjectName">
+                    <exRVSubjectName>
+                        <xsl:value-of select="$Start/root/exRVSubjectName"/>
+                    </exRVSubjectName>
+                </xsl:if>
+                <xsl:if test="$Start/root/exJMSQueueOrTopicName">
+                    <exJMSQueueOrTopicName>
+                        <xsl:value-of select="$Start/root/exJMSQueueOrTopicName"/>
+                    </exJMSQueueOrTopicName>
+                </xsl:if>
+                <xsl:if test="$Start/root/exHTTPURL">
+                    <exHTTPURL>
+                        <xsl:value-of select="$Start/root/exHTTPURL"/>
+                    </exHTTPURL>
+                </xsl:if>
+                <xsl:if test="$Start/root/exFilePath">
+                    <exFilePath>
+                        <xsl:value-of select="$Start/root/exFilePath"/>
+                    </exFilePath>
+                </xsl:if>
+                <exSourceName>
+                    <xsl:value-of select="$_processContext/pfx2:ProcessContext/ProjectName"/>
+                </exSourceName>
+                <xsl:if test="$GetServiceContext/root/ns1:ServiceContext/ns1:InitialProcessShortName">
+                    <exOperationName>
+                        <xsl:value-of select="$GetServiceContext/root/ns1:ServiceContext/ns1:InitialProcessShortName"/>
+                    </exOperationName>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate UUID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>359</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="GetServiceContext">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>226</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ServiceContext/GetServiceContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Map Exception">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>655</pd:x>
+        <pd:y>71</pd:y>
+        <config>
+            <element ref="pfx:Exception"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:Exception>
+                <xsl:copy-of select="$CreateExceptionInfo/root/pfx3:ExceptionInfo"/>
+                <xsl:copy-of select="$Start/root/pfx2:ErrorReport"/>
+                <ns2:LocalExceptionInfo>
+                    <ns2:ExceptionSourceType>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/InstanceTypes/Source"/>
+                    </ns2:ExceptionSourceType>
+                    <xsl:choose>
+                        <xsl:when test="exists($Start/root/ShouldLogLocally)">
+                            <ns2:LogExceptionLocally>
+                                <xsl:value-of select="$Start/root/ShouldLogLocally"/>
+                            </ns2:LogExceptionLocally>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <ns2:LogExceptionLocally>
+                                <xsl:value-of select="true()"/>
+                            </ns2:LogExceptionLocally>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <ns2:InitialProcessName>
+                        <xsl:value-of select="$GetServiceContext/root/ns1:ServiceContext/ns1:InitialProcessName"/>
+                    </ns2:InitialProcessName>
+                    <ns2:InitialProcessShortName>
+                        <xsl:value-of select="$GetServiceContext/root/ns1:ServiceContext/ns1:InitialProcessShortName"/>
+                    </ns2:InitialProcessShortName>
+                    <xsl:if test="$Start/root/exResponseCode">
+                        <ns2:ResponseCode>
+                            <xsl:value-of select="$Start/root/exResponseCode"/>
+                        </ns2:ResponseCode>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/exResponseMessage">
+                        <ns2:ResponseMessage>
+                            <xsl:value-of select="$Start/root/exResponseMessage"/>
+                        </ns2:ResponseMessage>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/exRVSubjectName">
+                        <ns2:RVSubject>
+                            <xsl:value-of select="$Start/root/exRVSubjectName"/>
+                        </ns2:RVSubject>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/exJMSQueueOrTopicName">
+                        <ns2:JMSDestinationName>
+                            <xsl:value-of select="$Start/root/exJMSQueueOrTopicName"/>
+                        </ns2:JMSDestinationName>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/exHTTPURL">
+                        <ns2:HTTPURL>
+                            <xsl:value-of select="$Start/root/exHTTPURL"/>
+                        </ns2:HTTPURL>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/exFilePath">
+                        <ns2:FilePath>
+                            <xsl:value-of select="$Start/root/exFilePath"/>
+                        </ns2:FilePath>
+                    </xsl:if>
+                </ns2:LocalExceptionInfo>
+                <pfx2:ProcessContext>
+                    <ProcessId>
+                        <xsl:value-of select="$_processContext/pfx2:ProcessContext/ProcessId"/>
+                    </ProcessId>
+                    <ProjectName>
+                        <xsl:value-of select="$_processContext/pfx2:ProcessContext/ProjectName"/>
+                    </ProjectName>
+                    <EngineName>
+                        <xsl:value-of select="$_processContext/pfx2:ProcessContext/EngineName"/>
+                    </EngineName>
+                    <RestartedFromCheckpoint>
+                        <xsl:value-of select="$_processContext/pfx2:ProcessContext/RestartedFromCheckpoint"/>
+                    </RestartedFromCheckpoint>
+                    <xsl:for-each select="$_processContext/pfx2:ProcessContext/TrackingInfo">
+                        <TrackingInfo>
+                            <xsl:value-of select="."/>
+                        </TrackingInfo>
+                    </xsl:for-each>
+                    <xsl:if test="$_processContext/pfx2:ProcessContext/CustomId">
+                        <CustomId>
+                            <xsl:value-of select="$_processContext/pfx2:ProcessContext/CustomId"/>
+                        </CustomId>
+                    </xsl:if>
+                </pfx2:ProcessContext>
+            </pfx:Exception>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>GetServiceContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Exception</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetServiceContext</pd:from>
+        <pd:to>Generate UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateExceptionInfo</pd:from>
+        <pd:to>Map Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate UUID</pd:from>
+        <pd:to>CreateExceptionInfo</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

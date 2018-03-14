@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://three.co.uk/xsd/cdm/product/productusage/productusagemanagement/productusage/v1" xmlns:ns3="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productallowance/v1" xmlns:pfx5="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx4="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx8="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:pfx7="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1" xmlns:pfx6="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/GetProducts/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:GetProductsRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>54</pd:startX>
+    <pd:startY>81</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <pfx5:GetProductsResponse>
+                <xsl:copy-of select="$GetProducts/root/pfx5:GetProductsResponse/pfx6:productSpecification"/>
+                <xsl:copy-of select="$ID-Transformation/root/pfx5:GetProductsRequest/pfx5:PredefinedTransformation"/>
+            </pfx5:GetProductsResponse>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx5:GetProductsResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>532</pd:endX>
+    <pd:endY>82</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables>
+        <Variable0>
+            <xsd:element name="root">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="Counter" type="xsd:int" minOccurs="0"/>
+                        <xsd:element name="Range" type="xsd:int" minOccurs="0"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </Variable0>
+    </pd:processVariables>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="GetProducts">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>376</pd:x>
+        <pd:y>83</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/GetProducts/Sub/GetProducts.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx5:GetProductsRequest>
+                    <xsl:copy-of select="$Start/root/pfx5:GetProductsRequest/pfx5:ProductFilter"/>
+                    <xsl:copy-of select="$Start/root/pfx5:GetProductsRequest/pfx5:View"/>
+                </pfx5:GetProductsRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="ID Transformation">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>208</pd:x>
+        <pd:y>258</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1/GetProducts/Sub/ID Transformation.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx5:GetProductsRequest>
+                    <xsl:copy-of select="$Start/root/pfx5:GetProductsRequest/pfx5:ProductFilter"/>
+                    <xsl:copy-of select="$Start/root/pfx5:GetProductsRequest/pfx5:View"/>
+                    <xsl:copy-of select="$Start/root/pfx5:GetProductsRequest/pfx5:PredefinedTransformation"/>
+                </pfx5:GetProductsRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Predefined Relationship">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>205</pd:x>
+        <pd:y>91</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Predefined Relationship</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Predefined Relationship</pd:from>
+        <pd:to>GetProducts</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetProducts</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Predefined Relationship</pd:from>
+        <pd:to>ID Transformation</pd:to>
+        <pd:xpathDescription>Predefined Relationship</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Start/root/pfx5:GetProductsRequest/pfx5:PredefinedTransformation/pfx5:From/pfx5:name)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>ID Transformation</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

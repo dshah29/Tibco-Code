@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:pfx11="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx10="http://three.co.uk/xsd/interface/customer/customerinteraction/customerinteractionmanagement/journeymanager/journeymanager/v1" xmlns:pfx="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://three.co.uk/xsd/cdm/common/commondefinitions/journey/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://three.co.uk/xsd/cdm/common/commonenumerations/channel/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/interface/customer/customerinteraction/customerinteractionmanagement/journeymanager/v1" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx9="http://xmlns.example.com/1417691934924" xmlns:pfx8="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/concrete/servicename/vn" xmlns:pfx7="http://xmlns.example.com/1417670626625" xmlns:pfx6="http://xmlns.example.com/1417541372703">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerinteraction/customerinteractionmanagement/journeymanager/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerInteraction/CustomerInteractionManagement/JourneyManager_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerinteraction/customerinteractionmanagement/journeymanager/journeymanager/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerInteraction/CustomerInteractionManagement/JourneyManager/JourneyManager_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcpaymentgateway/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1417541372703" location="/IntegrationServices/Customer/CustInteraction/CustIntrManagement/JourneyManager/UNIT_TEST/JMAPI.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1417691934924" location="/IntegrationServices/Customer1/CustomerInteraction/CustomerInteractionManagement/JourneyManager/Service/JourneyManagerService.wsdl"/>
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/GetPaymentMethodDetails/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx11:GetPaymentMethodDetailsRequest"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>61</pd:startX>
+    <pd:startY>131</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$GetPaymentMethodDetails/pfx11:GetPaymentMethodDetailsResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx11:GetPaymentMethodDetailsResponse"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>526</pd:endX>
+    <pd:endY>129</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="GetPaymentMethodDetails">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>299</pd:x>
+        <pd:y>132</pd:y>
+        <config>
+            <processName>/IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_PaymentGateway_v1/GetPaymentMethodDetails/Sub/GetPaymentMethodDetails.process</processName>
+        </config>
+        <pd:inputBindings>
+            <xsl:copy-of select="$Start/root/pfx11:GetPaymentMethodDetailsRequest"/>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>183</pd:x>
+        <pd:y>129</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx11:GetPaymentMethodDetailsRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>419</pd:x>
+        <pd:y>129</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$GetPaymentMethodDetails/pfx11:GetPaymentMethodDetailsResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetPaymentMethodDetails</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>GetPaymentMethodDetails</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

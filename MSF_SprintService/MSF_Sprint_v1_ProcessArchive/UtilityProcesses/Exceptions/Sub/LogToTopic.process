@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" xmlns:ns="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns0="www.tibco.com/plugin/Sleep" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptionmessage/v1" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns02="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptionmessage/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionMessage_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/Sub/LogToTopic.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:Exception"/>
+                    <xsd:element name="Payload" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>27</pd:startX>
+    <pd:startY>199</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>863</pd:endX>
+    <pd:endY>200</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355738765766</pd:targetNamespace>
+    <pd:activity name="Get Service Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>259</pd:x>
+        <pd:y>205</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ServiceContext/GetServiceContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:group name="Repeat On Error">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>364</pd:x>
+        <pd:y>12</pd:y>
+        <pd:width>367</pd:width>
+        <pd:height>358</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>errorLoop</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+            <pd:indexSlot>i</pd:indexSlot>
+            <pd:errorCondition>$i &gt; $_globalVariables/pfx3:GlobalVariables/MSF/Exceptions/ExceptionLogging/LogToTopic/Retries</pd:errorCondition>
+            <pd:suspendAfterErrorRetry>false</pd:suspendAfterErrorRetry>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>JMS Topic Publisher</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>JMS Topic Publisher</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>JMS Topic Publisher</pd:from>
+            <pd:to>Log Error</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-65536</pd:lineColor>
+            <pd:conditionType>error</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Log Error</pd:from>
+            <pd:to>Sleep</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Sleep</pd:from>
+            <pd:to>Generate Error</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:activity name="JMS Topic Publisher">
+            <pd:type>com.tibco.plugin.jms.JMSTopicPublishActivity</pd:type>
+            <pd:resourceType>ae.activities.JMSTopicPublishActivity</pd:resourceType>
+            <pd:x>537</pd:x>
+            <pd:y>106</pd:y>
+            <config>
+                <PermittedMessageType>XML Text</PermittedMessageType>
+                <SessionAttributes>
+                    <transacted>false</transacted>
+                    <acknowledgeMode>1</acknowledgeMode>
+                    <maxSessions>1</maxSessions>
+                    <destination>%%MSF/PREFIX%%.%%MSF/ENV%%.%%Destinations/Topics/MSF-XX/MSF/LogException_v1%%</destination>
+                </SessionAttributes>
+                <ConfigurableHeaders>
+                    <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                    <JMSExpiration>0</JMSExpiration>
+                    <JMSPriority>4</JMSPriority>
+                </ConfigurableHeaders>
+                <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+                <ApplicationProperties>/SharedResources/Connections/JMS/Properties/MSF-JMS-NONSOAP-Properties.sharedjmsapp</ApplicationProperties>
+                <InDataxsdString ref="pfx2:ExceptionMessage"/>
+            </config>
+            <pd:inputBindings>
+                <ns:ActivityInput>
+                    <OtherProperties>
+                        <JMS_TIBCO_COMPRESS>
+                            <xsl:value-of select="true()"/>
+                        </JMS_TIBCO_COMPRESS>
+                        <JMS_TIBCO_PRESERVE_UNDELIVERED>
+                            <xsl:value-of select="true()"/>
+                        </JMS_TIBCO_PRESERVE_UNDELIVERED>
+                        <xsl:if test="$Get-Service-Context/root/ns1:ServiceContext/ns1:ServiceInstanceID">
+                            <SCTX_ServiceInstanceID>
+                                <xsl:value-of select="$Get-Service-Context/root/ns1:ServiceContext/ns1:ServiceInstanceID"/>
+                            </SCTX_ServiceInstanceID>
+                        </xsl:if>
+                        <xsl:if test="$Get-Service-Context/root/ns1:ServiceContext/ns1:InitialProcessName">
+                            <SCTX_InitialProcessName>
+                                <xsl:value-of select="$Get-Service-Context/root/ns1:ServiceContext/ns1:InitialProcessName"/>
+                            </SCTX_InitialProcessName>
+                        </xsl:if>
+                        <MCTX_MessageID>
+                            <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/@messageID[1]"/>
+                        </MCTX_MessageID>
+                        <MCTX_MessageType>
+                            <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/@messageType[1]"/>
+                        </MCTX_MessageType>
+                        <MCTX_Timestamp>
+                            <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/@timestamp[1]"/>
+                        </MCTX_Timestamp>
+                        <xsl:if test="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:CorrelationID">
+                            <MCTX_CorrelationID>
+                                <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:CorrelationID"/>
+                            </MCTX_CorrelationID>
+                        </xsl:if>
+                        <MCTX_TransactionID>
+                            <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:TransactionID"/>
+                        </MCTX_TransactionID>
+                        <xsl:if test="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:BusinessKey">
+                            <MCTX_BusinessKey>
+                                <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:BusinessKey"/>
+                            </MCTX_BusinessKey>
+                        </xsl:if>
+                        <xsl:if test="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:ApplicationID">
+                            <MCTX_ApplicationID>
+                                <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:ApplicationID"/>
+                            </MCTX_ApplicationID>
+                        </xsl:if>
+                        <xsl:if test="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:UserID">
+                            <MCTX_UserID>
+                                <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:UserID"/>
+                            </MCTX_UserID>
+                        </xsl:if>
+                        <xsl:if test="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:ServiceInstanceID">
+                            <MCTX_ServiceInstanceID>
+                                <xsl:value-of select="$Get-Input-Message-Context/root/ns3:MessageContext/ns3:ServiceInstanceID"/>
+                            </MCTX_ServiceInstanceID>
+                        </xsl:if>
+                    </OtherProperties>
+                    <Body>
+                        <pfx2:ExceptionMessage>
+                            <xsl:copy-of select="$Start/root/pfx:Exception"/>
+                            <xsl:copy-of select="$Get-Service-Context/root/ns1:ServiceContext"/>
+                            <xsl:copy-of select="$Get-Input-Message-Context/root/ns3:MessageContext"/>
+                            <xsl:if test="$Start/root/Payload">
+                                <pfx2:Payload>
+                                    <xsl:value-of select="$Start/root/Payload"/>
+                                </pfx2:Payload>
+                            </xsl:if>
+                        </pfx2:ExceptionMessage>
+                    </Body>
+                </ns:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Log Error">
+            <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+            <pd:resourceType>ae.process.subprocess</pd:resourceType>
+            <pd:x>433</pd:x>
+            <pd:y>258</pd:y>
+            <config>
+                <processName>/UtilityProcesses/Logging/Log.process</processName>
+            </config>
+            <pd:inputBindings>
+                <root>
+                    <level>
+                        <xsl:value-of select="$_globalVariables/pfx3:GlobalVariables/MSF/Logging/Levels/ERROR"/>
+                    </level>
+                    <message>
+                        <xsl:value-of select="concat(&quot;Error on attempting to publish Exception - &quot;, $_error/ns2:ErrorReport/MsgCode, &quot; - &quot;, $_error/ns2:ErrorReport/Msg)"/>
+                    </message>
+                    <processName>
+                        <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                    </processName>
+                </root>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Sleep">
+            <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+            <pd:resourceType>ae.activities.sleep</pd:resourceType>
+            <pd:x>537</pd:x>
+            <pd:y>258</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns0:SleepInputSchema>
+                    <IntervalInMillisec>
+                        <xsl:value-of select="$_globalVariables/pfx3:GlobalVariables/MSF/Exceptions/ExceptionLogging/LogToTopic/SleepOnRetryMillisec"/>
+                    </IntervalInMillisec>
+                </ns0:SleepInputSchema>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Generate Error">
+            <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+            <pd:resourceType>ae.activities.throw</pd:resourceType>
+            <pd:x>649</pd:x>
+            <pd:y>259</pd:y>
+            <config>
+                <faultName/>
+            </config>
+            <pd:inputBindings>
+                <ns02:ActivityInput>
+                    <message>
+                        <xsl:value-of select="$_error/ns2:ErrorReport/Msg"/>
+                    </message>
+                    <xsl:if test="$_error/ns2:ErrorReport/MsgCode">
+                        <messageCode>
+                            <xsl:value-of select="$_error/ns2:ErrorReport/MsgCode"/>
+                        </messageCode>
+                    </xsl:if>
+                </ns02:ActivityInput>
+            </pd:inputBindings>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Get Input Message Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>140</pd:x>
+        <pd:y>206</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Get Input Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Service Context</pd:from>
+        <pd:to>Repeat On Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Repeat On Error</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Message Context</pd:from>
+        <pd:to>Get Service Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

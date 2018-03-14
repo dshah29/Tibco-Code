@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns6="http://www.tibco.com/namespaces/tnt/plugins/jms" xmlns:ns7="http://www.tibco.com/pe/DeployedVarsType" xmlns:pfx="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns8="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns1="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx2="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorExecutionService.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn"/>
+    <pd:name>UtilityProcesses/FOSDataAccessInterfaces/POSUpgradeNoCPP_PlanItemSuspend.process</pd:name>
+    <pd:startName>Receive PlanItem Suspend Request</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings>
+        <pfx:OperationReply>
+            <part1>
+                <xsl:copy-of select="$Call-Main/root/ns1:OperationReply"/>
+            </part1>
+        </pfx:OperationReply>
+    </pd:returnBindings>
+    <pd:starter name="Receive PlanItem Suspend Request">
+        <pd:type>com.tibco.plugin.jms.JMSQueueEventSource</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueEventSource</pd:resourceType>
+        <pd:x>78</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <PermittedMessageType>XML Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>tibco.aff.orchestrator.planItem.NOCPP.suspend.request</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-FOM-Connection.sharedjmscon</ConnectionReference>
+            <OutDataxsdString ref="pfx2:PlanItemSuspendRequest"/>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>409</pd:endX>
+    <pd:endY>51</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355136884829/POSUpgradeNoCPP_PlanItemExecute</pd:targetNamespace>
+    <pd:activity name="Send PlanItem Suspend Reply">
+        <pd:type>com.tibco.plugin.jms.JMSQueueSendActivity</pd:type>
+        <pd:resourceType>ae.activities.JMSQueueSendActivity</pd:resourceType>
+        <pd:x>249</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <PermittedMessageType>XML Text</PermittedMessageType>
+            <SessionAttributes>
+                <transacted>false</transacted>
+                <acknowledgeMode>1</acknowledgeMode>
+                <maxSessions>1</maxSessions>
+                <destination>tibco.aff.orchestrator.planItem.suspend.reply</destination>
+            </SessionAttributes>
+            <ConfigurableHeaders>
+                <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                <JMSExpiration>0</JMSExpiration>
+                <JMSPriority>4</JMSPriority>
+            </ConfigurableHeaders>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-FOM-Connection.sharedjmscon</ConnectionReference>
+            <InDataxsdString ref="pfx2:PlanItemSuspendReply"/>
+        </config>
+        <pd:inputBindings>
+            <ns6:ActivityInput>
+                <Body>
+                    <pfx2:PlanItemSuspendReply>
+                        <xsl:if test="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/@businessTransactionID">
+                            <xsl:attribute name="businessTransactionID">
+                                <xsl:value-of select="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/@businessTransactionID"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <xsl:if test="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/@correlationID">
+                            <xsl:attribute name="correlationID">
+                                <xsl:value-of select="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/@correlationID"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                        <ns8:resultStatus>
+                            <ns8:deployment>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns8:deployment>
+                            <ns8:service>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns8:service>
+                            <ns8:operation>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns8:operation>
+                            <ns8:severity>
+                                <xsl:value-of select="&quot;S&quot;"/>
+                            </ns8:severity>
+                            <ns8:code>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns8:code>
+                            <ns8:message>
+                                <xsl:value-of select="&quot;&quot;"/>
+                            </ns8:message>
+                        </ns8:resultStatus>
+                        <pfx2:orderID>
+                            <xsl:value-of select="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/pfx2:orderID"/>
+                        </pfx2:orderID>
+                        <pfx2:orderRef>
+                            <xsl:value-of select="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/pfx2:orderRef"/>
+                        </pfx2:orderRef>
+                        <pfx2:planID>
+                            <xsl:value-of select="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/pfx2:planID"/>
+                        </pfx2:planID>
+                        <pfx2:planItemID>
+                            <xsl:value-of select="$Receive-PlanItem-Suspend-Request/ns6:ActivityOutput/Body/pfx2:PlanItemSuspendRequest/pfx2:planItem/pfx2:planItemID"/>
+                        </pfx2:planItemID>
+                        <pfx2:completed>
+                            <xsl:value-of select="true()"/>
+                        </pfx2:completed>
+                        <pfx2:success>
+                            <xsl:value-of select="true()"/>
+                        </pfx2:success>
+                    </pfx2:PlanItemSuspendReply>
+                </Body>
+            </ns6:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Receive PlanItem Suspend Request</pd:from>
+        <pd:to>Send PlanItem Suspend Reply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Send PlanItem Suspend Reply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

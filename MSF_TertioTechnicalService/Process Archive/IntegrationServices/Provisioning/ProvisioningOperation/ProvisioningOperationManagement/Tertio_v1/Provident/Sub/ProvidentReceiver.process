@@ -1,0 +1,864 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Response" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns22="http://three.co.uk/wsdl/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns12="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns13="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:ns7="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1" xmlns:pfx="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" xmlns:ns2="http://www.tibco.com/pe/DeployedVarsType" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/EngineTypes" xmlns:ns4="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Request" xmlns:pfx2="http://xmlns.example.com/1454429760625" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/MC_Tertio_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProvidentAdapter_1/Response" schemaLocation="/AESchemas/ae/ProvidentAdapter_1/Response.aeschema"/>
+    <wsdl:import namespace="http://xmlns.example.com/1454429760625" location="/SharedResources/WebServiceDefinitions/Interface/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/Concrete/TertioAsynchResponse_v1.wsdl"/>
+    <pd:name>IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/Tertio_v1/Provident/Sub/ProvidentReceiver.process</pd:name>
+    <pd:startName>Adapter Subscriber</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings>
+        <root/>
+    </pd:returnBindings>
+    <pd:starter name="Adapter Subscriber">
+        <pd:type>com.tibco.plugin.ae.AESubscriberActivity</pd:type>
+        <pd:resourceType>ae.aepalette.aeSubscription</pd:resourceType>
+        <pd:x>88</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <ae.aepalette.sharedProperties.transportChoice>rvcmq</ae.aepalette.sharedProperties.transportChoice>
+            <ae.aepalette.sharedProperties.useRequestReply>false</ae.aepalette.sharedProperties.useRequestReply>
+            <ae.aepalette.sharedProperties.useCustomOutput>true</ae.aepalette.sharedProperties.useCustomOutput>
+            <ae.aepalette.sharedProperties.customOutputMeta>/AESchemas/ae/ProvidentAdapter_1/Response.aeschema#class.ProvidentResponse</ae.aepalette.sharedProperties.customOutputMeta>
+            <ae.aepalette.sharedProperties.transportType>rvcmq</ae.aepalette.sharedProperties.transportType>
+            <ae.aepalette.sharedProperties.msgFormat>aeRvMsg</ae.aepalette.sharedProperties.msgFormat>
+            <ae.aepalette.sharedProperties.rvSubject>%%IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/ProvidentAdapter/Subject/Response%%.&gt;</ae.aepalette.sharedProperties.rvSubject>
+            <ae.aepalette.sharedProperties.rvSessionService>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/Service%%</ae.aepalette.sharedProperties.rvSessionService>
+            <ae.aepalette.sharedProperties.rvSessionNetwork>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/Network%%</ae.aepalette.sharedProperties.rvSessionNetwork>
+            <ae.aepalette.sharedProperties.rvSessionDaemon>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/Daemon%%</ae.aepalette.sharedProperties.rvSessionDaemon>
+            <_sequenceKey>ProcessStarterOutput/body/ns:ProvidentResponse/TRANSACTION__ID</_sequenceKey>
+            <ae.aepalette.sharedProperties.rvCmqSessionName>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/CMQName%%</ae.aepalette.sharedProperties.rvCmqSessionName>
+            <ae.aepalette.sharedProperties.rvCmqSessionCompleteTime>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/WorkerCompleteTime%%</ae.aepalette.sharedProperties.rvCmqSessionCompleteTime>
+            <ae.aepalette.sharedProperties.rvCmqSessionSchedulerWeight>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/SchedulerWeight%%</ae.aepalette.sharedProperties.rvCmqSessionSchedulerWeight>
+            <ae.aepalette.sharedProperties.rvCmqSessionSchedulerHeartbeat>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/SchedulerHeartbeat%%</ae.aepalette.sharedProperties.rvCmqSessionSchedulerHeartbeat>
+            <ae.aepalette.sharedProperties.rvCmqSessionSchedulerActivation>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/SchedulerActivation%%</ae.aepalette.sharedProperties.rvCmqSessionSchedulerActivation>
+            <ae.aepalette.sharedProperties.rvCmqSessionWorkerWeight>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/WorkerWeight%%</ae.aepalette.sharedProperties.rvCmqSessionWorkerWeight>
+            <ae.aepalette.sharedProperties.rvCmqSessionWorkerTasks>%%SharedResources/Connections/RV/MSF-RV-DistributedQueue-Transport1/WorkerTasks%%</ae.aepalette.sharedProperties.rvCmqSessionWorkerTasks>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1228</pd:endX>
+    <pd:endY>57</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="ns3:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1453912713097</pd:targetNamespace>
+    <pd:activity name="Audit Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>437</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <payload>
+                    <xsl:copy-of select="$Adapter-Subscriber/ProcessStarterOutput"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Check for Known Status Code Response">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>721</pd:x>
+        <pd:y>381</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="CreateException_ResponseCodeError">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>891</pd:x>
+        <pd:y>366</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ResponseCodeError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ResponseCode>
+                    <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__CODE"/>
+                </ResponseCode>
+                <xsl:if xmlns:xsl="http://www.w3.org/1999/XSL/Transform" test="not(($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__DESCRIPTION/@xsi:nil=(&quot;true&quot;)) &#xA;or ($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__DESCRIPTION/@xsi:nil=(&quot;1&quot;)))">
+                    <ResponseMessage>
+                        <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__DESCRIPTION"/>
+                    </ResponseMessage>
+                </xsl:if>
+                <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                    <xsl:when test="contains($_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/ProvidentAdapter/ErrorCodes/InvalidDataErrorCodes,$StatusCodeResponse/root/statuscode[1])">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioExceptions/InvalidData/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioExceptions/InvalidData/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="contains($_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/ProvidentAdapter/ErrorCodes/InvalidProvisionActionErrorCodes,$StatusCodeResponse/root/statuscode[1])">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioExceptions/InvalidProvsioningData/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Business"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioExceptions/InvalidProvsioningData/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:when test="contains($_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/ProvidentAdapter/ErrorCodes/TertioFailureErrorCodes,$StatusCodeResponse/root/statuscode[1])">
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioExceptions/TertioFailure/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Technical"/>
+                        </ExceptionType>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/IntegrationServices/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioExceptions/TertioFailure/Description"/>
+                        </Description>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <ExceptionCode>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Invalid-Response-Code-Error/Code"/>
+                        </ExceptionCode>
+                        <ExceptionType>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Technical"/>
+                        </ExceptionType>
+                        <Context>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </Context>
+                        <Context2>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </Context2>
+                        <Severity>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                        </Severity>
+                        <Description>
+                            <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Invalid-Response-Code-Error/Description"/>
+                        </Description>
+                        <Comment>
+                            <xsl:value-of select="&quot;&quot;"/>
+                        </Comment>
+                        <ShouldLogLocally>
+                            <xsl:value-of select="false()"/>
+                        </ShouldLogLocally>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateException_ResponseCodeError Adapter">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>876</pd:x>
+        <pd:y>219</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ResponseCodeError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ResponseCode>
+                    <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__CODE"/>
+                </ResponseCode>
+                <ResponseMessage>
+                    <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__DESCRIPTION"/>
+                </ResponseMessage>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Unable-To-Get-Data-Error/Code"/>
+                </ExceptionCode>
+                <ExceptionType>
+                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/ExceptionTypes/Technical"/>
+                </ExceptionType>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/MSF/Exceptions/Severity/Fatal"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_globalVariables/ns2:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Unable-To-Get-Data-Error/Description"/>
+                </Description>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error Response Status">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>1078</pd:x>
+        <pd:y>374</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_ResponseCodeError/root/ns3:Exception"/>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Error-UnableToGetData">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>1072</pd:x>
+        <pd:y>211</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateException_ResponseCodeError-Adapter/root/ns3:Exception"/>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InitialiseBoundary">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>224</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/InitialiseBoundary.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+                <ns13:InputMessageContent>
+                    <xsl:copy-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse"/>
+                </ns13:InputMessageContent>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogAuditEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>877</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <response>
+                    <xsl:copy-of select="$Adapter-Subscriber/ProcessStarterOutput"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogResponse">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>719</pd:x>
+        <pd:y>211</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Logging/LogResponse.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Adapter-Subscriber/ProcessStarterOutput"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Response Status">
+        <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+        <pd:resourceType>ae.activities.null</pd:resourceType>
+        <pd:x>717</pd:x>
+        <pd:y>57</pd:y>
+        <config/>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="StatusCodeResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>570</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="statuscode" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                            <xsd:element name="errorcode" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                            <xsd:element name="errordescription" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:if test="not(($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/STATUS__CODE/@xsi:nil=(&quot;true&quot;)) or ($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/STATUS__CODE/@xsi:nil=(&quot;1&quot;)))">
+                    <statuscode>
+                        <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/STATUS__CODE"/>
+                    </statuscode>
+                </xsl:if>
+                <xsl:if test="not(($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__CODE/@xsi:nil=(&quot;true&quot;)) or ($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__CODE/@xsi:nil=(&quot;1&quot;)))">
+                    <errorcode>
+                        <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__CODE"/>
+                    </errorcode>
+                </xsl:if>
+                <xsl:if test="not(($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__DESCRIPTION/@xsi:nil=(&quot;true&quot;)) or ($Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__DESCRIPTION/@xsi:nil=(&quot;1&quot;)))">
+                    <errordescription>
+                        <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/resultStatus/ERROR__DESCRIPTION"/>
+                    </errordescription>
+                </xsl:if>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1014</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Adapter-Subscriber/ProcessStarterOutput"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>338</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns1:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Adapter-Subscriber/ProcessStarterOutput"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SOAPRequestReply">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1122</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx2:TertioAsynchResponse_v1</service>
+            <servicePort>SOAPJMS</servicePort>
+            <operation>ProvidentResponse</operation>
+            <soapAction>SOAPJMS/ProvidentResponse</soapAction>
+            <sharedChannels>
+                <jmsChannel>
+                    <NamingURL>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIContextURL%%</NamingURL>
+                    <NamingInitialContextFactory>com.tibco.tibjms.naming.TibjmsInitialContextFactory</NamingInitialContextFactory>
+                    <NamingPrincipal>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/UserName%%</NamingPrincipal>
+                    <NamingCredential>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/Password%%</NamingCredential>
+                    <ConnectionFactory>TopicConnectionFactory</ConnectionFactory>
+                    <JMSTo>%%MSF/REGION%%.%%MSF/ENV%%.%%Destinations/Topics/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioAsynchResponse_v1/ServiceRequest%%</JMSTo>
+                    <JMSMessageType>Bytes</JMSMessageType>
+                    <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                    <JMSPriority>4</JMSPriority>
+                    <JMSTimeToLive>0</JMSTimeToLive>
+                    <JMSUserName>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/UserName%%</JMSUserName>
+                    <JMSPassword>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/Password%%</JMSPassword>
+                    <shareJms>true</shareJms>
+                </jmsChannel>
+            </sharedChannels>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <xsl:for-each select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse">
+                    <pfx:ProvidentResponse>
+                        <pfx:ProvisioningAction>
+                            <xsl:value-of select="SO__TYPE"/>
+                        </pfx:ProvisioningAction>
+                        <xsl:for-each select="$StatusCodeResponse/root/statuscode">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'STATUS_CODE'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                        <xsl:for-each select="$StatusCodeResponse/root/errorcode">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'ERROR_CODE'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                        <xsl:for-each select="$StatusCodeResponse/root/errordescription">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'ERROR_DESCRIPTION'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                    </pfx:ProvidentResponse>
+                </xsl:for-each>
+                <headers>
+                    <Header.context>
+                        <ns5:MessageContext>
+                            <xsl:attribute name="messageID">
+                                <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/TRANSACTION__ID"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="messageType">
+                                <xsl:value-of select="'REPLY'"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="timestamp">
+                                <xsl:value-of select="current-dateTime()"/>
+                            </xsl:attribute>
+                            <ns5:TransactionID>
+                                <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/TRANSACTION__ID"/>
+                            </ns5:TransactionID>
+                        </ns5:MessageContext>
+                    </Header.context>
+                </headers>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>704</pd:x>
+        <pd:y>644</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>858</pd:x>
+        <pd:y>651</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns1:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1030</pd:x>
+        <pd:y>653</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SOAPRequestReply Catch All">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1227</pd:x>
+        <pd:y>653</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx2:TertioAsynchResponse_v1</service>
+            <servicePort>SOAPJMS</servicePort>
+            <operation>ProvidentResponse</operation>
+            <soapAction>SOAPJMS/ProvidentResponse</soapAction>
+            <sharedChannels>
+                <jmsChannel>
+                    <NamingURL>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIContextURL%%</NamingURL>
+                    <NamingInitialContextFactory>com.tibco.tibjms.naming.TibjmsInitialContextFactory</NamingInitialContextFactory>
+                    <NamingPrincipal>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/UserName%%</NamingPrincipal>
+                    <NamingCredential>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/Password%%</NamingCredential>
+                    <ConnectionFactory>TopicConnectionFactory</ConnectionFactory>
+                    <JMSTo>%%MSF/REGION%%.%%MSF/ENV%%.%%Destinations/Topics/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioAsynchResponse_v1/ServiceRequest%%</JMSTo>
+                    <JMSMessageType>Bytes</JMSMessageType>
+                    <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                    <JMSPriority>4</JMSPriority>
+                    <JMSTimeToLive>0</JMSTimeToLive>
+                    <JMSUserName>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/UserName%%</JMSUserName>
+                    <JMSPassword>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/Password%%</JMSPassword>
+                    <shareJms>true</shareJms>
+                </jmsChannel>
+            </sharedChannels>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <xsl:for-each select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse">
+                    <pfx:ProvidentResponse>
+                        <pfx:ProvisioningAction>
+                            <xsl:value-of select="SO__TYPE"/>
+                        </pfx:ProvisioningAction>
+                        <xsl:for-each select="$StatusCodeResponse/root/statuscode">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'STATUS_CODE'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                        <xsl:for-each select="$StatusCodeResponse/root/errorcode">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'ERROR_CODE'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                        <xsl:for-each select="$StatusCodeResponse/root/errordescription">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'ERROR_DESCRIPTION'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                    </pfx:ProvidentResponse>
+                </xsl:for-each>
+                <headers>
+                    <Header.context>
+                        <ns5:MessageContext>
+                            <xsl:attribute name="messageID">
+                                <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/TRANSACTION__ID"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="messageType">
+                                <xsl:value-of select="'REPLY'"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="timestamp">
+                                <xsl:value-of select="current-dateTime()"/>
+                            </xsl:attribute>
+                            <ns5:TransactionID>
+                                <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/TRANSACTION__ID"/>
+                            </ns5:TransactionID>
+                        </ns5:MessageContext>
+                    </Header.context>
+                </headers>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>751</pd:x>
+        <pd:y>501</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>920</pd:x>
+        <pd:y>510</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Catch-Exception/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="SOAPRequestReply-Catch-All-1">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>1070</pd:x>
+        <pd:y>501</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx2:TertioAsynchResponse_v1</service>
+            <servicePort>SOAPJMS</servicePort>
+            <operation>ProvidentResponse</operation>
+            <soapAction>SOAPJMS/ProvidentResponse</soapAction>
+            <sharedChannels>
+                <jmsChannel>
+                    <NamingURL>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/JNDIContextURL%%</NamingURL>
+                    <NamingInitialContextFactory>com.tibco.tibjms.naming.TibjmsInitialContextFactory</NamingInitialContextFactory>
+                    <NamingPrincipal>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/UserName%%</NamingPrincipal>
+                    <NamingCredential>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/Password%%</NamingCredential>
+                    <ConnectionFactory>TopicConnectionFactory</ConnectionFactory>
+                    <JMSTo>%%MSF/REGION%%.%%MSF/ENV%%.%%Destinations/Topics/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/TertioAsynchResponse_v1/ServiceRequest%%</JMSTo>
+                    <JMSMessageType>Bytes</JMSMessageType>
+                    <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                    <JMSPriority>4</JMSPriority>
+                    <JMSTimeToLive>0</JMSTimeToLive>
+                    <JMSUserName>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/UserName%%</JMSUserName>
+                    <JMSPassword>%%SharedResources/Connections/JMS/MSF-JMS-INT-Connection/Password%%</JMSPassword>
+                    <shareJms>true</shareJms>
+                </jmsChannel>
+            </sharedChannels>
+            <ConnectionReference>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</ConnectionReference>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <xsl:for-each select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse">
+                    <pfx:ProvidentResponse>
+                        <pfx:ProvisioningAction>
+                            <xsl:value-of select="SO__TYPE"/>
+                        </pfx:ProvisioningAction>
+                        <xsl:for-each select="$StatusCodeResponse/root/statuscode">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'STATUS_CODE'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                        <xsl:for-each select="$StatusCodeResponse/root/errorcode">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'ERROR_CODE'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                        <xsl:for-each select="$StatusCodeResponse/root/errordescription">
+                            <pfx:ResponseAttributes>
+                                <ns4:name>
+                                    <xsl:value-of select="'ERROR_DESCRIPTION'"/>
+                                </ns4:name>
+                                <ns4:value>
+                                    <xsl:value-of select="."/>
+                                </ns4:value>
+                            </pfx:ResponseAttributes>
+                        </xsl:for-each>
+                    </pfx:ProvidentResponse>
+                </xsl:for-each>
+                <headers>
+                    <Header.context>
+                        <ns5:MessageContext>
+                            <xsl:attribute name="messageID">
+                                <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/TRANSACTION__ID"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="messageType">
+                                <xsl:value-of select="'REPLY'"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="timestamp">
+                                <xsl:value-of select="current-dateTime()"/>
+                            </xsl:attribute>
+                            <ns5:TransactionID>
+                                <xsl:value-of select="$Adapter-Subscriber/ProcessStarterOutput/body/ns:ProvidentResponse/TRANSACTION__ID"/>
+                            </ns5:TransactionID>
+                        </ns5:MessageContext>
+                    </Header.context>
+                </headers>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Adapter Subscriber</pd:from>
+        <pd:to>InitialiseBoundary</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_ResponseCodeError</pd:from>
+        <pd:to>Generate Error Response Status</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Check for Known Status Code Response</pd:from>
+        <pd:to>CreateException_ResponseCodeError</pd:to>
+        <pd:xpathDescription>Otherwise</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($StatusCodeResponse/root/statuscode)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Check for Known Status Code Response</pd:from>
+        <pd:to>CreateException_ResponseCodeError Adapter</pd:to>
+        <pd:xpathDescription>Adapter Error</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateException_ResponseCodeError Adapter</pd:from>
+        <pd:to>Generate-Error-UnableToGetData</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogResponse</pd:from>
+        <pd:to>Check for Known Status Code Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>StatusCodeResponse</pd:from>
+        <pd:to>Response Status</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Status</pd:from>
+        <pd:to>LogAuditEnd</pd:to>
+        <pd:xpathDescription>Success</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>string-length($StatusCodeResponse/root/statuscode[1])&gt;0 and ($StatusCodeResponse/root/statuscode[1]="0")</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>SOAPRequestReply</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Response Status</pd:from>
+        <pd:to>LogResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Audit Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>InitialiseBoundary</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAuditEnd</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit Start</pd:from>
+        <pd:to>StatusCodeResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>SOAPRequestReply Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply Catch All</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch Exception</pd:from>
+        <pd:to>Log Exception Catch Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch Exception</pd:from>
+        <pd:to>SOAPRequestReply-Catch-All-1</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SOAPRequestReply-Catch-All-1</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

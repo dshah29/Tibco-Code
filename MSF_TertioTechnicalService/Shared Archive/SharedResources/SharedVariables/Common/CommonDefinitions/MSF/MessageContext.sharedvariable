@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+    <name>MessageContext</name>
+    <resourceType>ae.shared.sharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <persistent>false</persistent>
+        <multi-engine>false</multi-engine>
+        <initialValue>none</initialValue>
+        <xsdString>
+            <xsd:element name="group">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="param">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element name="id" type="xsd:string"/>
+                                    <xsd:element name="type" type="xsd:string"/>
+                                    <xsd:element name="timestamp" type="xsd:string"/>
+                                    <xsd:element name="TimetoLive" type="xsd:string"/>
+                                    <xsd:element name="root" type="xsd:string"/>
+                                    <xsd:element name="CorrID" type="xsd:string"/>
+                                    <xsd:element name="TransID" type="xsd:string"/>
+                                    <xsd:element name="BusinessKey" type="xsd:string"/>
+                                    <xsd:element name="ApplicationID" type="xsd:string"/>
+                                    <xsd:element name="UserID" type="xsd:string"/>
+                                    <xsd:element name="SIID" type="xsd:string"/>
+                                    <xsd:element name="SP" type="xsd:string"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsdString>
+    </config>
+</BWSharedResource>

@@ -1,0 +1,1955 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:os="http://www.tibco.com/aff/orderservice" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wspp="http://java.sun.com/xml/ns/wsit/policy" xmlns:sc="http://schemas.sun.com/2006/03/wss/server" xmlns:fault="http://www.tibco.com/aff/orderservice/result" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:t="http://schemas.xmlsoap.org/ws/2005/02/trust" xmlns:wsaw="http://www.w3.org/2005/08/addressing" xmlns:tns="http://www.tibco.com/aff/oms/service/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://www.tibco.com/aff/oms/service/soap">
+    <wsdl:types>
+        <xs:schema xmlns="http://www.tibco.com/aff/orderservice" xmlns:plan="http://www.tibco.com/aff/plan" xmlns:order="http://www.tibco.com/aff/order" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:rs="http://www.tibco.com/aff/orderservice/result" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" attributeFormDefault="unqualified" elementFormDefault="qualified" jaxb:version="2.0" targetNamespace="http://www.tibco.com/aff/orderservice" version="1.1">
+            <xs:element name="GetOrderDetailsRequest">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="orderId" type="xs:string"/>
+                        <xs:element name="orderRef">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="125"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                    <xs:attribute name="includeOrderRequest" type="xs:boolean"/>
+                    <xs:attribute name="includeAmendments" type="xs:boolean"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderDetailsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderType" type="order:orderType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SubmitOrderRequest">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="BasicOrderRequestType"/>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SubmitOrderResponse">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="BasicOrderResponseType"/>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SyncSubmitOrderResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" ref="rs:resultStatus"/>
+                        <xs:element minOccurs="0" name="orderID" type="xs:string"/>
+                        <xs:element name="orderRef" type="xs:string"/>
+                        <xs:element minOccurs="0" name="planID" type="xs:string"/>
+                        <xs:element name="status" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="rs:message"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                    <xs:attribute name="correlationID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AmendOrderRequest">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="BasicOrderRequestType"/>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="AmendOrderResponse">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="BasicOrderResponseType"/>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CancelOrderRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element name="orderID" type="xs:string"/>
+                            <xs:element name="orderRef">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="125"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:choice>
+                        <xs:element minOccurs="0" name="rollback" type="xs:boolean"/>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="CancelOrderResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="OrderID" type="xs:string"/>
+                        <xs:element name="OrderRef" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                    <xs:attribute name="BusinessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WithdrawOrderRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:choice>
+                            <xs:element name="orderID" type="xs:string"/>
+                            <xs:element name="orderRef">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="125"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="WithdrawOrderResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="OrderID" type="xs:string"/>
+                        <xs:element name="OrderRef" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                    <xs:attribute name="BusinessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderExecutionPlanRequest">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="orderID" type="xs:string"/>
+                        <xs:element name="orderRef">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="125"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderExecutionPlanResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <!-- <xs:element name="resultStatus" type="result:resultStatus"/>	 -->
+                        <xs:element minOccurs="0" name="plan" type="plan:planType"/>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrdersRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="sortCriteria" type="sortCriteria"/>
+                        <xs:element minOccurs="0" name="orderId" type="xs:string"/>
+                        <xs:element minOccurs="0" name="orderRef">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="125"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="customerID" type="xs:string"/>
+                        <xs:element minOccurs="0" name="subscriberID" type="xs:string"/>
+                        <xs:element minOccurs="0" name="dateRange">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="startDate" type="xs:date"/>
+                                    <xs:element minOccurs="0" name="endDate" type="xs:date"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="status" type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="headerUDF">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name" type="xs:string"/>
+                                    <xs:element name="value" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="orderLineUDF">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name" type="xs:string"/>
+                                    <xs:element name="value" type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:choice minOccurs="0">
+                            <xs:element name="count" type="xs:long"/>
+                            <xs:element name="pagination">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="startRecord" type="xs:long"/>
+                                        <xs:element name="endRecord" type="xs:long"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:choice>
+                        <xs:element minOccurs="0" name="orderSummary" type="xs:boolean"/>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="sortCriteria">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="sortField">
+                        <xs:complexType>
+                            <xs:choice>
+                                <xs:element name="orderUDFField" type="xs:string"/>
+                                <xs:element name="field" type="sortFieldValues"/>
+                            </xs:choice>
+                            <xs:attribute name="sortBy" type="SortByType"/>
+                            <xs:attribute name="sortSequence" type="xs:int"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="SortByType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="ASC"/>
+                    <xs:enumeration value="DESC"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="sortByValues">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="orderId"/>
+                    <xs:enumeration value="orderRef"/>
+                    <xs:enumeration value="customerId"/>
+                    <xs:enumeration value="subscriberId"/>
+                    <xs:enumeration value="submittedDate"/>
+                    <xs:enumeration value="status"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="sortFieldValues">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="orderId"/>
+                    <xs:enumeration value="orderRef"/>
+                    <xs:enumeration value="customerId"/>
+                    <xs:enumeration value="subscriberId"/>
+                    <xs:enumeration value="submittedDate"/>
+                    <xs:enumeration value="status"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="GetOrdersResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <!-- <xs:element name="resultStatus" type="result:resultStatus"/>	 -->
+                        <xs:element minOccurs="0" name="Orders">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Order" type="order:orderType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="pagination">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="startRecord" type="xs:long"/>
+                                    <xs:element name="endRecord" type="xs:long"/>
+                                    <xs:element name="totalRecords" type="xs:long"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="BasicOrderRequestType">
+                <xs:sequence>
+                    <xs:element name="orderRequest" type="order:orderRequestType"/>
+                </xs:sequence>
+                <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+            </xs:complexType>
+            <xs:complexType name="BasicOrderResponseType">
+                <xs:sequence>
+                    <xs:element name="orderId" type="xs:string"/>
+                    <xs:element name="orderRef" type="xs:string"/>
+                </xs:sequence>
+                <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                <xs:attribute name="BusinessTransactionID" type="xs:string"/>
+            </xs:complexType>
+            <xs:element name="GetOrderAmendmentsRequest">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="orderID" type="xs:string"/>
+                        <xs:element name="orderRef">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="125"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderAmendmentsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="order:orderAmendmentMetaData"/>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderAmendmentsDetailsRequest">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="orderID" type="xs:string"/>
+                        <xs:element name="orderRef">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="125"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="changedOn" type="xs:dateTime"/>
+                        <xs:element name="orderIDHistorySid" type="xs:string"/>
+                    </xs:choice>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="GetOrderAmendmentsDetailsResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderType" type="order:orderType"/>
+                        <xs:element name="changedOn" type="xs:dateTime"/>
+                        <xs:element name="action" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="ExternalBusinessTransactionID" type="ExternalBusinessTransactionIdType"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SuspendOrderRequest">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="orderID">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="1"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="orderRef">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="1"/>
+                                    <xs:maxLength value="125"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="SuspendOrderResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderID" type="xs:string"/>
+                        <xs:element name="orderRef" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ActivateOrderRequest">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="orderID">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="1"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="orderRef">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:minLength value="1"/>
+                                    <xs:maxLength value="125"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ActivateOrderResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderID" type="xs:string"/>
+                        <xs:element name="orderRef" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PerformBulkOrderActionRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="action">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="CANCEL"/>
+                                    <xs:enumeration value="SUSPEND"/>
+                                    <xs:enumeration value="RESUME"/>
+                                    <xs:enumeration value="WITHDRAW"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:choice>
+                            <xs:element maxOccurs="unbounded" name="orderID" type="xs:string"/>
+                            <xs:element maxOccurs="unbounded" name="orderRef">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="125"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                        </xs:choice>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="PerformBulkOrderActionResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="timestamp" type="xs:dateTime"/>
+                        <xs:element name="message" type="xs:string"/>
+                        <xs:element name="noOfOrders" type="xs:integer"/>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:simpleType name="ExternalBusinessTransactionIdType">
+                <xs:restriction base="xs:string">
+                    <xs:maxLength value="64"/>
+                    <xs:minLength value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/aff/order" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:types="http://www.tibco.com/aff/commontypes" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/aff/order" version="1.1">
+            <!--  xs:element name="orderType"> -->
+            <xs:complexType name="orderType">
+                <xs:sequence>
+                    <xs:element name="orderID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="255"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="orderRef">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="125"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="header" type="headerType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="line" type="lineType"/>
+                    <xs:element minOccurs="0" name="request">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element ref="orderRequest"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="amendments">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element maxOccurs="unbounded" ref="orderAmendment"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <!-- </xs:element> -->
+            <xs:complexType name="orderRequestType">
+                <xs:sequence>
+                    <xs:element name="orderRef">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="125"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="header" type="headerRequestType"/>
+                    <xs:element maxOccurs="unbounded" name="line" type="lineRequestType"/>
+                    <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="headerType">
+                <xs:sequence>
+                    <xs:element name="submittedDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="description">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="customerID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="64"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="subscriberID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="64"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:choice minOccurs="0">
+                        <xs:element minOccurs="0" name="requiredByDate" type="xs:dateTime"/>
+                        <xs:element name="requiredOnDate" type="xs:dateTime"/>
+                    </xs:choice>
+                    <xs:element default="4" minOccurs="0" name="orderPriority">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:minInclusive value="0"/>
+                                <xs:maxInclusive value="9"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="invoiceAddress" type="types:addressType"/>
+                    <xs:element minOccurs="0" name="deliveryAddress" type="types:addressType"/>
+                    <xs:element minOccurs="0" name="notes">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="slaID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="udf"/>
+                    <xs:element name="pointOfNoReturn" type="xs:boolean"/>
+                    <xs:element name="status">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="22"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="statusChanged" type="xs:dateTime"/>
+                    <xs:element name="suspended" type="xs:boolean"/>
+                    <xs:element name="originator">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="planUniqueID" type="xs:string"/>
+                    <xs:element minOccurs="0" name="planStatus" type="xs:string"/>
+                    <xs:element minOccurs="0" name="planExpectedCompletionDate" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="warning" type="xs:string"/>
+                    <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="headerRequestType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="description">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:choice maxOccurs="2">
+                        <xs:element name="customerID">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="64"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="subscriberID">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="64"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:choice minOccurs="0">
+                        <xs:element minOccurs="0" name="requiredByDate" type="xs:dateTime"/>
+                        <xs:element name="requiredOnDate" type="xs:dateTime"/>
+                    </xs:choice>
+                    <xs:element default="4" minOccurs="0" name="orderPriority">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:integer">
+                                <xs:minInclusive value="0"/>
+                                <xs:maxInclusive value="9"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="invoiceAddress" type="types:addressType"/>
+                    <xs:element minOccurs="0" name="deliveryAddress" type="types:addressType"/>
+                    <xs:element minOccurs="0" name="notes">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="slaID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="udf"/>
+                    <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="lineType">
+                <xs:sequence>
+                    <xs:element name="lineNumber">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="10"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="subscriberID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="64"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="productID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="productVersion">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="quantity" type="xs:long"/>
+                    <xs:element name="uom">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="45"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliveryAddress" type="types:addressType"/>
+                    <xs:element name="action" type="xs:string"> </xs:element>
+                    <xs:element minOccurs="0" name="actionMode">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:choice minOccurs="0">
+                        <xs:element name="requiredByDate" type="xs:dateTime"/>
+                        <xs:element name="requiredOnDate" type="xs:dateTime"/>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="linkID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="45"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="inventoryID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="50"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notes">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="slaID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="udf"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="characteristic"/>
+                    <xs:element minOccurs="0" name="customerItemID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="64"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="status">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="statusChanged" type="xs:dateTime"/>
+                    <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="lineRequestType">
+                <xs:sequence>
+                    <xs:element name="lineNumber">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="10"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="subscriberID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="64"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="productID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="productVersion">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="quantity" type="xs:long"/>
+                    <xs:element name="uom">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="45"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="deliveryAddress" type="types:addressType"/>
+                    <xs:element name="action" type="xs:string"> </xs:element>
+                    <xs:element minOccurs="0" name="actionMode">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:choice minOccurs="0">
+                        <xs:element name="requiredByDate" type="xs:dateTime"/>
+                        <xs:element name="requiredOnDate" type="xs:dateTime"/>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="linkID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="45"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="inventoryID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="50"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="notes">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="slaID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="32"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="udf"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="characteristic"/>
+                    <xs:element minOccurs="0" name="customerItemID">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="64"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="OrderResultSetType">
+                <xs:sequence>
+                    <xs:element name="currentPageNumber" type="xs:int"/>
+                    <xs:element name="pagesize" type="xs:int"/>
+                    <xs:element name="pagination" type="xs:int"/>
+                    <xs:element name="totalRecordCount" type="xs:int"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="orderResult" type="orderType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="OrderResult" type="orderType"/>
+            <xs:element name="OrderResultSet" type="OrderResultSetType"/>
+            <xs:element name="udf">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="255"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="value" type="xs:string"/>
+                        <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="characteristic">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="name">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="45"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="description">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:maxLength value="255"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="value">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:maxLength value="45"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="type">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:maxLength value="45"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="value">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:maxLength value="45"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="valueFrom">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:maxLength value="19"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="valueTo">
+                                        <xs:simpleType>
+                                            <xs:restriction base="xs:string">
+                                                <xs:maxLength value="19"/>
+                                            </xs:restriction>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="orderRequest" type="orderRequestType"/>
+            <xs:element name="orderAmendment">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
+                        <xs:element ref="orderRequest"/>
+                        <xs:element minOccurs="0" name="extension" type="types:extensionType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="orderAmendmentMetaData">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="orderAmendmentSid" type="xs:int"/>
+                        <xs:element name="businessTransactionId" type="xs:string"/>
+                        <xs:element name="orderID" type="xs:string"/>
+                        <xs:element name="orderHistorySid" type="xs:string"/>
+                        <xs:element name="orderRef" type="xs:string"/>
+                        <xs:element name="corelationId" type="xs:string"/>
+                        <xs:element name="creationDate" type="xs:dateTime"/>
+                        <xs:element name="status" type="xs:string"/>
+                        <xs:element name="lastStatusChange" type="xs:dateTime"/>
+                        <xs:element name="extension" type="types:extensionType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="orderLock">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="token" type="xs:int"/>
+                        <xs:element name="orderId" type="xs:string"/>
+                        <xs:element name="acquireTimestamp" type="xs:dateTime"/>
+                        <xs:element name="lockOwner" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/aff/commontypes" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/aff/commontypes" version="1.1">
+            <xs:complexType name="addressType">
+                <xs:sequence>
+                    <xs:element name="line1">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="line2">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="line3">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="100"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="locality">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                                <xs:maxLength value="45"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="region">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="45"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="country">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                                <xs:maxLength value="2"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="postCode">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:minLength value="1"/>
+                                <xs:maxLength value="20"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="supplementaryLocation">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:maxLength value="45"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="noteType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="user" type="xs:string"/>
+                    <xs:element minOccurs="0" name="date" type="xs:dateTime"/>
+                    <xs:element name="note" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="paginationRequestType">
+                <xs:sequence>
+                    <xs:choice>
+                        <xs:element name="count" type="xs:int"/>
+                        <xs:sequence>
+                            <xs:element name="startRecord" type="xs:int"/>
+                            <xs:element name="endRecord" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:choice>
+                    <xs:element minOccurs="0" name="sort" type="sortType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="paginationReplyType">
+                <xs:sequence>
+                    <xs:element name="startRecord" type="xs:int"/>
+                    <xs:element name="endRecord" type="xs:int"/>
+                    <xs:element name="totalRecords" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="sortType">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="field">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="fieldName" type="xs:string"/>
+                                <xs:choice>
+                                    <xs:element name="ascending">
+                                        <xs:complexType/>
+                                    </xs:element>
+                                    <xs:element name="descending">
+                                        <xs:complexType/>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="batchType">
+                <xs:sequence>
+                    <xs:element name="batchID" type="xs:string"/>
+                    <xs:element name="elementCount" type="xs:long"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="extensionType">
+                <xs:annotation>
+                    <xs:documentation>
+				Generic extension element to pass small amount of custom (transparent) data within AFF messages.
+			</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="lax"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="CriteriaType">
+                <xs:sequence>
+                    <xs:element name="filter" type="xs:string"/>
+                    <xs:element name="sort" type="xs:string"/>
+                    <xs:element name="pagesize" type="xs:int"/>
+                    <xs:element name="requestpageNo" type="xs:int"/>
+                    <xs:element name="pagination" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="Criteria" type="CriteriaType"/>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/aff/plan" xmlns:pf="http://www.tibco.com/aff/planfragments" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/aff/plan" version="1.1">
+            <!-- This plan schema element is to be used while returning the soap response -->
+            <xs:complexType name="planType">
+                <xs:annotation>
+                    <xs:documentation>Plan type</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="planID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Unique identifier for the plan.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="orderID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Order ID that this plan is fulfilling.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="orderRef" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Order reference ID that this plan is fulfilling.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="originator" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Originator of the AOPD request that created this
+						plan.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="planCreationDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Date and time when this plan was created.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="status" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Current status of the plan.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="statusChanged" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Date and time the status was last changed.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="description" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Description for the plan.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="planStartDate" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Date and time when the plan started executing.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="planStartMillis" type="xs:long">
+                        <xs:annotation>
+                            <xs:documentation>Timestamp when the plan started executing.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="isAmendment" type="xs:boolean"/>
+                    <xs:element maxOccurs="unbounded" ref="planItem"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="udf" type="udfType"/>
+                </xs:sequence>
+                <!-- </xs:complexType> -->
+            </xs:complexType>
+            <!-- Type to be used for soap response -->
+            <xs:element name="plan" type="planType"/>
+            <xs:complexType name="planItemType">
+                <xs:annotation>
+                    <xs:documentation>Plan item type.</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="planItemID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Unique identifier for the plan item within the
+						plan.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="planItemName" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Identifier for the plan item name(Product
+						Description) within the plan.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="description" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Description for the plan item.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="planFragmentUniqueID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>The id of the process component to invoke when
+						executing the plan item.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="1" minOccurs="0" ref="pf:planFragment"/>
+                    <xs:element maxOccurs="unbounded" name="orderLine">
+                        <xs:annotation>
+                            <xs:documentation>A list of order lines for this plan item.
+					</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="orderLineNumber" type="xs:string">
+                                    <xs:annotation>
+                                        <xs:documentation>Order line number for the order line
+									associated with the plan item.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="eol" type="xs:boolean">
+                                    <xs:annotation>
+                                        <xs:documentation>End of line flag indicating that this plan
+									item is the last one for the specified order line number.
+								</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="action" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Action for the plan item.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="status" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Status for the plan item.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="statusChanged" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Timestamp as date/time when the plan item status
+						was changed.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="milestone" type="milestoneType">
+                        <xs:annotation>
+                            <xs:documentation>Intermediate milestone for the plan item.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="parentID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Plan Item Ids which are dependent on this plan item</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="childID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Plan Item Ids on which this plan item depends</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="siblingID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Plan Item Ids of sibling products for this plan
+						item</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="dependentID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Plan Item Ids of dependent products for this plan
+						item</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="startTimestamp" type="xs:long">
+                        <xs:annotation>
+                            <xs:documentation>Timestamp that indicates when the plan item
+						started execution.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="endTimestamp" type="xs:long">
+                        <xs:annotation>
+                            <xs:documentation>Timestamp that indicates when the plan item
+						completed execution.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="cancelled" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="isNonExecuting" type="xs:boolean"/>
+                    <xs:element minOccurs="0" name="isNoReciprocalAction" type="xs:boolean"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="udf" type="udfType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="planItem" type="planItemType"/>
+            <xs:complexType name="milestoneType">
+                <xs:annotation>
+                    <xs:documentation>Milestone type</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="milestoneID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Unique identifier for this milestone within the
+						plan item and plan.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="description" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Description of the milestone.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ready" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Indicates that the milestone is ready to fire.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="readyTime" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Date and time when the milestone became ready.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="status" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Status for the milestone.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="statusChanged" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Date and time the milestone status was last
+						changed.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="dependency" type="dependencyType">
+                        <xs:annotation>
+                            <xs:documentation>Dependency for this milestone before it can be
+						made ready.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="milestone" type="milestoneType"/>
+            <xs:complexType name="dependencyType">
+                <xs:annotation>
+                    <xs:documentation>Dependency type.</xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="dependencyID" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Unique identifier for this dependency.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="type" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Type of dependency.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ready" type="xs:boolean">
+                        <xs:annotation>
+                            <xs:documentation>Indicates that the dependency has been satisfied.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="readyTime" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Date and time the dependency was made ready.
+					</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="status" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Status of the dependency.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="statusChanged" type="xs:dateTime">
+                        <xs:annotation>
+                            <xs:documentation>Date and time when the dependency status was last
+						changed.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element minOccurs="0" name="timeDelta" type="xs:long">
+                        <xs:annotation>
+                            <xs:documentation>Time delta to apply to the dependency that will
+						delay marking the dependency as ready, in msec.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice>
+                        <xs:element name="external">
+                            <xs:annotation>
+                                <xs:documentation>External dependency type.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="eventName" type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>Name of the external event that satisfies
+										this dependency.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="eventID" type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>Unique identifier of the external event that
+										satisfies this dependency.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="eventTime" type="xs:dateTime">
+                                        <xs:annotation>
+                                            <xs:documentation>Date and time the external event occurred
+										that satisfied this dependency.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="point">
+                            <xs:annotation>
+                                <xs:documentation>Point dependency type.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="planItemID" type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>The plan item ID that uniquely identifies the
+										plan item that must reach a milestone for this dependency to
+										be satisfied.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="planID" type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>The plan ID for the plan item ID that
+										uniquely identifies the plan item that must reach a milestone
+										for this dependency to be satisfied. If omitted then the
+										current plan is assumed.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:choice>
+                                        <xs:element name="milestoneID" type="xs:string">
+                                            <xs:annotation>
+                                                <xs:documentation>The milestone ID within the plan item ID
+											that uniquely identifies the milestone that must fire this
+											dependency to be satisfied.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:element>
+                                        <xs:element name="end">
+                                            <xs:annotation>
+                                                <xs:documentation>The end milestone for a plan item.
+										</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType/>
+                                        </xs:element>
+                                    </xs:choice>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="time">
+                            <xs:annotation>
+                                <xs:documentation>Time dependency type.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element minOccurs="0" name="absoluteTime" type="xs:dateTime">
+                                        <xs:annotation>
+                                            <xs:documentation>The date and time that this dependency will
+										be satisfied.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="dependency" type="dependencyType"/>
+            <xs:complexType name="udfType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="evaluationPriority" type="xs:string"/>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                    <xs:element minOccurs="0" name="flavor" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="value" type="xs:string"/>
+                    <xs:element minOccurs="0" name="originalValue" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="udf" type="udfType"/>
+            <xs:complexType name="udfSetType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="evaluationPriority" type="xs:string"/>
+                    <xs:element minOccurs="0" name="type" type="xs:string"/>
+                    <xs:element minOccurs="0" name="flavor" type="xs:string"/>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="value" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="udfSet" type="udfSetType"/>
+            <xs:complexType name="planResultSetType">
+                <xs:sequence>
+                    <xs:element name="currentPageNumber" type="xs:int"/>
+                    <xs:element name="pagesize" type="xs:int"/>
+                    <xs:element name="pagination" type="xs:int"/>
+                    <xs:element name="totalRecordCount" type="xs:int"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="plan" type="planType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:element name="planResultSet" type="planResultSetType"/>
+            <!-- This plan schema type is to be used for the rest responses -->
+            <xs:element name="SetPlanItemRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="planID" type="xs:string"/>
+                        <xs:element name="planItem" type="planItemSetType"/>
+                        <xs:element minOccurs="0" name="replace">
+                            <xs:complexType/>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="businessTransactionID" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:complexType name="planItemSetType">
+                <xs:sequence>
+                    <xs:element name="planItemID" type="xs:string"/>
+                    <xs:element minOccurs="0" name="planItemName" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="udf" type="udfSetType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="parentID" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="childID" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="siblingID" type="xs:string"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="dependentID" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/aff/planfragments" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/aff/planfragments" version="1.1">
+            <xs:element name="PlanFragmentModels">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="planFragment"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="planFragment">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="planFragmentID" type="xs:string"/>
+                        <xs:element name="planFragmentName" type="xs:string"/>
+                        <xs:element minOccurs="0" name="planFragmentVersion" type="xs:string"/>
+                        <xs:element minOccurs="0" name="owner" type="xs:string"/>
+                        <xs:element minOccurs="0" name="record_Type" type="xs:string"/>
+                        <xs:element name="errorHandler" type="xs:string"/>
+                        <xs:element minOccurs="0" name="retry">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="retryOverride" type="xs:boolean"/>
+                                    <xs:element name="retryFailed" type="xs:boolean"/>
+                                    <xs:element name="retryCount" type="xs:int"/>
+                                    <xs:element name="retryDelay" type="xs:long"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" ref="section"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="section">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="startMilestoneID" type="xs:string"/>
+                        <xs:element name="endMilestoneID" type="xs:string"/>
+                        <xs:element name="typicalDuration" type="xs:long"/>
+                        <xs:element name="maximumDuration" type="xs:long"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+        <xs:schema xmlns="http://www.tibco.com/aff/orderservice/result" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.tibco.com/aff/orderservice/result" version="1.1">
+            <xs:element name="resultFault">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="code" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                        <xs:element minOccurs="0" name="description" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="resultStatus">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="deployment" type="xs:string"/>
+                        <xs:element name="service" type="xs:string"/>
+                        <xs:element name="operation" type="xs:string"/>
+                        <xs:element minOccurs="0" name="component" type="xs:string"/>
+                        <xs:element name="severity">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="E"/>
+                                    <xs:enumeration value="F"/>
+                                    <xs:enumeration value="I"/>
+                                    <xs:enumeration value="S"/>
+                                    <xs:enumeration value="W"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element name="code" type="xs:string"/>
+                        <xs:element name="message" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="message">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="lineNumber" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Order line number the message is associated with.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="type" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Message type</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="code" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Message code</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="description" type="xs:string">
+                            <xs:annotation>
+                                <xs:documentation>Message description</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="udf">
+                            <xs:annotation>
+                                <xs:documentation>Message user defined field</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name" type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>Message user defined field name.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                    <xs:element name="value" type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>Message user defined field value.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="ResultFaultException">
+        <wsdl:part element="fault:resultFault" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderExecutionPlanResponseMsg">
+        <wsdl:part element="os:GetOrderExecutionPlanResponse" name="getorderexecutionplanresparameters"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrdersResponseMsg">
+        <wsdl:part element="os:GetOrdersResponse" name="getordersresparameters"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrdersRequestMsg">
+        <wsdl:part element="os:GetOrdersRequest" name="getordersreqparameters"/>
+    </wsdl:message>
+    <wsdl:message name="CancelOrderRequestMsg">
+        <wsdl:part element="os:CancelOrderRequest" name="cancelorderreqparameters"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderDetailsResponseMsg">
+        <wsdl:part element="os:GetOrderDetailsResponse" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="SubmitOrderRequestMsg">
+        <wsdl:part element="os:SubmitOrderRequest" name="submitorderreqparameters"/>
+    </wsdl:message>
+    <wsdl:message name="SuspendOrderRequestMessage">
+        <wsdl:part element="os:SuspendOrderRequest" name="suspendOrderRequestParameters"/>
+    </wsdl:message>
+    <wsdl:message name="SuspendOrderResponseMessage">
+        <wsdl:part element="os:SuspendOrderResponse" name="suspendOrderResponseParameters"/>
+    </wsdl:message>
+    <wsdl:message name="ActivateOrderRequestMessage">
+        <wsdl:part element="os:ActivateOrderRequest" name="activateOrderRequestParameters"/>
+    </wsdl:message>
+    <wsdl:message name="ActivateOrderResponseMessage">
+        <wsdl:part element="os:ActivateOrderResponse" name="activateOrderResponseParameters"/>
+    </wsdl:message>
+    <wsdl:message name="SyncSubmitOrderResponseMsg">
+        <wsdl:part element="os:SyncSubmitOrderResponse" name="syncsubmitorderresparameters"/>
+    </wsdl:message>
+    <wsdl:message name="CancelOrderResponseMsg">
+        <wsdl:part element="os:CancelOrderResponse" name="canceltorderresparameters"/>
+    </wsdl:message>
+    <wsdl:message name="SubmitOrderResponseMsg">
+        <wsdl:part element="os:SubmitOrderResponse" name="submitorderresparameters"/>
+    </wsdl:message>
+    <wsdl:message name="AmendOrderRequestMsg">
+        <wsdl:part element="os:AmendOrderRequest" name="amendorderreqparameters"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderDetailsRequestMsg">
+        <wsdl:part element="os:GetOrderDetailsRequest" name="parameters"/>
+    </wsdl:message>
+    <wsdl:message name="GetOrderExecutionPlanRequestMsg">
+        <wsdl:part element="os:GetOrderExecutionPlanRequest" name="getorderexecutionplanreqparameters"/>
+    </wsdl:message>
+    <wsdl:message name="AmendOrderResponseMsg">
+        <wsdl:part element="os:AmendOrderResponse" name="amendtorderresparameters"/>
+    </wsdl:message>
+    <wsdl:message name="WithdrawOrderRequestMsg">
+        <wsdl:part element="os:WithdrawOrderRequest" name="withdraworderreqparameters"/>
+    </wsdl:message>
+    <wsdl:message name="WithdrawOrderResponseMsg">
+        <wsdl:part element="os:WithdrawOrderResponse" name="withdrawtorderresparameters"/>
+    </wsdl:message>
+    <wsdl:message name="PerformBulkOrderActionRequestMsg">
+        <wsdl:part element="os:PerformBulkOrderActionRequest" name="performbulkorderactionreqparameters"/>
+    </wsdl:message>
+    <wsdl:message name="PerformBulkOrderActionResponseMsg">
+        <wsdl:part element="os:PerformBulkOrderActionResponse" name="performbulkorderactionresparameters"/>
+    </wsdl:message>
+    <!-- <wsdl:message name="GetComparePlansRequestMsg">
+	    <wsdl:part element="os:ComparePlansRequest" name="compareplansreqparameters"/>
+	</wsdl:message>
+	<wsdl:message name="GetComparePlansResponseMsg">
+	    <wsdl:part element="os:ComparePlansResponse" name="compareplansresparameters"/>
+	</wsdl:message> -->
+    <wsdl:portType name="OrderService">
+        <wsdl:operation name="GetOrderDetails">
+            <wsdl:input message="tns:GetOrderDetailsRequestMsg"/>
+            <wsdl:output message="tns:GetOrderDetailsResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="SubmitOrder">
+            <wsdl:input message="tns:SubmitOrderRequestMsg"/>
+            <wsdl:output message="tns:SubmitOrderResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="SuspendOrder">
+            <wsdl:input message="tns:SuspendOrderRequestMessage"/>
+            <wsdl:output message="tns:SuspendOrderResponseMessage"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="ActivateOrder">
+            <wsdl:input message="tns:ActivateOrderRequestMessage"/>
+            <wsdl:output message="tns:ActivateOrderResponseMessage"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="SyncSubmitOrder">
+            <wsdl:input message="tns:SubmitOrderRequestMsg" wsaw:Action="http://www.tibco.com/aff/service/soap/SyncSubmitOrder"/>
+            <wsdl:output message="tns:SyncSubmitOrderResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="CancelOrder">
+            <wsdl:input message="tns:CancelOrderRequestMsg"/>
+            <wsdl:output message="tns:CancelOrderResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="AmendOrder">
+            <wsdl:input message="tns:AmendOrderRequestMsg"/>
+            <wsdl:output message="tns:AmendOrderResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderExecutionPlan">
+            <wsdl:input message="tns:GetOrderExecutionPlanRequestMsg"/>
+            <wsdl:output message="tns:GetOrderExecutionPlanResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrders">
+            <wsdl:input message="tns:GetOrdersRequestMsg"/>
+            <wsdl:output message="tns:GetOrdersResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="WithdrawOrder">
+            <wsdl:input message="tns:WithdrawOrderRequestMsg"/>
+            <wsdl:output message="tns:WithdrawOrderResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <wsdl:operation name="PerformBulkOrderAction">
+            <wsdl:input message="tns:PerformBulkOrderActionRequestMsg"/>
+            <wsdl:output message="tns:PerformBulkOrderActionResponseMsg"/>
+            <wsdl:fault message="tns:ResultFaultException" name="fault"/>
+        </wsdl:operation>
+        <!-- <wsdl:operation name="GetComparePlans">
+	      <wsdl:input message="tns:GetComparePlansRequestMsg" />
+	      <wsdl:output message="tns:GetComparePlansResponseMsg" />
+	      <wsdl:fault name="fault" message="tns:ResultFaultException"/>      
+	    </wsdl:operation> -->
+    </wsdl:portType>
+    <wsdl:binding name="OrderServiceSoapBinding" type="tns:OrderService">
+        <wsp:PolicyReference URI="#OrderServiceUTSecurityPolicy"/>
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetOrderDetails">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/GetOrderDetails"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="SubmitOrder">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/SubmitOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="SuspendOrder">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/SuspendOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ActivateOrder">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/ActivateOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="SyncSubmitOrder">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/SyncSubmitOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="CancelOrder">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/CancelOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="AmendOrder">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/AmendOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrderExecutionPlan">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/GetOrderExecutionPlan"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetOrders">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/GetOrders"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="WithdrawOrder">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/WithdrawOrder"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="PerformBulkOrderAction">
+            <soap:operation soapAction="http://www.tibco.com/aff/service/soap/PerformBulkOrderAction"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault">
+                <soap:fault name="fault" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <!-- <wsdl:operation name="GetComparePlans">
+	  		<wsdlsoap:operation
+	  			soapAction="http://www.tibco.com/aff/service/soap/GetComaprePlans" />
+	  		<wsdl:input>
+	  			<wsdlsoap:body use="literal" />
+	  		</wsdl:input>
+	  		<wsdl:output>
+	  			<wsdlsoap:body use="literal" />
+	  		</wsdl:output>
+	  		<wsdl:fault name="fault">
+	  			<wsdlsoap:fault use="literal" name="fault" />
+	  		</wsdl:fault>
+	  	</wsdl:operation> -->
+    </wsdl:binding>
+    <wsdl:service name="OrderService">
+        <wsdl:port binding="tns:OrderServiceSoapBinding" name="OrderServicePort">
+            <soap:address location="http://localhost:8080/omsServer/api/orderService"/>
+        </wsdl:port>
+    </wsdl:service>
+    <wsp:Policy wsu:Id="OrderServiceUTSecurityPolicy">
+        <wsp:ExactlyOne>
+            <wsp:All>
+                <wsaw:UsingAddressing xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" wsp:Optional="true"/>
+                <sp:TransportBinding>
+                    <wsp:Policy>
+                        <sp:TransportToken>
+                            <wsp:Policy>
+                                <sp:HttpsToken RequireClientCertificate="false"/>
+                            </wsp:Policy>
+                        </sp:TransportToken>
+                        <sp:Layout>
+                            <wsp:Policy>
+                                <sp:Lax/>
+                            </wsp:Policy>
+                        </sp:Layout>
+                        <sp:IncludeTimestamp/>
+                        <sp:AlgorithmSuite>
+                            <wsp:Policy>
+                                <sp:Basic128/>
+                            </wsp:Policy>
+                        </sp:AlgorithmSuite>
+                    </wsp:Policy>
+                </sp:TransportBinding>
+                <sp:SignedSupportingTokens>
+                    <wsp:Policy>
+                        <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                            <wsp:Policy>
+                                <sp:WssUsernameToken10/>
+                            </wsp:Policy>
+                        </sp:UsernameToken>
+                    </wsp:Policy>
+                </sp:SignedSupportingTokens>
+                <sp:Wss11/>
+            </wsp:All>
+        </wsp:ExactlyOne>
+    </wsp:Policy>
+</wsdl:definitions>

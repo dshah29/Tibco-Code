@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/loggingcontrol/v1"
+	 targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/loggingcontrol/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:complexType name="LogLevelRequest">
+		<xs:sequence>
+			<xs:element ref="EngineName" minOccurs="0"/>
+			<xs:element ref="ServiceName" minOccurs="0"/>
+			<xs:element ref="ProjectName" minOccurs="0"/>
+			<xs:element ref="NewLogLevel" minOccurs="0"/>
+			<xs:element ref="LogLevelFilters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LogLevelRequest" type="LogLevelRequest"/>
+	<xs:complexType name="LogLevelResponse">
+		<xs:sequence>
+			<xs:element ref="EngineName"/>
+			<xs:element ref="ServiceName"/>
+			<xs:element ref="ProjectName"/>
+			<xs:element ref="LogLevel"/>
+			<xs:element ref="LogLevelFilters" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LogLevelResponse" type="LogLevelResponse"/>
+	<xs:element name="EngineName" type="xs:string"/>
+	<xs:element name="ServiceName" type="xs:string"/>
+	<xs:element name="ProjectName" type="xs:string"/>
+	<xs:element name="NewLogLevel">
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="0"/>
+				<xs:maxInclusive value="4"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:complexType name="LogLevelFilter">
+		<xs:sequence>
+<xs:choice>
+			<xs:element ref="SystemFilter"/>
+			<xs:element ref="ServiceFilter"/>
+</xs:choice>
+			<xs:element ref="LogLevel" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SystemFilter" type="xs:string"/>
+	<xs:element name="ServiceFilter" type="xs:string"/>
+	<xs:element name="LogLevel" type="xs:int"/>
+	<xs:element name="LogLevelFilter" type="LogLevelFilter"/>
+	<xs:complexType name="LogLevelFilters">
+		<xs:sequence>
+			<xs:element ref="LogLevelFilter" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LogLevelFilters" type="LogLevelFilters"/>
+</xs:schema>

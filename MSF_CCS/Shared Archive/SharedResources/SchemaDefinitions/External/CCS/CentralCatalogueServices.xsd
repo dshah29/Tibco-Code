@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.three.co.uk/ccs/"
+	 targetNamespace="http://www.three.co.uk/ccs/"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+
+	<!-- Operation Main Elements-->
+	<xs:element name="release" type="release_t"/>
+
+	<!-- "release_t" TYPE -->
+	<xs:complexType name="release_t">
+		<xs:sequence>
+			<xs:element name="productDefinition" type="productDefinition_t" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="release_ag"/>
+	</xs:complexType>
+
+	<!-- "release_ag" ATTRIBUTE GROUP -->
+	<xs:attributeGroup name="release_ag">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="targetApplication" type="application_t" use="required"/>
+		<xs:attribute name="orgID" type="xs:string" use="required"/>
+	</xs:attributeGroup>
+
+	<!-- "application_t" TYPE -->
+	<xs:simpleType name="application_t">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="APP_B4N"/>
+			<xs:enumeration value="APP_DC"/>
+			<xs:enumeration value="APP_PROV"/>
+			<xs:enumeration value="APP_PSOFT"/>
+			<xs:enumeration value="APP_RJ"/>
+			<xs:enumeration value="APP_SPRINT"/>
+			<xs:enumeration value="APP_SV"/>
+			<xs:enumeration value="APP_3P"/>
+			<xs:enumeration value="APP_MCE"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- "productDefinition_t" TYPE -->
+	<xs:complexType name="productDefinition_t">
+		<xs:sequence>
+			<xs:element name="attribute" type="attribute_t" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="prodRef" type="prodRef_t" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="product_ag"/>
+	</xs:complexType>
+
+	<!-- "attribute_t" TYPE -->
+	<xs:complexType name="attribute_t">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- "prodRef_t" TYPE -->
+	<xs:complexType name="prodRef_t">
+		<xs:attributeGroup ref="product_ag"/>
+	</xs:complexType>
+
+	<!-- "productID" ATTRIBUTE GROUP -->
+	<xs:attributeGroup name="product_ag">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="revisionID" type="xs:string" use="required"/>
+		<xs:attribute name="type" type="productType_t" use="required"/>
+	</xs:attributeGroup>
+
+	<!-- "productType_t" TYPE -->
+	<xs:simpleType name="productType_t">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Accessory"/>
+			<xs:enumeration value="Action"/>
+			<xs:enumeration value="Addon-FPC"/>
+			<xs:enumeration value="Addon-FRD"/>
+			<xs:enumeration value="Addon-PPC"/>
+			<xs:enumeration value="Addon-PRD"/>
+			<xs:enumeration value="Addon-SAO"/>
+			<xs:enumeration value="Addon-SVC"/>
+			<xs:enumeration value="Addon-PPA"/>
+			<xs:enumeration value="Allowance"/>
+			<xs:enumeration value="Allowance-PL"/>
+			<xs:enumeration value="Allowance-AO"/>
+			<xs:enumeration value="Base Plan"/>
+			<xs:enumeration value="Charge-AC"/>
+			<xs:enumeration value="Charge-FD"/>
+			<xs:enumeration value="Charge-MRC-AO"/>
+			<xs:enumeration value="Charge-MRC-PL"/>
+			<xs:enumeration value="Charge-PD"/>
+			<xs:enumeration value="Device"/>
+			<xs:enumeration value="GL Split"/>
+			<xs:enumeration value="Service"/>
+			<xs:enumeration value="Tariff"/>
+			<xs:enumeration value="USIM"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- modified for LLD 1.3 version -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1"
+	 xmlns:ps="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1"
+	 targetNamespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/organisation/v1" schemaLocation="../../../../../../SharedResources/SchemaDefinitions/CDM/Common/CommonEnumerations/Organisation_v1.xsd"/>
+	<xs:import namespace="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" schemaLocation="../../../../../../SharedResources/SchemaDefinitions/CDM/Product/ProductSpecification/ProductSpecificationManagement/ProductSpecification_v1.xsd"/>
+	<xs:element name="GetProductsRequest" type="GetProductsRequestDefn"/>
+	<xs:element name="GetProductsResponse" type="GetProductsResponseDefn"/>
+	<xs:element name="PredefinedTransformation" type="TransformationDefn"/>
+	<xs:element name="Characteristics" type="CharacteristicsDefn"/>
+	<xs:complexType name="CharacteristicsDefn">
+		<xs:sequence>
+			<xs:element name="UDF" type="UDFDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransformationDefn">
+		<xs:sequence>
+			<xs:element name="Segment" type="xs:string"/>
+			<xs:element name="From" type="UDFDefn" minOccurs="0"/>
+			<xs:element name="To" type="UDFDefn" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UDFDefn">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string"/>
+			<xs:element name="value" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetProductsRequestDefn">
+		<xs:sequence>
+			<xs:element name="ProductFilter" type="ProductFilterDefn" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="View" type="ViewDefn" minOccurs="0"/>
+			<xs:element name="PredefinedTransformation" type="TransformationDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetProductsResponseDefn">
+		<xs:sequence>
+			<xs:element ref="ps:productSpecification" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="PredefinedTransformation" type="TransformationDefn" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ViewDefn">
+		<xs:sequence>
+			<xs:element name="Return" type="ReturnDefn" minOccurs="0"/>
+			<xs:element name="Relation" type="RelationDefn" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReturnDefn">
+		<xs:choice>
+			<xs:element name="type" type="RelationshipTypeDefn" maxOccurs="unbounded"/>
+			<xs:element name="allCharacteristics" type="xs:boolean"/>
+			<xs:element name="allRelationships" type="xs:boolean"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:simpleType name="RelationshipTypeDefn">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ProductComprisedOf"/>
+			<xs:enumeration value="ProductPricedBy"/>
+			<xs:enumeration value="PriceAlteredByAllowance"/>
+			<xs:enumeration value="CompatibleSegment"/>
+			<xs:enumeration value="Characteristic"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="RelationDefn">
+		<xs:sequence>
+			<xs:element name="Relationship" type="RelationshipDefn" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RelationshipDefn">
+		<xs:sequence>
+			<xs:element name="relationshipValue" type="xs:string"/>
+			<xs:element name="type" type="RelationshipTypeDefn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductFilterDefn">
+		<xs:sequence>
+			<xs:element name="productID" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="operation" type="OperationDefn"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="productName" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="operation" type="OperationDefn"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="class" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ProductClassDefn">
+							<xs:attribute name="operation" type="OperationDefn"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="subClass" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="ProductSubClassDefn">
+							<xs:attribute name="operation" type="OperationDefn"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="repository" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="RepositoryDefn"/>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="OperationDefn">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="lk"/>
+			<xs:enumeration value="eq"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Product Class Enumeration -->
+	<xs:simpleType name="_ProductClassDefn">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CFS"/>
+			<xs:enumeration value="RFS"/>
+			<xs:enumeration value="BUNDLE"/>
+			<xs:enumeration value="TECHNICALCOMPONENT"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProductClassDefn">
+		<xs:union memberTypes="_ProductClassDefn xs:string"/>
+	</xs:simpleType>
+
+	<!-- Repository Enumeration -->
+	<xs:simpleType name="_RepositoryDefn">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="PRODUCT"/>
+			<xs:enumeration value="ALLOWANCE"/>
+			<xs:enumeration value="CHARACTERISTIC"/>
+			<xs:enumeration value="DISCOUNT "/>
+			<xs:enumeration value="PARTY"/>
+			<xs:enumeration value="PRICE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RepositoryDefn">
+		<xs:union memberTypes="_RepositoryDefn xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="_ProductSubClassDefn">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ADDON-SAO"/>
+			<xs:enumeration value="ADDON-FRD"/>
+			<xs:enumeration value="ADDON-FPC"/>
+			<xs:enumeration value="ADDON-SVC"/>
+			<xs:enumeration value="ADDON-PPA"/>
+			<xs:enumeration value="ALLOWANCE"/>
+			<xs:enumeration value="BASE PLAN"/>
+			<xs:enumeration value="DEVICE"/>
+			<xs:enumeration value="SERVICE"/>
+			<xs:enumeration value="BUNDLE"/>
+			<xs:enumeration value="TARIFF"/>
+			<xs:enumeration value="USIM"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ProductSubClassDefn">
+		<xs:union memberTypes="_ProductSubClassDefn xs:string"/>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custCredit="http://three.co.uk/xsd/cdm/customer/customerprofile/customercreditprofilemanagement/customercreditprofile/v1"
+	 xmlns:cdtProf="http://three.co.uk/xsd/cdm/common/commondefinitions/creditprofilereference/v1"
+	 xmlns:ntes="http://three.co.uk/xsd/cdm/common/commondefinitions/notes/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customerprofile/customercreditprofilemanagement/customercreditprofile/v1"
+	 version="$Id: CustomerCreditProfile_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/notes/v1" schemaLocation="../../../Common/CommonDefinitions/Notes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../../../Common/CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/creditprofilereference/v1" schemaLocation="../../../Common/CommonDefinitions/CreditProfileReference_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!-- collection of Credit Status fields-->
+	<xsd:simpleType name="__CREDIT_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ACCEPT"/>
+			<xsd:enumeration value="REFER"/>
+			<xsd:enumeration value="DECLINE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_CREDIT_STATUS">
+		<xsd:union memberTypes="custCredit:__CREDIT_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="CustomerCreditProfileDetails">
+		<xsd:sequence>
+			<xsd:element name="customerCreditProfileID" type="custBASE:CustomerCreditID"/>
+			<xsd:element name="creditProfileDate" type="xsd:date"/>
+
+			<!--When the credit vet expires-->
+			<xsd:element name="vettingExpiryDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="creditRiskRating" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="creditScore" type="BASE:PopulatedString" minOccurs="0"/>
+
+			<!-- if they have been accepted for credit or not -->
+			<xsd:element name="creditStatus" type="custCredit:_CREDIT_STATUS" minOccurs="0"/>
+
+			<!-- provides the number of approved subscriptions from the vetting agency -->
+			<xsd:element name="numberOfApprovedSubs" type="xsd:integer" minOccurs="0"/>
+
+			<!-- if we introduce notes into here, we can use these to provide additional context around the actual credit - REUSE!-->
+			<xsd:element name="creditNotes" type="ntes:Notes" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Provide some base information about any deposits the customer might have placed to improve a credit terms.-->
+	<xsd:complexType name="CustomerDepositDetails">
+		<xsd:sequence>
+
+			<!--has the credit vendor asked for a deposit to be placed?-->
+			<xsd:element name="isVendorRequested" type="xsd:boolean"/>
+
+			<!--if we can have many credit vets we need to define which one has requested the deposit-->
+			<xsd:element name="creditVendorID" type="BASE:PopulatedString" maxOccurs="unbounded"/>
+
+			<!-- if so how many subscriptions need a deposit put down? -->
+			<xsd:element name="noSubsWithoutDeposit" type="xsd:integer" minOccurs="0"/>
+			<xsd:element name="noSubsWithDeposit" type="xsd:integer" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CustomerCreditProfile">
+		<xsd:sequence>
+			<xsd:element name="customerCreditProfileDetails" type="custCredit:CustomerCreditProfileDetails"/>
+			<xsd:element name="customerProfileReference" type="cdtProf:CreditProfileReference" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element name="customerDepositDetails" type="custCredit:CustomerDepositDetails" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomerCreditProfile" type="custCredit:CustomerCreditProfile"/>
+	<xsd:element name="customerCreditProfile" type="custCredit:CustomerCreditProfile">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CustomerCreditProfile instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

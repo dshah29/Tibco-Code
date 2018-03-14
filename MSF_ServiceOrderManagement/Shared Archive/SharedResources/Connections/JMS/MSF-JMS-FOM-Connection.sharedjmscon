@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>MSF-JMS-FOM-Connection</name>
+    <resourceType>ae.shared.JMSConnectionKey</resourceType>
+    <config>
+        <NamingEnvironment>
+            <UseJNDI>true</UseJNDI>
+            <ProviderURL>tcp://localhost:7222</ProviderURL>
+            <NamingURL>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/JNDIContextURL%%</NamingURL>
+            <NamingInitialContextFactory>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/JNDIContextFactory%%</NamingInitialContextFactory>
+            <TopicFactoryName>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/TopicConnectionFactory%%</TopicFactoryName>
+            <QueueFactoryName>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/QueueConnectionFactory%%</QueueFactoryName>
+            <NamingPrincipal>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/JNDIUserName%%</NamingPrincipal>
+            <NamingCredential>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/JNDIPassword%%</NamingCredential>
+        </NamingEnvironment>
+        <ConnectionAttributes>
+            <username>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/UserName%%</username>
+            <password>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/Password%%</password>
+            <clientID>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/ClientID%%</clientID>
+            <autoGenClientID>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/AutoGenerateClientID%%</autoGenClientID>
+        </ConnectionAttributes>
+        <UseXACF>false</UseXACF>
+    </config>
+</BWSharedResource>

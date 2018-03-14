@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sequence name="TREAnyHash">
+        <elementType isRef="true">/AESchemas/ae/TRETypes.aeschema#class.AnyHashElement</elementType>
+    </sequence>
+    <sequence name="TREAnyArray">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.any</elementType>
+    </sequence>
+    <sequence name="TransactionOptions">
+        <elementType isRef="true">/AESchemas/ae/PaymentGatewayAdapter_1/Common.aeschema#class.TransactionOption</elementType>
+        <maxLength>0</maxLength>
+    </sequence>
+    <sequence name="TRELongArray">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.i4</elementType>
+    </sequence>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

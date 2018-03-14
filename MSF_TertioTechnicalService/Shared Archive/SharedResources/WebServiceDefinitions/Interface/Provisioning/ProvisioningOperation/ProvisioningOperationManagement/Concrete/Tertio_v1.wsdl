@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns1="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:tns="http://xmlns.example.com/1445249797444" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:jms="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:jndi="http://www.tibco.com/namespaces/ws/2004/soap/apis/jndi" name="Untitled" targetNamespace="http://xmlns.example.com/1445249797444">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://three.co.uk/xsd/Interface/provisioning/provisioningoperation/provisioningoperationmanagement/mctertio/v1">
+            <xs:include schemaLocation="../../../../../../../SharedResources/SchemaDefinitions/Interface/Provisioning/ProvisioningOperation/ProvisioningOperationManagement/MC_Tertio_v1.xsd"/>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:service name="TertioTC_v1">
+        <wsdl:port binding="tns:TertioEndpoint1Binding" name="TertioEndpoint1">
+            <soap:address location=""/>
+            <jndi:context>
+                <jndi:property name="java.naming.factory.initial" type="java.lang.String">com.tibco.tibjms.naming.TibjmsInitialContextFactory</jndi:property>
+                <jndi:property name="java.naming.provider.url" type="java.lang.String">tibjmsnaming://localhost:7222</jndi:property>
+            </jndi:context>
+            <jms:connectionFactory>QueueConnectionFactory</jms:connectionFactory>
+            <jms:targetAddress destination="queue">MCE.DEV.REQ.PROV.PROVOPS.PROVOPSMGT.MCTERTIO.SOAP11.V1</jms:targetAddress>
+        </wsdl:port>
+    </wsdl:service>
+    <wsdl:portType name="Tertio">
+        <wsdl:operation name="Provident">
+            <wsdl:input message="tns:ProvidentRequest"/>
+            <wsdl:output message="tns:ProvidentResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TertioEndpoint1Binding" type="tns:Tertio">
+        <soap:binding style="document" transport="http://www.tibco.com/namespaces/ws/2004/soap/binding/JMS"/>
+        <jms:binding messageFormat="Text"/>
+        <wsdl:operation name="Provident">
+            <soap:operation soapAction="TertioEndpoint1/Provident" style="document"/>
+            <wsdl:input>
+                <soap:body parts="request" use="literal"/>
+                <soap:header message="tns:MessageContext" part="context" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="response" use="literal"/>
+                <soap:header message="tns:MessageContext" part="context" use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="fault1">
+                <soap:fault name="fault1" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="context"/>
+    </wsdl:message>
+    <wsdl:message name="ProvidentRequest">
+        <wsdl:part element="ns1:ProvidentRequest" name="request"/>
+    </wsdl:message>
+    <wsdl:message name="ProvidentResponse">
+        <wsdl:part element="ns1:ProvidentResponse" name="response"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="fault"/>
+    </wsdl:message>
+</wsdl:definitions>

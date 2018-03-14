@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1">
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/enumerations/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/Enumerations_v1.xsd"/>
+    <name>StandardEnumerations</name>
+    <resourceType>ae.shared.sharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <persistent>false</persistent>
+        <multi-engine>false</multi-engine>
+        <initialValue>byRef</initialValue>
+        <initialValueRef>/SharedResources/XML/Common/CommonDefinitions/MSF/StandardEnumerations.xml</initialValueRef>
+        <xsdString ref="pfx:EnumerationSets"/>
+    </config>
+</BWSharedResource>

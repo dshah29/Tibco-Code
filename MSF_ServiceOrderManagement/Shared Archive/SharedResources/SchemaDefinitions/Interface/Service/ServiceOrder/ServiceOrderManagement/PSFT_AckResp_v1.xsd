@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="ResultStatus">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="STATUS_CODE" type="xs:int"/>
+				<xs:element name="ERROR_CODE" type="xs:string" minOccurs="0"/>
+				<xs:element name="ERROR_DESCRIPTION" type="xs:string" minOccurs="0"/>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

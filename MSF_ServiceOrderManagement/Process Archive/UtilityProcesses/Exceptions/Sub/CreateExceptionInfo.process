@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptionifnotransform/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/xsd/internal/common/commondefinitions/msf/exceptiondefinition/v1" xmlns:pfx3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx2="http://www.tibco.com/pe/EngineTypes" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ext="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfoextended/v1" xmlns:pfx6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfotransform/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/pe/EngineTypes" schemaLocation="/SharedResources/SchemaDefinitions/External/BW/EngineTypes.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/internal/common/commondefinitions/msf/exceptiondefinition/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/ExceptionDefinition_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfotransform/v1" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Common/CommonDefinitions/MSF/ExceptionInfoTransform_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfoextended/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfoExtended_v1.xsd"/>
+    <pd:name>UtilityProcesses/Exceptions/Sub/CreateExceptionInfo.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="exceptionID" type="xsd:string"/>
+                    <xsd:element name="ExceptionType" type="xsd:string"/>
+                    <xsd:element name="timestamp" type="xsd:dateTime"/>
+                    <xsd:element name="ExceptionCode" type="xsd:string"/>
+                    <xsd:element name="transactionID" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Context" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Context2" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Severity" type="xsd:string"/>
+                    <xsd:element name="Description" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="faultCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="Comment" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="attributes" minOccurs="0">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element ref="pfx2:ErrorReport" minOccurs="0"/>
+                    <xsd:element name="exResponseCode" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exResponseMessage" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exRVSubjectName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exJMSQueueOrTopicName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exHTTPURL" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exFilePath" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exSourceName" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="exOperationName" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>285</pd:startX>
+    <pd:startY>46</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:choose>
+                <xsl:when test="exists($Parse-Transform/pfx3:ExceptionInfo)">
+                    <xsl:copy-of select="$Parse-Transform/pfx3:ExceptionInfo"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="$Map-ExceptionInfo/pfx3:ExceptionInfo"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx3:ExceptionInfo"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>939</pd:endX>
+    <pd:endY>46</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1349780757027</pd:targetNamespace>
+    <pd:activity name="GetInputMessageContext">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>409</pd:x>
+        <pd:y>46</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Map Transform Params">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>625</pd:x>
+        <pd:y>232</pd:y>
+        <config>
+            <element ref="pfx6:ExceptionInfoTransform"/>
+        </config>
+        <pd:inputBindings>
+            <pfx6:ExceptionInfoTransform>
+                <xsl:copy-of select="$Map-ExceptionInfo/pfx3:ExceptionInfo"/>
+                <pfx6:attributes>
+                    <xsl:copy-of select="$Start/root/attributes/*"/>
+                </pfx6:attributes>
+            </pfx6:ExceptionInfoTransform>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map-ExceptionInfo">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>549</pd:x>
+        <pd:y>46</pd:y>
+        <config>
+            <element ref="pfx3:ExceptionInfo"/>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ExceptionInfo>
+                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="exceptionID">
+                    <xsl:value-of select="$Start/root/exceptionID"/>
+                </xsl:attribute>
+                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="exceptionType">
+                    <xsl:value-of select="$Start/root/ExceptionType"/>
+                </xsl:attribute>
+                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="timestamp">
+                    <xsl:value-of select="$Start/root/timestamp"/>
+                </xsl:attribute>
+                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="exceptionCode">
+                    <xsl:value-of select="$Start/root/ExceptionCode"/>
+                </xsl:attribute>
+                <xsl:attribute xmlns:xsl="http://www.w3.org/1999/XSL/Transform" name="severity">
+                    <xsl:value-of select="$Start/root/Severity"/>
+                </xsl:attribute>
+                <xsl:attribute name="description">
+                    <xsl:value-of select="$Start/root/Description"/>
+                </xsl:attribute>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/Comment)">
+                        <xsl:if test="$Start/root/Comment">
+                            <xsl:attribute name="comment">
+                                <xsl:value-of select="$Start/root/Comment"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:when test="exists($Start/root/pfx2:ErrorReport/MsgCode) and ($Start/root/pfx2:ErrorReport/MsgCode !='') and ($Start/root/pfx2:ErrorReport/Msg !='')">
+                        <xsl:if test="$Start/root/pfx2:ErrorReport/Msg">
+                            <xsl:attribute name="comment">
+                                <xsl:value-of select="$Start/root/pfx2:ErrorReport/Msg"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:if test="$Start/root/Context">
+                    <xsl:attribute name="context">
+                        <xsl:value-of select="$Start/root/Context"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:if test="$_globalVariables/ns:GlobalVariables/MSF/Exceptions/ExtendedExceptions = &quot;true&quot;">
+                    <xsl:if test="exists($Start/root/exResponseCode)">
+                        <xsl:attribute name="ext:ResponseCode">
+                            <xsl:value-of select="$Start/root/exResponseCode"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/exResponseMessage)">
+                        <xsl:attribute name="ext:ResponseMessage">
+                            <xsl:value-of select="$Start/root/exResponseMessage"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/exRVSubjectName)">
+                        <xsl:attribute name="ext:RVSubject">
+                            <xsl:value-of select="$Start/root/exRVSubjectName"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/exJMSQueueOrTopicName)">
+                        <xsl:attribute name="ext:JMSDestinationName">
+                            <xsl:value-of select="$Start/root/exJMSQueueOrTopicName"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/exHTTPURL)">
+                        <xsl:attribute name="ext:HTTPURL">
+                            <xsl:value-of select="$Start/root/exHTTPURL"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/exFilePath)">
+                        <xsl:attribute name="ext:FilePath">
+                            <xsl:value-of select="$Start/root/exFilePath"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/exSourceName)">
+                        <xsl:attribute name="ext:Service">
+                            <xsl:value-of select="$Start/root/exSourceName"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="exists($Start/root/exOperationName)">
+                        <xsl:attribute name="ext:Operation">
+                            <xsl:value-of select="$Start/root/exOperationName"/>
+                        </xsl:attribute>
+                    </xsl:if>
+                </xsl:if>
+                <xsl:if test="$Start/root/Context2">
+                    <xsl:attribute name="context2">
+                        <xsl:value-of select="$Start/root/Context2"/>
+                    </xsl:attribute>
+                </xsl:if>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/faultCode)">
+                        <xsl:if test="$Start/root/pfx2:ErrorReport/MsgCode">
+                            <xsl:attribute name="faultCode">
+                                <xsl:value-of select="$Start/root/pfx2:ErrorReport/MsgCode"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                    </xsl:when>
+                    <xsl:when test="exists($Start/root/pfx2:ErrorReport/MsgCode) and ($Start/root/pfx2:ErrorReport/MsgCode !='')">
+                        <xsl:if test="$Start/root/pfx2:ErrorReport/MsgCode">
+                            <xsl:attribute name="faultCode">
+                                <xsl:value-of select="$Start/root/pfx2:ErrorReport/MsgCode"/>
+                            </xsl:attribute>
+                        </xsl:if>
+                    </xsl:when>
+                </xsl:choose>
+                <xsl:choose>
+                    <xsl:when test="exists($Start/root/transactionID)">
+                        <xsl:attribute name="transactionID">
+                            <xsl:value-of select="$Start/root/transactionID"/>
+                        </xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:attribute name="transactionID">
+                            <xsl:value-of select="$GetInputMessageContext/root/ns3:MessageContext/ns3:TransactionID"/>
+                        </xsl:attribute>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </pfx3:ExceptionInfo>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse Transform">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>885</pd:x>
+        <pd:y>224</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>false</validateOutput>
+            <term ref="pfx3:ExceptionInfo"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Transform-XML/xmlString"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Transform XML">
+        <pd:type>com.tibco.plugin.xml.XMLTransformActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLTransformActivity</pd:resourceType>
+        <pd:x>755</pd:x>
+        <pd:y>224</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <engine>TibcoXML</engine>
+            <stylesheet>/SharedResources/XSLT/Common/CommonDefinitions/MSF/ExceptionInfoTransform.xslt</stylesheet>
+        </config>
+        <pd:inputBindings>
+            <textInput>
+                <xmlString>
+                    <xsl:value-of select="tib:render-xml($Map-Transform-Params/pfx6:ExceptionInfoTransform, true(), false())"/>
+                </xmlString>
+            </textInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Map-ExceptionInfo</pd:from>
+        <pd:to>Map Transform Params</pd:to>
+        <pd:xpathDescription>Have Attributes</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>exists($Start/root/attributes)</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse Transform</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Transform XML</pd:from>
+        <pd:to>Parse Transform</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Transform Params</pd:from>
+        <pd:to>Transform XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map-ExceptionInfo</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>GetInputMessageContext</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GetInputMessageContext</pd:from>
+        <pd:to>Map-ExceptionInfo</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:label>
+        <pd:name>Label</pd:name>
+        <pd:description>Add any additional attributes to the ExceptionInfo.
+
+It should be possible to do this with the BW mapper.
+However, if the namespace of the attrbutes to be added
+are known to BW then this crashes the BW execution!
+
+Instead this method streams the required information as
+text into an XSLT transform and then parses the result.
+As the process is likely to be called infrequently this
+shouldn't be a great problem.</pd:description>
+        <pd:x>854</pd:x>
+        <pd:y>352</pd:y>
+        <pd:width>326</pd:width>
+        <pd:height>169</pd:height>
+        <pd:fontColor>-16777216</pd:fontColor>
+        <pd:color>-256</pd:color>
+        <pd:type>solid</pd:type>
+        <pd:thickness>1</pd:thickness>
+        <pd:fade>true</pd:fade>
+    </pd:label>
+</pd:ProcessDefinition>

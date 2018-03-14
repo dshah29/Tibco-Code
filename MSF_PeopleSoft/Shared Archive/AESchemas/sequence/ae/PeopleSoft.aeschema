@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Repository:repository xmlns="http://www.tibco.com/xmlns/aemeta/types/2002" xmlns:Repository="http://www.tibco.com/xmlns/repo/types/2002" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <sequence name="USER_IDENTIFIER">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.USER_IDENTIFIER</elementType>
+    </sequence>
+    <sequence name="BILATERAL_INFORMATION">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.BILATERAL_INFORMATION</elementType>
+    </sequence>
+    <sequence name="ProductCharge">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.ProductCharge</elementType>
+    </sequence>
+    <sequence name="SeqContact">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CONTACT</elementType>
+    </sequence>
+    <sequence name="SeqService">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.SERVICE</elementType>
+    </sequence>
+    <sequence name="SeqServiceList">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.SERVICE_LIST</elementType>
+    </sequence>
+    <sequence name="SeqService_1">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.SERVICE</elementType>
+    </sequence>
+    <sequence name="SeqAddonList">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.ADDON</elementType>
+    </sequence>
+    <sequence name="ADDON_ID">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="SeqProductServices">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.ProductServices</elementType>
+    </sequence>
+    <sequence name="SeqProductId">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="SeqEmailAddress">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.EmailAddress</elementType>
+    </sequence>
+    <sequence name="SeqProduct">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Product</elementType>
+    </sequence>
+    <sequence name="SeqPermissions">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Permissions</elementType>
+    </sequence>
+    <sequence name="SeqTelNos">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.TelNos</elementType>
+    </sequence>
+    <sequence name="SeqProductIdAddOns">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="SequenceOfString">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="SeqServiceChange">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.SERVICE_CHANGE</elementType>
+    </sequence>
+    <sequence name="SeqChangeType">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CHANGE_TYPE</elementType>
+    </sequence>
+    <sequence name="SeqInteraction">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.INTERACTION</elementType>
+    </sequence>
+    <sequence name="SeqNote">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.NOTE</elementType>
+    </sequence>
+    <sequence name="SeqAccessoryID">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="Accessory">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Accessory</elementType>
+    </sequence>
+    <sequence name="OPENCASE_ID">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="ACCESSORY5">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="SeqCase">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.OPENCASEID</elementType>
+    </sequence>
+    <sequence name="SeqAccessory">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.ACCESSORY1</elementType>
+    </sequence>
+    <sequence name="ACCESSORYID">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.ACESSORYLIST</elementType>
+    </sequence>
+    <sequence name="OPENCASEID">
+        <elementType isRef="true">/AESchemas/ae.aeschema#scalar.string</elementType>
+    </sequence>
+    <sequence name="SeqProducts">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CCS_Product</elementType>
+    </sequence>
+    <sequence name="SeqPrices">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CCS_Price</elementType>
+    </sequence>
+    <sequence name="SeqCE_ATTRIBUTES">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CE_ATTR</elementType>
+    </sequence>
+    <sequence name="ProductList">
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.Product</elementType>
+    </sequence>
+    <sequence name="CUSTOMER">
+        <maxLength>0</maxLength>
+        <elementType isRef="true">/AESchemas/ae/PeopleSoft/Common.aeschema#class.CUSTOMER</elementType>
+    </sequence>
+    <designer>
+        <lockedProperties/>
+        <fixedChildren/>
+        <resourceDescriptions/>
+    </designer>
+</Repository:repository>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:pfx="http://www.tibco.com/schemas/SingleViewTechnicalService/SharedResources/SchemaDefinitions/Internal/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ReferenceValues.xsd">
+    <import namespace="http://www.tibco.com/schemas/SingleViewTechnicalService/SharedResources/SchemaDefinitions/Internal/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ReferenceValues.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ReferenceValues.xsd"/>
+    <name>ReferenceValues</name>
+    <resourceType>ae.shared.sharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <persistent>false</persistent>
+        <multi-engine>false</multi-engine>
+        <initialValue>none</initialValue>
+        <xsdString ref="pfx:referenceValues"/>
+    </config>
+</BWSharedResource>

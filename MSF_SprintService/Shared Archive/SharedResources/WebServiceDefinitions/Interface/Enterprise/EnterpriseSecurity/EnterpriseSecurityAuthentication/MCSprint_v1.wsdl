@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Created by TIBCO WSDL-->
+<wsdl:definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns4="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityevents/mcaudit/v1" xmlns:ns3="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" xmlns:tns="http://three.co.uk/wsdl/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="MCSprintWSDL" targetNamespace="http://three.co.uk/wsdl/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1">
+    <wsdl:import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <wsdl:import location="../../../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"/>
+    <wsdl:import location="../../../../../SchemaDefinitions/Interface/Enterprise/EnterpriseSecurity/EnterpriseSecurityAuthentication/MCSprint_v1.xsd" namespace="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1"/>
+    <wsdl:portType name="Sprint">
+        <wsdl:operation name="AuthenticateThreeConnectUser">
+            <wsdl:input message="tns:AuthenticateThreeConnectUserRequest"/>
+            <wsdl:output message="tns:AuthenticateThreeConnectUserResponse"/>
+            <wsdl:fault message="tns:ExceptionInfo" name="fault1"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:message name="MessageContext">
+        <wsdl:part element="ns:MessageContext" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="AuthenticateThreeConnectUserRequest">
+        <wsdl:part element="ns3:AuthenticateThreeConnectUserRequest" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="AuthenticateThreeConnectUserResponse">
+        <wsdl:part element="ns3:AuthenticateThreeConnectUserResponse" name="part1"/>
+    </wsdl:message>
+    <wsdl:message name="ExceptionInfo">
+        <wsdl:part element="ns2:ExceptionInfo" name="part1"/>
+    </wsdl:message>
+</wsdl:definitions>

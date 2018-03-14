@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/servicecontext/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <pd:name>UtilityProcesses/MessageContext/CreateMessageContext_REQUEST.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>27</pd:startX>
+    <pd:startY>105</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Map-Message-Context/pfx:MessageContext"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:MessageContext"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>692</pd:endX>
+    <pd:endY>113</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1352809409418</pd:targetNamespace>
+    <pd:activity name="Map Message Context">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>428</pd:x>
+        <pd:y>119</pd:y>
+        <config>
+            <element ref="pfx:MessageContext"/>
+        </config>
+        <pd:inputBindings>
+            <pfx:MessageContext>
+                <xsl:attribute name="messageType">
+                    <xsl:value-of select="&quot;REQUEST&quot;"/>
+                </xsl:attribute>
+                <xsl:attribute name="messageID">
+                    <xsl:value-of select="$Generate-UUID/UUID"/>
+                </xsl:attribute>
+                <xsl:attribute name="timestamp">
+                    <xsl:value-of select="current-dateTime()"/>
+                </xsl:attribute>
+                <xsl:if test="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:CorrelationID">
+                    <pfx:CorrelationID>
+                        <xsl:value-of select="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:CorrelationID"/>
+                    </pfx:CorrelationID>
+                </xsl:if>
+                <pfx:TransactionID>
+                    <xsl:value-of select="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:TransactionID"/>
+                </pfx:TransactionID>
+                <xsl:if test="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:BusinessKey">
+                    <pfx:BusinessKey>
+                        <xsl:value-of select="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:BusinessKey"/>
+                    </pfx:BusinessKey>
+                </xsl:if>
+                <xsl:if test="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:ApplicationID">
+                    <pfx:ApplicationID>
+                        <xsl:value-of select="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:ApplicationID"/>
+                    </pfx:ApplicationID>
+                </xsl:if>
+                <xsl:if test="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:UserID">
+                    <pfx:UserID>
+                        <xsl:value-of select="$Get-Input-Message-Context/root/pfx:MessageContext/pfx:UserID"/>
+                    </pfx:UserID>
+                </xsl:if>
+                <xsl:if test="$Get-Service-Context/root/ns:ServiceContext/ns:ServiceInstanceID">
+                    <pfx:ServiceInstanceID>
+                        <xsl:value-of select="$Get-Service-Context/root/ns:ServiceContext/ns:ServiceInstanceID"/>
+                    </pfx:ServiceInstanceID>
+                </xsl:if>
+            </pfx:MessageContext>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate UUID">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>221</pd:x>
+        <pd:y>38</pd:y>
+        <config>
+            <processName>/UtilityProcesses/UUID/GenerateUUID.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Input Message Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>220</pd:x>
+        <pd:y>167</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/GetInputMessageContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Get Service Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>223</pd:x>
+        <pd:y>288</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ServiceContext/GetServiceContext.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Generate UUID</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate UUID</pd:from>
+        <pd:to>Map Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Message Context</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Get Input Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Input Message Context</pd:from>
+        <pd:to>Map Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Get Service Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Get Service Context</pd:from>
+        <pd:to>Map Message Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

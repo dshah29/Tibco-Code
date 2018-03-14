@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns3="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:tns="http://three.co.uk/wsdl/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://three.co.uk/wsdl/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1">
+    <import location="../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1"/>
+    <import location="../../../../../../SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/MessageContext_v1.xsd" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1"/>
+    <import location="../../../../../../SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd" namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1"/>
+    <message name="GetProductsRequest">
+        <part element="ns3:GetProductsRequest" name="part1"/>
+    </message>
+    <message name="GetProductsResponse">
+        <part element="ns3:GetProductsResponse" name="part1"/>
+    </message>
+    <message name="ExceptionInfo">
+        <part element="ns:ExceptionInfo" name="part1"/>
+    </message>
+    <message name="MessageContext">
+        <part element="ns2:MessageContext" name="header"/>
+    </message>
+    <portType name="PortType">
+        <operation name="GetProducts">
+            <input message="tns:GetProductsRequest"/>
+            <output message="tns:GetProductsResponse"/>
+            <fault message="tns:ExceptionInfo" name="fault1"/>
+        </operation>
+    </portType>
+</definitions>

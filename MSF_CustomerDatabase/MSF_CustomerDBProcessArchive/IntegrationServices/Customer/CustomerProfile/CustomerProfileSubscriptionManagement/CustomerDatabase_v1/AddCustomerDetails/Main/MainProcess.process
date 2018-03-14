@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:ns32="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns3="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/customerdetails/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://www.tibco.com/CommonLE2/namespace/Public/Logging/LogRequest.xsd" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://www.tibco.com/CommonLE/Client/Schema/ClientInterface.xsd" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx9="http://www.tibco.com/namespaces/tnt/plugins/as" xmlns:pfx8="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1" xmlns:pfx7="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/addcustomerdetails/v1" xmlns:pfx6="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/querycustomerdetails/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/querycustomerdetails/v1"/>
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/querycustomerdetails/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/QueryCustomerDetails_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/customer/customerprofile/customerprofilesubscriptionmanagement/addcustomerdetails/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/AddCustomerDetails_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/mccustomerdatabase/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/MC_CustomerDatabase_v1.xsd"/>
+    <pd:name>IntegrationServices/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/CustomerDatabase_v1/AddCustomerDetails/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType ref="pfx8:AddCustomerDetailsRequest"/>
+    <pd:startX>168</pd:startX>
+    <pd:startY>195</pd:startY>
+    <pd:returnBindings>
+        <xsl:for-each select="$Put/pfx8:AddCustomerDetailsResponse">
+            <pfx8:AddCustomerDetailsResponse/>
+        </xsl:for-each>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx8:AddCustomerDetailsResponse"/>
+    <pd:endX>690</pd:endX>
+    <pd:endY>195</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213</pd:targetNamespace>
+    <pd:activity name="Put">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>442</pd:x>
+        <pd:y>194</pd:y>
+        <config>
+            <processName>/IntegrationServices/Customer/CustomerProfile/CustomerProfileSubscriptionManagement/CustomerDatabase_v1/Common/Put.process</processName>
+        </config>
+        <pd:inputBindings>
+            <group>
+                <xsl:copy-of select="$Start/pfx8:AddCustomerDetailsRequest"/>
+                <lastUpdate>
+                    <xsl:value-of select="current-dateTime()"/>
+                </lastUpdate>
+            </group>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>575</pd:x>
+        <pd:y>195</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Put/pfx8:AddCustomerDetailsResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>310</pd:x>
+        <pd:y>195</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx8:AddCustomerDetailsRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="CreateBusinessException-MandatoryFields">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>312</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateBusinessException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <ExceptionCode>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Mandatory-Value-Missing-Error/Code"/>
+                </ExceptionCode>
+                <Severity>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/MSF/Exceptions/Severity/Error"/>
+                </Severity>
+                <Description>
+                    <xsl:value-of select="$_globalVariables/ns1:GlobalVariables/ExceptionCodes/MSF/Activity-Errors/Mandatory-Value-Missing-Error/Description"/>
+                </Description>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate-Error-MandatoryFields">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>481</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <faultName>Schema0</faultName>
+        </config>
+        <pd:inputBindings>
+            <pfx3:ActivityInput>
+                <data>
+                    <xsl:copy-of select="$CreateBusinessException-MandatoryFields/root/pfx2:Exception"/>
+                </data>
+            </pfx3:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Put</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>Put</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>otherwise</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>CreateBusinessException-MandatoryFields</pd:to>
+        <pd:xpathDescription>InvalidInput</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>count($Start/pfx8:AddCustomerDetailsRequest/pfx8:AddCustomerDetailRequest[not(pfx8:MSISDN!="" or pfx8:accountID!="" or pfx8:CRMID!="")])&gt;0</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>CreateBusinessException-MandatoryFields</pd:from>
+        <pd:to>Generate-Error-MandatoryFields</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

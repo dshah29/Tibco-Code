@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource xmlns:pfx="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd">
+    <import namespace="http://www.tibco.com/schemas/OrderFallout/Shared Resource/Schema/common/exceptionClassification/exceptionClassification.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/exceptionClassification/exceptionClassification.xsd"/>
+    <name>Error Code List</name>
+    <resourceType>ae.shared.sharedVariable</resourceType>
+    <config xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+        <initialValue>none</initialValue>
+        <xsdString ref="pfx:exceptionClassifications"/>
+    </config>
+</BWSharedResource>

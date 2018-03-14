@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://three.co.uk/xsd/cdm/[sampleschema]/v[n]" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:pfx="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/pe/EngineTypes" xmlns:ns1="http://www.tibco.com/pe/DeployedVarsType" xmlns:ns4="http://www.tibco.com/cim/services/mastercatalogrecord/wsdl/2.0" xmlns:ns3="http://www.tibco.com/AFF/V4.0.0/classes/resultstatus" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx5="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" xmlns:pfx31="http://www.tibco.com/cim/services/mastercatalogrecordworkitem/wsdl/2.0" xmlns:pfx4="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:pfx8="http://www.tibco.com/pe/WriteToLogActivitySchema" xmlns:pfx7="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" xmlns:pfx6="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1">
+    <xsd:import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" schemaLocation="/SharedResources/SchemaDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/AFF/V4.0.0/services/orchestrator/execution" schemaLocation="/SharedResources/SchemaDefinitions/Resource/FOS/orchestrator/sharedResources/schemas/services/OrchestratorExecutionService.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/cdm/order/orderitemdefinition/order/v1" schemaLocation="/SharedResources/SchemaDefinitions/CDM/Order/OrderItemDefinition/Order_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/interface/product/productspecification/productspecificationmanagement/mcfcmanagement/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/MCFCManagement_v1.xsd"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetPackagePriceHistory/Main/MainProcess.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx6:GetPackagePriceHistoryRequest" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>65</pd:startX>
+    <pd:startY>47</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <xsl:copy-of select="$Retrieve-PackagePrice-History/pfx6:GetPackagePriceHistoryResponse"/>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx6:GetPackagePriceHistoryResponse" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:endType>
+    <pd:endX>528</pd:endX>
+    <pd:endY>47</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355141032213/MainProcess</pd:targetNamespace>
+    <pd:activity name="Retrieve PackagePrice History">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>285</pd:x>
+        <pd:y>62</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetPackagePriceHistory/Sub/RetrievePackagePriceHistory.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <pfx6:GetPackagePriceHistoryRequest>
+                    <xsl:choose>
+                        <xsl:when test="string-length($Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:MSISDN)>0">
+                            <xsl:choose>
+                                <xsl:when test="substring($Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:MSISDN,1,2)=&quot;44&quot;">
+                                    <pfx6:MSISDN>
+                                        <xsl:value-of select="concat(0,substring-after($Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:MSISDN,'44'))"/>
+                                    </pfx6:MSISDN>
+                                </xsl:when>
+                                <xsl:when test="substring($Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:MSISDN,1,3)=&quot;353&quot;">
+                                    <pfx6:MSISDN>
+                                        <xsl:value-of select="concat(0,substring-after($Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:MSISDN,'353'))"/>
+                                    </pfx6:MSISDN>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <pfx6:MSISDN>
+                                        <xsl:value-of select="$Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:MSISDN"/>
+                                    </pfx6:MSISDN>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx6:accountNumber>
+                                <xsl:value-of select="$Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:accountNumber"/>
+                            </pfx6:accountNumber>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:if test="$Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:startDate">
+                        <pfx6:startDate>
+                            <xsl:value-of select="$Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:startDate"/>
+                        </pfx6:startDate>
+                    </xsl:if>
+                    <xsl:if test="$Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:endDate">
+                        <pfx6:endDate>
+                            <xsl:value-of select="$Start/root/pfx6:GetPackagePriceHistoryRequest/pfx6:endDate"/>
+                        </pfx6:endDate>
+                    </xsl:if>
+                </pfx6:GetPackagePriceHistoryRequest>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>412</pd:x>
+        <pd:y>47</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Retrieve-PackagePrice-History/pfx6:GetPackagePriceHistoryResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>164</pd:x>
+        <pd:y>47</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns2:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/root/pfx6:GetPackagePriceHistoryRequest"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Retrieve PackagePrice History</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>Retrieve PackagePrice History</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

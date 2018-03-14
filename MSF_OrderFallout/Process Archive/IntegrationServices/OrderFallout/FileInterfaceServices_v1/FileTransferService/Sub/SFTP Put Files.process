@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns1="http://www.tibco.com/namespaces/tnt/plugins/file" xmlns:ns="http://www.tibco.com/pe/DeployedVarsType" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:ns12="http://www.tibco.com/namespaces/tnt/plugins/file/v2" xmlns:ns13="www.tibco.com/plugin/Sleep">
+    <pd:name>IntegrationServices/OrderFallout/FileInterfaceServices_v1/FileTransferService/Sub/SFTP Put Files.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="LocalResponseFile" type="xsd:string"/>
+                    <xsd:element name="LocalRequestFile" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>65</pd:startX>
+    <pd:startY>158</pd:startY>
+    <pd:returnBindings>
+        <root>
+            <TextContent>
+                <xsl:value-of select="$Read-File/ns1:ReadActivityOutputTextClass/fileContent/textContent"/>
+            </TextContent>
+        </root>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endX>742</pd:endX>
+    <pd:endY>156</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1457686495720/SFTP Get Files</pd:targetNamespace>
+    <pd:group name="GetRemoteFiles">
+        <pd:type>com.tibco.pe.core.LoopGroup</pd:type>
+        <pd:resourceType>ae.process.group</pd:resourceType>
+        <pd:x>251</pd:x>
+        <pd:y>9</pd:y>
+        <pd:width>433</pd:width>
+        <pd:height>283</pd:height>
+        <pd:collapsedWidth>57</pd:collapsedWidth>
+        <pd:collapsedHeight>70</pd:collapsedHeight>
+        <pd:groupVariables/>
+        <pd:joinToggle>inherit</pd:joinToggle>
+        <config>
+            <pd:groupType>simpleGroup</pd:groupType>
+            <pd:serializable>false</pd:serializable>
+        </config>
+        <pd:inputBindings/>
+        <pd:expanded>true</pd:expanded>
+        <pd:transition>
+            <pd:from>start</pd:from>
+            <pd:to>isSFTP Available</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>isSFTP Available</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Curved</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>otherwise</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Remove Response Local Files</pd:from>
+            <pd:to>end</pd:to>
+            <pd:lineType>Multiple Bends</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>Sleep So SFTP Complete</pd:from>
+            <pd:to>Remove Response Local Files</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>SFTP Put</pd:from>
+            <pd:to>Sleep So SFTP Complete</pd:to>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>always</pd:conditionType>
+        </pd:transition>
+        <pd:transition>
+            <pd:from>isSFTP Available</pd:from>
+            <pd:to>SFTP Put</pd:to>
+            <pd:xpathDescription>Available</pd:xpathDescription>
+            <pd:lineType>Default</pd:lineType>
+            <pd:lineColor>-16777216</pd:lineColor>
+            <pd:conditionType>xpath</pd:conditionType>
+            <pd:xpath>$_globalVariables/ns:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/isSFTPServerAvailable='true'</pd:xpath>
+        </pd:transition>
+        <pd:activity name="Sleep So SFTP Complete">
+            <pd:type>com.tibco.plugin.timer.SleepActivity</pd:type>
+            <pd:resourceType>ae.activities.sleep</pd:resourceType>
+            <pd:x>425</pd:x>
+            <pd:y>93</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns13:SleepInputSchema>
+                    <IntervalInMillisec>
+                        <xsl:value-of select="$_globalVariables/ns:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Local/LocalFileDeleteSleepIntervalMilliSecond"/>
+                    </IntervalInMillisec>
+                </ns13:SleepInputSchema>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="SFTP Put">
+            <pd:type>com.tibco.plugin.sp.SFTPPutActivity</pd:type>
+            <pd:resourceType>ae.activities.SFTPPutActivityUI</pd:resourceType>
+            <pd:x>325</pd:x>
+            <pd:y>85</pd:y>
+            <config>
+                <Timeout>120000</Timeout>
+                <FireWall>false</FireWall>
+                <isBinary>false</isBinary>
+                <Append>false</Append>
+                <useProcessData>false</useProcessData>
+                <persistTimestamp>false</persistTimestamp>
+                <Overwrite>true</Overwrite>
+                <SharedUserData>/SharedResources/Connections/SFTP/SFTP Connection.sharedsftp</SharedUserData>
+            </config>
+            <pd:inputBindings>
+                <SFTPPutInputDataFile>
+                    <RemoteFileName>
+                        <xsl:value-of select="concat($_globalVariables/ns:GlobalVariables/IntegrationServices/OrderFallout/ExceptionHandler/ExceptionRequest/FileServiceHandler/Remote/RemoteFileDirectoryResponse,'/',tib:substring-after-last($Start/root/LocalResponseFile,'/'))"/>
+                    </RemoteFileName>
+                    <LocalFileName>
+                        <xsl:value-of select="$Start/root/LocalResponseFile"/>
+                    </LocalFileName>
+                </SFTPPutInputDataFile>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="Remove Response Local Files">
+            <pd:type>com.tibco.plugin.file.FileRemoveActivity</pd:type>
+            <pd:resourceType>ae.activities.FileRemoveActivity</pd:resourceType>
+            <pd:x>565</pd:x>
+            <pd:y>92</pd:y>
+            <config/>
+            <pd:inputBindings>
+                <ns1:RemoveActivityInputClass>
+                    <fileName>
+                        <xsl:value-of select="$Start/root/LocalResponseFile"/>
+                    </fileName>
+                </ns1:RemoveActivityInputClass>
+            </pd:inputBindings>
+        </pd:activity>
+        <pd:activity name="isSFTP Available">
+            <pd:type>com.tibco.plugin.timer.NullActivity</pd:type>
+            <pd:resourceType>ae.activities.null</pd:resourceType>
+            <pd:x>326</pd:x>
+            <pd:y>206</pd:y>
+            <config/>
+            <pd:inputBindings/>
+        </pd:activity>
+    </pd:group>
+    <pd:activity name="Remove Local Request File">
+        <pd:type>com.tibco.plugin.file.FileRemoveActivity</pd:type>
+        <pd:resourceType>ae.activities.FileRemoveActivity</pd:resourceType>
+        <pd:x>71</pd:x>
+        <pd:y>280</pd:y>
+        <config/>
+        <pd:inputBindings>
+            <ns1:RemoveActivityInputClass>
+                <fileName>
+                    <xsl:value-of select="$Start/root/LocalRequestFile"/>
+                </fileName>
+            </ns1:RemoveActivityInputClass>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>GetRemoteFiles</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Remove Local Request File</pd:to>
+        <pd:xpathDescription>Request File Removal</pd:xpathDescription>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>xpath</pd:conditionType>
+        <pd:xpath>$Start/root/LocalRequestFile!=""</pd:xpath>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Remove Local Request File</pd:from>
+        <pd:to>GetRemoteFiles</pd:to>
+        <pd:lineType>Multiple Bends</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>GetRemoteFiles</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://www.tibco.com/aff/orderservice/result" xmlns:ns1="http://xmlns.tibco.com/encodings/mime" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/aff/orderservice" xmlns:ns3="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:ns12="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:pfx="http://xmlns.example.com/1301395797508">
+    <xs:import xmlns:xs="http://www.w3.org/2001/XMLSchema" namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" schemaLocation="/SharedResources/SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/Exception_v1.xsd"/>
+    <wsdl:import namespace="http://xmlns.example.com/1301395797508" location="/SharedResources/WebServiceDefinitions/Interface/FOS/Concrete/jms/OrderServiceJMS.wsdl"/>
+    <pd:name>UtilityProcesses/FOSDataAccessInterfaces/withdrawOrder.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType wsMsgRef="pfx:WithdrawOrderRequestMsg"/>
+    <pd:startX>65</pd:startX>
+    <pd:startY>86</pd:startY>
+    <pd:returnBindings>
+        <pfx:WithdrawOrderResponseMsg>
+            <withdrawtorderresparameters>
+                <xsl:copy-of select="$WithdrawOrder/outputMessage/ns:WithdrawOrderResponse"/>
+            </withdrawtorderresparameters>
+        </pfx:WithdrawOrderResponseMsg>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType wsMsgRef="pfx:WithdrawOrderResponseMsg"/>
+    <pd:endX>447</pd:endX>
+    <pd:endY>86</pd:endY>
+    <pd:errorSchemas>
+        <WithdrawOrder_Exception ref="pfx2:Exception"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1461062298929/withdrawOrder</pd:targetNamespace>
+    <pd:activity name="Catch Completed Order">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>84</pd:x>
+        <pd:y>176</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=ResultFaultException</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate Error - No Record Exists">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>254</pd:x>
+        <pd:y>176</pd:y>
+        <config>
+            <faultName>WithdrawOrder_Exception</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <message>
+                    <xsl:value-of select="$Catch-Completed-Order/ResultFaultException/detail/ns2:resultFault/ns2:message"/>
+                </message>
+                <messageCode>
+                    <xsl:value-of select="$Catch-Completed-Order/ResultFaultException/detail/ns2:resultFault/ns2:code"/>
+                </messageCode>
+                <data>
+                    <pfx2:Exception>
+                        <ns3:ErrorReport>
+                            <StackTrace>
+                                <xsl:value-of select="$_error/ns3:ErrorReport/StackTrace"/>
+                            </StackTrace>
+                            <Msg>
+                                <xsl:value-of select="$Catch-Completed-Order/ResultFaultException/detail/ns2:resultFault/ns2:message"/>
+                            </Msg>
+                            <FullClass>
+                                <xsl:value-of select="$_error/ns3:ErrorReport/FullClass"/>
+                            </FullClass>
+                            <Class>
+                                <xsl:value-of select="$_error/ns3:ErrorReport/Class"/>
+                            </Class>
+                            <ProcessStack>
+                                <xsl:value-of select="$_error/ns3:ErrorReport/ProcessStack"/>
+                            </ProcessStack>
+                            <MsgCode>
+                                <xsl:value-of select="$Catch-Completed-Order/ResultFaultException/detail/ns2:resultFault/ns2:code"/>
+                            </MsgCode>
+                        </ns3:ErrorReport>
+                    </pfx2:Exception>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>352</pd:x>
+        <pd:y>86</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns3:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$WithdrawOrder/outputMessage/ns:WithdrawOrderResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TraceStart">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>148</pd:x>
+        <pd:y>86</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns3:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Start/pfx:WithdrawOrderRequestMsg"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="WithdrawOrder">
+        <pd:type>com.tibco.plugin.soap.SOAPSendReceiveActivity</pd:type>
+        <pd:resourceType>ae.activities.SOAPSendReceiveUI</pd:resourceType>
+        <pd:x>253</pd:x>
+        <pd:y>86</pd:y>
+        <config>
+            <timeout>0</timeout>
+            <soapAttachmentStyle>SwA</soapAttachmentStyle>
+            <timeoutType>Seconds</timeoutType>
+            <service>pfx:Service</service>
+            <servicePort>OrderServiceEndpoint</servicePort>
+            <operation>WithdrawOrder</operation>
+            <soapAction>/Resource/Service.serviceagent/OrderServiceEndpoint/WithdrawOrder</soapAction>
+            <sharedChannels>
+                <jmsChannel>
+                    <targetService/>
+                    <JMSPriority>4</JMSPriority>
+                    <JMSTimeToLive>0</JMSTimeToLive>
+                    <JMSDeliveryMode>PERSISTENT</JMSDeliveryMode>
+                    <JMSMessageType>Text</JMSMessageType>
+                    <NamingURL>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/JNDIContextURL%%</NamingURL>
+                    <NamingInitialContextFactory>com.tibco.tibjms.naming.TibjmsInitialContextFactory</NamingInitialContextFactory>
+                    <NamingPrincipal>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/JNDIUserName%%</NamingPrincipal>
+                    <NamingCredential>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/JNDIPassword%%</NamingCredential>
+                    <ConnectionFactory>QueueConnectionFactory</ConnectionFactory>
+                    <JMSTo>tibco.aff.oms.ordersService</JMSTo>
+                    <JMSUserName>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/UserName%%</JMSUserName>
+                    <JMSPassword>%%SharedResources/Connections/JMS/MSF-JMS-FOM-Connection/Password%%</JMSPassword>
+                    <SoapJmsW3cFlag>false</SoapJmsW3cFlag>
+                </jmsChannel>
+            </sharedChannels>
+        </config>
+        <pd:inputBindings>
+            <inputMessage>
+                <xsl:copy-of select="$Start/pfx:WithdrawOrderRequestMsg/withdraworderreqparameters/ns:WithdrawOrderRequest"/>
+            </inputMessage>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>552</pd:x>
+        <pd:y>88</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate All Error">
+        <pd:type>com.tibco.pe.core.GenerateErrorActivity</pd:type>
+        <pd:resourceType>ae.activities.throw</pd:resourceType>
+        <pd:x>690</pd:x>
+        <pd:y>88</pd:y>
+        <config>
+            <faultName>WithdrawOrder_Exception</faultName>
+        </config>
+        <pd:inputBindings>
+            <ns12:ActivityInput>
+                <data>
+                    <pfx2:Exception>
+                        <xsl:copy-of select="$_error/ns3:ErrorReport"/>
+                    </pfx2:Exception>
+                </data>
+            </ns12:ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>TraceStart</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>WithdrawOrder</pd:from>
+        <pd:to>TraceEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch Completed Order</pd:from>
+        <pd:to>Generate Error - No Record Exists</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceStart</pd:from>
+        <pd:to>WithdrawOrder</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TraceEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Generate All Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

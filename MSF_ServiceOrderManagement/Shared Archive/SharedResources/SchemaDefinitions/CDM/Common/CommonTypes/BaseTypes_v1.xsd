@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 version="$Id: BaseTypes_v1.xsd 5682 2016-02-10 23:58:08Z mgarg $"
+	 elementFormDefault="unqualified"
+	 attributeFormDefault="unqualified">
+	<xsd:simpleType name="VersionMarker">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="0"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PopulatedString">
+		<xsd:restriction base="xsd:string">
+			<xsd:minLength value="1"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="CTN">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="(08|07|[+]?447|[+]?3538)[0-9]{8,9}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="MSISDN">
+		<xsd:restriction base="BASE:CTN"/>
+	</xsd:simpleType>
+	<xsd:simpleType name="BAN">
+		<xsd:restriction base="xsd:integer">
+			<xsd:pattern value="[0-9]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="BEN">
+		<xsd:restriction base="xsd:integer">
+			<xsd:pattern value="[0-9]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="POSITIVEINT">
+		<xsd:restriction base="xsd:integer">
+			<xsd:pattern value="[0-9]+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PHONENUMBER">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[+]?[0-9]{5,15}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SMSNUMBER">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[+]?[0-9]{3,15}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SMTP_EMAILADDRESS">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([\.a-zA-Z0-9_\-])+@([\.a-zA-Z0-9_\-])+(([\.a-zA-Z0-9_\-])*\.([\.a-zA-Z0-9_\-])+)+"/>
+			<xsd:pattern value="[^&lt;]*&lt;([\.a-zA-Z0-9_\-])+@([\.a-zA-Z0-9_\-])+(([\.a-zA-Z0-9_\-])*\.([\.a-zA-Z0-9_\-])+)+>"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="EMAILADDRESS">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([\.a-zA-Z0-9_\-])+@([\.a-zA-Z0-9_\-])+(([\.a-zA-Z0-9_\-])*\.([\.a-zA-Z0-9_\-])+)+"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="POSTCODE">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[a-zA-Z0-9 ]{2,20}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IMEI">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{15,16}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="UUID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="([a-fA-F0-9]{8})-([a-fA-F0-9]{4})-([a-fA-F0-9]{4})-([a-fA-F0-9]{4})-([a-fA-F0-9]{12})"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="IMSI">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{15}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="SIM">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{19,22}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="ICCID">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[0-9]{19,22}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="PRICE">
+		<xsd:restriction base="xsd:decimal"/>
+	</xsd:simpleType>
+	<xsd:element name="CTN" type="BASE:CTN"/>
+	<xsd:element name="PRICE" type="BASE:PRICE"/>
+	<xsd:element name="BAN" type="BASE:BAN"/>
+	<xsd:element name="BEN" type="BASE:BEN"/>
+	<xsd:element name="MSISDN" type="BASE:MSISDN"/>
+	<xsd:element name="PHONENUMBER" type="BASE:PHONENUMBER"/>
+	<xsd:element name="ICCID" type="BASE:ICCID"/>
+	<xsd:element name="SMTP_EMAILADDRESS" type="BASE:SMTP_EMAILADDRESS"/>
+	<xsd:element name="EMAILADDRESS" type="BASE:EMAILADDRESS"/>
+	<xsd:element name="POSITIVEINT" type="BASE:POSITIVEINT"/>
+	<xsd:element name="POSTCODE" type="BASE:POSTCODE"/>
+	<xsd:element name="UUID" type="BASE:UUID"/>
+	<xsd:element name="IMEI" type="BASE:IMEI"/>
+	<xsd:element name="IMSI" type="BASE:IMSI"/>
+	<xsd:element name="SIM" type="BASE:SIM"/>
+</xsd:schema>

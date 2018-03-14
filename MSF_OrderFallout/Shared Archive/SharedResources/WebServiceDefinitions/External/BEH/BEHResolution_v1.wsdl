@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns2="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" xmlns:ns="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:tns="http://xmlns.example.com/BEHResolution_v1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.example.com/BEHResolution_v1">
+    <import namespace="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd" location="../../../SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd"/>
+    <import namespace="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" location="../../../SchemaDefinitions/Resource/Common/CommonDefinitions/MSF/ExceptionInfo_v1.xsd"/>
+    <import namespace="http://www.tibco.com/xsd/orderfallout/businessexceptionmanagement/orderfalloutbusinessexception.xsd" location="../../../SchemaDefinitions/External/BussnessExceptionHandler/OrderFalloutBusinessException.xsd"/>
+    <message name="PIFResolutionMessage">
+        <part name="resolution" element="ns2:PIF_BusinessExceptionResponse"/>
+    </message>
+    <message name="PQFResolutionMessage">
+        <part name="resolution" element="ns2:PQF_BusinessExceptionResponse"/>
+    </message>
+    <message name="ExceptionInfo">
+        <part name="part1" element="ns3:ExceptionInfo"/>
+    </message>
+    <message name="Output"/>
+    <portType name="PortType">
+        <operation name="PIFResolution">
+            <input message="tns:PIFResolutionMessage"/>
+        </operation>
+        <operation name="PQFResolution">
+            <input message="tns:PQFResolutionMessage"/>
+        </operation>
+    </portType>
+</definitions>

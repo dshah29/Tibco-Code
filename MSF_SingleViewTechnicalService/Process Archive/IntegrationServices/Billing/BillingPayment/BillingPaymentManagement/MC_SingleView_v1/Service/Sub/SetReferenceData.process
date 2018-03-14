@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns="http://www.tibco.com/schemas/SingleViewTechnicalService/SharedResources/SchemaDefinitions/Internal/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ReferenceValues.xsd">
+    <pd:name>IntegrationServices/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/Service/Sub/SetReferenceData.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startX>149</pd:startX>
+    <pd:startY>72</pd:startY>
+    <pd:returnBindings/>
+    <pd:endName>End</pd:endName>
+    <pd:endX>451</pd:endX>
+    <pd:endY>73</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1433250525504</pd:targetNamespace>
+    <pd:activity name="SetVariable">
+        <pd:type>com.tibco.pe.core.SetSharedVariableActivity</pd:type>
+        <pd:resourceType>ae.activities.setSharedVariable</pd:resourceType>
+        <pd:x>290</pd:x>
+        <pd:y>74</pd:y>
+        <config>
+            <variableConfig>/SharedResources/SharedVariables/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1/ReferenceValues.sharedvariable</variableConfig>
+        </config>
+        <pd:inputBindings>
+            <ns:referenceValues>
+                <ns:type>
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="&quot;Currency&quot;"/>
+                    </xsl:attribute>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="&quot;Euro&quot;"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="4200001"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="&quot;GBP&quot;"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="1021"/>
+                    </ns:value>
+                </ns:type>
+                <ns:type>
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="&quot;PaymentType&quot;"/>
+                    </xsl:attribute>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'Cash'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="4100065"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'Cheque'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="4100066"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'CreditCard'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="3200004"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'CreditNote'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="3200026"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'DirectDebitBank'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="3200002"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'DirectDebitCreditCard'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="3200001"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'RefundOverpayment'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="3200006"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'RefundGeneral'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="3200024"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="'TopUpScratchCard'"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="3200005"/>
+                    </ns:value>
+                </ns:type>
+                <ns:type>
+                    <xsl:attribute name="name">
+                        <xsl:value-of select="&quot;PaymentSource&quot;"/>
+                    </xsl:attribute>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="&quot;3OnlineUpgrade&quot;"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="1"/>
+                    </ns:value>
+                    <ns:value>
+                        <xsl:attribute name="mceValue">
+                            <xsl:value-of select="&quot;3AdvisorUpgrade&quot;"/>
+                        </xsl:attribute>
+                        <xsl:value-of select="2"/>
+                    </ns:value>
+                </ns:type>
+            </ns:referenceValues>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>SetVariable</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>SetVariable</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

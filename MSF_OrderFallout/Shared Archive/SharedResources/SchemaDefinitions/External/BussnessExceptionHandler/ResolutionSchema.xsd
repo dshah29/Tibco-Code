@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd"
+	 targetNamespace="http://www.tibco.com/schemas/MSF_OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/ResolutionSchema.xsd"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:element name="pifResolution">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pifRequestMessage" type="xs:string" minOccurs="0"/>
+				<xs:element name="resolution" type="xs:string" minOccurs="0"/>
+				<xs:element name="extension" type="extensionType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pqfResolution">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="pqfRequestMessage" type="xs:string" minOccurs="0"/>
+				<xs:element name="resolution" type="xs:string" minOccurs="0"/>
+				<xs:element name="extension" type="extensionType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="extensionType">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

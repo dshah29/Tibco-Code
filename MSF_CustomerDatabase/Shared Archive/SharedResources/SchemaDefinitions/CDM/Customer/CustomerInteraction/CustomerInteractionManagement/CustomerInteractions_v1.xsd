@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:custIntrs="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinteractionmanagement/customerinteractions/v1"
+	 xmlns:custOrdInt="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerorderinteraction/v1"
+	 xmlns:custInqInt="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinquiryinteraction/v1"
+	 xmlns:custPrbInt="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerprobleminteraction/v1"
+	 xmlns:custBASE="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinteractionmanagement/customerinteractions/v1"
+	 version="$Id: CustomerInteractions_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerorderinteraction/v1" schemaLocation="CustomerOrderInteraction_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerinquiryinteraction/v1" schemaLocation="CustomerInquiryInteraction_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customerinteraction/customerprobleminteraction/v1" schemaLocation="CustomerProblemInteraction_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/customer/customertypes/customerbasetypes/v1" schemaLocation="../../CustomerTypes/CustomerBaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+
+	<!--Here is where we put it all together-->
+	<xsd:complexType name="CustomerInteractions">
+		<xsd:sequence>
+			<xsd:element ref="custOrdInt:customerOrderInteraction" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="custInqInt:customerInquiryInteraction" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:element ref="custPrbInt:customerProblemInteraction" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomerInteractions" type="custIntrs:CustomerInteractions"/>
+	<xsd:element name="customerInteractions" type="custIntrs:CustomerInteractions">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CustomerInteractions instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<!-- Interaction category defined by PeopleSoft -->
+	<xsd:simpleType name="__INTERACTION_CATEGORY__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="3008"/>
+			<xsd:enumeration value="3009"/>
+			<xsd:enumeration value="3010"/>
+			<xsd:enumeration value="3015"/>
+			<xsd:enumeration value="3016"/>
+			<xsd:enumeration value="3039"/>
+			<xsd:enumeration value="3057"/>
+			<xsd:enumeration value="3058"/>
+			<xsd:enumeration value="3059"/>
+			<xsd:enumeration value="3061"/>
+			<xsd:enumeration value="3077"/>
+			<xsd:enumeration value="3087"/>
+			<xsd:enumeration value="3095"/>
+			<xsd:enumeration value="3096"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_INTERACTION_CATEGORY">
+		<xsd:union memberTypes="custIntrs:__INTERACTION_CATEGORY__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="interactionCategory" type="custIntrs:_INTERACTION_CATEGORY"/>
+
+	<!-- Interaction category defined by PeopleSoft -->
+	<xsd:simpleType name="__INTERACTION_METHOD__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="WSUI"/>
+			<xsd:enumeration value="OSUI"/>
+			<xsd:enumeration value="TSUI"/>
+			<xsd:enumeration value="SSUI"/>
+			<xsd:enumeration value="ISUI"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_INTERACTION_METHOD">
+		<xsd:union memberTypes="custIntrs:__INTERACTION_METHOD__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="interactionMethod" type="custIntrs:_INTERACTION_METHOD"/>
+
+	<!-- Interaction subcategory defined by PeopleSoft -->
+	<xsd:simpleType name="__INTERACTION_SUBCATEGORY__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="M001"/>
+			<xsd:enumeration value="M002"/>
+			<xsd:enumeration value="M003"/>
+			<xsd:enumeration value="M004"/>
+			<xsd:enumeration value="M005"/>
+			<xsd:enumeration value="R065"/>
+			<xsd:enumeration value="R223"/>
+			<xsd:enumeration value="R233"/>
+			<xsd:enumeration value="R241"/>
+			<xsd:enumeration value="R242"/>
+			<xsd:enumeration value="R247"/>
+			<xsd:enumeration value="R254"/>
+			<xsd:enumeration value="R256"/>
+			<xsd:enumeration value="R257"/>
+			<xsd:enumeration value="R258"/>
+			<xsd:enumeration value="R259"/>
+			<xsd:enumeration value="R273"/>
+			<xsd:enumeration value="R274"/>
+			<xsd:enumeration value="R275"/>
+			<xsd:enumeration value="R276"/>
+			<xsd:enumeration value="R277"/>
+			<xsd:enumeration value="R279"/>
+			<xsd:enumeration value="R404"/>
+			<xsd:enumeration value="R523"/>
+			<xsd:enumeration value="R525"/>
+			<xsd:enumeration value="R526"/>
+			<xsd:enumeration value="R529"/>
+			<xsd:enumeration value="R530"/>
+			<xsd:enumeration value="S104"/>
+			<xsd:enumeration value="S113"/>
+			<xsd:enumeration value="S118"/>
+			<xsd:enumeration value="S119"/>
+			<xsd:enumeration value="S120"/>
+			<xsd:enumeration value="S121"/>
+			<xsd:enumeration value="S122"/>
+			<xsd:enumeration value="S123"/>
+			<xsd:enumeration value="S124"/>
+			<xsd:enumeration value="S125"/>
+			<xsd:enumeration value="S126"/>
+			<xsd:enumeration value="S128"/>
+			<xsd:enumeration value="S130"/>
+			<xsd:enumeration value="S135"/>
+			<xsd:enumeration value="S136"/>
+			<xsd:enumeration value="S138"/>
+			<xsd:enumeration value="S140"/>
+			<xsd:enumeration value="S142"/>
+			<xsd:enumeration value="S143"/>
+			<xsd:enumeration value="S144"/>
+			<xsd:enumeration value="S147"/>
+			<xsd:enumeration value="S148"/>
+			<xsd:enumeration value="S150"/>
+			<xsd:enumeration value="S163"/>
+			<xsd:enumeration value="S262"/>
+			<xsd:enumeration value="S264"/>
+			<xsd:enumeration value="S269"/>
+			<xsd:enumeration value="S275"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_INTERACTION_SUBCATEGORY">
+		<xsd:union memberTypes="custIntrs:__INTERACTION_SUBCATEGORY__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="interactionSubcategory" type="custIntrs:_INTERACTION_SUBCATEGORY"/>
+
+	<!-- Interaction outcome defined by PeopleSoft -->
+	<xsd:simpleType name="__INTERACTION_OUTCOME__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="3893"/>
+			<xsd:enumeration value="3934"/>
+			<xsd:enumeration value="5979"/>
+			<xsd:enumeration value="5984"/>
+			<xsd:enumeration value="5999"/>
+			<xsd:enumeration value="6004"/>
+			<xsd:enumeration value="611"/>
+			<xsd:enumeration value="M001"/>
+			<xsd:enumeration value="M002"/>
+			<xsd:enumeration value="M003"/>
+			<xsd:enumeration value="M004"/>
+			<xsd:enumeration value="M005"/>
+			<xsd:enumeration value="M006"/>
+			<xsd:enumeration value="M007"/>
+			<xsd:enumeration value="M008"/>
+			<xsd:enumeration value="M009"/>
+			<xsd:enumeration value="M010"/>
+			<xsd:enumeration value="M011"/>
+			<xsd:enumeration value="M012"/>
+			<xsd:enumeration value="M013"/>
+			<xsd:enumeration value="M014"/>
+			<xsd:enumeration value="M015"/>
+			<xsd:enumeration value="M016"/>
+			<xsd:enumeration value="M017"/>
+			<xsd:enumeration value="M018"/>
+			<xsd:enumeration value="M019"/>
+			<xsd:enumeration value="M020"/>
+			<xsd:enumeration value="M021"/>
+			<xsd:enumeration value="M022"/>
+			<xsd:enumeration value="M023"/>
+			<xsd:enumeration value="M024"/>
+			<xsd:enumeration value="M025"/>
+			<xsd:enumeration value="M026"/>
+			<xsd:enumeration value="M027"/>
+			<xsd:enumeration value="M028"/>
+			<xsd:enumeration value="M029"/>
+			<xsd:enumeration value="M030"/>
+			<xsd:enumeration value="M031"/>
+			<xsd:enumeration value="M032"/>
+			<xsd:enumeration value="M033"/>
+			<xsd:enumeration value="M034"/>
+			<xsd:enumeration value="M035"/>
+			<xsd:enumeration value="M036"/>
+			<xsd:enumeration value="M037"/>
+			<xsd:enumeration value="M038"/>
+			<xsd:enumeration value="M039"/>
+			<xsd:enumeration value="M040"/>
+			<xsd:enumeration value="M041"/>
+			<xsd:enumeration value="M042"/>
+			<xsd:enumeration value="M043"/>
+			<xsd:enumeration value="M044"/>
+			<xsd:enumeration value="M045"/>
+			<xsd:enumeration value="M046"/>
+			<xsd:enumeration value="M047"/>
+			<xsd:enumeration value="M048"/>
+			<xsd:enumeration value="M049"/>
+			<xsd:enumeration value="M050"/>
+			<xsd:enumeration value="M051"/>
+			<xsd:enumeration value="M052"/>
+			<xsd:enumeration value="M053"/>
+			<xsd:enumeration value="M054"/>
+			<xsd:enumeration value="M055"/>
+			<xsd:enumeration value="M056"/>
+			<xsd:enumeration value="M057"/>
+			<xsd:enumeration value="M058"/>
+			<xsd:enumeration value="M059"/>
+			<xsd:enumeration value="M060"/>
+			<xsd:enumeration value="M061"/>
+			<xsd:enumeration value="M062"/>
+			<xsd:enumeration value="M063"/>
+			<xsd:enumeration value="M064"/>
+			<xsd:enumeration value="M065"/>
+			<xsd:enumeration value="M066"/>
+			<xsd:enumeration value="M067"/>
+			<xsd:enumeration value="M068"/>
+			<xsd:enumeration value="M069"/>
+			<xsd:enumeration value="M070"/>
+			<xsd:enumeration value="M071"/>
+			<xsd:enumeration value="M072"/>
+			<xsd:enumeration value="M073"/>
+			<xsd:enumeration value="M074"/>
+			<xsd:enumeration value="M075"/>
+			<xsd:enumeration value="M076"/>
+			<xsd:enumeration value="M077"/>
+			<xsd:enumeration value="M078"/>
+			<xsd:enumeration value="M079"/>
+			<xsd:enumeration value="M080"/>
+			<xsd:enumeration value="M081"/>
+			<xsd:enumeration value="M082"/>
+			<xsd:enumeration value="M083"/>
+			<xsd:enumeration value="M084"/>
+			<xsd:enumeration value="M085"/>
+			<xsd:enumeration value="M086"/>
+			<xsd:enumeration value="M087"/>
+			<xsd:enumeration value="M088"/>
+			<xsd:enumeration value="M089"/>
+			<xsd:enumeration value="M090"/>
+			<xsd:enumeration value="M091"/>
+			<xsd:enumeration value="M092"/>
+			<xsd:enumeration value="M093"/>
+			<xsd:enumeration value="M094"/>
+			<xsd:enumeration value="M095"/>
+			<xsd:enumeration value="M096"/>
+			<xsd:enumeration value="M097"/>
+			<xsd:enumeration value="M098"/>
+			<xsd:enumeration value="M099"/>
+			<xsd:enumeration value="M100"/>
+			<xsd:enumeration value="M101"/>
+			<xsd:enumeration value="M102"/>
+			<xsd:enumeration value="M103"/>
+			<xsd:enumeration value="M104"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_INTERACTION_OUTCOME">
+		<xsd:union memberTypes="custIntrs:__INTERACTION_OUTCOME__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="interactionOutcome" type="custIntrs:_INTERACTION_OUTCOME"/>
+
+	<!-- Interaction status defined by PeopleSoft -->
+	<xsd:simpleType name="__INTERACTION_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BUSY"/>
+			<xsd:enumeration value="CALL"/>
+			<xsd:enumeration value="CHLD"/>
+			<xsd:enumeration value="CMPL"/>
+			<xsd:enumeration value="NOCL"/>
+			<xsd:enumeration value="INPR"/>
+			<xsd:enumeration value="NOAN"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_INTERACTION_STATUS">
+		<xsd:union memberTypes="custIntrs:__INTERACTION_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:element name="interactionStatus" type="custIntrs:_INTERACTION_STATUS"/>
+</xsd:schema>

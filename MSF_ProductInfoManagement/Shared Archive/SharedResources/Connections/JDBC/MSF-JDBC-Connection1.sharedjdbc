@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BWSharedResource>
+    <name>MSF-JDBC-Connection1</name>
+    <resourceType>ae.shared.JDBCSharedResource</resourceType>
+    <config>
+        <driver>%%SharedResources/Connections/JDBC/MSF-JDBC-Connection1/JDBCDriver%%</driver>
+        <maxConnections>%%SharedResources/Connections/JDBC/MSF-JDBC-Connection1/MaxConnections%%</maxConnections>
+        <loginTimeout>%%SharedResources/Connections/JDBC/MSF-JDBC-Connection1/LoginTimeout%%</loginTimeout>
+        <connectionType>JDBC</connectionType>
+        <UseSharedJndiConfig>false</UseSharedJndiConfig>
+        <location>%%SharedResources/Connections/JDBC/MSF-JDBC-Connection1/DBURL%%</location>
+        <user>%%SharedResources/Connections/JDBC/MSF-JDBC-Connection1/UserName%%</user>
+        <password>%%SharedResources/Connections/JDBC/MSF-JDBC-Connection1/Password%%</password>
+    </config>
+</BWSharedResource>

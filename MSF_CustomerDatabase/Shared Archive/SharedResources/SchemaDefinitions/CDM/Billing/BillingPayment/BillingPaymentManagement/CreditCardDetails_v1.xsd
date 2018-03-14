@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cc="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1" xmlns:ind="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" xmlns:billBASE="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1" targetNamespace="http://three.co.uk/xsd/cdm/billing/billingpayment/billingpaymentmanagement/creditcarddetails/v1" version="$Id: CreditCardDetails_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/individual/v1" schemaLocation="../../../Common/CommonDefinitions/Individual_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1" schemaLocation="../../../Common/CommonDefinitions/Address_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/billing/billingtypes/billingbasetypes/v1" schemaLocation="../../BillingTypes/BillingBaseTypes_v1.xsd"/>
+	<xsd:complexType name="CreditCardDetails">
+		<xsd:sequence>
+			<xsd:element name="transactionID" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="cardNumber" type="billBASE:PAYMENTCARD_NUM" minOccurs="0"/>
+			<xsd:element name="CVV2Number" type="billBASE:PAYMENTCARD_CVV2" minOccurs="0"/>
+			<xsd:element name="issueNumber" type="billBASE:PAYMENTCARD_ISSUENUM" minOccurs="0"/>
+			<xsd:element name="creditCardType" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="cardStartDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="cardExpiryDate" type="xsd:date" minOccurs="0"/>
+			<xsd:element ref="ind:individual" minOccurs="0"/>
+			<xsd:element ref="addr:address" minOccurs="0"/>
+			<xsd:element name="amount" type="BASE:PRICE" minOccurs="0"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CreditCardDetails" type="cc:CreditCardDetails"/>
+	<xsd:element name="creditCardDetails" type="cc:CreditCardDetails">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element CreditCardDetails instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

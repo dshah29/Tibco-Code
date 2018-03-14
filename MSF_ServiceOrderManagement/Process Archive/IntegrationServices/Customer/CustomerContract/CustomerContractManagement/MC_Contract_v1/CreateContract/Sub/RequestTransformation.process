@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:pfx3="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Internal/Customer/CustomerContract/CustomerContractManagement/PSFT_ContractManagementResp_v1.xsd" xmlns:pfx2="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:pfx="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_ext_to_eai" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_ext_to_eai" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/crm_ext_to_eai.aeschema"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Internal/Customer/CustomerContract/CustomerContractManagement/PSFT_ContractManagementResp_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Customer/CustomerContract/CustomerContractManagement/PSFT_ContractManagementResp_v1.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_v1.xsd"/>
+    <pd:name>IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/CreateContract/Sub/RequestTransformation.process</pd:name>
+    <pd:startName>Start</pd:startName>
+    <pd:startType>
+        <xsd:element name="root">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element ref="pfx:Message"/>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </pd:startType>
+    <pd:startX>177</pd:startX>
+    <pd:startY>105</pd:startY>
+    <pd:returnBindings>
+        <xsl:copy-of select="$Map-Data/pfx2:CreateContractRequest"/>
+    </pd:returnBindings>
+    <pd:endName>End</pd:endName>
+    <pd:endType ref="pfx2:CreateContractRequest"/>
+    <pd:endX>600</pd:endX>
+    <pd:endY>105</pd:endY>
+    <pd:errorSchemas/>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1444846992331</pd:targetNamespace>
+    <pd:activity name="Map Data">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>445</pd:x>
+        <pd:y>105</pd:y>
+        <config>
+            <element ref="pfx2:CreateContractRequest"/>
+        </config>
+        <pd:inputBindings>
+            <pfx2:CreateContractRequest>
+                <pfx2:BAN>
+                    <xsl:value-of select="$Parse-XML/CreateContractRequest/BAN"/>
+                </pfx2:BAN>
+                <pfx2:contract>
+                    <pfx2:contractNumber>
+                        <xsl:value-of select="$Parse-XML/CreateContractRequest/contract/contractNumber"/>
+                    </pfx2:contractNumber>
+                    <pfx2:conditionsID>
+                        <xsl:value-of select="$Parse-XML/CreateContractRequest/contract/conditionsID"/>
+                    </pfx2:conditionsID>
+                    <pfx2:orgID>
+                        <xsl:value-of select="$Parse-XML/CreateContractRequest/contract/orgID"/>
+                    </pfx2:orgID>
+                    <pfx2:startDate>
+                        <xsl:value-of select="concat(translate($Parse-XML/CreateContractRequest/contract/startDate, ' ', 'T'),'-00:00')"/>
+                    </pfx2:startDate>
+                    <pfx2:endDate>
+                        <xsl:value-of select="concat(translate($Parse-XML/CreateContractRequest/contract/endDate, ' ', 'T'),'-00:00')"/>
+                    </pfx2:endDate>
+                    <pfx2:durationInMonths>
+                        <xsl:value-of select="$Parse-XML/CreateContractRequest/contract/durationInMonths"/>
+                    </pfx2:durationInMonths>
+                    <pfx2:changeEvent>
+                        <xsl:value-of select="$Parse-XML/CreateContractRequest/contract/changeEvent"/>
+                    </pfx2:changeEvent>
+                </pfx2:contract>
+            </pfx2:CreateContractRequest>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Parse XML">
+        <pd:type>com.tibco.plugin.xml.XMLParseActivity</pd:type>
+        <pd:resourceType>ae.activities.XMLParseActivity</pd:resourceType>
+        <pd:x>315</pd:x>
+        <pd:y>105</pd:y>
+        <config>
+            <inputStyle>text</inputStyle>
+            <xsdVersion>default</xsdVersion>
+            <validateOutput>true</validateOutput>
+            <term ref="pfx3:CreateContractRequest"/>
+        </config>
+        <pd:inputBindings>
+            <xmlString>
+                <xsl:value-of select="$Start/root/pfx:Message/XMLMessage"/>
+            </xmlString>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>Start</pd:from>
+        <pd:to>Parse XML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Parse XML</pd:from>
+        <pd:to>Map Data</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map Data</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

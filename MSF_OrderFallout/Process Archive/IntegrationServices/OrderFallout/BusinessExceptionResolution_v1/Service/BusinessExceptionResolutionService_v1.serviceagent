@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceResource xmlns:wsdl="http://xmlns.example.com/BEHResolution_v1">
+    <ns0:import xmlns:ns0="http://schemas.xmlsoap.org/wsdl/" namespace="http://xmlns.example.com/BEHResolution_v1" location="/SharedResources/WebServiceDefinitions/External/BEH/BEHResolution_v1.wsdl"/>
+    <config>
+        <class>com.tibco.bw.service.serviceAgent.ServiceServiceAgent</class>
+        <implType>bw</implType>
+        <groups>
+            <row isDefault="true" groupName="Default"/>
+        </groups>
+        <serviceChange>Wed May 25 12:55:52 IST 2016</serviceChange>
+        <name>BusinessExceptionResolutionService_v1</name>
+        <resourceType>service.definition</resourceType>
+        <wsdl namespace="http://three.co.uk/wsdl//IntegrationServices/OrderFallout/BusinessExceptionResolution_v1/Service/BusinessExceptionResolutionService_v1" embedWsdlComponents="true" embedSchemaComponents="true" embedJndiProperties="true"/>
+        <interfaceImpl>
+            <tab>
+                <tabName>PortType</tabName>
+                <tabType>bw</tabType>
+                <config>
+                    <wsdlDetail location="/SharedResources/WebServiceDefinitions/External/BEH/BEHResolution_v1.wsdl" portType="PortType" ns="http://xmlns.example.com/BEHResolution_v1"/>
+                    <detail>
+                        <tab>
+                            <tabName>service.definition.impl.tab.label</tabName>
+                            <tabType>impl</tabType>
+                            <config>
+                                <operations>
+                                    <row opName="PIFResolution" opImpl="/IntegrationServices/OrderFallout/BusinessExceptionResolution_v1/Service/PortType/wsPIFResolution.process"/>
+                                    <row opName="PQFResolution" opImpl="/IntegrationServices/OrderFallout/BusinessExceptionResolution_v1/Service/PortType/wsPQFResolution.process"/>
+                                </operations>
+                            </config>
+                        </tab>
+                        <tab>
+                            <tabName>service.definition.ep.tab.label</tabName>
+                            <tabType>ep</tabType>
+                            <config>
+                                <epBindings>
+                                    <row epName="PortTypeEndpoint1" epType="soap">
+                                        <config>
+                                            <epDetail>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.transport.tab.label</tabName>
+                                                    <tabType>transport</tabType>
+                                                    <config>
+                                                        <sharedChannel>/SharedResources/Connections/JMS/MSF-JMS-INT-Connection.sharedjmscon</sharedChannel>
+                                                        <transport>
+                                                            <config>
+                                                                <JMSTo>%%MSF/PREFIX%%.%%MSF/ENV%%.%%Destinations/Queues/OrderFallout/BPMToBusinessException%%</JMSTo>
+                                                                <JMSDestinationType>queue</JMSDestinationType>
+                                                                <JMSMessageType>Bytes</JMSMessageType>
+                                                                <JMSAcknowledgementMode>1</JMSAcknowledgementMode>
+                                                                <ApplicationProperties/>
+                                                                <ApplicationPropertiesOutMessage/>
+                                                                <JMSMaxSessions/>
+                                                                <operations>
+                                                                    <operation name="PIFResolution">
+                                                                        <general>
+                                                                            <config>
+                                                                                <JMSDurable>false</JMSDurable>
+                                                                                <JMSDurableName/>
+                                                                            </config>
+                                                                        </general>
+                                                                    </operation>
+                                                                    <operation name="PQFResolution"/>
+                                                                </operations>
+                                                            </config>
+                                                        </transport>
+                                                    </config>
+                                                </tab>
+                                                <tab>
+                                                    <tabName>soap.service.transport.ui.details.tab.label</tabName>
+                                                    <tabType>details</tabType>
+                                                    <config>
+                                                        <operationStyle>document</operationStyle>
+                                                        <soapVersion>SOAP 1.1</soapVersion>
+                                                        <soap>
+                                                            <operation name="PIFResolution">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/IntegrationServices/OrderFallout/BusinessExceptionResolution_v1/Service/BusinessExceptionResolutionService_v1.serviceagent/PortTypeEndpoint1/PIFResolution</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                            <operation name="PQFResolution">
+                                                                <general>
+                                                                    <config>
+                                                                        <soapAction>/IntegrationServices/OrderFallout/BusinessExceptionResolution_v1/Service/BusinessExceptionResolutionService_v1.serviceagent/PortTypeEndpoint1/PQFResolution</soapAction>
+                                                                        <operationStyle/>
+                                                                        <soapUse>literal</soapUse>
+                                                                        <inputNamespace/>
+                                                                        <outputNamespace/>
+                                                                        <faultNamespace/>
+                                                                        <portAddressPrefix/>
+                                                                    </config>
+                                                                </general>
+                                                            </operation>
+                                                        </soap>
+                                                    </config>
+                                                </tab>
+                                            </epDetail>
+                                        </config>
+                                    </row>
+                                </epBindings>
+                            </config>
+                        </tab>
+                    </detail>
+                </config>
+            </tab>
+        </interfaceImpl>
+    </config>
+</serviceResource>

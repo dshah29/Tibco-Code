@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	 xmlns:addr="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 xmlns:STS="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1"
+	 xmlns:TYP="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1"
+	 xmlns:udf="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/cdm/common/commondefinitions/address/v1"
+	 version="$Id: Address_v1.xsd 4927 2015-10-03 18:23:15Z rarmitage $"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/status/v1" schemaLocation="../CommonEnumerations/Status_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commonenumerations/types/v1" schemaLocation="../CommonEnumerations/Types_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../CommonTypes/BaseTypes_v1.xsd"/>
+	<xsd:import namespace="http://three.co.uk/xsd/cdm/common/commondefinitions/udf/v1" schemaLocation="UDF_v1.xsd"/>
+
+	<!-- defines asset specific address types-->
+	<xsd:simpleType name="__ADDRESS_TYPES__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="BILLING"/>
+			<xsd:enumeration value="HOME"/>
+			<xsd:enumeration value="WORK"/>
+			<xsd:enumeration value="COLLECTION"/>
+			<xsd:enumeration value="DELIVERY"/>
+			<xsd:enumeration value="STORE"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_ADDRESS_TYPES">
+		<xsd:union memberTypes="addr:__ADDRESS_TYPES__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+
+	<!--Standard list of residential states.-->
+	<xsd:simpleType name="__RESIDENT_STATUS__BASE__">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="OWNER"/>
+			<xsd:enumeration value="TENANT"/>
+			<xsd:enumeration value="PARENTS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="_RESIDENT_STATUS">
+		<xsd:union memberTypes="addr:__RESIDENT_STATUS__BASE__ BASE:PopulatedString"/>
+	</xsd:simpleType>
+	<xsd:complexType name="Address">
+		<xsd:sequence>
+			<xsd:element name="flatNumber" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="houseNumber" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="houseName" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="streetLine1" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="streetLine2" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="streetLine3" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="city" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="county" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="country" type="BASE:PopulatedString" minOccurs="0"/>
+			<xsd:element name="postCode" type="BASE:POSTCODE" minOccurs="0"/>
+
+			<!--Here we can document the resident move in and move out dates-->
+			<xsd:element name="dateMovedIn" type="xsd:date" minOccurs="0"/>
+			<xsd:element name="untilDate" type="xsd:date" minOccurs="0"/>
+
+			<!--Type has been added for the different address type, these could be Billing, Collection, Home, Work etc...-->
+			<xsd:element name="type" type="addr:_ADDRESS_TYPES" minOccurs="0"/>
+			<xsd:element name="residentStatus" type="addr:_RESIDENT_STATUS" minOccurs="0"/>
+			<xsd:element ref="udf:UDF" minOccurs="0" maxOccurs="unbounded"/>
+			<xsd:sequence minOccurs="0">
+				<xsd:element name="end10" type="BASE:VersionMarker"/>
+				<xsd:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Address" type="addr:Address"/>
+	<xsd:element name="address" type="addr:Address">
+		<xsd:annotation>
+			<xsd:documentation>DEPRECATED: Use element Address instead</xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+</xsd:schema>

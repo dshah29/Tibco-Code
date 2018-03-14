@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:spnt="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1"
+	 xmlns:BASE="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1"
+	 targetNamespace="http://three.co.uk/xsd/interface/enterprise/enterprisesecurity/enterprisesecurityauthentication/mcsprint/v1"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:import namespace="http://three.co.uk/xsd/cdm/common/commontypes/basetypes/v1" schemaLocation="../../../../CDM/Common/CommonTypes/BaseTypes_v1.xsd"/>
+	<xs:complexType name="AuthenticateThreeConnectUserRequest">
+		<xs:sequence>
+			<xs:element name="agentID" type="BASE:PopulatedString"/>
+			<xs:element name="password" type="xs:string"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AuthenticateThreeConnectUserResponse">
+		<xs:sequence>
+			<xs:element name="passwordExpiryDate" type="xs:date"/>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SprintToMCELoadRequest">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AuthenticateThreeConnectUserRequest" type="spnt:AuthenticateThreeConnectUserRequest"/>
+	<xs:element name="AuthenticateThreeConnectUserResponse" type="spnt:AuthenticateThreeConnectUserResponse"/>
+	<xs:element name="SprintToMCELoadRequest" type="spnt:SprintToMCELoadRequest"/>
+</xs:schema>

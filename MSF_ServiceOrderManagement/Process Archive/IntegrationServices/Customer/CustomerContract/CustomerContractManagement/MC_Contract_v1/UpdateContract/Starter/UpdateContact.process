@@ -1,0 +1,1359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx5="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Internal/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_WithoutNameSpace_v1.xsd" xmlns:pfx4="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx3="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:pfx2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:pfx7="http://xmlns.tibco.com/2003/5/bw/plugins/tibrv" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns9="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/Dispatcher/crm_eai_to_ext" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns12="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/adapter/crm_ext_to_eai" xmlns:ns6="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" xmlns:pfx="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:ns7="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Request" xmlns:ns10="http://three.co.uk/xsd/resource/common/commondefinitions/msf/localexceptioninfo/v1" xmlns:ns8="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/crm_ext_to_eai" xmlns:ns11="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/Dispatcher/crm_ext_to_eai" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns1="http://three.co.uk/xsd/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/TREAdapters/TRE/in/Reply" schemaLocation="/AESchemas/ae/TREAdapters/TRE/in/Reply.aeschema"/>
+    <xsd:import namespace="http://xmlns.tibco.com/2003/5/bw/plugins/tibrv" schemaLocation="/SharedResources/SchemaDefinitions/External/RV/RVMsgSchema.xsd"/>
+    <xsd:import namespace="http://three.co.uk/xsd/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_v1.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Internal/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_WithoutNameSpace_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Internal/Customer/CustomerContract/CustomerContractManagement/MC_ContractManagement_WithoutNameSpace_v1.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/billing/billingpayment/billingpaymentmanagement/mcsingleview/v1" location="/SharedResources/WebServiceDefinitions/Interface/Billing/BillingPayment/BillingPaymentManagement/MC_SingleView_v1.wsdl"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/customer/customercontract/customercontractmanagement/customercontract/v1" location="/SharedResources/WebServiceDefinitions/Interface/Customer/CustomerContract/CustomerContractManagement/MC_CustomerContract_v1.wsdl"/>
+    <pd:name>IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/UpdateContract/Starter/UpdateContact.process</pd:name>
+    <pd:startName>RV_RVS_UpdateContract</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings>
+        <pfx3:UpdateContractResponse>
+            <part1>
+                <xsl:copy-of select="$Call-Main/root/ns6:UpdateContractResponse"/>
+            </part1>
+        </pfx3:UpdateContractResponse>
+    </pd:returnBindings>
+    <pd:starter name="RV_RVS_UpdateContract">
+        <pd:type>com.tibco.plugin.tibrv.RVEventSource</pd:type>
+        <pd:resourceType>ae.rvpalette.RVEventSource</pd:resourceType>
+        <pd:x>65</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <wantsValidationForOutput>false</wantsValidationForOutput>
+            <wantsFiltrationForOutput>false</wantsFiltrationForOutput>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <wantsRawRVObjectForOutput>false</wantsRawRVObjectForOutput>
+            <sharedChannel>/SharedResources/MSF-RV-DistributedQueue-Transport_UpdateContract.rvtransport</sharedChannel>
+            <subject>%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Environment%%.%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Country%%.%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/Company%%.%%IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/PeopleSoft_Adapters/Subjects/UpdateContract_Request%%</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1744</pd:endX>
+    <pd:endY>56</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 wsMsgRef="pfx3:ExceptionInfo"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355136884829</pd:targetNamespace>
+    <pd:activity name="Audit Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>458</pd:x>
+        <pd:y>53</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <payload>
+                    <xsl:copy-of select="$Map_XMLRequestMessage/root/XMLMessage"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call Main">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>886</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <processName>/IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/UpdateContract/Main/MainProcess.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$RequestTransformation/ns6:UpdateContractRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>110</pd:x>
+        <pd:y>305</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Catch Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>445</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>250</pd:x>
+        <pd:y>313</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>289</pd:x>
+        <pd:y>183</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ReceiveError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Message Context REPLY">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1001</pd:x>
+        <pd:y>66</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/CreateMessageContext_REPLY.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="InitialiseBoundary">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>346</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/InitialiseBoundary.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+                <pfx2:InputMessageContent>
+                    <xsl:copy-of select="$Map_XMLRequestMessage/root/XMLMessage"/>
+                </pfx2:InputMessageContent>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Initialise Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>109</pd:x>
+        <pd:y>181</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/InitialiseBoundary.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>390</pd:x>
+        <pd:y>313</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>389</pd:x>
+        <pd:y>453</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Catch-Exception/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Receive Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>431</pd:x>
+        <pd:y>185</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Receive-Error/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="LogAuditEnd">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1566</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <response>
+                    <xsl:copy-of select="$Call-Main/root/UpdateContractResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Ouput Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1158</pd:x>
+        <pd:y>57</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ContextResources/SetOutputContext.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Message-Context-REPLY/root/ns2:MessageContext"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1282</pd:x>
+        <pd:y>55</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <response>
+                    <xsl:copy-of select="$Call-Main/root"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>610</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$Map_XMLRequestMessage/root/XMLMessage"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RequestTransformation">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>754</pd:x>
+        <pd:y>56</pd:y>
+        <config>
+            <processName>/IntegrationServices/Customer/CustomerContract/CustomerContractManagement/MC_Contract_v1/UpdateContract/Sub/RequestTransformation.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <XMLMessage>
+                    <xsl:value-of select="$Map_XMLRequestMessage/root/XMLMessage[1]"/>
+                </XMLMessage>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="GenerateError">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>564</pd:x>
+        <pd:y>365</pd:y>
+        <config>
+            <element ref="pfx5:UpdateContractResponse"/>
+        </config>
+        <pd:inputBindings>
+            <UpdateContractResponse>
+                <BAN>
+                    <xsl:value-of select="$RequestTransformation/ns6:UpdateContractRequest/ns6:BAN"/>
+                </BAN>
+                <xsl:choose>
+                    <xsl:when test="exists($Catch-Exception/ns3:Exception/ns5:ExceptionInfo)">
+                        <transactionID>
+                            <xsl:value-of select="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@transactionID[1]"/>
+                        </transactionID>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <transactionID>
+                            <xsl:value-of select="$Create-Exception-Catch-All/root/ns3:Exception/ns5:ExceptionInfo/@transactionID[1]"/>
+                        </transactionID>
+                    </xsl:otherwise>
+                </xsl:choose>
+                <xsl:choose>
+                    <xsl:when test="exists($Catch-Exception/ns3:Exception/ns5:ExceptionInfo)">
+                        <Status>
+                            <StatusCode>
+                                <xsl:value-of select="1"/>
+                            </StatusCode>
+                            <xsl:if test="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]">
+                                <ErrorCode>
+                                    <xsl:value-of select="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]"/>
+                                </ErrorCode>
+                            </xsl:if>
+                            <ErrorDescription>
+                                <xsl:value-of select="tib:render-xml($Catch-Exception/ns3:Exception/ns5:ExceptionInfo)"/>
+                            </ErrorDescription>
+                        </Status>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Status>
+                            <StatusCode>
+                                <xsl:value-of select="1"/>
+                            </StatusCode>
+                            <xsl:if test="$Create-Exception-Catch-All/root/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]">
+                                <ErrorCode>
+                                    <xsl:value-of select="$Create-Exception-Catch-All/root/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]"/>
+                                </ErrorCode>
+                            </xsl:if>
+                            <ErrorDescription>
+                                <xsl:value-of select="tib:render-xml($Create-Exception-Catch-All/root/ns3:Exception/ns5:ExceptionInfo)"/>
+                            </ErrorDescription>
+                        </Status>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </UpdateContractResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate_ErrorResponse">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>577</pd:x>
+        <pd:y>179</pd:y>
+        <config>
+            <element ref="pfx5:UpdateContractResponse"/>
+        </config>
+        <pd:inputBindings>
+            <UpdateContractResponse>
+                <BAN>
+                    <xsl:value-of select="0"/>
+                </BAN>
+                <transactionID>
+                    <xsl:value-of select="$Create-Exception-Receive-Error/root/ns3:Exception/ns5:ExceptionInfo/@transactionID[1]"/>
+                </transactionID>
+                <Status>
+                    <StatusCode>
+                        <xsl:value-of select="1"/>
+                    </StatusCode>
+                    <xsl:if test="$Create-Exception-Receive-Error/root/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]">
+                        <ErrorCode>
+                            <xsl:value-of select="$Create-Exception-Receive-Error/root/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]"/>
+                        </ErrorCode>
+                    </xsl:if>
+                    <ErrorDescription>
+                        <xsl:value-of select="tib:render-xml($Create-Exception-Receive-Error/root/ns3:Exception/ns5:ExceptionInfo)"/>
+                    </ErrorDescription>
+                </Status>
+            </UpdateContractResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Map_XMLRequestMessage">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>206</pd:x>
+        <pd:y>54</pd:y>
+        <config>
+            <element>
+                <xs:element xmlns:xs="http://www.w3.org/2001/XMLSchema" name="root">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="XMLMessage" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$RV_RVS_UpdateContract/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^data^&quot;]">
+                    <xsl:for-each select="pfx7:msg/pfx7:field[pfx7:name=&quot;RequestMessage&quot;]">
+                        <xsl:for-each select="pfx7:msg/pfx7:field[pfx7:name=&quot;XMLMessage&quot;]">
+                            <xsl:if test="current()/pfx7:simple">
+                                <XMLMessage>
+                                    <xsl:value-of select="current()/pfx7:simple"/>
+                                </XMLMessage>
+                            </xsl:if>
+                        </xsl:for-each>
+                    </xsl:for-each>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RVP_PR_PublishRV-SuccessResponse">
+        <pd:type>com.tibco.plugin.tibrv.RVPubActivity</pd:type>
+        <pd:resourceType>ae.rvpalette.RVPubActivity</pd:resourceType>
+        <pd:x>1434</pd:x>
+        <pd:y>55</pd:y>
+        <config>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <sharedChannel>/SharedResources/Connections/RV/MSF-RV-Reliable-Transport1.rvtransport</sharedChannel>
+            <subject>usim.termination</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings>
+            <ActivityInput>
+                <subject>
+                    <xsl:value-of select="$RV_RVS_UpdateContract/ActivityOutput/replySubject"/>
+                </subject>
+                <body>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^pfmt^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="10"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^ver^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="3"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^type^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="1"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^prefixList^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;default&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;1&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$RV_RVS_UpdateContract/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <xsl:for-each select="$RV_RVS_UpdateContract/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                                        <pfx7:field>
+                                            <pfx7:name>
+                                                <xsl:value-of select="pfx7:name"/>
+                                            </pfx7:name>
+                                            <pfx7:id>
+                                                <xsl:value-of select="pfx7:id"/>
+                                            </pfx7:id>
+                                            <pfx7:simple>
+                                                <xsl:value-of select="pfx7:simple"/>
+                                            </pfx7:simple>
+                                        </pfx7:field>
+                                    </xsl:for-each>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ServiceOrderManagement/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;id&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016.ServiceOrderManagement.1c3fa62e-1dd2-11b2-a808-c5cd038725f0&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ServiceOrderManagement/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^data^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^class^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;^reply^CRMConnector_crm2eai^PubSyncMessage&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;ResponseMessage&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^class^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;Message&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^idx^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;XMLMessage&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="tib:render-xml($Call-Main/root/UpdateContractResponse)"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^returnValue^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;0&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                </body>
+            </ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RVP_PR_PublishRV-ValidationErrorResponse">
+        <pd:type>com.tibco.plugin.tibrv.RVPubActivity</pd:type>
+        <pd:resourceType>ae.rvpalette.RVPubActivity</pd:resourceType>
+        <pd:x>889</pd:x>
+        <pd:y>181</pd:y>
+        <config>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <sharedChannel>/SharedResources/Connections/RV/MSF-RV-Reliable-Transport1.rvtransport</sharedChannel>
+            <subject>usim.termination</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings>
+            <ActivityInput>
+                <subject>
+                    <xsl:value-of select="$RV_RVS_UpdateContract/ActivityOutput/replySubject"/>
+                </subject>
+                <body>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^pfmt^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="10"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^ver^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="3"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^type^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="1"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^prefixList^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;default&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;1&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$RV_RVS_UpdateContract/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <xsl:for-each select="$RV_RVS_UpdateContract/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                                        <pfx7:field>
+                                            <pfx7:name>
+                                                <xsl:value-of select="pfx7:name"/>
+                                            </pfx7:name>
+                                            <pfx7:id>
+                                                <xsl:value-of select="pfx7:id"/>
+                                            </pfx7:id>
+                                            <pfx7:simple>
+                                                <xsl:value-of select="pfx7:simple"/>
+                                            </pfx7:simple>
+                                        </pfx7:field>
+                                    </xsl:for-each>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ServiceOrderManagement/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;id&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016.ServiceOrderManagement.1c3fa62e-1dd2-11b2-a808-c5cd038725f0&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ServiceOrderManagement/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^data^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^class^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;^reply^CRMConnector_crm2eai^PubSyncMessage&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;ResponseMessage&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^class^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;Message&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^idx^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;XMLMessage&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="tib:render-xml($Generate_ErrorResponse/UpdateContractResponse)"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^returnValue^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;0&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                </body>
+            </ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RVP_PR_PublishRV-ErrorResponse">
+        <pd:type>com.tibco.plugin.tibrv.RVPubActivity</pd:type>
+        <pd:resourceType>ae.rvpalette.RVPubActivity</pd:resourceType>
+        <pd:x>931</pd:x>
+        <pd:y>362</pd:y>
+        <config>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <sharedChannel>/SharedResources/Connections/RV/MSF-RV-Reliable-Transport1.rvtransport</sharedChannel>
+            <subject>usim.termination</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings>
+            <ActivityInput>
+                <subject>
+                    <xsl:value-of select="$RV_RVS_UpdateContract/ActivityOutput/replySubject"/>
+                </subject>
+                <body>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^pfmt^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="10"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^ver^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="3"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^type^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="1"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^prefixList^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;default&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;1&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$RV_RVS_UpdateContract/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <xsl:for-each select="$RV_RVS_UpdateContract/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                                        <pfx7:field>
+                                            <pfx7:name>
+                                                <xsl:value-of select="pfx7:name"/>
+                                            </pfx7:name>
+                                            <pfx7:id>
+                                                <xsl:value-of select="pfx7:id"/>
+                                            </pfx7:id>
+                                            <pfx7:simple>
+                                                <xsl:value-of select="pfx7:simple"/>
+                                            </pfx7:simple>
+                                        </pfx7:field>
+                                    </xsl:for-each>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ServiceOrderManagement/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;id&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016.ServiceOrderManagement.1c3fa62e-1dd2-11b2-a808-c5cd038725f0&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ServiceOrderManagement/IntegrationServices/Service/ServiceOrder/ServiceOrderManagement/MC_ServiceOrder_v1/SubmitServiceOrder-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^data^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^class^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;^reply^CRMConnector_crm2eai^PubSyncMessage&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;ResponseMessage&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^class^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;Message&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^idx^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;XMLMessage&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="tib:render-xml($GenerateError/UpdateContractResponse)"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^returnValue^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;0&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                </body>
+            </ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>InitialiseBoundary</pd:from>
+        <pd:to>Audit Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call Main</pd:from>
+        <pd:to>Create Message Context REPLY</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Message Context REPLY</pd:from>
+        <pd:to>Set Ouput Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Ouput Context</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise Receive Error</pd:from>
+        <pd:to>Create Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Receive Error</pd:from>
+        <pd:to>Log Exception Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch Exception</pd:from>
+        <pd:to>Log Exception Catch Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>RequestTransformation</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit Start</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RequestTransformation</pd:from>
+        <pd:to>Call Main</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>GenerateError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch Exception</pd:from>
+        <pd:to>GenerateError</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Receive Error</pd:from>
+        <pd:to>Generate_ErrorResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RV_RVS_UpdateContract</pd:from>
+        <pd:to>Map_XMLRequestMessage</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map_XMLRequestMessage</pd:from>
+        <pd:to>InitialiseBoundary</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>RVP_PR_PublishRV-SuccessResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate_ErrorResponse</pd:from>
+        <pd:to>RVP_PR_PublishRV-ValidationErrorResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RVP_PR_PublishRV-ValidationErrorResponse</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>GenerateError</pd:from>
+        <pd:to>RVP_PR_PublishRV-ErrorResponse</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RVP_PR_PublishRV-ErrorResponse</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Map_XMLRequestMessage</pd:from>
+        <pd:to>Initialise Receive Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>LogAuditEnd</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RVP_PR_PublishRV-SuccessResponse</pd:from>
+        <pd:to>LogAuditEnd</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>

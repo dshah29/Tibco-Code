@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:ns2="http://www.tibco.com/schemas/Order Fallout Workspace/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://www.tibco.com/schemas/Order Fallout Workspace/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/Schema.xsd" xmlns:ns3="http://www.tibco.com/schemas/OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd" xmlns:tns="http://xmlns.example.com/1444127067216" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xmlns.example.com/1444127067216">
+    <import namespace="http://www.tibco.com/schemas/OrderFallout/SharedResources/SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd" location="../../../SchemaDefinitions/External/BussnessExceptionHandler/BulkResolutionSchema.xsd"/>
+    <message name="BulkResolutionRequest">
+        <part name="BulkResolutionRequest" element="ns3:BulkResolutionRequest"/>
+    </message>
+    <message name="BulkResolutionResponse">
+        <part name="BulkResolutionResponse" element="ns3:BulkResolutionResponse"/>
+    </message>
+    <portType name="PortType">
+        <operation name="BulkResolution">
+            <input message="tns:BulkResolutionRequest"/>
+            <output message="tns:BulkResolutionResponse"/>
+        </operation>
+    </portType>
+</definitions>

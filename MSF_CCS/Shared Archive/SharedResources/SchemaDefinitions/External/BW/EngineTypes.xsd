@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	 xmlns:tns="http://www.tibco.com/pe/EngineTypes"
+	 targetNamespace="http://www.tibco.com/pe/EngineTypes"
+	 elementFormDefault="qualified"
+	 attributeFormDefault="unqualified">
+	<xs:complexType name="ErrorReport" final="#all" block="#all">
+		<xs:sequence>
+			<xs:element name="StackTrace" type="xs:string" form="unqualified" block="#all"/>
+			<xs:element name="Msg" type="xs:string" form="unqualified" block="#all"/>
+			<xs:element name="FullClass" type="xs:string" form="unqualified" block="#all"/>
+			<xs:element name="Class" type="xs:string" form="unqualified" block="#all"/>
+			<xs:element name="ProcessStack" type="xs:string" form="unqualified" block="#all"/>
+			<xs:element name="MsgCode" type="xs:string" form="unqualified" block="#all" minOccurs="0"/>
+			<xs:element name="Data" type="tns:anydata" form="unqualified" block="#all" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcessContext" final="#all" block="#all">
+		<xs:sequence>
+			<xs:element name="ProcessId" type="xs:long" form="unqualified" block="#all"/>
+			<xs:element name="ProjectName" type="xs:string" form="unqualified" block="#all"/>
+			<xs:element name="EngineName" type="xs:string" form="unqualified" block="#all"/>
+			<xs:element name="RestartedFromCheckpoint" type="xs:boolean" form="unqualified" block="#all"/>
+			<xs:element name="TrackingInfo" type="xs:string" form="unqualified" block="#all" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CustomId" type="xs:string" form="unqualified" block="#all" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="anydata" final="#all" block="#all">
+		<xs:sequence>
+			<xs:any namespace="##any" processContents="skip"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ErrorReport" type="tns:ErrorReport" final="#all" block="#all"/>
+	<xs:element name="ProcessContext" type="tns:ProcessContext" final="#all" block="#all"/>
+	<xs:element name="CorrelationValue" type="xs:string" final="#all" block="#all"/>
+</xs:schema>

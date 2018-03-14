@@ -1,0 +1,1332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pd:ProcessDefinition xmlns:BW="java://com.tibco.pe.core.JavaCustomXPATHFunctions" xmlns:ns="http://www.tibco.com/pe/EngineTypes" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:pfx5="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productpricespecification/v1" xmlns:tib="http://www.tibco.com/bw/xslt/custom-functions" xmlns:pfx4="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:pfx3="http://xmlns.example.com/1438681693077" xmlns:pfx2="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/customeraccount/v1" xmlns:pfx8="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" xmlns:pfx7="http://xmlns.tibco.com/2003/5/bw/plugins/tibrv" xmlns:pfx6="http://three.co.uk/xsd/cdm/common/commondefinitions/discount/v1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:ns9="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProductInfoSchemas/AESchema" xmlns:ns12="http://three.co.uk/xsd/cdm/product/productspecification/productspecificationmanagement/productspecification/v1" xmlns:ns5="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exceptioninfo/v1" xmlns:ns6="http://three.co.uk/xsd/resource/common/commondefinitions/msf/inputmessagecontent/v1" xmlns:ns13="http://www.tibco.com/xmlns/ae2xsd/2002/05/ae/ProductInfoSchemas/crm_eai_to_ext" xmlns:ns10="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/concrete/rpiproductinfo/v1" xmlns:pfx="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns7="http://www.three.co.uk/xsd/interface/customer/customeraccount/customeraccountmanagement/customeraccount/v1" xmlns:ns11="http://three.co.uk/xsd/peoplesoft/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:ns8="http://three.co.uk/xsd/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" xmlns:pd="http://xmlns.tibco.com/bw/process/2003" xmlns:ns2="http://three.co.uk/xsd/resource/common/commondefinitions/msf/messagecontext/v1" xmlns:ns1="http://three.co.uk/xsd/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" xmlns:ns4="http://www.tibco.com/pe/GenerateErrorActivity/InputSchema" xmlns:ns3="http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsd:import namespace="http://xmlns.tibco.com/2003/5/bw/plugins/tibrv" schemaLocation="/SharedResources/SchemaDefinitions/External/RV/RVMsgSchema.xsd"/>
+    <xsd:import namespace="http://www.tibco.com/ns/no_namespace_schema_location/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd" schemaLocation="/SharedResources/SchemaDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/PSFT_RPIProductInfo_v1.xsd"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/interface/managedentityabe/managemententityabe/submanagemententityabe/servicename/vn" location="/SharedResources/WebServiceDefinitions/Interface/ManagedEntityABE/ManagementEntityABE/SubManagementEntityABE/ServiceName_vn.wsdl"/>
+    <wsdl:import namespace="http://www.three.co.uk/wsdl/interface/customer/customeraccount/customeraccountmanagement/customeraccount/v1" location="/SharedResources/WebServiceDefinitions/Interface/Customer/CustomerAccount/CustomerAccountManagement/CustomerAccount_v1.wsdl"/>
+    <wsdl:import namespace="http://xmlns.example.com/1438681693077" location="/SharedResources/WebServiceDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/Concrete/RPIProductInfo_v1.wsdl"/>
+    <wsdl:import namespace="http://three.co.uk/wsdl/Interface/product/productspecification/productspecificationmanagement/rpiproductinfo/v1" location="/SharedResources/WebServiceDefinitions/Interface/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1.wsdl"/>
+    <pd:name>IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetProductPrices/Starter/GetProductPrices.process</pd:name>
+    <pd:startName>RV_GPP</pd:startName>
+    <pd:startX>0</pd:startX>
+    <pd:startY>0</pd:startY>
+    <pd:returnBindings>
+        <pfx4:GetProductPricesResponse>
+            <response>
+                <xsl:copy-of select="$Call-PFST-Main/root/ns8:GetProductPricesResponse"/>
+            </response>
+        </pfx4:GetProductPricesResponse>
+    </pd:returnBindings>
+    <pd:starter name="RV_GPP">
+        <pd:type>com.tibco.plugin.tibrv.RVEventSource</pd:type>
+        <pd:resourceType>ae.rvpalette.RVEventSource</pd:resourceType>
+        <pd:x>39</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <wantsValidationForOutput>false</wantsValidationForOutput>
+            <wantsFiltrationForOutput>false</wantsFiltrationForOutput>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <wantsRawRVObjectForOutput>false</wantsRawRVObjectForOutput>
+            <sharedChannel>/SharedResources/Connections/RV_DistributedQueue_Transport_GPP.rvtransport</sharedChannel>
+            <subject>%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1/Environment%%.%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1/Country%%.%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1/Company%%.%%IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/RPIProductInfo_v1/GetProductPrices/SubjectNameRV%%</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings/>
+    </pd:starter>
+    <pd:endName>End</pd:endName>
+    <pd:endX>1317</pd:endX>
+    <pd:endY>60</pd:endY>
+    <pd:errorSchemas>
+        <Schema0 wsMsgRef="pfx4:ExceptionInfo"/>
+    </pd:errorSchemas>
+    <pd:processVariables/>
+    <pd:targetNamespace>http://xmlns.example.com/1355136884829</pd:targetNamespace>
+    <pd:activity name="AE To CDM">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>524</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetProductPrices/Sub/SemanticAdapter/AE To CDM.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <XMLMessage>
+                    <xsl:value-of select="$TransformXML/root/XMLMessage[1]"/>
+                </XMLMessage>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Audit End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>984</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <response>
+                    <xsl:copy-of select="$Call-PFST-Main/root/GetProductPricesResponse"/>
+                </response>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Audit Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>432</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Audit/LogAuditStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <payload>
+                    <xsl:copy-of select="$TransformXML/root/XMLMessage"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Call PFST Main">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>630</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/IntegrationServices/Product/ProductSpecification/ProductSpecificationManagement/GetProductPrices/Sub/SemanticAdapter/PSFT Call Main.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$AE-To-CDM/ns8:GetProductPricesRequest"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Catch All">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>139</pd:x>
+        <pd:y>295</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <catchAll>true</catchAll>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Catch Exception">
+        <pd:type>com.tibco.pe.core.CatchActivity</pd:type>
+        <pd:resourceType>ae.activities.catch</pd:resourceType>
+        <pd:x>148</pd:x>
+        <pd:y>412</pd:y>
+        <pd:handler>true</pd:handler>
+        <config>
+            <fault>localname=Exception namespace=http://three.co.uk/xsd/resource/common/commondefinitions/msf/exception/v1</fault>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Create Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>248</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_ReceiveError.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>248</pd:x>
+        <pd:y>302</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/CreateException_CatchAll.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$_error/ns:ErrorReport"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Create Message Context REPLY">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>754</pd:x>
+        <pd:y>67</pd:y>
+        <config>
+            <processName>/UtilityProcesses/MessageContext/CreateMessageContext_REPLY.process</processName>
+        </config>
+        <pd:inputBindings/>
+    </pd:activity>
+    <pd:activity name="Generate Error Response">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>470</pd:x>
+        <pd:y>201</pd:y>
+        <config>
+            <element ref="pfx8:GetProductPricesResponse"/>
+        </config>
+        <pd:inputBindings>
+            <GetProductPricesResponse>
+                <Status>
+                    <StatusCode>
+                        <xsl:value-of select="1"/>
+                    </StatusCode>
+                    <ErrorCode>
+                        <xsl:value-of select="$Create-Exception/root/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]"/>
+                    </ErrorCode>
+                    <ErrorDescription>
+                        <xsl:value-of select="$Create-Exception/root/ns3:Exception/ns5:ExceptionInfo/@description[1]"/>
+                    </ErrorDescription>
+                </Status>
+            </GetProductPricesResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Generate Error Response-Catch">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>471</pd:x>
+        <pd:y>300</pd:y>
+        <config>
+            <element ref="pfx8:GetProductPricesResponse"/>
+        </config>
+        <pd:inputBindings>
+            <GetProductPricesResponse>
+                <xsl:choose>
+                    <xsl:when test="exists($Catch-Exception/ns3:Exception/ns5:ExceptionInfo)">
+                        <Status>
+                            <StatusCode>
+                                <xsl:value-of select="1"/>
+                            </StatusCode>
+                            <xsl:if test="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]">
+                                <ErrorCode>
+                                    <xsl:value-of select="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]"/>
+                                </ErrorCode>
+                            </xsl:if>
+                            <ErrorDescription>
+                                <xsl:value-of select="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@description[1]"/>
+                            </ErrorDescription>
+                        </Status>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <Status>
+                            <StatusCode>
+                                <xsl:value-of select="1"/>
+                            </StatusCode>
+                            <ErrorCode>
+                                <xsl:value-of select="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@exceptionCode[1]"/>
+                            </ErrorCode>
+                            <ErrorDescription>
+                                <xsl:value-of select="$Catch-Exception/ns3:Exception/ns5:ExceptionInfo/@description[1]"/>
+                            </ErrorDescription>
+                        </Status>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </GetProductPricesResponse>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="InitialiseBoundary">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>242</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/InitialiseBoundary.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+                <ns6:InputMessageContent>
+                    <xsl:copy-of select="$TransformXML/root/XMLMessage"/>
+                </ns6:InputMessageContent>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Initialise Error">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>137</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <processName>/UtilityProcesses/StartUp/InitialiseBoundary.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <InitialProcessName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </InitialProcessName>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>361</pd:x>
+        <pd:y>192</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch All">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>361</pd:x>
+        <pd:y>301</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Exception-Catch-All/root/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Log Exception Catch Exception">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>321</pd:x>
+        <pd:y>419</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Exceptions/LogException.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Catch-Exception/ns3:Exception"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RV_GPP-Success Response">
+        <pd:type>com.tibco.plugin.tibrv.RVPubActivity</pd:type>
+        <pd:resourceType>ae.rvpalette.RVPubActivity</pd:resourceType>
+        <pd:x>1106</pd:x>
+        <pd:y>68</pd:y>
+        <config>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <sharedChannel>/SharedResources/Connections/RV/MSF-RV-Reliable-Transport1.rvtransport</sharedChannel>
+            <subject>usim.termination</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings>
+            <ActivityInput>
+                <subject>
+                    <xsl:value-of select="$RV_GPP/ActivityOutput/replySubject"/>
+                </subject>
+                <body>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^pfmt^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="10"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^ver^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="3"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^type^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="1"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^prefixList^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;default&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;1&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$RV_GPP/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <xsl:for-each select="$RV_GPP/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                                        <pfx7:field>
+                                            <pfx7:name>
+                                                <xsl:value-of select="pfx7:name"/>
+                                            </pfx7:name>
+                                            <pfx7:id>
+                                                <xsl:value-of select="pfx7:id"/>
+                                            </pfx7:id>
+                                            <pfx7:simple>
+                                                <xsl:value-of select="pfx7:simple"/>
+                                            </pfx7:simple>
+                                        </pfx7:field>
+                                    </xsl:for-each>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ProductInfoManagement\IntegrationServices\Product\ProductSpecification\ProductSpecificationManagement\GetPackagePriceHistory-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;id&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016.ProductInfoManagement.1c3fa62e-1dd2-11b2-a808-c5cd038725f0&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ProductInfoManagement\IntegrationServices\Product\ProductSpecification\ProductSpecificationManagement\GetPackagePriceHistory-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^data^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^class^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;^reply^CRMConnector_crm2eai^PubSyncMessage&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;ResponseMessage&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^class^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;Message&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^idx^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;XMLMessage&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="tib:render-xml($Call-PFST-Main/root/GetProductPricesResponse)"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^returnValue^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;0&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                </body>
+            </ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RV_GPP-Error Response">
+        <pd:type>com.tibco.plugin.tibrv.RVPubActivity</pd:type>
+        <pd:resourceType>ae.rvpalette.RVPubActivity</pd:resourceType>
+        <pd:x>608</pd:x>
+        <pd:y>299</pd:y>
+        <config>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <sharedChannel>/SharedResources/Connections/RV/MSF-RV-Reliable-Transport1.rvtransport</sharedChannel>
+            <subject>usim.termination</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings>
+            <ActivityInput>
+                <subject>
+                    <xsl:value-of select="$RV_GPP/ActivityOutput/replySubject"/>
+                </subject>
+                <body>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^pfmt^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="10"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^ver^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="3"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^type^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="1"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^prefixList^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;default&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;1&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$RV_GPP/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <xsl:for-each select="$RV_GPP/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                                        <pfx7:field>
+                                            <pfx7:name>
+                                                <xsl:value-of select="pfx7:name"/>
+                                            </pfx7:name>
+                                            <pfx7:id>
+                                                <xsl:value-of select="pfx7:id"/>
+                                            </pfx7:id>
+                                            <pfx7:simple>
+                                                <xsl:value-of select="pfx7:simple"/>
+                                            </pfx7:simple>
+                                        </pfx7:field>
+                                    </xsl:for-each>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ProductInfoManagement\IntegrationServices\Product\ProductSpecification\ProductSpecificationManagement\GetPackagePriceHistory-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;id&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016.ProductInfoManagement.1c3fa62e-1dd2-11b2-a808-c5cd038725f0&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ProductInfoManagement\IntegrationServices\Product\ProductSpecification\ProductSpecificationManagement\GetPackagePriceHistory-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^data^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^class^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;^reply^CRMConnector_crm2eai^PubSyncMessage&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;ResponseMessage&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^class^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;Message&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^idx^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;XMLMessage&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="tib:render-xml($Generate-Error-Response-Catch/GetProductPricesResponse/Status)"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^returnValue^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;0&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                </body>
+            </ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="RV_GPP-Validation Error Response">
+        <pd:type>com.tibco.plugin.tibrv.RVPubActivity</pd:type>
+        <pd:resourceType>ae.rvpalette.RVPubActivity</pd:resourceType>
+        <pd:x>610</pd:x>
+        <pd:y>199</pd:y>
+        <config>
+            <wantsXMLCompliantFieldNames>false</wantsXMLCompliantFieldNames>
+            <sharedChannel>/SharedResources/Connections/RV/MSF-RV-Reliable-Transport1.rvtransport</sharedChannel>
+            <subject>usim.termination</subject>
+            <xsdString ref="pfx7:msg"/>
+        </config>
+        <pd:inputBindings>
+            <ActivityInput>
+                <subject>
+                    <xsl:value-of select="$RV_GPP/ActivityOutput/replySubject"/>
+                </subject>
+                <body>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^pfmt^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="10"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^ver^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="3"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^type^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:simple>
+                            <xsl:value-of select="1"/>
+                        </pfx7:simple>
+                    </pfx7:field>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^prefixList^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;default&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;1&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;/tibco/public/class/ae/adapter/crm_ext_to_eai&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                    <xsl:choose xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                        <xsl:when test="$RV_GPP/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <xsl:for-each select="$RV_GPP/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^tracking^&quot;]/pfx7:msg/*">
+                                        <pfx7:field>
+                                            <pfx7:name>
+                                                <xsl:value-of select="pfx7:name"/>
+                                            </pfx7:name>
+                                            <pfx7:id>
+                                                <xsl:value-of select="pfx7:id"/>
+                                            </pfx7:id>
+                                            <pfx7:simple>
+                                                <xsl:value-of select="pfx7:simple"/>
+                                            </pfx7:simple>
+                                        </pfx7:field>
+                                    </xsl:for-each>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ProductInfoManagement\IntegrationServices\Product\ProductSpecification\ProductSpecificationManagement\GetPackagePriceHistory-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^tracking^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;id&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016.ProductInfoManagement.1c3fa62e-1dd2-11b2-a808-c5cd038725f0&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^1^[1]&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;crmps016-RVTargetConnector.send&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^2^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;BW.MSF_ProductInfoManagement\IntegrationServices\Product\ProductSpecification\ProductSpecificationManagement\GetPackagePriceHistory-JobID1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <pfx7:field>
+                        <pfx7:name>
+                            <xsl:value-of select="&quot;^data^&quot;"/>
+                        </pfx7:name>
+                        <pfx7:id>
+                            <xsl:value-of select="0"/>
+                        </pfx7:id>
+                        <pfx7:msg>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^class^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;^reply^CRMConnector_crm2eai^PubSyncMessage&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;ResponseMessage&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:msg>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^class^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;Message&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;^idx^&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="&quot;1&quot;"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                    <pfx7:field>
+                                        <pfx7:name>
+                                            <xsl:value-of select="&quot;XMLMessage&quot;"/>
+                                        </pfx7:name>
+                                        <pfx7:id>
+                                            <xsl:value-of select="0"/>
+                                        </pfx7:id>
+                                        <pfx7:simple>
+                                            <xsl:value-of select="tib:render-xml($Generate-Error-Response/GetProductPricesResponse/Status)"/>
+                                        </pfx7:simple>
+                                    </pfx7:field>
+                                </pfx7:msg>
+                            </pfx7:field>
+                            <pfx7:field>
+                                <pfx7:name>
+                                    <xsl:value-of select="&quot;^returnValue^&quot;"/>
+                                </pfx7:name>
+                                <pfx7:id>
+                                    <xsl:value-of select="0"/>
+                                </pfx7:id>
+                                <pfx7:simple>
+                                    <xsl:value-of select="&quot;0&quot;"/>
+                                </pfx7:simple>
+                            </pfx7:field>
+                        </pfx7:msg>
+                    </pfx7:field>
+                </body>
+            </ActivityInput>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Set Ouput Context">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>870</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <processName>/UtilityProcesses/ContextResources/SetOutputContext.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:copy-of select="$Create-Message-Context-REPLY/root/ns2:MessageContext"/>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace End">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>1216</pd:x>
+        <pd:y>60</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceEnd.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <body>
+                    <xsl:value-of select="tib:render-xml($Call-PFST-Main/root/GetProductPricesResponse)"/>
+                </body>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="Trace Start">
+        <pd:type>com.tibco.pe.core.CallProcessActivity</pd:type>
+        <pd:resourceType>ae.process.subprocess</pd:resourceType>
+        <pd:x>342</pd:x>
+        <pd:y>58</pd:y>
+        <config>
+            <processName>/UtilityProcesses/Tracing/TraceStart.process</processName>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <processName>
+                    <xsl:value-of select="BW:getCurrentProcessName($_processContext/ns:ProcessContext/ProcessId)"/>
+                </processName>
+                <payload>
+                    <xsl:copy-of select="$TransformXML/root/XMLMessage"/>
+                </payload>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:activity name="TransformXML">
+        <pd:type>com.tibco.plugin.mapper.MapperActivity</pd:type>
+        <pd:resourceType>ae.activities.MapperActivity</pd:resourceType>
+        <pd:x>136</pd:x>
+        <pd:y>59</pd:y>
+        <config>
+            <element>
+                <xsd:element name="root">
+                    <xsd:complexType>
+                        <xsd:sequence>
+                            <xsd:element name="XMLMessage" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+                        </xsd:sequence>
+                    </xsd:complexType>
+                </xsd:element>
+            </element>
+        </config>
+        <pd:inputBindings>
+            <root>
+                <xsl:for-each xmlns:xsl="http://www.w3.org/1999/XSL/Transform" select="$RV_GPP/ActivityOutput/body/pfx7:field[pfx7:name=&quot;^data^&quot;]">
+                    <xsl:for-each select="pfx7:msg/pfx7:field[pfx7:name=&quot;RequestMessage&quot;]">
+                        <xsl:for-each select="pfx7:msg/pfx7:field[pfx7:name=&quot;XMLMessage&quot;]">
+                            <XMLMessage>
+                                <xsl:value-of select="current()/pfx7:simple"/>
+                            </XMLMessage>
+                        </xsl:for-each>
+                    </xsl:for-each>
+                </xsl:for-each>
+            </root>
+        </pd:inputBindings>
+    </pd:activity>
+    <pd:transition>
+        <pd:from>InitialiseBoundary</pd:from>
+        <pd:to>Trace Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit Start</pd:from>
+        <pd:to>AE To CDM</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Message Context REPLY</pd:from>
+        <pd:to>Set Ouput Context</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Set Ouput Context</pd:from>
+        <pd:to>Audit End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Initialise Error</pd:from>
+        <pd:to>Create Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception</pd:from>
+        <pd:to>Log Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch All</pd:from>
+        <pd:to>Create Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Create Exception Catch All</pd:from>
+        <pd:to>Log Exception Catch All</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch All</pd:from>
+        <pd:to>Generate Error Response-Catch</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Catch Exception</pd:from>
+        <pd:to>Log Exception Catch Exception</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception Catch Exception</pd:from>
+        <pd:to>Generate Error Response-Catch</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace Start</pd:from>
+        <pd:to>Audit Start</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>AE To CDM</pd:from>
+        <pd:to>Call PFST Main</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Log Exception</pd:from>
+        <pd:to>Generate Error Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RV_GPP</pd:from>
+        <pd:to>TransformXML</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TransformXML</pd:from>
+        <pd:to>InitialiseBoundary</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>TransformXML</pd:from>
+        <pd:to>Initialise Error</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-65536</pd:lineColor>
+        <pd:conditionType>error</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Trace End</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Audit End</pd:from>
+        <pd:to>RV_GPP-Success Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RV_GPP-Success Response</pd:from>
+        <pd:to>Trace End</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate Error Response</pd:from>
+        <pd:to>RV_GPP-Validation Error Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RV_GPP-Validation Error Response</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Generate Error Response-Catch</pd:from>
+        <pd:to>RV_GPP-Error Response</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>RV_GPP-Error Response</pd:from>
+        <pd:to>End</pd:to>
+        <pd:lineType>One Bend</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+    <pd:transition>
+        <pd:from>Call PFST Main</pd:from>
+        <pd:to>Create Message Context REPLY</pd:to>
+        <pd:lineType>Default</pd:lineType>
+        <pd:lineColor>-16777216</pd:lineColor>
+        <pd:conditionType>always</pd:conditionType>
+    </pd:transition>
+</pd:ProcessDefinition>
